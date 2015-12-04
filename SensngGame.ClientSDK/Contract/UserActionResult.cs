@@ -20,5 +20,7 @@ namespace SensngGame.ClientSDK.Contract
         public string HeadImagUrl { get; set; }
         public string NickName { get; set; }
         public string OpenId { get; set; }
+
+        public string QrCodeId { get; set; }
     }
 }

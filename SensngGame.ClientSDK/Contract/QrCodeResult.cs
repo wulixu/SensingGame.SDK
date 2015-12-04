@@ -19,7 +19,7 @@ namespace SensngGame.ClientSDK.Contract
     public class QrCodeData
     {
         public string QrCodeUrl { get; set; }
-        public int QrCodeId { get; set; }
+        public string QrCodeId { get; set; }
     }
 
 }

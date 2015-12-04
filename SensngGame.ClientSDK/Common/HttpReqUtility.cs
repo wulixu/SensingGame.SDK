@@ -305,6 +305,7 @@ namespace SensingSite.ClientSDK.Common
             }
             catch(Exception ex)
             {
+                log.Error("HttpUploadFile", ex);
                 return HttpCallErrorFlag;
             }
         }
@@ -385,6 +386,7 @@ namespace SensingSite.ClientSDK.Common
             }
             catch (Exception ex)
             {
+                log.Error("HttpUploadFile", ex);
                 return HttpCallErrorFlag;
             }
         }

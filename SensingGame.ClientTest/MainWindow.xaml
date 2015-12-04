@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SensingGame.ClientTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="600" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="280*"/>
+            <RowDefinition Height="289*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="63*"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="image" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Height="200" Margin="15,57,0,0" VerticalAlignment="Top" Width="200"/>
+        <Image x:Name="avatorImg" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Left" Height="212" Margin="113,57,0,0" VerticalAlignment="Top" Width="224"/>
+
+        <Image x:Name="image1" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Height="200" Margin="15,57,0,0" VerticalAlignment="Top" Width="200"/>
+        <Image x:Name="avatorImg1" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Left" Height="212" Margin="113,57,0,0" VerticalAlignment="Top" Width="224"/>
+        <Button x:Name="button" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Height="35" Margin="440,10,0,0" VerticalAlignment="Top" Width="105" Click="button_Click"/>
     </Grid>
 </Window>

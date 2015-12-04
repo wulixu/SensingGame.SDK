@@ -12,13 +12,13 @@ namespace SensngGame.ClientSDK
     /// </summary>
     public interface IGameServiceClient
     {
-        Task<QrCodeResult> GetQrCode4LoginAsyn(string gameId, string appId, string clientUniqueId);
+        Task<QrCodeResult> GetQrCode4LoginAsync(bool isSendWeChatMsg = false);
 
-        Task<UserActionResult> FindScanQrCodeUserAsyn(string qrCodeId);
+        Task<UserActionResult> FindScanQrCodeUserAsync(string qrCodeId);
 
-        Task<PostBackResult> PostDataByUserAsyn(string userId, string qrCodeId, string playerImage, string gameImage, int score);
+        Task<UserActionResult> PostDataByUserAsync(string qrCodeId, string playerImage, string gameImage, int score,bool isSendWeChatMsg = true);
 
-        Task<QrCodeResult> PostData4ScanAsyn(string gameId, string playerImage, string gameImage, int score);
+        Task<QrCodeResult> PostData4ScanAsync(string playerImage, string gameImage, int score);
 
     }
 }

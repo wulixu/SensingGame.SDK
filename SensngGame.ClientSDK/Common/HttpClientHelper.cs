@@ -12,6 +12,7 @@ using System.Net.Mime;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using LogService;
 
 namespace SensingGame.ClientSDK.Common
 {
@@ -23,6 +24,9 @@ namespace SensingGame.ClientSDK.Common
     }
     public class HttpClientHelper :IDisposable
     {
+
+        private static readonly IBizLogger logger = ServerLogFactory.GetLogger(typeof(HttpClientHelper));
+
         public static TimeSpan TIME_OUT = TimeSpan.FromSeconds(10);
         private HttpClient httpClient;
         public HttpClientHelper() 
@@ -55,6 +59,7 @@ namespace SensingGame.ClientSDK.Common
             }
             catch (Exception ex)
             {
+                logger.Error("PostInfo", ex);
                 return "Error:" + ex.Message;
             }
         }
@@ -90,6 +95,7 @@ namespace SensingGame.ClientSDK.Common
              }
             catch (Exception exception)
             {
+                logger.Error("GetInfo", exception);
                 return "Error:cannot connect internet.";
             }
             //HttpClient client = new HttpClient();

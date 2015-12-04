@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SensingGame.ClientTest
 {
@@ -21,32 +22,65 @@ namespace SensingGame.ClientTest
     /// </summary>
     public partial class MainWindow : Window
     {
+        GameServiceClient gameSvc = new GameServiceClient("williamwu", "wx37e46819d148d5fb", "1", "3");
         public MainWindow()
         {
             InitializeComponent();
 
             
             Loaded += MainWindow_Loaded;
+            //timer.Interval = TimeSpan.FromSeconds(2);
+            //timer.Tick += Timer_Tick;
+            //timer.Start();
         }
 
+        private async void Timer_Tick(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrEmpty(currentQrCode))
+            {
+                var user = await gameSvc.FindScanQrCodeUserAsync(currentQrCode);
+                if (user != null && user.Data != null)
+                {
+                    avatorImg.Source = new BitmapImage(new Uri(user.Data.HeadImagUrl));
+
+                    await gameSvc.PostDataByUserAsync(user.Data.QrCodeId, @"E:\TFS\SensingGame\SensingGame\bin\Debug\welcome.png", @"E:\TFS\SensingGame\SensingGame\bin\Debug\welcome.png",80);
+                }
+
+                var user1 = await gameSvc.FindScanQrCodeUserAsync(currentPDQrCode);
+                if (user1 != null && user.Data != null)
+                {
+                    avatorImg.Source = new BitmapImage(new Uri(user1.Data.HeadImagUrl));
+                }
+
+            }
+        }
+
+        private string currentQrCode;
+        private string currentPDQrCode;
+
+        private DispatcherTimer timer = new DispatcherTimer();
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            GameServiceClient gameSvc = new GameServiceClient("williamwu");
-            var data = await gameSvc.GetQrCode4LoginAsyn("123", "123", "clientUniqueId");
-            var qrcode = data.Data;
 
-            var user = await gameSvc.FindScanQrCodeUserAsyn("13");
-
-            var postBack = await gameSvc.PostData4ScanAsyn("1", "2", "3", 5);
-            var pData = postBack.Data;
-            //var qrcode = data.Result;
-            //data.Result
-            //var qrCode = data.Data;
+            var data = await gameSvc.GetQrCode4LoginAsync();
+            if (data != null && data.Data != null)
+            {
+                var qrcode = data.Data;
+                currentQrCode = qrcode.QrCodeId;
+                image.Source = new BitmapImage(new Uri(qrcode.QrCodeUrl));
+            }
+            var postBack = await gameSvc.PostData4ScanAsync(@"E:\TFS\SensingGame\SensingGame\bin\Debug\welcome.png", @"E:\TFS\SensingGame\SensingGame\bin\Debug\welcome.png",50);
+            if (postBack != null && postBack.Data != null)
+            {
+                var qrcode = postBack.Data;
+                currentPDQrCode = qrcode.QrCodeId;
+                image1.Source = new BitmapImage(new Uri(qrcode.QrCodeUrl));
+            }
         }
 
-        public async Task Doit()
+        private async void button_Click(object sender, RoutedEventArgs e)
         {
-
+            Timer_Tick(null,null);
         }
     }
 }

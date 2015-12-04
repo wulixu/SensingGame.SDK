@@ -23,7 +23,7 @@ namespace SensingSite.ClientSDK.Common
         /// 获取本机MAC地址
         /// </summary>
         /// <returns>MAC数据 string</returns>
-        public string GetClientMac()
+        public static string GetClientMac()
         {
             string macAddresses = "";
 
