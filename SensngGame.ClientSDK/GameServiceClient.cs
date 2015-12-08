@@ -134,7 +134,19 @@ namespace SensngGame.ClientSDK
             nameValues.Add("score", score.ToString());
             try
             {
-                return await SendMultipartFormRequestAsync<QrCodeResult>(absolutePath, new string[] { playerImage, gameImage}, new string[] { "gameimage", "playerimage" }, nameValues);
+                var files = new List<string>();
+                var names = new List<string>();
+                if (!string.IsNullOrEmpty(playerImage) && File.Exists(playerImage))
+                {
+                    files.Add(playerImage);
+                    names.Add("playerimage");
+                }
+                if (!string.IsNullOrEmpty(gameImage) && File.Exists(gameImage))
+                {
+                    files.Add(gameImage);
+                    names.Add("gameImage");
+                }
+                return await SendMultipartFormRequestAsync<QrCodeResult>(absolutePath, files.ToArray(), names.ToArray(), nameValues);
             }
             catch (Exception ex)
             {
@@ -148,6 +160,7 @@ namespace SensngGame.ClientSDK
             var absolutePath = $"{ServiceHost}/{PostDataByUserQuery}";
             var nameValues = new NameValueCollection();
             nameValues.Add("weiXinAppId", weiXinAppId);
+            nameValues.Add("qrCodeId", qrCodeId);
             nameValues.Add("gameId", gameId);
             nameValues.Add("clientUniueId", clientUniueId);
             nameValues.Add("activityId", activityId);
@@ -156,7 +169,19 @@ namespace SensngGame.ClientSDK
 
             try
             {
-                return await SendMultipartFormRequestAsync<UserActionResult>(absolutePath, new string[] { playerImage, gameImage }, new string[] { "gameimage", "playerimage" }, nameValues);
+                var files = new List<string>();
+                var names = new List<string>();
+                if(!string.IsNullOrEmpty(playerImage) && File.Exists(playerImage))
+                {
+                    files.Add(playerImage);
+                    names.Add("playerimage");
+                }
+                if (!string.IsNullOrEmpty(gameImage) && File.Exists(gameImage))
+                {
+                    files.Add(gameImage);
+                    names.Add("gameImage");
+                }
+                return await SendMultipartFormRequestAsync<UserActionResult>(absolutePath, files.ToArray(),names.ToArray(), nameValues);
             }
             catch (Exception ex)
             {

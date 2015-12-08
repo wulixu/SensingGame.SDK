@@ -41,17 +41,15 @@ namespace SensingGame.ClientTest
                 var user = await gameSvc.FindScanQrCodeUserAsync(currentQrCode);
                 if (user != null && user.Data != null)
                 {
-                    avatorImg.Source = new BitmapImage(new Uri(user.Data.HeadImagUrl));
-
-                    await gameSvc.PostDataByUserAsync(user.Data.QrCodeId, @"E:\TFS\SensingGame\SensingGame\bin\Debug\welcome.png", @"E:\TFS\SensingGame\SensingGame\bin\Debug\welcome.png",80);
+                    avatorImg.Source = new BitmapImage(new Uri(user.Data.HeadImgUrl));
+                    await gameSvc.PostDataByUserAsync(currentQrCode, null, null, 80);
                 }
 
                 var user1 = await gameSvc.FindScanQrCodeUserAsync(currentPDQrCode);
-                if (user1 != null && user.Data != null)
+                if (user1 != null && user1.Data != null)
                 {
-                    avatorImg.Source = new BitmapImage(new Uri(user1.Data.HeadImagUrl));
+                    avatorImg1.Source = new BitmapImage(new Uri(user1.Data.HeadImgUrl));
                 }
-
             }
         }
 
