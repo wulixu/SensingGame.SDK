@@ -1,4 +1,5 @@
 ﻿using SensngGame.ClientSDK;
+using SensngGame.ClientSDK.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,8 @@ namespace SensingGame.ClientTest
             //timer.Start();
         }
 
+        private UserData firstUser;
+
         private async void Timer_Tick(object sender, EventArgs e)
         {
             if(!string.IsNullOrEmpty(currentQrCode))
@@ -41,6 +44,7 @@ namespace SensingGame.ClientTest
                 var user = await gameSvc.FindScanQrCodeUserAsync(currentQrCode);
                 if (user != null && user.Data != null)
                 {
+                    firstUser = user.Data;
                     avatorImg.Source = new BitmapImage(new Uri(user.Data.HeadImgUrl));
                     await gameSvc.PostDataByUserAsync(currentQrCode, null, null, 80);
                 }
@@ -79,6 +83,14 @@ namespace SensingGame.ClientTest
         private async void button_Click(object sender, RoutedEventArgs e)
         {
             Timer_Tick(null,null);
+        }
+
+        private async void button_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            if(!string.IsNullOrEmpty(currentQrCode))
+            {
+                await gameSvc.PostDataByUserAsync(currentQrCode, null, null, 80);
+            }
         }
     }
 }

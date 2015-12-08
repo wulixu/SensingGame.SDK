@@ -15,11 +15,16 @@
             <ColumnDefinition Width="25*"/>
             <ColumnDefinition Width="63*"/>
         </Grid.ColumnDefinitions>
-        <Image x:Name="image" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Height="200" Margin="15,57,0,0" VerticalAlignment="Top" Width="200"/>
-        <Image x:Name="avatorImg" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Left" Height="212" Margin="113,57,0,0" VerticalAlignment="Top" Width="224"/>
+        <Image x:Name="image" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Height="200" Margin="15,30,0,0" VerticalAlignment="Top" Width="200"/>
+        <Image x:Name="avatorImg" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Left" Height="200" Margin="113,30,0,0" VerticalAlignment="Top" Width="200"/>
 
-        <Image x:Name="image1" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Height="200" Margin="15,57,0,0" VerticalAlignment="Top" Width="200"/>
-        <Image x:Name="avatorImg1" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Left" Height="212" Margin="113,57,0,0" VerticalAlignment="Top" Width="224"/>
+        <Image x:Name="image1" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Height="200" Margin="15,30,0,0" VerticalAlignment="Top" Width="200"/>
+        <Image x:Name="avatorImg1" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Left" Height="200" Margin="113,30,0,0" VerticalAlignment="Top" Width="200"/>
         <Button x:Name="button" Content="请先扫码&#xD;&#xA;后点击获取头像" Grid.Column="1" HorizontalAlignment="Left" Height="35" Margin="440,10,0,0" VerticalAlignment="Top" Width="105" Click="button_Click"/>
+        <Label x:Name="label" Content="QrCoce4Login获得的二维码" HorizontalAlignment="Left" Height="25" Margin="35,249,0,0" VerticalAlignment="Top" Width="155"/>
+        <Label x:Name="label_Copy" Content="PostData获取的二维码" HorizontalAlignment="Left" Height="25" Margin="35,254,0,0" VerticalAlignment="Top" Width="155" Grid.Row="1"/>
+        <Label x:Name="label_Copy1" Content="用户头像" HorizontalAlignment="Left" Height="25" Margin="183,249,0,0" VerticalAlignment="Top" Width="130" Grid.Column="1"/>
+        <Label x:Name="label_Copy2" Content="用户头像" HorizontalAlignment="Left" Height="25" Margin="183,254,0,0" VerticalAlignment="Top" Width="130" Grid.Column="1" Grid.Row="1"/>
+        <Button x:Name="button_Copy" Content="PostDataByUser" Grid.Column="1" HorizontalAlignment="Left" Height="35" Margin="440,75,0,0" VerticalAlignment="Top" Width="105" Click="button_Copy_Click"/>
     </Grid>
 </Window>
