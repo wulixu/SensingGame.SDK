@@ -17,11 +17,12 @@ namespace SensngGame.ClientSDK
 {
     public class GameServiceClient : IGameServiceClient
     {
-
         /// <summary>
         /// The service host.
         /// </summary>
-        private const string ServiceHost = "http://wx.troncell.com/api/v0/WeixinApi";
+        private const string ServiceHost = "http://game.troncell.com/api/v0/WeixinApi";
+
+        //private const string ServiceHost = "http://localhost:4468/api/v0/WeixinApi";
 
         /// <summary>
         /// The json header
@@ -48,10 +49,29 @@ namespace SensngGame.ClientSDK
         /// </summary>
         private const string PostDataByUserQuery = "PostDataByUser";
 
+
+        private const string GetUsersByActivityQuery = "GetUsersByActivitiy";
+
+        private const string GetRankUsersByActivityQuery = "GetRankUsersByActivity";
+
+        private const string GetActivityInfoQuery = "GetActivityInfo";
+
+        private const string GetAwardsByActivityQuery = "GetAwardsByActivity";
+
+        private const string WinAwardByActionIdQuery = "WinAwardByActionId";
+
+        private const string GetWinAwardUsersByActivityIdQuery = "GetWinAwardUsersByActivityId";
+
+        private const string WinAwardByRandomQuery = "WinAwardByRandom";
+
+
+
+
+
         /// <summary>
         /// The subscription key name.
         /// </summary>
-        private const string SubscriptionKeyName = "subscription-key";
+        private const string SubscriptionKeyName = "SubscriptionKey";
 
         #region Inner Keys.
         /// <summary>
@@ -81,21 +101,20 @@ namespace SensngGame.ClientSDK
 
         private static HttpClient s_httpClient = new HttpClient();
 
-        public GameServiceClient(string subscriptionKey,string weiXinAppId, string gameId,string activityId)
+        public GameServiceClient(string subscriptionKey, string weiXinAppId, string gameId, string activityId)
         {
-            
             this._subscriptionKey = subscriptionKey;
             this.weiXinAppId = weiXinAppId;
             this.gameId = gameId;
             this.activityId = activityId;
             this.clientUniueId = MacIPHelper.GetClientMac();
-
         }
 
+        #region QrcodeClient
         public async Task<UserActionResult> FindScanQrCodeUserAsync(string qrCodeId)
         {
             var absolutePath = $"{ServiceHost}/{FindScanQCodeUserQuery}";
-            var formNameValues = $"weiXinAppId={weiXinAppId}&&gameId={gameId}&clientUniueId={clientUniueId}&activityId={activityId}&qrCodeId={qrCodeId}";
+            var formNameValues = $"qrCodeId={qrCodeId}&{GetBasicFormNameValues()}";
             try
             {
                 var userAction = await SendRequestAsync<string, UserActionResult>(HttpMethod.Post, absolutePath, formNameValues);
@@ -111,7 +130,7 @@ namespace SensngGame.ClientSDK
         public async Task<QrCodeResult> GetQrCode4LoginAsync(bool isSendWeChatMsg = false)
         {
             var absolutePath = $"{ServiceHost}/{QrCode4LoginQuery}";
-            var formNameValues = $"weiXinAppId={weiXinAppId}&&gameId={gameId}&clientUniueId={clientUniueId}&activityId={activityId}&isSendWeChatMsg={isSendWeChatMsg}";
+            var formNameValues = $"isSendWeChatMsg={isSendWeChatMsg}&{GetBasicFormNameValues()}";
             try
             {
                 return await SendRequestAsync<object, QrCodeResult>(HttpMethod.Post, absolutePath, formNameValues);
@@ -127,10 +146,7 @@ namespace SensngGame.ClientSDK
         {
             var absolutePath = $"{ServiceHost}/{PostData4ScanQuery}";
             var nameValues = new NameValueCollection();
-            nameValues.Add("weiXinAppId", weiXinAppId);
-            nameValues.Add("gameId", gameId);
-            nameValues.Add("clientUniueId",clientUniueId);
-            nameValues.Add("activityId", activityId);
+            AddBasicNameValues(nameValues);
             nameValues.Add("score", score.ToString());
             try
             {
@@ -155,23 +171,19 @@ namespace SensngGame.ClientSDK
             return default(QrCodeResult);
         }
 
-        public async Task<UserActionResult> PostDataByUserAsync(string qrCodeId, string playerImage, string gameImage, int score, bool isSendWeChatMsg = true)
+        public async Task<UserActionResult> PostDataByUserAsync(string actionId, string playerImage, string gameImage, int score, bool isSendWeChatMsg = true)
         {
             var absolutePath = $"{ServiceHost}/{PostDataByUserQuery}";
             var nameValues = new NameValueCollection();
-            nameValues.Add("weiXinAppId", weiXinAppId);
-            nameValues.Add("qrCodeId", qrCodeId);
-            nameValues.Add("gameId", gameId);
-            nameValues.Add("clientUniueId", clientUniueId);
-            nameValues.Add("activityId", activityId);
+            AddBasicNameValues(nameValues);
+            nameValues.Add("actionId", actionId);
             nameValues.Add("score", score.ToString());
             nameValues.Add("isSendWeChatMsg", isSendWeChatMsg.ToString());
-
             try
             {
                 var files = new List<string>();
                 var names = new List<string>();
-                if(!string.IsNullOrEmpty(playerImage) && File.Exists(playerImage))
+                if (!string.IsNullOrEmpty(playerImage) && File.Exists(playerImage))
                 {
                     files.Add(playerImage);
                     names.Add("playerimage");
@@ -181,7 +193,7 @@ namespace SensngGame.ClientSDK
                     files.Add(gameImage);
                     names.Add("gameImage");
                 }
-                return await SendMultipartFormRequestAsync<UserActionResult>(absolutePath, files.ToArray(),names.ToArray(), nameValues);
+                return await SendMultipartFormRequestAsync<UserActionResult>(absolutePath, files.ToArray(), names.ToArray(), nameValues);
             }
             catch (Exception ex)
             {
@@ -189,8 +201,132 @@ namespace SensngGame.ClientSDK
             }
             return default(UserActionResult);
         }
+        #endregion
+
+        #region Activity Apis
+
+        public async Task<UserActionsResult> GetUsersByActivitiy(int maxUserCount)
+        {
+            var absolutePath = $"{ServiceHost}/{GetUsersByActivityQuery}";
+            var formNameValues = $"maxUsersCnt={maxUserCount}&{GetBasicFormNameValues()}";
+            try
+            {
+                var usersAction = await SendRequestAsync<string, UserActionsResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return usersAction;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetUsersByActivitiy", ex);
+            }
+            return default(UserActionsResult);
+        }
 
 
+        public async Task<UserActionsResult> GetRankUsersByActivity(string rankColumn, int maxRankUsersCnt)
+        {
+            var absolutePath = $"{ServiceHost}/{GetRankUsersByActivityQuery}";
+            var formNameValues = $"maxRankUsersCnt={maxRankUsersCnt}&rankColumn={rankColumn}&{GetBasicFormNameValues()}";
+            try
+            {
+                var usersActions = await SendRequestAsync<string, UserActionsResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return usersActions;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetUsersByActivitiy", ex);
+            }
+            return default(UserActionsResult);
+        }
+
+        public async Task<ActivityResult> GetActivityInfo()
+        {
+            var absolutePath = $"{ServiceHost}/{GetActivityInfoQuery}";
+            var formNameValues = $"{GetBasicFormNameValues()}";
+            try
+            {
+                var activity = await SendRequestAsync<string, ActivityResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return activity;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetUsersByActivitiy", ex);
+            }
+            return default(ActivityResult);
+        }
+
+        #endregion
+
+
+
+
+        #region Awards Apis
+        public async Task<AwardsResult> GetAwardsByActivity()
+        {
+            var absolutePath = $"{ServiceHost}/{GetAwardsByActivityQuery}";
+            var formNameValues = $"{GetBasicFormNameValues()}";
+            try
+            {
+                var awards = await SendRequestAsync<string, AwardsResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return awards;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetAwardsByActivity", ex);
+            }
+            return default(AwardsResult);
+        }
+
+
+        public async Task<UserActionResult> WinAwardByActionId(string actionId)
+        {
+            var absolutePath = $"{ServiceHost}/{GetAwardsByActivityQuery}";
+            var formNameValues = $"actionId={actionId}&{GetBasicFormNameValues()}";
+            try
+            {
+                var userAction = await SendRequestAsync<string, UserActionResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return userAction;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("WinAwardByActionId", ex);
+            }
+            return default(UserActionResult);
+        }
+
+        public async Task<UserActionResult> GetWinAwardUsersByActivityId(string actionId, string awardId)
+        {
+            var absolutePath = $"{ServiceHost}/{GetWinAwardUsersByActivityIdQuery}";
+            var formNameValues = $"actionId={actionId}&awardId={awardId}&{GetBasicFormNameValues()}";
+            try
+            {
+                var userAction = await SendRequestAsync<string, UserActionResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return userAction;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("WinAwardByActionId", ex);
+            }
+            return default(UserActionResult);
+        }
+
+
+        public async Task<UserActionResult> WinAwardByRandom(string awardId)
+        {
+            var absolutePath = $"{ServiceHost}/{WinAwardByRandomQuery}";
+            var formNameValues = $"awardId={awardId}&{GetBasicFormNameValues()}";
+            try
+            {
+                var userAction = await SendRequestAsync<string, UserActionResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return userAction;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("WinAwardByRandom", ex);
+            }
+            return default(UserActionResult);
+        }
+
+        #endregion
         #region the json client
         private async Task<TResponse> SendRequestAsync<TRequest, TResponse>(HttpMethod httpMethod, string requestUrl, TRequest requestBody)
         {
@@ -308,6 +444,20 @@ namespace SensngGame.ClientSDK
             }
         }
 
+
+        private string GetBasicFormNameValues()
+        {
+            return $"weiXinAppId={weiXinAppId}&gameId={gameId}&clientUniueId={clientUniueId}&activityId={activityId}&subscriptionKey={_subscriptionKey}";
+        }
+
+        private void AddBasicNameValues(NameValueCollection collections)
+        {
+            collections.Add("weiXinAppId", weiXinAppId);
+            collections.Add("gameId", gameId);
+            collections.Add("clientUniueId", clientUniueId);
+            collections.Add("activityId", activityId);
+            collections.Add("subscriptionKey", _subscriptionKey);
+        }
         #endregion
 
     }

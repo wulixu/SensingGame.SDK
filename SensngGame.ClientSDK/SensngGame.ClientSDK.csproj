@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="ClientError.cs" />
     <Compile Include="ClientException.cs" />
+    <Compile Include="Contract\ActivityResult.cs" />
+    <Compile Include="Contract\AwardResult.cs" />
     <Compile Include="Contract\QrCodeResult.cs" />
     <Compile Include="Contract\UserActionResult.cs" />
     <Compile Include="GameServiceClient.cs" />
