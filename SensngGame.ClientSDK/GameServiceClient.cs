@@ -20,9 +20,9 @@ namespace SensngGame.ClientSDK
         /// <summary>
         /// The service host.
         /// </summary>
-        //private const string ServiceHost = "http://game.troncell.com/api/v0/WeixinApi";
+        private const string ServiceHost = "http://game.troncell.com/api/v0/WeixinApi";
 
-        private const string ServiceHost = "http://localhost:4468/api/v0/WeixinApi";
+        //private const string ServiceHost = "http://localhost:4468/api/v0/WeixinApi";
 
         /// <summary>
         /// The json header
