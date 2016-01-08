@@ -101,6 +101,11 @@ namespace SensngGame.ClientSDK
 
         private static HttpClient s_httpClient = new HttpClient();
 
+        static GameServiceClient()
+        {
+            s_httpClient.Timeout = TimeSpan.FromSeconds(15);
+        }
+
         public GameServiceClient(string subscriptionKey, string weiXinAppId, string gameId, string activityId)
         {
             this._subscriptionKey = subscriptionKey;
@@ -108,8 +113,6 @@ namespace SensngGame.ClientSDK
             this.gameId = gameId;
             this.activityId = activityId;
             this.clientUniueId = MacIPHelper.GetClientMac();
-
-            s_httpClient.Timeout = TimeSpan.FromSeconds(15);
         }
 
         #region QrcodeClient
@@ -441,7 +444,6 @@ namespace SensngGame.ClientSDK
 
                     response.EnsureSuccessStatusCode();
                 }
-
                 return default(TResponse);
             }
         }
