@@ -6,21 +6,56 @@ using System.Threading.Tasks;
 
 namespace SensngGame.ClientSDK.Contract
 {
+    public class UserInfoResult
+    {
+        public string Status { get; set; }
+        public string ErrMessage { get; set; }
+        public UserInfoData Data { get; set; }
+    }
     public class UserActionResult
+    {
+        public string Status { get; set; }
+        public string ErrMessage { get; set; }
+        public UserActionData Data { get; set; }
+    }
+
+    public class UserDataResult
     {
         public string Status { get; set; }
         public string ErrMessage { get; set; }
         public UserData Data { get; set; }
     }
 
+    public class UserAwardResult
+    {
+        public string Status { get; set; }
+        public string ErrMessage { get; set; }
+        public UserAwardData Data { get; set; }
+    }
+
+    public class UserAwardsResult
+    {
+        public string Status { get; set; }
+        public string ErrMessage { get; set; }
+        public List<UserAwardData> Data { get; set; }
+    }
+
     public class UserActionsResult
     {
         public string Status { get; set; }
         public string ErrMessage { get; set; }
-        public List<UserData> Data { get; set; }
+        public List<UserActionData> Data { get; set; }
+    }
+    public class UserInfosResult
+    {
+        public string Status { get; set; }
+        public string ErrMessage { get; set; }
+        public List<UserInfoData> Data { get; set; }
     }
 
-    public class UserData
+    
+
+    public class UserInfoData
     {
         public int Id { get; set; }
         public string Openid { get; set; }
@@ -34,6 +69,46 @@ namespace SensngGame.ClientSDK.Contract
         public string Unionid { get; set; }
         public string Remark { get; set; }
         public int WeixinGroupid { get; set; }
+    }
+
+    public class UserData :UserInfoData
+    {
+        public string Name { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Address { get; set; }
+
+        public string IdentityID { get; set; }
+
+        public string CompanyName { get; set; }
+
+        public bool IsSigned { get; set; }
+    }
+
+    public class UserAwardData:UserInfoData
+    {
+        public int AwardID { get; set; }
+
+        public bool IsNotified { get; set; }
+
+        public bool IsReceived { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Address { get; set; }
+
+        public string ReceiverName { get; set; }
+
+        public string ExpressNO { get; set; }
+
+        public string ExpressCompany { get; set; }
+
+        public string ExpressImageUrl { get; set; }
+    }
+
+    public class UserActionData : UserInfoData
+    {
         public string qrCodeId { get; set; }
         public int ActionId { get; set; }
         public int Score { get; set; }
