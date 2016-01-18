@@ -52,6 +52,8 @@ namespace SensingGame.ClientTest
                     avatorImg.Source = new BitmapImage(new Uri(user.Data.Headimgurl));
                     //await gameSvc.PostDataByUserAsync(firstUser.ActionId.ToString(), null, null, 80);
                 }
+
+                var users = await gameSvc.FindScanQrCodeUsersAsync("5322");
             }
             if (!string.IsNullOrEmpty(afterQrCode))
             {
