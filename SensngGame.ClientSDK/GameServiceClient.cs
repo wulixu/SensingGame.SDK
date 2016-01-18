@@ -45,6 +45,11 @@ namespace SensngGame.ClientSDK
         private const string FindScanQCodeUserQuery = "FindScanQrCodeUser";
 
         /// <summary>
+        /// The find scan qrcode user query.
+        /// </summary>
+        private const string FindScanQCodeUsersQuery = "GetScanQrCodeUsers";
+
+        /// <summary>
         /// The post data by user query.
         /// </summary>
         private const string PostDataByUserQuery = "PostDataByUser";
@@ -134,6 +139,22 @@ namespace SensngGame.ClientSDK
                 logger.Error("FindScanQrCodeUserAysnc", ex);
             }
             return default(UserActionResult);
+        }
+
+        public async Task<UserActionsResult> FindScanQrCodeUsersAsync(string qrCodeId)
+        {
+            var absolutePath = $"{ServiceHost}/{FindScanQCodeUsersQuery}";
+            var formNameValues = $"qrCodeId={qrCodeId}&{GetBasicFormNameValues()}";
+            try
+            {
+                var userActions = await SendRequestAsync<string, UserActionsResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return userActions;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("FindScanQrCodeUserAysnc", ex);
+            }
+            return default(UserActionsResult);
         }
 
         public async Task<QrCodeResult> GetQrCode4LoginAsync(bool isSendWeChatMsg = false)
