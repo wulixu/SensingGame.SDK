@@ -52,6 +52,8 @@ namespace SensingGame.ClientTest
                     avatorImg.Source = new BitmapImage(new Uri(user.Data.Headimgurl));
                     //await gameSvc.PostDataByUserAsync(firstUser.ActionId.ToString(), null, null, 80);
                 }
+
+                var users = await gameSvc.FindScanQrCodeUsersAsync("5322");
             }
             if (!string.IsNullOrEmpty(afterQrCode))
             {
@@ -138,7 +140,8 @@ namespace SensingGame.ClientTest
         ActivityData activityInfo = null;
         private async void serviceCreate_Click(object sender, RoutedEventArgs e)
         {
-            gameSvc = new GameServiceClient("yourKey", weixinAppId.Text, gameId.Text, activityId.Text);
+            
+            //gameSvc = new GameServiceClient("yourKey", weixinAppId.Text, gameId.Text, activityId.Text);
             var data = await gameSvc.GetQrCode4LoginAsync();
             if (data != null && data.Data != null)
             {
