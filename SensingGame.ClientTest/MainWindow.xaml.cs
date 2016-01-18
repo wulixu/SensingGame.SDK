@@ -91,6 +91,7 @@ namespace SensingGame.ClientTest
         {
             activityDetails.Text = "";
             var users = await gameSvc.GetUsersByActivitiy(50);
+            
             if(users != null && users.Data != null)
             {
                 activityDetails.Text += $"Users:{users.Data.Count}" + Environment.NewLine;   
@@ -138,7 +139,7 @@ namespace SensingGame.ClientTest
         ActivityData activityInfo = null;
         private async void serviceCreate_Click(object sender, RoutedEventArgs e)
         {
-            gameSvc = new GameServiceClient("yourKey", weixinAppId.Text, gameId.Text, activityId.Text);
+            gameSvc = new GameServiceClient("j;lajdf;jaiuefjf", weixinAppId.Text, gameId.Text, activityId.Text);
             var data = await gameSvc.GetQrCode4LoginAsync();
             if (data != null && data.Data != null)
             {

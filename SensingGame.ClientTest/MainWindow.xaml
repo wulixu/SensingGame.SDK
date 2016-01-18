@@ -29,11 +29,11 @@
         <Label x:Name="label_Copy2" Content="用户头像" HorizontalAlignment="Left" Height="25" Margin="98,253,0,0" VerticalAlignment="Top" Width="70" Grid.Column="1" Grid.Row="2"/>
         <Button x:Name="button_Copy" Content="PostDataByUser" Grid.Column="2" HorizontalAlignment="Left" Height="35" Margin="82,165,0,0" VerticalAlignment="Top" Width="105" Click="button_Copy_Click" Grid.Row="1"/>
         <Label x:Name="label1" Content="WeiXinAppId:" HorizontalAlignment="Left" Margin="7,18,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="weixinAppId" HorizontalAlignment="Left" Height="20" Margin="92,22,0,0" TextWrapping="Wrap" Text="wx9ff3581ee0c40573" VerticalAlignment="Top" Width="147" RenderTransformOrigin="0.545,1"/>
+        <TextBox x:Name="weixinAppId" HorizontalAlignment="Left" Height="20" Margin="92,22,0,0" TextWrapping="Wrap" Text="wx37e46819d148d5fb" VerticalAlignment="Top" Width="147" RenderTransformOrigin="0.545,1"/>
         <Label x:Name="label1_Copy" Content="Game Id:" HorizontalAlignment="Left" Margin="60,17,0,0" VerticalAlignment="Top" Grid.Column="1"/>
         <TextBox x:Name="gameId" HorizontalAlignment="Left" Height="20" Margin="165,21,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="58" RenderTransformOrigin="0.545,1" Grid.Column="1"/>
         <Label x:Name="label1_Copy1" Content="Activity Id:" HorizontalAlignment="Left" Margin="40,18,0,0" VerticalAlignment="Top" Grid.Column="2" Width="87"/>
-        <TextBox x:Name="activityId" HorizontalAlignment="Right" Height="20" Margin="0,22,10,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.545,1" Grid.Column="2"/>
+        <TextBox x:Name="activityId" HorizontalAlignment="Right" Height="20" Margin="0,22,10,0" TextWrapping="Wrap" Text="6" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.545,1" Grid.Column="2"/>
         <Button x:Name="acitivityDetails" Content="GetActivityDetails" Grid.Column="3" HorizontalAlignment="Left" Height="35" Margin="74,22,0,0" VerticalAlignment="Top" Width="105" Grid.Row="1" Click="acitivityDetails_Click"/>
         <Button x:Name="ActivityWinner" Content="SetRandomWinnner" Grid.Column="2" HorizontalAlignment="Left" Height="35" Margin="62,7,0,0" VerticalAlignment="Top" Width="125" Grid.Row="2" Click="ActivityWinner_Click"/>
         <Image x:Name="avatorWinnerImg" Grid.Column="2" Grid.Row="2"  HorizontalAlignment="Left" Height="200" Margin="28,52,0,0" VerticalAlignment="Top" Width="200"/>
