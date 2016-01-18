@@ -1,0 +1,254 @@
+﻿<Window x:Class="ZoomingWithMultipleCharts.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" 
+        xmlns:vc="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"       
+   
+        >              
+    
+    <Grid x:Name="LayoutRoot" Width="680" Height="450" Background="Black">
+        <StackPanel>
+
+            <vc:Chart x:Name="MyChart1" CornerRadius="4,4,0,0" Padding="4,4,8,0" Background="White" LightingEnabled="True" Width="680" Height="250" ZoomingEnabled="true" Theme="Theme3" BorderThickness="1,1,1,0" Canvas.ZIndex="1">
+
+                <vc:Chart.Titles>
+                    <vc:Title Margin="5" FontSize="12" FontWeight="Bold" Text="Visifire OnZoom event Demo"/>
+                    <vc:Title Text="Price" VerticalAlignment="Center" HorizontalAlignment="Left" ></vc:Title>
+                </vc:Chart.Titles>
+
+                <vc:Chart.TrendLines>
+                    <vc:TrendLine LineColor="#A0FFE4C4" LabelText="Trend" StartValue="40" EndValue="60"></vc:TrendLine>
+                </vc:Chart.TrendLines>
+
+                <vc:Chart.AxesX>
+                    <vc:Axis Interval="2" IntervalType="Days" ScrollBarSize="0" AxisMinimum="Jan 1 2001" AxisMaximum="March 30 2001" >
+                        <vc:Axis.AxisLabels>
+                            <vc:AxisLabels Angle="-90" Enabled="true"></vc:AxisLabels>
+                        </vc:Axis.AxisLabels>
+
+                        <vc:Axis.Ticks>
+                            <vc:Ticks Enabled="true"></vc:Ticks>
+                        </vc:Axis.Ticks>
+
+                    </vc:Axis>
+                </vc:Chart.AxesX>
+
+                <vc:Chart.AxesY>
+                    <vc:Axis Interval="20" Padding="4" Prefix="$" AxisMaximum="100"/>
+                </vc:Chart.AxesY>
+
+                <vc:Chart.Series>
+                    <vc:DataSeries ShowInLegend="false" RenderAs="Stock" >
+                        <vc:DataSeries.DataPoints>
+                            <vc:DataPoint XValue="Jan 1 2001" YValues="45,30,48,26"/>
+                            <vc:DataPoint XValue="Jan 2 2001" YValues="36,20,42,18"/>
+                            <vc:DataPoint XValue="Jan 3 2001" YValues="22,30,34,18"/>
+                            <vc:DataPoint XValue="Jan 4 2001" YValues="30,38,40,20"/>
+                            <vc:DataPoint XValue="Jan 5 2001" YValues="50,40,55,38"/>
+                            <vc:DataPoint XValue="Jan 6 2001" YValues="62,54,72,50"/>
+                            <vc:DataPoint XValue="Jan 7 2001" YValues="70,56,78,52"/>
+                            <vc:DataPoint XValue="Jan 8 2001" YValues="66,40,68,35"/>
+                            <vc:DataPoint XValue="Jan 9 2001" YValues="48,58,62,32"/>
+                            <vc:DataPoint XValue="Jan 10 2001" YValues="42,46,50,32"/>
+                            <vc:DataPoint XValue="Jan 11 2001" YValues="36,20,44,18"/>
+                            <vc:DataPoint XValue="Jan 12 2001" YValues="20,32,40,18"/>
+                            <vc:DataPoint XValue="Jan 13 2001" YValues="28,10,30,8"/>
+                            <vc:DataPoint XValue="Jan 14 2001" YValues="6,20,42,3"/>
+                            <vc:DataPoint XValue="Jan 15 2001" YValues="28,18,31,10"/>
+                            <vc:DataPoint XValue="Jan 16 2001" YValues="30,40,42,28"/>
+                            <vc:DataPoint XValue="Jan 17 2001" YValues="40,50,52,36"/>
+                            <vc:DataPoint XValue="Jan 18 2001" YValues="20,40,44,16"/>
+                            <vc:DataPoint XValue="Jan 19 2001" YValues="25,35,38,20"/>
+                            <vc:DataPoint XValue="Jan 20 2001" YValues="28,18,34,12"/>
+                            <vc:DataPoint XValue="Jan 21 2001" YValues="24,12,30,8"/>
+                            <vc:DataPoint XValue="Jan 22 2001" YValues="20,40,46,15"/>
+                            <vc:DataPoint XValue="Jan 23 2001" YValues="40,50,55,26"/>
+                            <vc:DataPoint XValue="Jan 24 2001" YValues="68,50,77,34"/>
+                            <vc:DataPoint XValue="Jan 25 2001" YValues="60,43,71,42"/>
+                            <vc:DataPoint XValue="Jan 26 2001" YValues="44,54,61,34"/>
+                            <vc:DataPoint XValue="Jan 27 2001" YValues="38,40,52,30"/>
+                            <vc:DataPoint XValue="Jan 28 2001" YValues="30,35,48,28"/>
+                            <vc:DataPoint XValue="Jan 29 2001" YValues="28,10,40,8"/>
+                            <vc:DataPoint XValue="Jan 30 2001" YValues="18,33,38,10"/>
+                            <vc:DataPoint XValue="Feb 1 2001" YValues="45,30,48,26"/>
+                            <vc:DataPoint XValue="Feb 2 2001" YValues="36,20,42,18"/>
+                            <vc:DataPoint XValue="Feb 3 2001" YValues="22,30,34,18"/>
+                            <vc:DataPoint XValue="Feb 4 2001" YValues="30,38,40,20"/>
+                            <vc:DataPoint XValue="Feb 5 2001" YValues="50,40,55,38"/>
+                            <vc:DataPoint XValue="Feb 6 2001" YValues="62,54,72,50"/>
+                            <vc:DataPoint XValue="Feb 7 2001" YValues="70,56,78,52"/>
+                            <vc:DataPoint XValue="Feb 8 2001" YValues="66,40,68,35"/>
+                            <vc:DataPoint XValue="Feb 9 2001" YValues="48,58,62,32"/>
+                            <vc:DataPoint XValue="Feb 10 2001" YValues="42,46,50,32"/>
+                            <vc:DataPoint XValue="Feb 11 2001" YValues="36,20,44,18"/>
+                            <vc:DataPoint XValue="Feb 12 2001" YValues="20,32,40,18"/>
+                            <vc:DataPoint XValue="Feb 13 2001" YValues="28,10,30,8"/>
+                            <vc:DataPoint XValue="Feb 14 2001" YValues="6,20,42,3"/>
+                            <vc:DataPoint XValue="Feb 15 2001" YValues="28,18,31,10"/>
+                            <vc:DataPoint XValue="Feb 16 2001" YValues="30,40,42,28"/>
+                            <vc:DataPoint XValue="Feb 17 2001" YValues="40,50,52,36"/>
+                            <vc:DataPoint XValue="Feb 18 2001" YValues="20,40,44,16"/>
+                            <vc:DataPoint XValue="Feb 19 2001" YValues="25,35,38,20"/>
+                            <vc:DataPoint XValue="Feb 20 2001" YValues="28,18,34,12"/>
+                            <vc:DataPoint XValue="Feb 21 2001" YValues="24,12,30,8"/>
+                            <vc:DataPoint XValue="Feb 22 2001" YValues="20,40,46,15"/>
+                            <vc:DataPoint XValue="Feb 23 2001" YValues="40,50,55,26"/>
+                            <vc:DataPoint XValue="Feb 24 2001" YValues="68,50,77,34"/>
+                            <vc:DataPoint XValue="Feb 25 2001" YValues="60,43,71,42"/>
+                            <vc:DataPoint XValue="Feb 26 2001" YValues="44,54,61,34"/>
+                            <vc:DataPoint XValue="Feb 27 2001" YValues="38,40,52,30"/>
+                            <vc:DataPoint XValue="Feb 28 2001" YValues="30,35,48,28"/>
+                            <vc:DataPoint XValue="March 1 2001" YValues="45,30,48,26"/>
+                            <vc:DataPoint XValue="March 2 2001" YValues="36,20,42,18"/>
+                            <vc:DataPoint XValue="March 3 2001" YValues="22,30,34,18"/>
+                            <vc:DataPoint XValue="March 4 2001" YValues="30,38,40,20"/>
+                            <vc:DataPoint XValue="March 5 2001" YValues="50,40,55,38"/>
+                            <vc:DataPoint XValue="March 6 2001" YValues="62,54,72,50"/>
+                            <vc:DataPoint XValue="March 7 2001" YValues="70,56,78,52"/>
+                            <vc:DataPoint XValue="March 8 2001" YValues="66,40,68,35"/>
+                            <vc:DataPoint XValue="March 9 2001" YValues="48,58,62,32"/>
+                            <vc:DataPoint XValue="March 10 2001" YValues="42,46,50,32"/>
+                            <vc:DataPoint XValue="March 11 2001" YValues="36,20,44,18"/>
+                            <vc:DataPoint XValue="March 12 2001" YValues="20,32,40,18"/>
+                            <vc:DataPoint XValue="March 13 2001" YValues="28,10,30,8"/>
+                            <vc:DataPoint XValue="March 14 2001" YValues="6,20,42,3"/>
+                            <vc:DataPoint XValue="March 15 2001" YValues="28,18,31,10"/>
+                            <vc:DataPoint XValue="March 16 2001" YValues="30,40,42,28"/>
+                            <vc:DataPoint XValue="March 17 2001" YValues="40,50,52,36"/>
+                            <vc:DataPoint XValue="March 18 2001" YValues="20,40,44,16"/>
+                            <vc:DataPoint XValue="March 19 2001" YValues="25,35,38,20"/>
+                            <vc:DataPoint XValue="March 20 2001" YValues="28,18,34,12"/>
+                            <vc:DataPoint XValue="March 21 2001" YValues="24,12,30,8"/>
+                            <vc:DataPoint XValue="March 22 2001" YValues="20,40,46,15"/>
+                            <vc:DataPoint XValue="March 23 2001" YValues="40,50,55,26"/>
+                            <vc:DataPoint XValue="March 24 2001" YValues="68,50,77,34"/>
+                            <vc:DataPoint XValue="March 25 2001" YValues="60,43,71,42"/>
+                            <vc:DataPoint XValue="March 26 2001" YValues="44,54,61,34"/>
+                            <vc:DataPoint XValue="March 27 2001" YValues="38,40,52,30"/>
+                            <vc:DataPoint XValue="March 28 2001" YValues="30,35,48,28"/>
+                            <vc:DataPoint XValue="March 29 2001" YValues="28,10,40,8"/>
+                            <vc:DataPoint XValue="March 30 2001" YValues="18,33,38,10"/>
+                        </vc:DataSeries.DataPoints>
+                    </vc:DataSeries>
+                </vc:Chart.Series>
+
+            </vc:Chart>
+            <vc:Chart x:Name="MyChart2" CornerRadius="0,0,4,4" Padding="4,6,8,2" Background="White" Watermark="False" Width="680" ZoomingEnabled="True" Height="200" Theme="Theme3" ScrollingEnabled="False" UniqueColors="False" BorderThickness="1,0,1,1">
+
+                <vc:Chart.Titles>
+                    <vc:Title Text="                   Volume" VerticalAlignment="Center" HorizontalAlignment="Left" ></vc:Title>
+                </vc:Chart.Titles>
+
+                <vc:Chart.AxesX>
+                    <vc:Axis Interval="2" IntervalType="Days" ScrollBarSize="26" AxisMinimum="Jan 1 2001" AxisMaximum="March 30 2001"  Enabled="true"  ValueFormatString="d/MMM/yyyy">
+                        <vc:Axis.AxisLabels>
+                            <vc:AxisLabels Angle="-90" ></vc:AxisLabels>
+                        </vc:Axis.AxisLabels>
+                    </vc:Axis>
+                </vc:Chart.AxesX>
+
+                <vc:Chart.AxesY>
+                    <vc:Axis Interval="20" AxisMaximum="100" Padding="10"/>
+                </vc:Chart.AxesY>
+
+                <vc:Chart.Series>
+                    <vc:DataSeries RenderAs="Area" XValueFormatString="d/MMM/yyyy" Bevel="False">
+                        <vc:DataSeries.DataPoints>
+                            <vc:DataPoint XValue="Jan 1 2001" YValue="45"/>
+                            <vc:DataPoint XValue="Jan 2 2001" YValue="36"/>
+                            <vc:DataPoint XValue="Jan 3 2001" YValue="22"/>
+                            <vc:DataPoint XValue="Jan 4 2001" YValue="30"/>
+                            <vc:DataPoint XValue="Jan 5 2001" YValue="50"/>
+                            <vc:DataPoint XValue="Jan 6 2001" YValue="62"/>
+                            <vc:DataPoint XValue="Jan 7 2001" YValue="70"/>
+                            <vc:DataPoint XValue="Jan 8 2001" YValue="66"/>
+                            <vc:DataPoint XValue="Jan 9 2001" YValue="48"/>
+                            <vc:DataPoint XValue="Jan 10 2001" YValue="42"/>
+                            <vc:DataPoint XValue="Jan 11 2001" YValue="36"/>
+                            <vc:DataPoint XValue="Jan 12 2001" YValue="20"/>
+                            <vc:DataPoint XValue="Jan 13 2001" YValue="28"/>
+                            <vc:DataPoint XValue="Jan 14 2001" YValue="6"/>
+                            <vc:DataPoint XValue="Jan 15 2001" YValue="28"/>
+                            <vc:DataPoint XValue="Jan 16 2001" YValue="30"/>
+                            <vc:DataPoint XValue="Jan 17 2001" YValue="40"/>
+                            <vc:DataPoint XValue="Jan 18 2001" YValue="20"/>
+                            <vc:DataPoint XValue="Jan 19 2001" YValue="25"/>
+                            <vc:DataPoint XValue="Jan 20 2001" YValue="28"/>
+                            <vc:DataPoint XValue="Jan 21 2001" YValue="24"/>
+                            <vc:DataPoint XValue="Jan 22 2001" YValue="20"/>
+                            <vc:DataPoint XValue="Jan 23 2001" YValue="40"/>
+                            <vc:DataPoint XValue="Jan 24 2001" YValue="68"/>
+                            <vc:DataPoint XValue="Jan 25 2001" YValue="60"/>
+                            <vc:DataPoint XValue="Jan 26 2001" YValue="44"/>
+                            <vc:DataPoint XValue="Jan 27 2001" YValue="38"/>
+                            <vc:DataPoint XValue="Jan 28 2001" YValue="28"/>
+                            <vc:DataPoint XValue="Jan 29 2001" YValue="32"/>
+                            <vc:DataPoint XValue="Jan 30 2001" YValue="18"/>
+                            <vc:DataPoint XValue="Feb 1 2001" YValue="45"/>
+                            <vc:DataPoint XValue="Feb 2 2001" YValue="36"/>
+                            <vc:DataPoint XValue="Feb 3 2001" YValue="22"/>
+                            <vc:DataPoint XValue="Feb 4 2001" YValue="30"/>
+                            <vc:DataPoint XValue="Feb 5 2001" YValue="50"/>
+                            <vc:DataPoint XValue="Feb 6 2001" YValue="62"/>
+                            <vc:DataPoint XValue="Feb 7 2001" YValue="70"/>
+                            <vc:DataPoint XValue="Feb 8 2001" YValue="66"/>
+                            <vc:DataPoint XValue="Feb 9 2001" YValue="48"/>
+                            <vc:DataPoint XValue="Feb 10 2001" YValue="42"/>
+                            <vc:DataPoint XValue="Feb 11 2001" YValue="36"/>
+                            <vc:DataPoint XValue="Feb 12 2001" YValue="20"/>
+                            <vc:DataPoint XValue="Feb 13 2001" YValue="28"/>
+                            <vc:DataPoint XValue="Feb 14 2001" YValue="6"/>
+                            <vc:DataPoint XValue="Feb 15 2001" YValue="28"/>
+                            <vc:DataPoint XValue="Feb 16 2001" YValue="30"/>
+                            <vc:DataPoint XValue="Feb 17 2001" YValue="40"/>
+                            <vc:DataPoint XValue="Feb 18 2001" YValue="20"/>
+                            <vc:DataPoint XValue="Feb 19 2001" YValue="25"/>
+                            <vc:DataPoint XValue="Feb 20 2001" YValue="28"/>
+                            <vc:DataPoint XValue="Feb 21 2001" YValue="24"/>
+                            <vc:DataPoint XValue="Feb 22 2001" YValue="20"/>
+                            <vc:DataPoint XValue="Feb 23 2001" YValue="40"/>
+                            <vc:DataPoint XValue="Feb 24 2001" YValue="68"/>
+                            <vc:DataPoint XValue="Feb 25 2001" YValue="60"/>
+                            <vc:DataPoint XValue="Feb 26 2001" YValue="44"/>
+                            <vc:DataPoint XValue="Feb 27 2001" YValue="38"/>
+                            <vc:DataPoint XValue="Feb 28 2001" YValue="28"/>
+                            <vc:DataPoint XValue="March 1 2001" YValue="45"/>
+                            <vc:DataPoint XValue="March 2 2001" YValue="36"/>
+                            <vc:DataPoint XValue="March 3 2001" YValue="22"/>
+                            <vc:DataPoint XValue="March 4 2001" YValue="30"/>
+                            <vc:DataPoint XValue="March 5 2001" YValue="50"/>
+                            <vc:DataPoint XValue="March 6 2001" YValue="62"/>
+                            <vc:DataPoint XValue="March 7 2001" YValue="70"/>
+                            <vc:DataPoint XValue="March 8 2001" YValue="66"/>
+                            <vc:DataPoint XValue="March 9 2001" YValue="48"/>
+                            <vc:DataPoint XValue="March 10 2001" YValue="42"/>
+                            <vc:DataPoint XValue="March 11 2001" YValue="36"/>
+                            <vc:DataPoint XValue="March 12 2001" YValue="20"/>
+                            <vc:DataPoint XValue="March 13 2001" YValue="28"/>
+                            <vc:DataPoint XValue="March 14 2001" YValue="6"/>
+                            <vc:DataPoint XValue="March 15 2001" YValue="28"/>
+                            <vc:DataPoint XValue="March 16 2001" YValue="30"/>
+                            <vc:DataPoint XValue="March 17 2001" YValue="40"/>
+                            <vc:DataPoint XValue="March 18 2001" YValue="20"/>
+                            <vc:DataPoint XValue="March 19 2001" YValue="25"/>
+                            <vc:DataPoint XValue="March 20 2001" YValue="28"/>
+                            <vc:DataPoint XValue="March 21 2001" YValue="24"/>
+                            <vc:DataPoint XValue="March 22 2001" YValue="20"/>
+                            <vc:DataPoint XValue="March 23 2001" YValue="40"/>
+                            <vc:DataPoint XValue="March 24 2001" YValue="68"/>
+                            <vc:DataPoint XValue="March 25 2001" YValue="60"/>
+                            <vc:DataPoint XValue="March 26 2001" YValue="44"/>
+                            <vc:DataPoint XValue="March 27 2001" YValue="38"/>
+                            <vc:DataPoint XValue="March 28 2001" YValue="28"/>
+                            <vc:DataPoint XValue="March 29 2001" YValue="32"/>
+                            <vc:DataPoint XValue="March 30 2001" YValue="18"/>
+                        </vc:DataSeries.DataPoints>
+                    </vc:DataSeries>
+                </vc:Chart.Series>
+            </vc:Chart>
+        </StackPanel>
+    </Grid>
+
+
+    
+</Window>

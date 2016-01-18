@@ -1,0 +1,50 @@
+﻿<Window x:Class="WPF_RangeBar_Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vsSdk="clr-namespace:Visifire.Controls"
+        xmlns:vc="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+        Title="MainWindow" Height="350" Width="600">
+    <Grid x:Name="LayoutRoot" Background="White" >
+        <Grid Margin="20">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>From:</TextBlock>
+                    <TextBlock x:Name="FromTextBlock" HorizontalAlignment="Left"></TextBlock>
+                    <TextBlock Margin="50,0,0,0">To:</TextBlock>
+                    <TextBlock x:Name="ToTextBlock" HorizontalAlignment="Right"></TextBlock>
+                </StackPanel>
+                <CheckBox Margin="10" IsChecked="{Binding ElementName=MyRangeControl, Path=AnimationEnabled, Mode=TwoWay}">Enable/Disable Animation</CheckBox>
+                <vsSdk:RangeBar x:Name="MyRangeControl" Height="80" NumberOfLabels="10" NumberOfMinorTicks="10" >
+                    <vsSdk:RangeBar.Chart>
+                        <vc:Chart ScrollingEnabled="false" ShadowEnabled="False"
+                                  BorderThickness="0" Loaded="RangeChart_Loaded"
+                                  Padding="0" Margin="0">
+                                  
+                            <vc:Chart.AxesX>
+                                <vc:Axis Enabled="false" />
+                            </vc:Chart.AxesX>
+
+                            <vc:Chart.AxesY>
+                                <vc:Axis Enabled="false" >
+                                    <vc:Axis.Grids>
+                                        <vc:ChartGrid Enabled="false"></vc:ChartGrid>
+                                    </vc:Axis.Grids>
+                                </vc:Axis>
+                            </vc:Chart.AxesY>
+
+                            <vc:Chart.PlotArea>
+                                <vc:PlotArea ShadowEnabled="false" ></vc:PlotArea>
+                            </vc:Chart.PlotArea>
+
+                            <vc:Chart.Series>
+                                <vc:DataSeries XValueType="DateTime" LightWeight="true" RenderAs="Area" ></vc:DataSeries>
+                            </vc:Chart.Series>
+
+                        </vc:Chart>
+                    </vsSdk:RangeBar.Chart>
+                </vsSdk:RangeBar>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="VideoElement.Signature.SignatureToolItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:sign="clr-namespace:VideoElement.Signature"
+             d:DesignHeight="204" d:DesignWidth="192" x:Name="us" TouchDown="us_TouchDown">
+    <!--<UserControl.Style>
+        <Style TargetType="{x:Type sign:SignatureToolItem}">
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="../images/woodbg_hover.png">
+                       
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="Background" Value="../images/woodbg_hover.png">
+
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>-->
+
+    <Grid>
+        <Image x:Name="img" >
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=IsChecked, ElementName=us}" Value="false">
+                            <Setter Property="Source" Value="../images/woodbg.png">
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=IsChecked, ElementName=us}" Value="true">
+                            <Setter Property="Source" Value="../images/woodbg_hover.png">
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <sign:EffectButton x:Name="effect"  Width="42" Height="42" Source="{Binding ElementName=us,Path= SignatureSource}" Tag="{Binding ElementName=us,Path= Tag}"  Margin="0,0,0,0" OnClick="EffectButton_OnClick"> </sign:EffectButton>
+        <Label HorizontalAlignment="Center" Foreground="#7a4d15" VerticalAlignment="Bottom" VerticalContentAlignment="Center"   Content="{Binding ElementName=us,Path= SignatureContent}"></Label>
+    </Grid>
+</UserControl>

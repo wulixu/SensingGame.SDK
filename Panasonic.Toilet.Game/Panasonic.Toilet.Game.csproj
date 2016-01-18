@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4467C0A4-9040-48BF-B9B7-911A4148D013}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TronCell.Game</RootNamespace>
+    <AssemblyName>Panasonic.Game</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <XefDelaySign>true</XefDelaySign>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <OutputPath>bin\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>troncell.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.4\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Prism.4.1.0.0\lib\NET40\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Kinect">
+      <HintPath>$(KINECTSDK20_DIR)Assemblies\Microsoft.Kinect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Prism.4.1.0.0\lib\NET40\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Speech\v11.0\Assembly\Microsoft.Speech.dll</HintPath>
+    </Reference>
+    <Reference Include="PixelLab.Common, Version=6.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PixelLab.Common.6.0.2\lib\net40\PixelLab.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PixelLab.Core, Version=6.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PixelLab.Core.6.0.2\lib\net4\PixelLab.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PixelLab.Wpf, Version=6.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\PixelLab.BOT.6.0.2\lib\net40\PixelLab.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="SensingBase">
+      <HintPath>..\VideoElement\Libs\SensingBase.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converters\ImageConverter.cs" />
+    <Compile Include="GameControl.xaml.cs">
+      <DependentUpon>GameControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\ScoreListControl.xaml.cs">
+      <DependentUpon>ScoreListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FallingShapes.cs" />
+    <Compile Include="FallingThings.cs" />
+    <Compile Include="FlyingText.cs" />
+    <Compile Include="GiftFactory.cs" />
+    <Compile Include="KinectController\Bone.cs" />
+    <Compile Include="KinectController\BoneData.cs" />
+    <Compile Include="KinectController\Player.cs" />
+    <Compile Include="KinectController\Segment.cs" />
+    <Compile Include="Loader\DisposeController.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paddle.xaml.cs">
+      <DependentUpon>Paddle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="RegexValidationRule.cs" />
+    <Compile Include="Screen\AnimatedContentControl.cs" />
+    <Compile Include="Screen\BillboardScreen.xaml.cs">
+      <DependentUpon>BillboardScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\GameOverScreen.xaml.cs">
+      <DependentUpon>GameOverScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\ImageButton.xaml.cs">
+      <DependentUpon>ImageButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screen\OutlinedTextBlock.cs" />
+    <Compile Include="Screen\WelcomePage.xaml.cs">
+      <DependentUpon>WelcomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sprite\Animation.cs" />
+    <Compile Include="Sprite\Converters\TileListConverter.cs" />
+    <Compile Include="Sprite\Sprite.cs" />
+    <Compile Include="Sprite\TileList.cs" />
+    <Compile Include="Sprite\TileSource.cs" />
+    <Compile Include="SQLite.cs" />
+    <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="StartScreen.xaml.cs">
+      <DependentUpon>StartScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StartupApplication.cs" />
+    <Compile Include="Utility\GameMath.cs" />
+    <Compile Include="Utility\GUIHelper.cs" />
+    <Compile Include="Utility\ImageSaver.cs" />
+    <Compile Include="Utility\SoundPlayer.cs" />
+    <Compile Include="Utility\SpeechHelper.cs" />
+    <Compile Include="Utility\Timer.cs" />
+    <Compile Include="Utility\WindowsAPI\Kernel32.cs" />
+    <Compile Include="ViewModel\GameViewModel.cs" />
+    <Compile Include="ViewModel\ScoreRankViewModel.cs" />
+    <None Include="packages.config" />
+    <Resource Include="Fonts\ch\RTWSYueRoudGoG0v1-Regular.ttf" />
+    <Resource Include="Fonts\en\ChaletComprime-MilanSixty.otf" />
+    <Resource Include="Fonts\en\CoreCircus.otf" />
+    <Resource Include="Fonts\en\CoreCircusPierrot1.otf" />
+    <Resource Include="Fonts\en\LondrinaBlack-Regular.otf" />
+    <Resource Include="Fonts\en\LondrinaBook-Regular.otf" />
+    <Resource Include="Fonts\en\LondrinaSolid-Regular.otf" />
+    <Resource Include="Fonts\en\LunchBox-Bold.ttf" />
+    <Resource Include="Fonts\en\LunchBox-Light.otf" />
+    <Resource Include="Fonts\en\LunchBox.otf" />
+    <Resource Include="Fonts\en\MyriadPro-Regular.otf" />
+    <Resource Include="Fonts\en\Populaire.otf" />
+    <Resource Include="Fonts\en\RTWSYueRoudGoG0v1-Regular.ttf" />
+    <Resource Include="Fonts\en\ThirstyScriptRegular.otf" />
+    <Resource Include="Fonts\en\TrendHMSansOne.otf" />
+    <Resource Include="Fonts\en\TrendHMSlabOne.otf" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\go.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\click.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="sqlite3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprites\001.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprites\002.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprites\003.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprites\004.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprites\005.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprites\006.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprites\007.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprites\008.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Sprites\Sprites.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Imgs\1.png" />
+    <Resource Include="Imgs\2.png" />
+    <Resource Include="Imgs\3.png" />
+    <Resource Include="Imgs\4.png" />
+    <Resource Include="Imgs\5.png" />
+    <Resource Include="Imgs\bag.png" />
+    <None Include="Imgs\bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Imgs\cao.png" />
+    <Resource Include="Imgs\charts.png" />
+    <Resource Include="Imgs\close.png" />
+    <Resource Include="Imgs\crown.png" />
+    <Resource Include="Imgs\cup.png" />
+    <Resource Include="Imgs\df.png" />
+    <Resource Include="Imgs\game.png" />
+    <Resource Include="Imgs\game_over.png" />
+    <Resource Include="Imgs\game_test.jpg" />
+    <Resource Include="Imgs\hint.png" />
+    <Resource Include="Imgs\left.png" />
+    <Resource Include="Imgs\logo.png" />
+    <Resource Include="hints\h_scorebg.png" />
+    <None Include="Imgs\icon_rank_head.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Imgs\icon_score_head.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Imgs\Basket.png" />
+    <None Include="Heads\nohead.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Imgs\copyright.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Imgs\new_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Imgs\over_back1.png" />
+    <Resource Include="Imgs\over_bg.png" />
+    <Resource Include="Imgs\people.png" />
+    <Resource Include="Imgs\play_1.png" />
+    <Resource Include="Imgs\play_2.png" />
+    <Resource Include="Imgs\play_disable.png" />
+    <Resource Include="Imgs\Profile_bg.png" />
+    <Resource Include="Imgs\right.png" />
+    <Resource Include="Imgs\score.png" />
+    <Resource Include="Imgs\start.png" />
+    <Resource Include="Imgs\start_1.png" />
+    <Resource Include="Imgs\start_down.png" />
+    <Resource Include="Imgs\time+score.png" />
+    <Resource Include="Imgs\time_bg.png" />
+    <Resource Include="Imgs\tx.png" />
+    <Resource Include="Imgs\xc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="troncell.ico" />
+    <None Include="Imgs\scoreboard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Imgs\scoreboardbg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Imgs\turnoff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Imgs\qrcode_bg.png" />
+    <Content Include="Resources\bg.mp3" />
+    <Resource Include="Sprites.xml" />
+    <None Include="Resources\Squeeze.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Pop-5.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Hit-2.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Imgs\basic_logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Imgs\Profile.png" />
+    <Content Include="Libs\InputSimulator.dll" />
+    <Content Include="Libs\InputSimulator.pdb" />
+    <Resource Include="Libs\InputSimulator.xml" />
+    <Content Include="Libs\Microsoft.Expression.Interactions.dll" />
+    <Resource Include="Libs\Microsoft.Expression.Interactions.xml" />
+    <Content Include="Libs\System.Windows.Interactivity.dll" />
+    <Resource Include="Libs\System.Windows.Interactivity.xml" />
+    <Content Include="Libs\WpfKb.dll" />
+    <Content Include="Libs\WpfKb.pdb" />
+    <Resource Include="Libs\WpfKb.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="GameControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screen\ScoreListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Paddle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screen\BillboardScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screen\GameOverScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screen\ImageButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screen\WelcomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StartScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SensingGame.ClientSDK.Factory\SensingGame.ClientSDK.Factory.csproj">
+      <Project>{1a2c1f62-56d3-47ef-87a3-5a0cbc9b65b2}</Project>
+      <Name>SensingGame.ClientSDK.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SensngGame.ClientSDK\SensngGame.ClientSDK.csproj">
+      <Project>{968eb4fb-4452-43de-a26b-e9af5b2dd256}</Project>
+      <Name>SensngGame.ClientSDK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

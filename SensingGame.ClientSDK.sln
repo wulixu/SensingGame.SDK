@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensingGame.ClientTest", "SensingGame.ClientTest\SensingGame.ClientTest.csproj", "{BB7BEEB7-39CE-4EAE-8014-AF9365871CAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensngGame.ClientSDK", "SensngGame.ClientSDK\SensngGame.ClientSDK.csproj", "{968EB4FB-4452-43DE-A26B-E9AF5B2DD256}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{9956EBCB-3413-4A62-8B40-2D47E3D342FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogService", "Utils\LogService\LogService.csproj", "{62176A09-A9F2-4589-9F3F-0A30AC263740}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5B9D090A-970B-40B1-9D56-65BBBF8F01C3}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoElement", "VideoElement\VideoElement.csproj", "{969759D6-EE65-4A94-823F-2CCDB830900C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensingGame.ClientSDK.Factory", "SensingGame.ClientSDK.Factory\SensingGame.ClientSDK.Factory.csproj", "{1A2C1F62-56D3-47EF-87A3-5A0CBC9B65B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panasonic.Toilet.Game", "Panasonic.Toilet.Game\Panasonic.Toilet.Game.csproj", "{4467C0A4-9040-48BF-B9B7-911A4148D013}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB7BEEB7-39CE-4EAE-8014-AF9365871CAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7BEEB7-39CE-4EAE-8014-AF9365871CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7BEEB7-39CE-4EAE-8014-AF9365871CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7BEEB7-39CE-4EAE-8014-AF9365871CAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968EB4FB-4452-43DE-A26B-E9AF5B2DD256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{968EB4FB-4452-43DE-A26B-E9AF5B2DD256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{968EB4FB-4452-43DE-A26B-E9AF5B2DD256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{968EB4FB-4452-43DE-A26B-E9AF5B2DD256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62176A09-A9F2-4589-9F3F-0A30AC263740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62176A09-A9F2-4589-9F3F-0A30AC263740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62176A09-A9F2-4589-9F3F-0A30AC263740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62176A09-A9F2-4589-9F3F-0A30AC263740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{969759D6-EE65-4A94-823F-2CCDB830900C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{969759D6-EE65-4A94-823F-2CCDB830900C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{969759D6-EE65-4A94-823F-2CCDB830900C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{969759D6-EE65-4A94-823F-2CCDB830900C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A2C1F62-56D3-47EF-87A3-5A0CBC9B65B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A2C1F62-56D3-47EF-87A3-5A0CBC9B65B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A2C1F62-56D3-47EF-87A3-5A0CBC9B65B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A2C1F62-56D3-47EF-87A3-5A0CBC9B65B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4467C0A4-9040-48BF-B9B7-911A4148D013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4467C0A4-9040-48BF-B9B7-911A4148D013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4467C0A4-9040-48BF-B9B7-911A4148D013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4467C0A4-9040-48BF-B9B7-911A4148D013}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{62176A09-A9F2-4589-9F3F-0A30AC263740} = {9956EBCB-3413-4A62-8B40-2D47E3D342FA}
+	EndGlobalSection
+EndGlobal

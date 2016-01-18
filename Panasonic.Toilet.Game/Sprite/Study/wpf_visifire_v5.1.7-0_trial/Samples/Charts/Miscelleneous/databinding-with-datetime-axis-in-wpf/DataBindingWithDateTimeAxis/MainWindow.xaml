@@ -1,0 +1,38 @@
+﻿<Window x:Class="DataBindingWithDateTimeAxis.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525"
+        
+        xmlns:vc="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+        >
+    <Grid>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"  >
+            <DataGrid Width="180" Height="300" x:Name="MyGrid"></DataGrid>          
+            <vc:Chart Name="MyChart1" Width="450" Height="300" Padding="10,10" Margin="10,0" AnimatedUpdate="True">
+                <vc:Chart.Titles>
+                    <vc:Title Text="Visifire DataBinding with DateTime Axis"></vc:Title>
+                </vc:Chart.Titles>
+
+                <vc:Chart.AxesX>
+                    <vc:Axis IntervalType="Minutes" ValueFormatString="MMM-d HH:mm" Interval="2" >
+                        <vc:Axis.AxisLabels>
+                            <vc:AxisLabels Angle="90"/>
+                        </vc:Axis.AxisLabels>
+                    </vc:Axis>
+                </vc:Chart.AxesX>
+
+                <vc:Chart.Series>
+                    <vc:DataSeries RenderAs="Line" ShadowEnabled="false" DataSource="{Binding ItemsSource, ElementName=MyGrid}" XValueType="DateTime"  XValueFormatString="MMM-d HH:mm">
+                        <vc:DataSeries.DataMappings>
+                            <vc:DataMapping MemberName="XValue" Path="XValue"></vc:DataMapping>
+                            <vc:DataMapping MemberName="YValue" Path="YValue"></vc:DataMapping>
+                        </vc:DataSeries.DataMappings>
+                    </vc:DataSeries>
+                </vc:Chart.Series>
+            </vc:Chart>
+
+        </StackPanel>
+
+
+    </Grid>
+</Window>

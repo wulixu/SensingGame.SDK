@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="VideoElement.EraserTool.EraserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:eraserTool="clr-namespace:VideoElement.EraserTool"
+             mc:Ignorable="d" 
+            Padding="20" Background="Transparent">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Storyboard x:Key="DisplayStoryboard">
+            <DoubleAnimation From="0" To="272" Duration="0:0:0.2" Storyboard.TargetName="ColorBorder" Storyboard.TargetProperty="Width"></DoubleAnimation>
+            <DoubleAnimation From="0" To="1" Duration="0:0:0.2" Storyboard.TargetName="ColorBorder" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+        </Storyboard>
+        <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/VideoElement;component/Resources/BrushDictionary.xaml"/>
+        </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Border x:Name="ColorBorder" Visibility="Hidden" Margin="0 0 0 -18" Width="272" Height="60" Background="#e3e1df" CornerRadius="10" BorderThickness="0" Padding="10 0 10 0">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" Opacity="0.5" BlurRadius="10" ShadowDepth="5"></DropShadowEffect>
+            </Border.Effect>
+            <Grid >
+                <StackPanel x:Name="ColroPanel" Orientation="Horizontal" Visibility="Visible" VerticalAlignment="Top">
+                    <Border Background="{StaticResource RedBrush}" Width="42" Height="42" TouchDown="UIElement_OnTouchDownColor" Tag="Red"/>
+                    <Border Background="{StaticResource YellowBrush}" Width="42" Height="42" TouchDown="UIElement_OnTouchDownColor" Tag="Yellow"/>
+                    <Border Background="{StaticResource BlueBrush}" Width="42" Height="42" TouchDown="UIElement_OnTouchDownColor" Tag="Blue"/>
+                    <Border Background="{StaticResource GreenBrush}" Width="42" Height="42" TouchDown="UIElement_OnTouchDownColor" Tag="Green"/>
+                    <Border Background="{StaticResource WhiteBrush}" Width="42" Height="42" TouchDown="UIElement_OnTouchDownColor" Tag="White"/>
+                    <Border Background="{StaticResource BlackBrush}" Width="42" Height="42" TouchDown="UIElement_OnTouchDownColor" Tag="Black"/>
+                </StackPanel>
+                <StackPanel x:Name="PenPanel" Orientation="Horizontal" Visibility="Collapsed" VerticalAlignment="Top">
+                    <Border Margin="0 0 0 0"  Width="42" Height="42" TouchDown="UIElement_OnTouchDownPen" Background="#00000111" Tag="1">
+                        <Image Source="/Images/bdx_1.png" Stretch="Fill"/>
+                    </Border>
+                    <Border Margin="5 0"  Width="42" Height="42"  TouchDown="UIElement_OnTouchDownPen" Background="#00000111" Tag="2">
+                        <Image Source="/Images/bdx_2.png" Stretch="Fill"/>
+                    </Border>
+                    <Border Margin="5 0" Width="42" Height="42" TouchDown="UIElement_OnTouchDownPen" Background="#00000111" Tag="3">
+                        <Image Source="/Images/bdx_3.png" Stretch="Fill"/>
+                    </Border>
+                    <Border Margin="5 0" Width="42" Height="42"  TouchDown="UIElement_OnTouchDownPen" Background="#00000111" Tag="4">
+                        <Image Source="/Images/bdx_4.png" Stretch="Fill"/>
+                    </Border>
+                    <Border Margin="5 0" Width="42" Height="42"  TouchDown="UIElement_OnTouchDownPen" Background="#00000111" Tag="5">
+                        <Image Source="/Images/bdx_5.png" Stretch="Fill"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Width="272" Height="70" Grid.Row="1" Background="#f1eeea" BorderThickness="0" CornerRadius="10">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" Opacity="0.5" BlurRadius="10" ShadowDepth="5"></DropShadowEffect>
+            </Border.Effect>
+            <StackPanel  Orientation="Horizontal" TouchDown="UIElement_OnTouchDown1">
+                <eraserTool:ImageTitle x:Name="ElementColor"  Width="52" Height="70" TitleName="颜色" TouchDown="ElementColor_OnTouchDown" Padding="10 5 0 5"/>
+                <Border Width="1"  Height="30" ></Border>
+                <eraserTool:ImageTitle Margin="0 0 0 0" x:Name="ElementEraser" Width="52" Height="70" ImgBrush="{DynamicResource EraserBrush}" TitleName="橡皮擦" Padding="5" TouchDown="ElementEraser_OnTouchDown"/>
+                <Border Width="1"  Height="30" ></Border>
+                <eraserTool:ImageTitle x:Name="ElementPen" Margin="0 0 0 0" Width="52" Height="70" Padding="5"  ImgBrush="{DynamicResource PenBrush}" TitleName="粗细" TouchDown="ElementPen_OnTouchDown"/>
+                <Border Width="1"  Height="30" ></Border>
+                <eraserTool:ImageTitle x:Name="ElementClear" Margin="0 0 0 0" Width="52" Height="70" Padding="5"  ImgBrush="{DynamicResource ClearBrush}" TitleName="清除" TouchDown="ElementClear_OnTouchDown"/>
+                <Border Width="1"  Height="30" ></Border>
+                <eraserTool:ImageTitle x:Name="ElementClose"  Width="52" Height="70"  ImgBrush="{DynamicResource CloseTipBrush}" TitleName="关闭" TouchDown="UIElement_OnTouchDown" Padding="5 5 10 5"/>
+
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</UserControl>

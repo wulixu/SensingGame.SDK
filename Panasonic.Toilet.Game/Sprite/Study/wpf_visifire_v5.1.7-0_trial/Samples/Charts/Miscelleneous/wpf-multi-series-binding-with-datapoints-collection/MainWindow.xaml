@@ -1,0 +1,40 @@
+﻿<Window x:Class="WPF_MultiSeriesBindingWithDataPointsCollection.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:local="clr-namespace:WPF_MultiSeriesBindingWithDataPointsCollection"
+        xmlns:vc="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+        Title="MainWindow" Height="350" Width="525" WindowState="Maximized">
+    <Window.DataContext>
+        <local:ViewModel></local:ViewModel>
+    </Window.DataContext>
+
+    <Grid >
+        <StackPanel>
+
+            <vc:Chart x:Name="MyChart" ScrollingEnabled="False" Theme="Theme1" Height="600" Width="700">
+
+                <vc:Chart.Legends>
+                    <vc:Legend ShadowEnabled="False"></vc:Legend>
+                </vc:Chart.Legends>
+
+                <vc:Chart.Titles>
+                    <vc:Title Text="Real time Update of 2 DataSeries" FontSize="16" />
+                </vc:Chart.Titles>
+
+                <vc:Chart.PlotArea>
+                    <vc:PlotArea ShadowEnabled="false"></vc:PlotArea>
+                </vc:Chart.PlotArea>
+
+                <vc:Chart.Series>
+                    <vc:DataSeries RenderAs="Line" LightWeight="true" ShadowEnabled="false" LightingEnabled="false" MarkerSize="4" LineThickness="1" DataPoints="{Binding DataPointsOfSeries[0]}" />
+                    <vc:DataSeries RenderAs="Line" LightWeight="true" ShadowEnabled="false" LightingEnabled="false" MarkerSize="4" LineThickness="1" DataPoints="{Binding DataPointsOfSeries[1]}" />
+                </vc:Chart.Series>
+            </vc:Chart>
+
+            <Button x:Name="UpdateDataButton" Click="UpdateDataButton_Click"  Height="40" >Click here to refresh Data in ViewModel</Button>
+        </StackPanel>
+        <Grid Canvas.ZIndex="12" IsHitTestVisible="True" Background="#66cccccc" Visibility="{Binding ShowLoadingMsg}" >
+            <TextBlock HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Foreground="Red">Loading...</TextBlock>
+        </Grid>
+    </Grid>
+</Window>

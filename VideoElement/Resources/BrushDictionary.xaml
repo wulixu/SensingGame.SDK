@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ImageBrush x:Key="BigImageBg" ImageSource="/VideoElement;component/Images/photobg.png"></ImageBrush>
+    <ImageBrush x:Key="ColorOutBg" ImageSource="/VideoElement;component/Images/color_out_bg.png"></ImageBrush>
+
+    <ImageBrush x:Key="Toolbg" ImageSource="/VideoElement;component/Images/toolbg.png"></ImageBrush>
+    <ImageBrush x:Key="RedBrush" ImageSource="/VideoElement;component/Images/red.png"></ImageBrush>
+    <ImageBrush x:Key="YellowBrush" ImageSource="/VideoElement;component/Images/yellow.png"></ImageBrush>
+    <ImageBrush x:Key="BlueBrush" ImageSource="/VideoElement;component/Images/blue.png"></ImageBrush>
+    <ImageBrush x:Key="GreenBrush" ImageSource="/VideoElement;component/Images/green.png"></ImageBrush>
+    <ImageBrush x:Key="WhiteBrush" ImageSource="/VideoElement;component/Images/white.png"></ImageBrush>
+    <ImageBrush x:Key="BlackBrush" ImageSource="/VideoElement;component/Images/black.png"></ImageBrush>
+    <ImageBrush x:Key="EraserBrush" ImageSource="/VideoElement;component/Images/eraser.png"></ImageBrush>
+    <ImageBrush x:Key="PenBrush" ImageSource="/VideoElement;component/Images/pen.png"></ImageBrush>
+    <ImageBrush x:Key="ClearBrush" ImageSource="/VideoElement;component/Images/clear.png"></ImageBrush>
+
+    <ImageBrush x:Key="CloseTipBrush" ImageSource="/VideoElement;component/Images/CloseTip.png"/>
+    <ImageBrush x:Key="SelectedBrush" ImageSource="/VideoElement;component/Images/tbbg.jpg"/>
+
+</ResourceDictionary>
