@@ -17,6 +17,7 @@ namespace SensngGame.ClientSDK
 {
     public class GameServiceClient : IGameServiceClient
     {
+        public static  string ServerBase = "http://game.troncell.com/";
         /// <summary>
         /// The service host.
         /// </summary>
@@ -284,20 +285,20 @@ namespace SensngGame.ClientSDK
             return default(ActivityResult);
         }
 
-        public async Task<UserInfosResult> GetActivityWhiteListUser()
+        public async Task<WhiteUsersResult> GetActivityWhiteListUsers()
         {
             var absolutePath = $"{ServiceHost}/{GetActivityWhitelistUsersQuery}";
             var formNameValues = $"{GetBasicFormNameValues()}";
             try
             {
-                var users = await SendRequestAsync<string, UserInfosResult>(HttpMethod.Post, absolutePath, formNameValues);
+                var users = await SendRequestAsync<string, WhiteUsersResult>(HttpMethod.Post, absolutePath, formNameValues);
                 return users;
             }
             catch (Exception ex)
             {
                 logger.Error("GetUsersByActivitiy", ex);
             }
-            return default(UserInfosResult);
+            return default(WhiteUsersResult);
         }
 
         #endregion
