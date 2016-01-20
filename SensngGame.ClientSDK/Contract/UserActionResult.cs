@@ -53,6 +53,13 @@ namespace SensngGame.ClientSDK.Contract
         public List<UserInfoData> Data { get; set; }
     }
 
+    public class WhiteUsersResult
+    {
+        public string Status { get; set; }
+        public string ErrMessage { get; set; }
+        public List<WhiteUserData> Data { get; set; }
+    }
+
     
 
     public class UserInfoData
@@ -71,6 +78,20 @@ namespace SensngGame.ClientSDK.Contract
         public int WeixinGroupid { get; set; }
     }
 
+    public class WhiteUserData : UserInfoData
+    {
+        public string AwardSeqs { get; set; }
+
+        public string Name { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Address { get; set; }
+
+        public string IdentityID { get; set; }
+
+        public string CompanyName { get; set; }
+    }
     public class UserData :UserInfoData
     {
         public string Name { get; set; }
