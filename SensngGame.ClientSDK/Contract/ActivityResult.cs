@@ -69,6 +69,8 @@ namespace SensngGame.ClientSDK.Contract
         /// </summary>
         public int UserActionCount { get; set; }
 
+        public bool IsEnableWhiteUser { get; set; }
+
 
     }
 }
