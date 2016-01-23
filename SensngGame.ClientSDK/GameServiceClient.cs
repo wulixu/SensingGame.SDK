@@ -58,6 +58,8 @@ namespace SensngGame.ClientSDK
 
         private const string GetUsersByActivityQuery = "GetUsersByActivitiy";
 
+        private const string GetUsersByActivityAndGameQuery = "GetUsersByActivitiyAndGame";
+
         private const string GetRankUsersByActivityQuery = "GetRankUsersByActivity";
 
         private const string GetActivityInfoQuery = "GetActivityInfo";
@@ -251,6 +253,23 @@ namespace SensngGame.ClientSDK
             }
             return default(UserInfosResult);
         }
+
+        public async Task<UserActionsResult> GetUsersByActivityAndGame(int maxUserCount)
+        {
+            var absolutePath = $"{ServiceHost}/{GetUsersByActivityAndGameQuery}";
+            var formNameValues = $"maxUsersCnt={maxUserCount}&{GetBasicFormNameValues()}";
+            try
+            {
+                var userActionInfos = await SendRequestAsync<string, UserActionsResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return userActionInfos;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetUsersByActivitiy", ex);
+            }
+            return default(UserActionsResult);
+        }
+
 
 
         public async Task<UserActionsResult> GetRankUsersByActivity(string rankColumn, int maxRankUsersCnt)
