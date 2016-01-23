@@ -71,6 +71,7 @@ namespace SensngGame.ClientSDK
         private const string WinAwardByActionIdQuery = "WinAwardByActionId";
 
         private const string GetWinAwardUsersByActivityIdQuery = "GetWinAwardUsersByActivityId";
+                                                                    
 
         private const string WinAwardByRandomQuery = "WinAwardByRandom";
 
@@ -360,10 +361,10 @@ namespace SensngGame.ClientSDK
             return default(UserAwardResult);
         }
 
-        public async Task<UserAwardsResult> GetWinAwardUsersByActivityId(string actionId, string awardId)
+        public async Task<UserAwardsResult> GetWinAwardUsersByActivityId()
         {
             var absolutePath = $"{ServiceHost}/{GetWinAwardUsersByActivityIdQuery}";
-            var formNameValues = $"actionId={actionId}&awardId={awardId}&{GetBasicFormNameValues()}";
+            var formNameValues = $"{GetBasicFormNameValues()}";
             try
             {
                 var userAwards = await SendRequestAsync<string, UserAwardsResult>(HttpMethod.Post, absolutePath, formNameValues);
