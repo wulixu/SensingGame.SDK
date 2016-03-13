@@ -435,6 +435,7 @@ namespace SensngGame.ClientSDK
                 else
                 {
                     request.Content = new StringContent(JsonConvert.SerializeObject(requestBody, s_settings), Encoding.UTF8, JsonHeader);
+                    request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 }
             }
 

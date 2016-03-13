@@ -53,7 +53,12 @@ namespace SensingGame.ClientTest
                     //await gameSvc.PostDataByUserAsync(firstUser.ActionId.ToString(), null, null, 80);
                 }
 
-                var users = await gameSvc.FindScanQrCodeUsersAsync("5322");
+                var users = await gameSvc.FindScanQrCodeUsersAsync(firstQrCode);
+                if(users != null && users.Data !=null)
+                {
+                    scanCountBefore.Content = $"{users.Data.Count} 人";
+                }
+                
             }
             if (!string.IsNullOrEmpty(afterQrCode))
             {
@@ -62,6 +67,12 @@ namespace SensingGame.ClientTest
                 {
                     afterUser = user1.Data;
                     avatorImg1.Source = new BitmapImage(new Uri(user1.Data.Headimgurl));
+                }
+
+                var user1s = await gameSvc.FindScanQrCodeUsersAsync(afterQrCode);
+                if (user1s != null && user1s.Data != null)
+                {
+                    scanCountAfter.Content = $"{user1s.Data.Count} 人";
                 }
             }
         }
@@ -79,7 +90,7 @@ namespace SensingGame.ClientTest
             Timer_Tick(null,null);
         }
 
-        private async void button_Copy_Click(object sender, RoutedEventArgs e)
+        private async void PostDataByUserClick(object sender, RoutedEventArgs e)
         {
             if(firstUser != null)
             {
@@ -89,9 +100,16 @@ namespace SensingGame.ClientTest
 
         AwardData awardInfo = null;
         
-        private async void acitivityDetails_Click(object sender, RoutedEventArgs e)
+        private async void AcitivityDetails_Click(object sender, RoutedEventArgs e)
         {
             activityDetails.Text = "";
+            var activityInfo = await gameSvc.GetActivityInfo();
+            if(activityInfo != null && activityInfo.Data !=null)
+            {
+                activityDetails.Text += $"Activity Name:{activityInfo.Data.Name}" + Environment.NewLine;
+                activityDetails.Text += $"Enable WhiteList:{activityInfo.Data.IsEnableWhiteUser}" + Environment.NewLine;
+            }
+
             var users = await gameSvc.GetUsersByActivitiy(50);
             if(users != null && users.Data != null)
             {
@@ -107,18 +125,18 @@ namespace SensingGame.ClientTest
                 }
                 foreach (var award in awards.Data)
                 {
-                    activityDetails.Text += $"Award:{award.Name}----{award.AwardProduct}" + Environment.NewLine;
+                    activityDetails.Text += $"Award:{award.Name}--AwardId:{award.Id}----{award.AwardProduct}" + Environment.NewLine;
                 }
             }
             
-            var rankUser = await gameSvc.GetRankUsersByActivity("score", 10);
+            var rankUser = await gameSvc.GetRankUsersByActivity("Score", 20);
                 
             if(rankUser != null && rankUser.Data != null)
             {
                 activityDetails.Text += $"RankUsers Count:{rankUser.Data.Count}" + Environment.NewLine;
             }
 
-            var whiteUsers = await gameSvc.GetActivityWhiteListUser();
+            var whiteUsers = await gameSvc.GetActivityWhiteListUsers();
             if (whiteUsers != null && whiteUsers.Data != null)
             {
                 activityDetails.Text += $"WhiteUsers Count:{whiteUsers.Data.Count}" + Environment.NewLine;
@@ -138,7 +156,7 @@ namespace SensingGame.ClientTest
         }
 
         ActivityData activityInfo = null;
-        private async void serviceCreate_Click(object sender, RoutedEventArgs e)
+        private async void ServiceCreate_Click(object sender, RoutedEventArgs e)
         {
             
             //gameSvc = new GameServiceClient("yourKey", weixinAppId.Text, gameId.Text, activityId.Text);
@@ -166,15 +184,33 @@ namespace SensingGame.ClientTest
 
         private async void GetRankUsers_Click(object sender, RoutedEventArgs e)
         {
-            var rankUser = await gameSvc.GetRankUsersByActivity(orderby.Text, 10);
+            var rankMax = int.Parse(rankPos.Text);
+            var rankUser = await gameSvc.GetRankUsersByActivity(orderby.Text, rankMax);
 
             if (rankUser != null && rankUser.Data != null)
             {
-                if(rankUser.Data.Count > 0)
+                if (rankUser.Data.Count >= rankMax)
                 {
-                    var topUser = rankUser.Data[0];
+                    var topUser = rankUser.Data[rankMax - 1];
                     avatorRank.Source = new BitmapImage(new Uri(topUser.Headimgurl));
+                    rankMsg.Content = $"Id:{topUser.Id}--OpenId:{topUser.Openid}--Nickname:{topUser.Nickname}";
                 }
+                else
+                {
+                    rankMsg.Content = "没有这么多人";
+                }
+            }
+        }
+
+        private async void CreateWinUser_Click(object sender, RoutedEventArgs e)
+        {
+            var awardId = awardIDBox.Text;
+            var userId = winnerIDBox.Text;
+            var awardUser = await gameSvc.WinAwardByUser(awardId, userId);
+            if(awardUser != null && awardUser.Data != null)
+            {
+                var user = awardUser.Data;
+                awardUserImg.Source = new BitmapImage(new Uri(user.Headimgurl));
             }
         }
     }

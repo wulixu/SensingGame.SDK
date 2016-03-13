@@ -1,0 +1,38 @@
+﻿<Window x:Class="Hooters.TestClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hooters.TestClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="472" Width="714">
+    <Grid Margin="0,0,0,22">
+        <Button x:Name="CreteDeviceBtn" Content="Create Device &amp; Counters" HorizontalAlignment="Left" Height="30" Margin="15,126,0,0" VerticalAlignment="Top" Width="170" Click="CreteDeviceBtn_Click"/>
+        <TextBlock x:Name="MsgBlock" HorizontalAlignment="Left" Height="185" Margin="15,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="677"/>
+        <Label x:Name="label" Content="Device Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="DeviceName" HorizontalAlignment="Left" Height="21" Margin="100,14,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="115"/>
+        <Label x:Name="label_Copy" Content="Device Mac:" HorizontalAlignment="Left" Margin="233,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="DeviceMac" HorizontalAlignment="Left" Height="21" Margin="308,14,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="115"/>
+        <Label x:Name="label_Copy1" Content="Sub_Key:" HorizontalAlignment="Left" Margin="448,11,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="SubKey" HorizontalAlignment="Left" Height="21" Margin="504,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115"/>
+        <Button x:Name="CreateBtn" Content="生成服务" HorizontalAlignment="Left" Height="21" Margin="631,14,0,0" VerticalAlignment="Top" Width="61" Background="#FFF50B0B" Click="CreateBtn_Click"/>
+        <Rectangle Fill="#FFE619E6" HorizontalAlignment="Left" Height="1" Stroke="#FF1AEEAA" VerticalAlignment="Top" Width="706" Margin="0,45,0,0"/>
+        <Label x:Name="label_Copy2" Content="Counter1 Name:" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Counter1Name" HorizontalAlignment="Left" Height="21" Margin="100,55,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="115"/>
+        <Label x:Name="label_Copy3" Content="Increment:" HorizontalAlignment="Left" Margin="233,51,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Counter1Increment" HorizontalAlignment="Left" Height="21" Margin="308,55,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="62"/>
+        <Label x:Name="label_Copy4" Content="Total:" HorizontalAlignment="Left" Margin="384,51,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Counter1Total" HorizontalAlignment="Left" Height="21" Margin="427,56,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.667,0.19"/>
+        <Label x:Name="label_Copy5" Content="Counter2 Name:" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Counter2Name" HorizontalAlignment="Left" Height="21" Margin="100,93,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="115"/>
+        <Label x:Name="label_Copy6" Content="Increment:" HorizontalAlignment="Left" Margin="233,89,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Counter2Increment" HorizontalAlignment="Left" Height="21" Margin="308,93,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="62"/>
+        <Label x:Name="label_Copy7" Content="Total:" HorizontalAlignment="Left" Margin="384,89,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Counter2Total" HorizontalAlignment="Left" Height="21" Margin="427,94,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.667,0.19"/>
+        <Button x:Name="GetCounters" Content="Get Counters By Device" HorizontalAlignment="Left" Height="30" Margin="205,126,0,0" VerticalAlignment="Top" Width="130" Click="GetCounters_Click"/>
+        <Button x:Name="PostCountersData" Content="Post Counters Data(auto)" HorizontalAlignment="Left" Height="30" Margin="355,126,0,0" VerticalAlignment="Top" Width="155" Click="PostCountersData_Click" />
+        <Button x:Name="PostHeatmap" Content="Post Heatmap &amp; Cameramap" HorizontalAlignment="Left" Height="30" Margin="530,126,0,0" VerticalAlignment="Top" Width="166" RenderTransformOrigin="1.323,0.633" Click="PostHeatmap_Click"/>
+        <Label x:Name="label_Copy8" Content="上传时间间隔(秒):" HorizontalAlignment="Left" Margin="510,76,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TimeTick" HorizontalAlignment="Left" Height="21" Margin="618,80,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Text="10" Width="42" RenderTransformOrigin="0.667,0.19"/>
+    </Grid>
+</Window>
