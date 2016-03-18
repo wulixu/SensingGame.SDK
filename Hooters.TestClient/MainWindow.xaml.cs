@@ -36,13 +36,19 @@ namespace Hooters.TestClient
 
         private async void CreteDeviceBtn_Click(object sender, RoutedEventArgs e)
         {
-            device.Counters = new List<CounterInfo>();
-            device.Counters.Add(new CounterInfo { Name = Counter1Name.Text });
-            device.Counters.Add(new CounterInfo { Name = Counter2Name.Text });
+            if (device.Counters == null)
+            {
+                device.Counters = new List<CounterInfo>();
+                device.Counters.Add(new CounterInfo { Name = Counter1Name.Text });
+                device.Counters.Add(new CounterInfo { Name = Counter2Name.Text });
+            }
             var result = await hooterService.CreateCountersByDevice(device);
             if (result != null)
             {
-                MsgBlock.Text = $"Status:{result.Status}, Message = {result.Message}, Data ={result.Data}";
+                var data = result.Data;
+
+                MsgBlock.Text  += $"Status:{result.Status}, Message = {result.Message}, Data ={result.Data}" + Environment.NewLine;
+                
             }
         }
 
@@ -50,15 +56,29 @@ namespace Hooters.TestClient
         {
             device.Name = DeviceName.Text;
             device.Mac = DeviceMac.Text;
+            device.Type = TypeKey.Text;
             hooterService = new HooterServiceClient(SubKey.Text);
         }
 
         private async void GetCounters_Click(object sender, RoutedEventArgs e)
         {
             var result = await hooterService.GetCountersByDevice(device.Mac);
-            if (result != null && result.Status == HooterServiceClient.ApiOK)
+            if (result != null)
             {
-                MsgBlock.Text = $"Status:{result.Status}, Message = {result.Message}, Data ={result.Data}";
+
+                var data = result.Data;
+                MsgBlock.Text = $"Status:{result.Status}, Message = {result.Message}, Data ={result.Data}" + Environment.NewLine;
+
+                MsgBlock.Text += $"Device Name:{data.Name}, Device Mac = {data.Mac}" + Environment.NewLine;
+
+                if (data != null && data.Counters != null)
+                {
+                    device = data;
+                    foreach (var c in data.Counters)
+                    {
+                        MsgBlock.Text += $"Counter Name:{c.Name}, Counter Total = {c.Total}" + Environment.NewLine;
+                    }
+                }
             }
         }
 
@@ -101,12 +121,12 @@ namespace Hooters.TestClient
             {
                 counter.Increment = new Random().Next(100);
                 counter.Total += counter.Increment;
-                counter.CollectingTime = DateTime.Now;
+                counter.CollectingTime = DateTime.Now.AddDays(new Random().Next(5));
             }
             var result = await hooterService.PostCountersByDevice(device);
             if(result != null)
             {
-                MsgBlock.Text += $"Status:{result.Status}, Message = {result.Message}, Data ={result.Data}";
+                MsgBlock.Text += $"Status:{result.Status}, Message = {result.Message}, Data ={result.Data}" + Environment.NewLine;
                 isPosting = false;
             }
         }

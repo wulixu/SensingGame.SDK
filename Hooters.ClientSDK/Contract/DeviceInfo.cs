@@ -12,6 +12,8 @@ namespace Hooters.ClientSDK.Contract
         public string Mac { get; set; }
         public string Name { get; set; }
 
+        public string Type { get; set; }
+
         public List<CounterInfo> Counters { get; set; }
     }
 

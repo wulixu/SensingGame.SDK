@@ -20,9 +20,9 @@ namespace Hooters.ClientSDK
         /// <summary>
         /// The service host.
         /// </summary>
-        private const string ServiceHost = "http://game.troncell.com/api/v0/CounterApi";
+        //private const string ServiceHost = "http://game.troncell.com/api/v0/CounterApi";
 
-        //private const string ServiceHost = "http://localhost:4469/api/v0/CounterApi";
+        private const string ServiceHost = "http://localhost:4469/api/v0/CounterApi";
 
         private const string CreateCountersByDeviceQuery = "/CreateCountersByDevice";
         private const string PostHeatmapByDeviceQuery = "/PostHeatmapByDevice";
@@ -59,7 +59,7 @@ namespace Hooters.ClientSDK
 
         public async Task<DeviceResult> GetCountersByDevice(string mac)
         {
-            var absolutePath = $"{ServiceHost}/{CreateCountersByDeviceQuery}?SubscriptionKey={subscriptionKey}";
+            var absolutePath = $"{ServiceHost}/{GetCountersByDeviceQuery}?SubscriptionKey={subscriptionKey}";
             var formNameValues = $"mac={mac}";
             try
             {
@@ -76,7 +76,7 @@ namespace Hooters.ClientSDK
 
         public async Task<DeviceResult> CreateCountersByDevice(DeviceInfo deviceInfo)
         {
-            var absolutePath = $"{ServiceHost}/{CreateCountersByDeviceQuery}";
+            var absolutePath = $"{ServiceHost}/{CreateCountersByDeviceQuery}?SubscriptionKey={subscriptionKey}";
             try
             {
                 var deviceResult = await SendRequestAsync<DeviceInfo, DeviceResult>(HttpMethod.Post, absolutePath, deviceInfo);
@@ -108,11 +108,12 @@ namespace Hooters.ClientSDK
 
         public async Task<DeviceResult> PostHeatmapByDevice(string mac, string heatmapImagePath, string cameraImagePath)
         {
-            var absolutePath = $"{ServiceHost}/{PostCountersByDeviceQuery}?SubscriptionKey={subscriptionKey}";
+            var absolutePath = $"{ServiceHost}/{PostHeatmapByDeviceQuery}?SubscriptionKey={subscriptionKey}";
 
 
             var nameValues = new NameValueCollection();
             nameValues.Add("mac", mac);
+            nameValues.Add("deviceId", "0");
             try
             {
                 var files = new List<string>();
@@ -151,16 +152,13 @@ namespace Hooters.ClientSDK
                 }
                 else if (requestBody is string)
                 {
-                    if (type == "json")
-                    {
-                        request.Content = new StringContent(JsonConvert.SerializeObject(requestBody, s_settings), Encoding.UTF8, JsonHeader);
-                        request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                    }
-                    else
-                    {
-                        request.Content = new StringContent(requestBody as string);
-                        request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-                    }
+                    request.Content = new StringContent(requestBody as string);
+                    request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                }
+                else
+                {
+                    request.Content = new StringContent(JsonConvert.SerializeObject(requestBody, s_settings), Encoding.UTF8, JsonHeader);
+                    request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 }
             }
 
