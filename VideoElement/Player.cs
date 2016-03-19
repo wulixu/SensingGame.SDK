@@ -64,13 +64,9 @@ namespace VideoElement
                     hats.Add(HatName, bitmap);
                 }
 
-                RotateTransform rotate = new RotateTransform(15);
-                rotate.CenterX = HeadPosition.X;
-                rotate.CenterY = HeadPosition.Y;
-                dc.PushTransform(rotate);
+              //  var ratio = bitmap.Width / bitmap.Height;
+                dc.DrawImage(bitmap, new Rect(HatPosition.X - 300 * scale, HatPosition.Y - 65*scale, 600 * scale, 300 * scale));
 
-                dc.DrawImage(bitmap, new Rect(HatPosition.X - 100 * scale, HatPosition.Y - 100 * scale, 200 * scale, 200 * scale));
-                dc.Pop();
                 if (count > 0 && count < threshold)
                 {
                     if (LeftHand)

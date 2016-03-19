@@ -269,7 +269,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="company.ico" />
@@ -346,10 +348,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SensingGame.ClientSDK.Factory\SensingGame.ClientSDK.Factory.csproj">
-      <Project>{1a2c1f62-56d3-47ef-87a3-5a0cbc9b65b2}</Project>
-      <Name>SensingGame.ClientSDK.Factory</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SensngGame.ClientSDK\SensngGame.ClientSDK.csproj">
       <Project>{968eb4fb-4452-43de-a26b-e9af5b2dd256}</Project>
       <Name>SensngGame.ClientSDK</Name>

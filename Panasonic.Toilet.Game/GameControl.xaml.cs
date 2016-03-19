@@ -1,6 +1,6 @@
 ﻿using log4net;
 using Microsoft.Kinect;
-using SensingGame.ClientSDK.Factory;
+using SensngGame.ClientSDK;
 using SensngGame.ClientSDK.Contract;
 using System;
 using System.Collections.Generic;
@@ -50,6 +50,8 @@ namespace TronCell.Game
 
         static ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        private GameServiceClient m_gameServiceClient = null;
+        private UserActionResult m_userActionResult = null;
         #region Private State
         private const int TimerResolution = 2;  // ms
         private const int NumIntraFrames = 3;
@@ -143,18 +145,18 @@ namespace TronCell.Game
 
         private void GameControl_Loaded(object sender, RoutedEventArgs e)
         {
-            GameServiceClientFactory.Initialize(ConfigurationManager.AppSettings["WeixinAppId"], "12", ConfigurationManager.AppSettings["ActivityId"]);
-
+            m_gameServiceClient = new GameServiceClient("j;lajdf;jaiuefjf", ConfigurationManager.AppSettings["WeixinAppId"], "12", ConfigurationManager.AppSettings["ActivityId"]);
             RefreshQrcode();
         }
 
         private void RefreshQrcode()
         {
+            m_userActionResult = null;
             Task<QrCode> qrTask = Task.Factory.StartNew<QrCode>(() =>
             {
                 while (true)
                 {
-                    var qrCodeResult = GameServiceClientFactory.GetInstance().GetQrCode4LoginAsync().Result;
+                    var qrCodeResult = m_gameServiceClient.GetQrCode4LoginAsync().Result;
                     if (qrCodeResult != null)
                     {
                         QrCode qrCode = new QrCode();
@@ -202,9 +204,8 @@ namespace TronCell.Game
                     {
                         try
                         {
-                            UserActionResult actionReuslt = GameServiceClientFactory.GetInstance()
-                                                                                    .FindScanQrCodeUserAsync(qrCode.QrcodeId)
-                                                                                    .Result;
+                            UserActionResult actionReuslt = m_gameServiceClient.FindScanQrCodeUserAsync(qrCode.QrcodeId)
+                                                                                .Result;
                             if (actionReuslt.Data != null)
                             {
                                 try
@@ -212,14 +213,25 @@ namespace TronCell.Game
                                     var headDir = AppDomain.CurrentDomain.BaseDirectory + "weixinheads/";
                                     if (!Directory.Exists(headDir)) Directory.CreateDirectory(headDir);
 
-                                    var headPath = headDir + actionReuslt.Data.Headimgurl.GetHashCode() + ".jpg";
-                                    if (!File.Exists(headPath))
+                                    if (string.IsNullOrEmpty(actionReuslt.Data.Headimgurl))
                                     {
-                                        var downloadPath = headDir + Guid.NewGuid() + ".downloading";
-                                        WebClient webClient = new WebClient();
-                                        webClient.DownloadFile(actionReuslt.Data.Headimgurl, headPath);
-                                        File.Move(downloadPath, headPath);
+                                        actionReuslt.Data.Headimgurl = "nohead.jpg";
+                                        return actionReuslt;
                                     }
+
+                                    var headPath = headDir + actionReuslt.Data.Headimgurl.GetHashCode() + ".jpg";
+                                    if (File.Exists(headPath))
+                                    {
+                                        actionReuslt.Data.Headimgurl = actionReuslt.Data.Headimgurl.GetHashCode() + ".jpg";
+                                        return actionReuslt;
+                                    }
+
+                                    var downloadPath = headDir + Guid.NewGuid() + ".downloading";
+                                    WebClient webClient = new WebClient();
+                                    webClient.DownloadFile(actionReuslt.Data.Headimgurl, headPath);
+                                    File.Move(downloadPath, headPath);
+                                    actionReuslt.Data.Headimgurl = actionReuslt.Data.Headimgurl.GetHashCode() + ".jpg";
+                                    
                                 }
                                 catch (Exception)
                                 { }
@@ -244,7 +256,7 @@ namespace TronCell.Game
                 UserActionResult actionResult = t.Result;
                 if (actionResult != null)
                 {
-                    GameServiceClientFactory.CurrentUserActionResult = actionResult;
+                    m_userActionResult = actionResult;
                     WelcomePage_OnNextScreened(null, null);
                 }
                 else
@@ -394,8 +406,12 @@ namespace TronCell.Game
 
                 player.UpdatePlayerLocation(body.Joints);
 
-                Canvas.SetLeft(ellipseHead, player.HeadLocation.X - ellipseHead.Width / 2);
-                Canvas.SetTop(ellipseHead, player.HeadLocation.Y - ellipseHead.Height / 2);
+                if (player.HeadLocation.X > 0 && player.HeadLocation.X < 1920
+                    && player.HeadLocation.Y > 0 && player.HeadLocation.Y < 1080)
+                {
+                    Canvas.SetLeft(ellipseHead, player.HeadLocation.X - ellipseHead.Width / 2);
+                    Canvas.SetTop(ellipseHead, player.HeadLocation.Y - ellipseHead.Height / 2);
+                }
             }
             else
             {
@@ -639,8 +655,6 @@ namespace TronCell.Game
         private void DoGameOver()
         {
             var score = gifts.GetFirstPlayerScore();
-            UserActionResult currentUserAction = GameServiceClientFactory.CurrentUserActionResult;
-
 
             ScaleTransform scale = new ScaleTransform(0.5, 0.5, 1920 / 2, 1080 / 2);
             TransformedBitmap scaleBitmap = new TransformedBitmap(colorBitmap, scale);
@@ -653,20 +667,14 @@ namespace TronCell.Game
             {
                 encoder.Save(fs);
             }
-            GameServiceClientFactory.GetInstance().PostDataByUserAsync(currentUserAction.Data.ActionId + "",
+            m_gameServiceClient.PostDataByUserAsync(m_userActionResult.Data.ActionId + "",
                                                null, uploadPath, score);
 
 
 
-            var headImagePath = "Heads/nohead.jpg";
+            var headImagePath = "weixinheads/" + m_userActionResult.Data.Headimgurl;
 
-            var relativeHeadPath = "weixinheads/" + currentUserAction.Data.Headimgurl.GetHashCode() + ".jpg";
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + relativeHeadPath))
-            {
-                headImagePath = relativeHeadPath;
-            }
-
-            gameViewModel.AddNewScore(score, headImagePath);
+            gameViewModel.AddNewScore(score, headImagePath, m_userActionResult.Data.Id);
 
             RefreshQrcode();
 
@@ -964,6 +972,76 @@ namespace TronCell.Game
         private void btnTurnOff_Click(object sender, RoutedEventArgs e)
         {
             //this.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var fetchRankUsersTask  = Task.Factory.StartNew<string>(() =>
+            {
+                int tryCount = 0;
+                List<UserActionData> userlist = null;
+                while (tryCount < 3)
+                {
+                    var userActionsResult = m_gameServiceClient.GetRankUsersByActivity("score", 7).Result;
+                    if(userActionsResult.Data != null)
+                    {
+                        userlist = userActionsResult.Data;
+                        break;
+                    }
+                    tryCount++;
+                }
+                tryCount = 0;
+                List<AwardData> awardList = null;
+                while(tryCount < 3)
+                {
+                    var  awardResult = m_gameServiceClient.GetAwardsByActivity().Result;
+                    if(awardResult.Data != null)
+                    {
+                        awardList = awardResult.Data.OrderBy(a => a.AwardSeq).ToList();
+                        break;
+                    }
+                }
+                tryCount = 0;
+
+                if (userlist == null)
+                    return "获取玩家列表为空";
+                if (awardList == null)
+                    return "获取奖品列表为空";
+
+                int awardCount = 0;
+                string errors = null;
+                for (int i = 0; i < awardList.Count; i++)
+                {
+                    var award = awardList[i];
+                    for (int j = 0; j < award.PlanQty - award.ActualQty; j++)
+                    {
+                        if (userlist.Count <= awardCount)
+                            break;
+                        var user = userlist[awardCount];
+                        var userAwardResult = m_gameServiceClient.WinAwardByUser(award.Id.ToString(), user.Id.ToString()).Result;
+                        if(userAwardResult.Data == null)
+                        {
+                            if (errors == null) errors = "";
+                            errors += " " + award.Id + " " + user.Id + " failed";
+                        }
+                        awardCount++;
+                    }
+                }
+                return null;
+            });
+
+            fetchRankUsersTask.ContinueWith((t) =>
+            {
+                string errors = t.Result;
+                if(errors != null)
+                {
+                    MessageBox.Show(errors);
+                }
+                MessageBox.Show("奖品发放完毕。");
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
+
+
         }
     }
 

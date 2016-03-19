@@ -119,11 +119,11 @@ namespace SensingGame.ClientTest
                 activityDetails.Text += $"RankUsers Count:{rankUser.Data.Count}" + Environment.NewLine;
             }
 
-            var whiteUsers = await gameSvc.GetActivityWhiteListUser();
-            if (whiteUsers != null && whiteUsers.Data != null)
-            {
-                activityDetails.Text += $"WhiteUsers Count:{whiteUsers.Data.Count}" + Environment.NewLine;
-            }
+          //  var whiteUsers = await gameSvc.GetActivityWhiteListUser();
+            //if (whiteUsers != null && whiteUsers.Data != null)
+            //{
+            //    activityDetails.Text += $"WhiteUsers Count:{whiteUsers.Data.Count}" + Environment.NewLine;
+            //}
         }
 
         private async void ActivityWinner_Click(object sender, RoutedEventArgs e)
@@ -142,13 +142,16 @@ namespace SensingGame.ClientTest
         private async void serviceCreate_Click(object sender, RoutedEventArgs e)
         {
             gameSvc = new GameServiceClient("j;lajdf;jaiuefjf", weixinAppId.Text, gameId.Text, activityId.Text);
-            var data = await gameSvc.GetQrCode4LoginAsync();
-            if (data != null && data.Data != null)
-            {
-                var qrcode = data.Data;
-                firstQrCode = qrcode.QrCodeId;
-                image.Source = new BitmapImage(new Uri(qrcode.QrCodeUrl));
-            }
+            //var data = await gameSvc.GetQrCode4LoginAsync();
+            var users = await gameSvc.GetCanWinUsers("29");
+            //var message = await gameSvc.GetChartMessage(20);
+           // var activityusers = await gameSvc.GetUsersByActivitiy(1000);
+            //if (data != null && data.Data != null)
+            //{
+            //    var qrcode = data.Data;
+            //    firstQrCode = qrcode.QrCodeId;
+            //    image.Source = new BitmapImage(new Uri(qrcode.QrCodeUrl));
+            //}
 
             var acitivityInfo = await gameSvc.GetActivityInfo();
         }

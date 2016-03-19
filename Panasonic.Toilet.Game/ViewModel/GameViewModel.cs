@@ -14,11 +14,12 @@ namespace TronCell.Game.ViewModel
         public static string GameDataPath = "gamedata";
         public ObservableCollection<ScoreRankViewModel> RankScoreCollection { get; set; } = new ObservableCollection<ScoreRankViewModel>();
 
-        public void AddNewScore(int score, string headImage)
+        public void AddNewScore(int score, string headImage, int userId)
         {
             int count = RankScoreCollection.Count();
             ScoreRankViewModel newRank = new ScoreRankViewModel
             {
+                UserId = userId,
                 Score = score,
                 HeadImage = headImage,
                 CreateTime = DateTime.Today.ToString()
@@ -31,26 +32,45 @@ namespace TronCell.Game.ViewModel
                 return;
             }
 
-            int rankIndex = -1;
-            for(int i = 0; i < count; i++)
+            int updateIndex = -1;
+            for (int i = 0; i < count; i++)
             {
-                if(RankScoreCollection[i].Score <= score)
+                if (RankScoreCollection[i].UserId == userId)
+                {
+                    updateIndex = i;
+                    break;
+                }
+            }
+            if(updateIndex !=-1 && RankScoreCollection[updateIndex].Score >= score)
+            {
+                return;
+            }
+ 
+            if(updateIndex != -1 && RankScoreCollection[updateIndex].Score < score)
+            {
+                RankScoreCollection.RemoveAt(updateIndex);
+            }
+
+            int rankIndex = -1;
+            for (int i = 0; i < count; i++)
+            {
+                if (RankScoreCollection[i].Score <= score)
                 {
                     rankIndex = i;
                     break;
                 }
             }
 
-            if(rankIndex !=-1 && count < 5)
+            if (rankIndex != -1 && count < 5)
             {
                 RankScoreCollection.Insert(rankIndex, newRank);
             }
-            else if(rankIndex != -1 && count >= 5)
+            else if (rankIndex != -1 && count >= 5)
             {
                 RankScoreCollection.Insert(rankIndex, newRank);
                 RankScoreCollection.RemoveAt(count);
             }
-            else if(rankIndex == -1 && count < 5)
+            else if (rankIndex == -1 && count < 5)
             {
                 RankScoreCollection.Add(newRank);
             }
@@ -58,11 +78,15 @@ namespace TronCell.Game.ViewModel
             {
                 Console.WriteLine("分数进不了前5");
             }
+            
+
             UpdateRank();
             Task.Factory.StartNew(() => 
             {
                 SQLite.SQLiteConnection db = new SQLite.SQLiteConnection(AppDomain.CurrentDomain.BaseDirectory + GameDataPath);
-                db.Insert(newRank);
+                db.DeleteAll<ScoreRankViewModel>();
+                db.InsertAll(RankScoreCollection);
+               
             });
             
         }
@@ -70,6 +94,7 @@ namespace TronCell.Game.ViewModel
         private void UpdateRank()
         {
             int count = RankScoreCollection.Count();
+
             for(int i = 0;i < count; i++)
             {
                 RankScoreCollection[i].Rank = i + 1;

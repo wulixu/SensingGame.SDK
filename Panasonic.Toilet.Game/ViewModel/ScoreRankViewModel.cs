@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -55,6 +56,9 @@ namespace TronCell.Game.ViewModel
         }
 
         public string CreateTime { get; set; }
+
+        [PrimaryKey]
+        public int UserId { get; set; }
 
         private void RasiePropertyChangedEvent([CallerMemberName] string caller = "")
         {

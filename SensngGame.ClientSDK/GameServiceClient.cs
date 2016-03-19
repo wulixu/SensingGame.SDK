@@ -77,6 +77,9 @@ namespace SensngGame.ClientSDK
 
         private const string WinAwardByUserQuery = "WinAwardByUser";
 
+        private const string GetCanWinUsersQuery = "GetCanWinUsers";
+
+        private const string GetChatMessageQuery = "GetChatMessage";
 
 
 
@@ -410,7 +413,37 @@ namespace SensngGame.ClientSDK
             return default(UserAwardResult);
         }
 
+        public async Task<UserAwardsResult> GetCanWinUsers(string awardId)
+        {
+            var absolutePath = $"{ServiceHost}/{GetCanWinUsersQuery}";
+            var formNameValues = $"awardId={awardId}&{GetBasicFormNameValues()}";
+            try
+            {
+                var userAward = await SendRequestAsync<string, UserAwardsResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return userAward;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetCanWinUsers", ex);
+            }
+            return default(UserAwardsResult);
+        }
 
+        public async Task<ChatMessageResult> GetChartMessage(int maxCount = 20)
+        {
+            var absolutePath = $"{ServiceHost}/{GetChatMessageQuery}";
+            var formNameValues = $"maxCount={maxCount}&{GetBasicFormNameValues()}";
+            try
+            {
+                var chatMessageResult = await SendRequestAsync<string, ChatMessageResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return chatMessageResult;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetChartMessage", ex);
+            }
+            return default(ChatMessageResult);
+        }
 
 
         #endregion

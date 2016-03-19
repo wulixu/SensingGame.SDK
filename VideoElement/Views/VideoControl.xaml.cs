@@ -1,5 +1,5 @@
 ﻿
-using SensingGame.ClientSDK.Factory;
+
 using SensngGame.ClientSDK;
 using SensngGame.ClientSDK.Contract;
 using System;
@@ -40,8 +40,7 @@ namespace VideoElement
         public VideoControl()
         {
             _model = new VideoControlViewModel();
-            GameServiceClientFactory.Initialize(AppConfig.WeixinAppId, "2", AppConfig.ActivityId);
-
+            gameSvc = new GameServiceClient("j;lajdf;jaiuefjf", AppConfig.WeixinAppId, "2", AppConfig.ActivityId);
             SensingBase.Utils.Position p = new SensingBase.Utils.Position();
 
             InitializeComponent();
@@ -60,7 +59,6 @@ namespace VideoElement
             {
                 InitData();
             }
-            gameSvc = GameServiceClientFactory.GetInstance();
             _postHelper = new PostHelper();
         }
 

@@ -1,5 +1,4 @@
-﻿using log4net.Config;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,29 +13,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VideoElement
+namespace LuckDraw2
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         public MainWindow()
         {
-
             InitializeComponent();
-
-            log.Debug("MainWindow");
-            //AlbumLibrary.Common.MouseTouchDevice.RegisterEvents(this);
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        protected override void OnKeyDown(KeyEventArgs e)
         {
-            videoControl.Dispose();
+            base.OnKeyDown(e);
+            if (e.Key >= Key.D0 && e.Key <= Key.D9)
+            {
+                luck.ShowAward(e.Key - Key.D0);
+            }
+            else if (e.Key == Key.Enter)
+            {
+                luck.Begin();
+            }
         }
-
-     
     }
 }

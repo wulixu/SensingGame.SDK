@@ -49,14 +49,24 @@
                 </Image>
                 <Ellipse x:Name="ellipseHead" Fill="Red" Opacity="0.3" Width="300" Height="300" />
             </Canvas>
-            <Image Source="pack://siteoforigin:,,,/Imgs/basic_logo.png" VerticalAlignment="Top" HorizontalAlignment="Left"
-                  Width="800" Height="403"  Margin="164,71,0,0"/>
+            <TextBlock Foreground="White" FontSize="100" FontFamily="Stencil Std" Width="800" Height="403"  Margin="164,71,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">TronCell</TextBlock>
+
             <Image Source="pack://siteoforigin:,,,/Imgs/copyright.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="586" Height="63" Margin="0,0,50,25" />
-            <Button x:Name="btnTurnOff" HorizontalAlignment="Right" VerticalAlignment="Top" 
+            <Button x:Name="btnTurnOff" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Collapsed" IsEnabled="False"
                     Width="134" Height="134" Margin="0,106.131,167.656,0" Click="btnTurnOff_Click">
                 <Button.Template>
                     <ControlTemplate>
                         <Image Source="pack://siteoforigin:,,,/Imgs/turnoff.png"></Image>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Click="Button_Click" Width="200" Height="100" FontSize="35"
+                    VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,106.131,141.125,0" Content="开始抽奖" Foreground="#FFE45D16" >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"  Background="#FFF3C422" >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
