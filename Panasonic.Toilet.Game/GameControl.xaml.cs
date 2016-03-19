@@ -145,7 +145,7 @@ namespace TronCell.Game
 
         private void GameControl_Loaded(object sender, RoutedEventArgs e)
         {
-            m_gameServiceClient = new GameServiceClient("j;lajdf;jaiuefjf", ConfigurationManager.AppSettings["WeixinAppId"], "12", ConfigurationManager.AppSettings["ActivityId"]);
+            m_gameServiceClient = new GameServiceClient("j;lajdf;jaiuefjf", ConfigurationManager.AppSettings["WeixinAppId"], "3", ConfigurationManager.AppSettings["ActivityId"]);
             RefreshQrcode();
         }
 
