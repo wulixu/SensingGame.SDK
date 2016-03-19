@@ -20,9 +20,9 @@ namespace Hooters.ClientSDK
         /// <summary>
         /// The service host.
         /// </summary>
-        //private const string ServiceHost = "http://game.troncell.com/api/v0/CounterApi";
+        private const string ServiceHost = "http://hooters.troncell.com//api/v0/CounterApi";
 
-        private const string ServiceHost = "http://localhost:4469/api/v0/CounterApi";
+        //private const string ServiceHost = "http://localhost:4469/api/v0/CounterApi";
 
         private const string CreateCountersByDeviceQuery = "/CreateCountersByDevice";
         private const string PostHeatmapByDeviceQuery = "/PostHeatmapByDevice";
