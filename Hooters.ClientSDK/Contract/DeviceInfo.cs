@@ -16,6 +16,8 @@ namespace Hooters.ClientSDK.Contract
 
         public string LocalIp { get; set; }
 
+        public string Status { get; set; }
+        
         public List<CounterInfo> Counters { get; set; }
     }
 
