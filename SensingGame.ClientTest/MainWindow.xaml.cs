@@ -159,7 +159,7 @@ namespace SensingGame.ClientTest
         private async void ServiceCreate_Click(object sender, RoutedEventArgs e)
         {
             
-            //gameSvc = new GameServiceClient("yourKey", weixinAppId.Text, gameId.Text, activityId.Text);
+            gameSvc = new GameServiceClient(subKey.Text, gameId.Text);
             var data = await gameSvc.GetQrCode4LoginAsync();
             if (data != null && data.Data != null)
             {

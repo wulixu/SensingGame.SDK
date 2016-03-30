@@ -21,7 +21,7 @@ namespace SensngGame.ClientSDK
         /// <summary>
         /// The service host.
         /// </summary>
-        private const string ServiceHost = "http://game.troncell.com/api/v0/WeixinApi";
+        private const string ServiceHost = "http://game.troncell.com/api/v1/WeixinApi";
 
         //private const string ServiceHost = "http://localhost:4469/api/v0/WeixinApi";
 
@@ -91,10 +91,7 @@ namespace SensngGame.ClientSDK
         /// The subscription key.
         /// </summary>
         private string _subscriptionKey;
-
-        private string weiXinAppId;
         private string gameId;
-        private string activityId;
         private string clientUniueId;
         #endregion
 
@@ -119,12 +116,10 @@ namespace SensngGame.ClientSDK
             s_httpClient.Timeout = TimeSpan.FromSeconds(15);
         }
 
-        public GameServiceClient(string subscriptionKey, string weiXinAppId, string gameId, string activityId)
+        public GameServiceClient(string subscriptionKeyForActivity, string gameId)
         {
-            this._subscriptionKey = subscriptionKey;
-            this.weiXinAppId = weiXinAppId;
+            this._subscriptionKey = subscriptionKeyForActivity;
             this.gameId = gameId;
-            this.activityId = activityId;
             this.clientUniueId = MacIPHelper.GetClientMac();
         }
 
@@ -535,15 +530,13 @@ namespace SensngGame.ClientSDK
 
         private string GetBasicFormNameValues()
         {
-            return $"weiXinAppId={weiXinAppId}&gameId={gameId}&clientUniueId={clientUniueId}&activityId={activityId}&subscriptionKey={_subscriptionKey}";
+            return $"gameId={gameId}&clientUniueId={clientUniueId}&subscriptionKey={_subscriptionKey}";
         }
 
         private void AddBasicNameValues(NameValueCollection collections)
         {
-            collections.Add("weiXinAppId", weiXinAppId);
             collections.Add("gameId", gameId);
             collections.Add("clientUniueId", clientUniueId);
-            collections.Add("activityId", activityId);
             collections.Add("subscriptionKey", _subscriptionKey);
         }
         #endregion
