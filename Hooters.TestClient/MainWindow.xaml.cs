@@ -57,6 +57,7 @@ namespace Hooters.TestClient
             device.Name = DeviceName.Text;
             device.Mac = DeviceMac.Text;
             device.Type = TypeKey.Text;
+            device.Status = "Running";
             hooterService = new HooterServiceClient(SubKey.Text);
         }
 
@@ -76,7 +77,7 @@ namespace Hooters.TestClient
                     device = data;
                     foreach (var c in data.Counters)
                     {
-                        MsgBlock.Text += $"Counter Name:{c.Name}, Counter Total = {c.Total}" + Environment.NewLine;
+                        MsgBlock.Text += $"Counter Name:{c.Name}" + Environment.NewLine;
                     }
                 }
             }
@@ -119,9 +120,17 @@ namespace Hooters.TestClient
             isPosting = true;
             foreach (var counter in device.Counters)
             {
-                counter.Increment = new Random().Next(100);
-                counter.Total += counter.Increment;
-                counter.CollectingTime = DateTime.Now.AddDays(new Random().Next(5));
+                var timesLength = new Random().Next(50);
+                List<CounterTimeInfo> times = new List<CounterTimeInfo>();
+                for (int index = 0; index < timesLength; index++)
+                {
+                    var timeInfo = new CounterTimeInfo();
+                    timeInfo.Increment = new Random().Next(100);
+                    timeInfo.Total += timeInfo.Increment;
+                    timeInfo.CollectingTime = DateTime.Now.AddDays(new Random().Next(5));
+                    times.Add(timeInfo);
+                }
+                counter.Times = times;
             }
             var result = await hooterService.PostCountersByDevice(device);
             if(result != null)
@@ -140,6 +149,16 @@ namespace Hooters.TestClient
             {
                 MsgBlock.Text += $"Status:{result.Status}, Message = {result.Message}, Data ={result.Data}";
             }
+        }
+
+        private void MultiData_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void PostMultiCounters()
+        {
+
         }
     }
 }
