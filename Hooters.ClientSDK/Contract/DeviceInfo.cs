@@ -25,8 +25,13 @@ namespace Hooters.ClientSDK.Contract
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Increment { get; set; }
-        public long Total { get; set; }
+        public IList<CounterTimeInfo> Times { get; set; }
+    }
+
+    public class CounterTimeInfo
+    {
         public DateTime CollectingTime { get; set; }
+        public long Total { get; set; }
+        public int Increment { get; set; }
     }
 }
