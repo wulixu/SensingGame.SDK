@@ -17,6 +17,7 @@ namespace Hooters.ClientSDK
     public class HooterServiceClient
     {
         public const string ApiOK = "OK";
+
         /// <summary>
         /// The service host.
         /// </summary>
@@ -25,9 +26,19 @@ namespace Hooters.ClientSDK
         //private const string ServiceHost = "http://localhost:4469/api/v0/CounterApi";
 
         private const string CreateCountersByDeviceQuery = "/CreateCountersByDevice";
+        private const string PostSnapShotByDeviceQuery = "/PostSnapShotByDevice";
+
+
+
         private const string PostHeatmapByDeviceQuery = "/PostHeatmapByDevice";
+
         private const string PostCountersByDeviceQuery = "/PostCountersByDevice";
         private const string GetCountersByDeviceQuery = "/GetCountersByDevice";
+
+        private const string GetGroupInfoQuery = "/GetGroupInfo";
+
+
+        private const string PostSalesDataQuery = "/PosSalesData";
 
         /// <summary>
         /// The json header
@@ -106,23 +117,45 @@ namespace Hooters.ClientSDK
         }
 
 
-        public async Task<DeviceResult> PostHeatmapByDevice(string mac, string heatmapImagePath, string cameraImagePath)
+        public async Task<DeviceResult> PostHeatmapByDevice(string mac, string heatmapImagePath, DateTime time)
         {
             var absolutePath = $"{ServiceHost}/{PostHeatmapByDeviceQuery}?SubscriptionKey={subscriptionKey}";
 
-
             var nameValues = new NameValueCollection();
             nameValues.Add("mac", mac);
-            nameValues.Add("deviceId", "0");
+            nameValues.Add("collectionTime", time.ToLongTimeString());
             try
             {
+
+
                 var files = new List<string>();
                 var names = new List<string>();
                 if (!string.IsNullOrEmpty(heatmapImagePath) && File.Exists(heatmapImagePath))
                 {
                     files.Add(heatmapImagePath);
-                    names.Add("heatmapimage");
+                    names.Add("heatmapData");
                 }
+                return await SendMultipartFormRequestAsync<DeviceResult>(absolutePath, files.ToArray(), names.ToArray(), nameValues);
+            }
+            catch (Exception ex)
+            {
+                logger.Error("PostHeatmapByDevice", ex);
+            }
+            return default(DeviceResult);
+        }
+
+
+        public async Task<DeviceResult> PostSnapShotByDevice(string mac, string cameraImagePath, DateTime time)
+        {
+            var absolutePath = $"{ServiceHost}/{PostSnapShotByDeviceQuery}?SubscriptionKey={subscriptionKey}";
+
+            var nameValues = new NameValueCollection();
+            nameValues.Add("mac", mac);
+            nameValues.Add("collectionTime", time.ToLongTimeString());
+            try
+            {
+                var files = new List<string>();
+                var names = new List<string>();
                 if (!string.IsNullOrEmpty(cameraImagePath) && File.Exists(cameraImagePath))
                 {
                     files.Add(cameraImagePath);
@@ -132,11 +165,41 @@ namespace Hooters.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("PostCountersByDevice", ex);
+                logger.Error("PostSnapShotByDevice", ex);
             }
             return default(DeviceResult);
         }
 
+        
+        public async Task<OrderResult> PostSalesData(IList<OrderInfo> orders)
+        {
+            var absolutePath = $"{ServiceHost}/{PostSalesDataQuery}?SubscriptionKey={subscriptionKey}";
+            try
+            {
+                var orderResult = await SendRequestAsync<ICollection<OrderInfo>, OrderResult>(HttpMethod.Post, absolutePath, orders);
+                return orderResult;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("PostSalesData", ex);
+            }
+            return default(OrderResult);
+        }
+
+        public async Task<GroupResult> GetGroupInfoAsync()
+        {
+            var absolutePath = $"{ServiceHost}/{GetGroupInfoQuery}?SubscriptionKey={subscriptionKey}";
+            try
+            {
+                var deviceResult = await SendRequestAsync<string, GroupResult>(HttpMethod.Get, absolutePath, null);
+                return deviceResult;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("PostCountersByDevice", ex);
+            }
+            return default(GroupResult);
+        }
 
         #region the json client
         private async Task<TResponse> SendRequestAsync<TRequest, TResponse>(HttpMethod httpMethod, string requestUrl, TRequest requestBody,string type="json")

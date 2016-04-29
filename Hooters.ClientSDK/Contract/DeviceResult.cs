@@ -12,4 +12,18 @@ namespace Hooters.ClientSDK.Contract
         public string Message { get; set; }
         public DeviceInfo Data { get; set; }
     }
+
+    public class GroupResult
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public string Data { get; set; }
+    }
+
+    public class OrderResult
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+    }
+
 }
