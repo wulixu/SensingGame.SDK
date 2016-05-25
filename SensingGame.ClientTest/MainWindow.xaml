@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="250*"/>
                 <ColumnDefinition Width="250*"/>
             </Grid.ColumnDefinitions>
-            <Image x:Name="image" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Height="200" Margin="28,13,0,0" VerticalAlignment="Top" Width="200"/>
+            <Image x:Name="image" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Height="200" Margin="28,13,0,0" VerticalAlignment="Top" Width="200" Source="bg.png"/>
             <Image x:Name="avatorImg" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Left" Height="200" Margin="29,25,0,0" VerticalAlignment="Top" Width="200"/>
 
             <Image x:Name="image1" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Height="200" Margin="19,74,0,0" VerticalAlignment="Top" Width="200"/>
