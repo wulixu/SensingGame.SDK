@@ -64,6 +64,7 @@
             <Button x:Name="startActivity" Margin="10,10,83,261" Grid.Row="3" Grid.Column="1" Click="startActivity_Click">Start Activity</Button>
             <Button x:Name="stopAcitivy" Margin="10,63,83,208" Grid.Row="3" Grid.Column="1" Click="stopAcitivy_Click">Stop Activity</Button>
             <TextBlock x:Name="activityStatus" Foreground="Black" Margin="180,20,18,250" Height="50" Grid.Row="3" Grid.Column="1"></TextBlock>
+            <Button x:Name="startActivity_Copy" Margin="72,16,22,255" Grid.Row="3" Grid.Column="2" Click="startActivity_Click" Content="Start Activity"/>
 
         </Grid>
     </ScrollViewer>

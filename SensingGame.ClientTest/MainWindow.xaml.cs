@@ -248,9 +248,9 @@ namespace SensingGame.ClientTest
 
         }
 
-        private void startActivity_Click(object sender, RoutedEventArgs e)
+        private async void startActivity_Click(object sender, RoutedEventArgs e)
         {
-
+            var awardUser = await gameSvc.GetUsersByActivityAndGame(100);
         }
     }
 }

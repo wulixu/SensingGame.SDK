@@ -141,7 +141,7 @@ namespace SensngGame.ClientSDK.Contract
         public int ViewCount { get; set; }
         public int LikeCount { get; set; }
 
-        public DateTime ScanQrCodeTime { get; set; }
+        public string ScanQrCodeTime { get; set; }
 
         public bool IsSigned { get; set; }
         public int AwardID { get; set; }
