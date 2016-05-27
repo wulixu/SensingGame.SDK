@@ -242,5 +242,15 @@ namespace SensingGame.ClientTest
                 awardUserImg.Source = UriToImage(user.Headimgurl);
             }
         }
+
+        private void stopAcitivy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void startActivity_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
