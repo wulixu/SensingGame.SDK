@@ -81,6 +81,8 @@ namespace SensngGame.ClientSDK
 
         private const string GetChatMessageQuery = "GetChatMessage";
 
+        private const string UpdateActivityGame = "UpdateActivityGame";
+
 
 
 
@@ -159,6 +161,7 @@ namespace SensngGame.ClientSDK
             return default(UserActionsResult);
         }
 
+
         public async Task<QrCodeResult> GetQrCode4LoginAsync(bool isSendWeChatMsg = false)
         {
             var absolutePath = $"{ServiceHost}/{QrCode4LoginQuery}";
@@ -233,9 +236,28 @@ namespace SensngGame.ClientSDK
             }
             return default(UserActionResult);
         }
+
+
         #endregion
 
         #region Activity Apis
+
+        public async Task<UserActionResult> UpdateActivityGameAsyc(bool isGameStarted, DateTime gameOvertime)
+        {
+            var absolutePath = $"{ServiceHost}/{UpdateActivityGame}";
+            var formNameValues = $"isGameStarted={isGameStarted}&gameOvertime={gameOvertime}&{GetBasicFormNameValues()}";
+            try
+            {
+                var userActionResult = await SendRequestAsync<string, UserActionResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return userActionResult;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("UpdateActivityGameAsyc", ex);
+            }
+            return default(UserActionResult);
+
+        }
 
         public async Task<UserInfosResult> GetUsersByActivitiy(int maxUserCount)
         {

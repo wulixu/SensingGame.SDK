@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -49,16 +50,17 @@ namespace SensingGame.ClientTest
                 if (user != null && user.Data != null)
                 {
                     firstUser = user.Data;
-                    avatorImg.Source = new BitmapImage(new Uri(user.Data.Headimgurl));
+                    //avatorImg.Source = new BitmapImage(new Uri(user.Data.Headimgurl));
+                    avatorImg.Source = UriToImage(user.Data.Headimgurl);
                     //await gameSvc.PostDataByUserAsync(firstUser.ActionId.ToString(), null, null, 80);
                 }
 
                 var users = await gameSvc.FindScanQrCodeUsersAsync(firstQrCode);
-                if(users != null && users.Data !=null)
+                if (users != null && users.Data != null)
                 {
                     scanCountBefore.Content = $"{users.Data.Count} 人";
                 }
-                
+
             }
             if (!string.IsNullOrEmpty(afterQrCode))
             {
@@ -66,7 +68,8 @@ namespace SensingGame.ClientTest
                 if (user1 != null && user1.Data != null)
                 {
                     afterUser = user1.Data;
-                    avatorImg1.Source = new BitmapImage(new Uri(user1.Data.Headimgurl));
+                    //avatorImg1.Source = new BitmapImage(new Uri(user1.Data.Headimgurl));
+                    avatorImg1.Source = UriToImage(user1.Data.Headimgurl);
                 }
 
                 var user1s = await gameSvc.FindScanQrCodeUsersAsync(afterQrCode);
@@ -82,38 +85,38 @@ namespace SensingGame.ClientTest
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
 
-            
+
         }
 
         private async void button_Click(object sender, RoutedEventArgs e)
         {
-            Timer_Tick(null,null);
+            Timer_Tick(null, null);
         }
 
         private async void PostDataByUserClick(object sender, RoutedEventArgs e)
         {
-            if(firstUser != null)
+            if (firstUser != null)
             {
                 await gameSvc.PostDataByUserAsync(firstUser.ActionId.ToString(), System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), System.IO.Path.Combine(Environment.CurrentDirectory, "playing.png"), Convert.ToInt16(score.Text));
             }
         }
 
         AwardData awardInfo = null;
-        
+
         private async void AcitivityDetails_Click(object sender, RoutedEventArgs e)
         {
             activityDetails.Text = "";
             var activityInfo = await gameSvc.GetActivityInfo();
-            if(activityInfo != null && activityInfo.Data !=null)
+            if (activityInfo != null && activityInfo.Data != null)
             {
                 activityDetails.Text += $"Activity Name:{activityInfo.Data.Name}" + Environment.NewLine;
                 activityDetails.Text += $"Enable WhiteList:{activityInfo.Data.IsEnableWhiteUser}" + Environment.NewLine;
             }
 
             var users = await gameSvc.GetUsersByActivitiy(50);
-            if(users != null && users.Data != null)
+            if (users != null && users.Data != null)
             {
-                activityDetails.Text += $"Users:{users.Data.Count}" + Environment.NewLine;   
+                activityDetails.Text += $"Users:{users.Data.Count}" + Environment.NewLine;
             }
             var awards = await gameSvc.GetAwardsByActivity();
 
@@ -128,10 +131,10 @@ namespace SensingGame.ClientTest
                     activityDetails.Text += $"Award:{award.Name}--AwardId:{award.Id}----{award.AwardProduct}" + Environment.NewLine;
                 }
             }
-            
+
             var rankUser = await gameSvc.GetRankUsersByActivity("Score", 20);
-                
-            if(rankUser != null && rankUser.Data != null)
+
+            if (rankUser != null && rankUser.Data != null)
             {
                 activityDetails.Text += $"RankUsers Count:{rankUser.Data.Count}" + Environment.NewLine;
             }
@@ -141,6 +144,13 @@ namespace SensingGame.ClientTest
             {
                 activityDetails.Text += $"WhiteUsers Count:{whiteUsers.Data.Count}" + Environment.NewLine;
             }
+
+            var activityGames =  await gameSvc.GetUsersByActivityAndGame(50);
+            if (activityGames != null && activityGames.Data != null)
+            {
+                activityDetails.Text += $"activityGames Count:{activityGames.Data.Count}" + Environment.NewLine;
+            }
+
         }
 
         private async void ActivityWinner_Click(object sender, RoutedEventArgs e)
@@ -148,9 +158,10 @@ namespace SensingGame.ClientTest
             if (awardInfo != null)
             {
                 var winner = await gameSvc.WinAwardByRandom(awardInfo.Id.ToString());
-                if(winner != null && winner.Data != null)
+                if (winner != null && winner.Data != null)
                 {
-                    avatorWinnerImg.Source = new BitmapImage(new Uri(winner.Data.Headimgurl));
+                    //avatorWinnerImg.Source = new BitmapImage(new Uri(winner.Data.Headimgurl));
+                    avatorWinnerImg.Source = UriToImage(winner.Data.Headimgurl);
                 }
             }
         }
@@ -158,27 +169,50 @@ namespace SensingGame.ClientTest
         ActivityData activityInfo = null;
         private async void ServiceCreate_Click(object sender, RoutedEventArgs e)
         {
-            
             gameSvc = new GameServiceClient(subKey.Text, gameId.Text);
             var data = await gameSvc.GetQrCode4LoginAsync();
             if (data != null && data.Data != null)
             {
                 var qrcode = data.Data;
                 firstQrCode = qrcode.QrCodeId;
-                image.Source = new BitmapImage(new Uri(qrcode.QrCodeUrl));
+
+                image.Source = UriToImage(qrcode.QrCodeUrl);
+
+
+                //BitmapImage bmImage = new BitmapImage();
+
+                //bmImage.BeginInit();
+                //bmImage.UriSource = new Uri(qrcode.QrCodeUrl, UriKind.Absolute);
+                //bmImage.EndInit();
+
+                // bmImage;
             }
 
             var acitivityInfo = await gameSvc.GetActivityInfo();
         }
 
+        public static BitmapImage UriToImage(string imageUrl)
+        {
+            var imageBytes = new WebClient().DownloadData(imageUrl);
+            MemoryStream ms = new MemoryStream(imageBytes);
+            BitmapImage bmImage = new BitmapImage();
+            bmImage.BeginInit();
+            bmImage.StreamSource = ms;
+            bmImage.EndInit();
+            return bmImage;
+
+        }
+
+
         private async void button1_Click(object sender, RoutedEventArgs e)
         {
-            var postBack = await gameSvc.PostData4ScanAsync(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"),System.IO.Path.Combine(Environment.CurrentDirectory,"playing.png"), Convert.ToInt16(scoreafter.Text));
+            var postBack = await gameSvc.PostData4ScanAsync(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), System.IO.Path.Combine(Environment.CurrentDirectory, "playing.png"), Convert.ToInt16(scoreafter.Text));
             if (postBack != null && postBack.Data != null)
             {
                 var qrcode = postBack.Data;
                 afterQrCode = qrcode.QrCodeId;
-                image1.Source = new BitmapImage(new Uri(qrcode.QrCodeUrl));
+                //image1.Source = new BitmapImage(new Uri(qrcode.QrCodeUrl));
+                image1.Source = UriToImage(qrcode.QrCodeUrl);
             }
         }
 
@@ -192,7 +226,8 @@ namespace SensingGame.ClientTest
                 if (rankUser.Data.Count >= rankMax)
                 {
                     var topUser = rankUser.Data[rankMax - 1];
-                    avatorRank.Source = new BitmapImage(new Uri(topUser.Headimgurl));
+                    //avatorRank.Source = new BitmapImage(new Uri(topUser.Headimgurl));
+                    avatorRank.Source = UriToImage(topUser.Headimgurl);
                     rankMsg.Content = $"Id:{topUser.Id}--OpenId:{topUser.Openid}--Nickname:{topUser.Nickname}";
                 }
                 else
@@ -207,11 +242,27 @@ namespace SensingGame.ClientTest
             var awardId = awardIDBox.Text;
             var userId = winnerIDBox.Text;
             var awardUser = await gameSvc.WinAwardByUser(awardId, userId);
-            if(awardUser != null && awardUser.Data != null)
+            if (awardUser != null && awardUser.Data != null)
             {
                 var user = awardUser.Data;
-                awardUserImg.Source = new BitmapImage(new Uri(user.Headimgurl));
+                //awardUserImg.Source = new BitmapImage(new Uri(user.Headimgurl));
+                awardUserImg.Source = UriToImage(user.Headimgurl);
             }
+        }
+
+        private async void startActivity_Click(object sender, RoutedEventArgs e)
+        {
+           await gameSvc.UpdateActivityGameAsyc(true, DateTime.Now);
+            activityStatus.Text = "Started";
+        }
+
+        private async void stopAcitivy_Click(object sender, RoutedEventArgs e)
+        {
+            await  gameSvc.UpdateActivityGameAsyc(false, DateTime.Now);
+            activityStatus.Text = "Stopped";
+
+
         }
     }
 }
+
