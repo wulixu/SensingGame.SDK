@@ -53,6 +53,7 @@
     <Compile Include="ClientException.cs" />
     <Compile Include="Contract\DeviceInfo.cs" />
     <Compile Include="Contract\DeviceResult.cs" />
+    <Compile Include="Contract\OrderInfo.cs" />
     <Compile Include="HooterServiceClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

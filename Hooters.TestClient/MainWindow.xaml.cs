@@ -144,7 +144,7 @@ namespace Hooters.TestClient
 
         private async void PostHeatmap_Click(object sender, RoutedEventArgs e)
         {
-            var result = await hooterService.PostHeatmapByDevice(device.Mac, System.IO.Path.Combine(Environment.CurrentDirectory, "heapmap.png"), System.IO.Path.Combine(Environment.CurrentDirectory, "camera.png"));
+            var result = await hooterService.PostHeatmapByDevice(device.Mac, System.IO.Path.Combine(Environment.CurrentDirectory, "heapmap.png"), DateTime.Now);
             if (result != null)
             {
                 MsgBlock.Text += $"Status:{result.Status}, Message = {result.Message}, Data ={result.Data}";
@@ -159,6 +159,32 @@ namespace Hooters.TestClient
         public void PostMultiCounters()
         {
 
+        }
+
+        private async void DeleteOne_Click(object sender, RoutedEventArgs e)
+        {
+            if(device.Counters.Count > 0)
+            {
+                device.Counters.RemoveAt(0);
+            }
+            var result = await hooterService.CreateCountersByDevice(device);
+        }
+
+        private async void GroupInfoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var result = await hooterService.GetGroupInfoAsync();
+        }
+
+        private DispatcherTimer uploadSales_timer;
+
+        private async void UploadSalesDataBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var datas = new List<OrderInfo>();
+            for (int index = 0; index < 10; index++)
+            {
+                datas.Add(new OrderInfo { CollectingTime = DateTime.Now, Total = 500, Details = "鸡蛋,2,59", BuyerAge = 15, BuyerGender = "Female" });
+            }
+            var result = await hooterService.PostSalesData(datas);
         }
     }
 }

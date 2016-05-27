@@ -144,13 +144,6 @@ namespace SensingGame.ClientTest
             {
                 activityDetails.Text += $"WhiteUsers Count:{whiteUsers.Data.Count}" + Environment.NewLine;
             }
-
-            var activityGames =  await gameSvc.GetUsersByActivityAndGame(50);
-            if (activityGames != null && activityGames.Data != null)
-            {
-                activityDetails.Text += $"activityGames Count:{activityGames.Data.Count}" + Environment.NewLine;
-            }
-
         }
 
         private async void ActivityWinner_Click(object sender, RoutedEventArgs e)
@@ -206,13 +199,13 @@ namespace SensingGame.ClientTest
 
         private async void button1_Click(object sender, RoutedEventArgs e)
         {
-            var postBack = await gameSvc.PostData4ScanAsync(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), System.IO.Path.Combine(Environment.CurrentDirectory, "playing.png"), Convert.ToInt16(scoreafter.Text));
+            var postBack = await gameSvc.PostData4ScanAsync(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"),System.IO.Path.Combine(Environment.CurrentDirectory,"playing.png"), Convert.ToInt16(scoreafter.Text));
             if (postBack != null && postBack.Data != null)
             {
                 var qrcode = postBack.Data;
                 afterQrCode = qrcode.QrCodeId;
                 //image1.Source = new BitmapImage(new Uri(qrcode.QrCodeUrl));
-                image1.Source = UriToImage(qrcode.QrCodeUrl);
+                image1.Source =  UriToImage(qrcode.QrCodeUrl);
             }
         }
 
@@ -242,27 +235,12 @@ namespace SensingGame.ClientTest
             var awardId = awardIDBox.Text;
             var userId = winnerIDBox.Text;
             var awardUser = await gameSvc.WinAwardByUser(awardId, userId);
-            if (awardUser != null && awardUser.Data != null)
+            if(awardUser != null && awardUser.Data != null)
             {
                 var user = awardUser.Data;
                 //awardUserImg.Source = new BitmapImage(new Uri(user.Headimgurl));
                 awardUserImg.Source = UriToImage(user.Headimgurl);
             }
         }
-
-        private async void startActivity_Click(object sender, RoutedEventArgs e)
-        {
-           await gameSvc.UpdateActivityGameAsyc(true, DateTime.Now);
-            activityStatus.Text = "Started";
-        }
-
-        private async void stopAcitivy_Click(object sender, RoutedEventArgs e)
-        {
-            await  gameSvc.UpdateActivityGameAsyc(false, DateTime.Now);
-            activityStatus.Text = "Stopped";
-
-
-        }
     }
 }
-
