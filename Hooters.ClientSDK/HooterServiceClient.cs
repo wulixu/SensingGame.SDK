@@ -1,5 +1,4 @@
 ﻿using Hooters.ClientSDK.Contract;
-using LogService;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -46,8 +45,7 @@ namespace Hooters.ClientSDK
         private const string JsonHeader = "application/json";
         private string subscriptionKey = null;
 
-        private static readonly IBizLogger logger = ServerLogFactory.GetLogger(typeof(HooterServiceClient));
-
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(typeof(HooterServiceClient));
         /// <summary>
         /// The default resolver.
         /// </summary>

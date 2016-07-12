@@ -21,9 +21,9 @@ namespace SensngGame.ClientSDK
         /// <summary>
         /// The service host.
         /// </summary>
-        //private const string ServiceHost = "http://game.troncell.com/api/v1/WeixinApi";
+        private const string ServiceHost = "http://wx.troncell.com/api/v1/WeixinApi";
 
-        private const string ServiceHost = "http://localhost:4469/api/v1/WeixinApi";
+        //private const string ServiceHost = "http://localhost:4469/api/v1/WeixinApi";
 
         /// <summary>
         /// The json header
@@ -170,7 +170,7 @@ namespace SensngGame.ClientSDK
             {
                 return await SendRequestAsync<object, QrCodeResult>(HttpMethod.Post, absolutePath, formNameValues);
             }
-            catch (Exception ex)
+           catch (Exception ex)
             {
                 logger.Error("GetQrCode4LoginAsync", ex);
             }

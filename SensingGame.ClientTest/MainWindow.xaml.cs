@@ -2,6 +2,8 @@
 using SensngGame.ClientSDK.Contract;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -12,11 +14,15 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using ZXing;
+using ZXing.Common;
+using ZXing.QrCode;
 
 namespace SensingGame.ClientTest
 {
@@ -85,6 +91,17 @@ namespace SensingGame.ClientTest
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
 
+
+        }
+
+        public void ClearData()
+        {
+            image.Source = null;
+            image1.Source = null;
+            avatorImg.Source = null;
+            avatorImg1.Source = null;
+            awardUserImg.Source = null;
+            awardUserImg.Source = null;
 
         }
 
@@ -162,6 +179,7 @@ namespace SensingGame.ClientTest
         ActivityData activityInfo = null;
         private async void ServiceCreate_Click(object sender, RoutedEventArgs e)
         {
+            ClearData();
             gameSvc = new GameServiceClient(subKey.Text, gameId.Text);
             var data = await gameSvc.GetQrCode4LoginAsync();
             if (data != null && data.Data != null)
@@ -184,7 +202,19 @@ namespace SensingGame.ClientTest
             var acitivityInfo = await gameSvc.GetActivityInfo();
         }
 
-        public static BitmapImage UriToImage(string imageUrl)
+        public static BitmapSource UriToImage(string imageUrl)
+        {
+            if (imageUrl.Contains("mp.weixin.qq.com/cgi-bin/showqrcode") || imageUrl.Contains("wx.qlogo.cn"))
+            {
+                return WebImageToImage(imageUrl);
+            }
+            else
+            {
+                return ValueToImage(imageUrl);
+            }
+        }
+
+        public static BitmapSource WebImageToImage(string imageUrl)
         {
             var imageBytes = new WebClient().DownloadData(imageUrl);
             MemoryStream ms = new MemoryStream(imageBytes);
@@ -193,9 +223,44 @@ namespace SensingGame.ClientTest
             bmImage.StreamSource = ms;
             bmImage.EndInit();
             return bmImage;
-
         }
 
+        public static BitmapSource ValueToImage(string qrcode)
+        {
+
+            IBarcodeWriter writer = new BarcodeWriter{ Format = BarcodeFormat.QR_CODE };
+            var bitmap = writer.Write(qrcode);
+
+            var hbmp = bitmap.GetHbitmap();
+            BitmapSource source;
+            try
+            {
+                source = Imaging.CreateBitmapSourceFromHBitmap(hbmp, IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+                
+            }
+            finally
+            {
+                //DeleteObject(hbmp);
+            }
+            return source;
+        }
+
+        public static BitmapImage ToBitmapImage(Bitmap bitmap)
+        {
+            using (var memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+
+                return bitmapImage;
+            }
+        }
 
         private async void button1_Click(object sender, RoutedEventArgs e)
         {
