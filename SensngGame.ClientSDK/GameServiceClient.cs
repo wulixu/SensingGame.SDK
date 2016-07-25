@@ -156,10 +156,10 @@ namespace SensngGame.ClientSDK
         }
 
 
-        public async Task<QrCodeResult> GetQrCode4LoginAsync(bool isSendWeChatMsg = false)
+        public async Task<QrCodeResult> GetQrCode4LoginAsync(bool isSendWeChatMsg = false,string roomNo="")
         {
             var absolutePath = $"{ServiceHost}/{QrCode4LoginQuery}";
-            var formNameValues = $"isSendWeChatMsg={isSendWeChatMsg}&{GetBasicFormNameValues()}";
+            var formNameValues = $"roomNo={roomNo}&isSendWeChatMsg={isSendWeChatMsg}&{GetBasicFormNameValues()}";
             try
             {
                 return await SendRequestAsync<object, QrCodeResult>(HttpMethod.Post, absolutePath, formNameValues);
@@ -171,12 +171,13 @@ namespace SensngGame.ClientSDK
             return default(QrCodeResult);
         }
 
-        public async Task<QrCodeResult> PostData4ScanAsync(string playerImage, string gameImage, int score)
+        public async Task<QrCodeResult> PostData4ScanAsync(string playerImage, string gameImage, int score,string roomNo = "")
         {
             var absolutePath = $"{ServiceHost}/{PostData4ScanQuery}";
             var nameValues = new NameValueCollection();
             AddBasicNameValues(nameValues);
             nameValues.Add("score", score.ToString());
+            nameValues.Add("roomNo", roomNo);
             try
             {
                 var files = new List<string>();
