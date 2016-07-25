@@ -34,7 +34,7 @@
             <TextBox x:Name="subKey" HorizontalAlignment="Left" Height="20" Margin="109,22,0,0" TextWrapping="Wrap" Text="809fb311136541c5953561bc4d7e8464" VerticalAlignment="Top" Width="364" RenderTransformOrigin="0.545,1" Grid.ColumnSpan="2"/>
             <Label x:Name="label1_Copy" Content="Game Id:" HorizontalAlignment="Left" Margin="109,17,0,0" VerticalAlignment="Top" Grid.Column="2"/>
             <TextBox x:Name="gameId" HorizontalAlignment="Left" Height="20" Margin="181,21,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="58" RenderTransformOrigin="0.545,1" Grid.Column="2"/>
-            <Button x:Name="acitivityDetails" Content="显示活动详细信息" Grid.Column="3" HorizontalAlignment="Left" Height="35" Margin="74,10,0,0" VerticalAlignment="Top" Width="105" Grid.Row="1" Click="AcitivityDetails_Click"/>
+            <Button x:Name="acitivityDetails" Content="显示活动详细信息" Grid.Column="3" HorizontalAlignment="Left" Height="35" Margin="21,10,0,0" VerticalAlignment="Top" Width="105" Grid.Row="1" Click="AcitivityDetails_Click"/>
             <Button x:Name="ActivityWinner" Content="随机抽奖" Grid.Column="2" HorizontalAlignment="Left" Height="35" Margin="62,7,0,0" VerticalAlignment="Top" Width="125" Grid.Row="2" Click="ActivityWinner_Click"/>
             <Image x:Name="avatorWinnerImg" Grid.Column="2" Grid.Row="2"  HorizontalAlignment="Left" Height="200" Margin="28,49,0,0" VerticalAlignment="Top" Width="200"/>
             <Label x:Name="label_Copy3" Content="获奖用户" HorizontalAlignment="Left" Margin="99,255,0,-1" Width="70" Grid.Column="2" Grid.Row="2" RenderTransformOrigin="4.3,-0.04" Height="25" VerticalAlignment="Top"/>
@@ -65,6 +65,7 @@
             <Button x:Name="stopAcitivy" Margin="10,63,83,208" Grid.Row="3" Grid.Column="1" Click="stopAcitivy_Click">Stop Activity</Button>
             <TextBlock x:Name="activityStatus" Foreground="Black" Margin="180,20,18,250" Height="50" Grid.Row="3" Grid.Column="1"></TextBlock>
             <Button x:Name="startActivity_Copy" Margin="72,16,22,255" Grid.Row="3" Grid.Column="2" Click="startActivity_Click" Content="Start Activity"/>
+            <Button x:Name="acitivityGameDetails" Content="显示活动游戏信息" Grid.Column="3" HorizontalAlignment="Left" Height="35" Margin="135,9,0,0" VerticalAlignment="Top" Width="105" Grid.Row="1" Click="acitivityGameDetails_Click"/>
 
         </Grid>
     </ScrollViewer>

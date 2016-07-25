@@ -81,15 +81,9 @@ namespace SensngGame.ClientSDK
 
         private const string GetChatMessageQuery = "GetChatMessage";
 
-        private const string UpdateActivityGame = "UpdateActivityGame";
+        private const string UpdateActivityGameQuery = "UpdateActivityGame";
 
-
-
-
-        /// <summary>
-        /// The subscription key name.
-        /// </summary>
-        private const string SubscriptionKeyName = "SubscriptionKey";
+        private const string GetActivityGameInfoQuery = "GetActivityGameInfo";
 
         #region Inner Keys.
         /// <summary>
@@ -244,7 +238,7 @@ namespace SensngGame.ClientSDK
 
         public async Task<UserActionResult> UpdateActivityGameAsyc(bool isGameStarted, DateTime gameOvertime)
         {
-            var absolutePath = $"{ServiceHost}/{UpdateActivityGame}";
+            var absolutePath = $"{ServiceHost}/{UpdateActivityGameQuery}";
             var formNameValues = $"isGameStarted={isGameStarted}&gameOvertime={gameOvertime}&{GetBasicFormNameValues()}";
             try
             {
@@ -445,6 +439,26 @@ namespace SensngGame.ClientSDK
             }
             return default(UserAwardsResult);
         }
+
+
+        public async Task<GameActivityResult> GetActivityGameInfo()
+        {
+            var absolutePath = $"{ServiceHost}/{GetActivityGameInfoQuery}";
+            var formNameValues = $"{GetBasicFormNameValues()}";
+            try
+            {
+                var userAward = await SendRequestAsync<string, GameActivityResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return userAward;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetActivityGameInfo", ex);
+            }
+            return default(GameActivityResult);
+        }
+
+        
+
 
         public async Task<ChatMessageResult> GetChartMessage(int maxCount = 20)
         {

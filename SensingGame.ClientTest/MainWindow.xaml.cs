@@ -317,5 +317,16 @@ namespace SensingGame.ClientTest
         {
             var awardUser = await gameSvc.GetUsersByActivityAndGame(100);
         }
+
+        private async void acitivityGameDetails_Click(object sender, RoutedEventArgs e)
+        {
+            activityDetails.Text = "";
+            var activityGame = await gameSvc.GetActivityGameInfo();
+            if (activityGame.Data != null)
+            {
+                activityDetails.Text += $"Activity Name:{activityGame.Data.Name}" + Environment.NewLine;
+                activityDetails.Text += $"Enable WhiteList:{activityGame.Data.MaterialPacketUrl}" + Environment.NewLine;
+            }
+        }
     }
 }
