@@ -322,11 +322,16 @@ namespace SensingGame.ClientTest
         {
             activityDetails.Text = "";
             var activityGame = await gameSvc.GetActivityGameInfo();
-            if (activityGame.Data != null)
+            if (activityGame != null && activityGame.Data != null)
             {
                 activityDetails.Text += $"Activity Name:{activityGame.Data.Name}" + Environment.NewLine;
-                activityDetails.Text += $"Enable WhiteList:{activityGame.Data.MaterialPacketUrl}" + Environment.NewLine;
+                activityDetails.Text += $"Package Zip:{activityGame.Data.MaterialPacketUrl}" + Environment.NewLine;
             }
+        }
+
+        private void subKey_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
