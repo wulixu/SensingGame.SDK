@@ -9,54 +9,54 @@ namespace SensngGame.ClientSDK.Contract
     public class UserInfoResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public UserInfoData Data { get; set; }
     }
     public class UserActionResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public UserActionData Data { get; set; }
     }
 
     public class UserDataResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public UserData Data { get; set; }
     }
 
     public class UserAwardResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public UserAwardData Data { get; set; }
     }
 
     public class UserAwardsResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public List<UserAwardData> Data { get; set; }
     }
 
     public class UserActionsResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public List<UserActionData> Data { get; set; }
     }
     public class UserInfosResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public List<UserInfoData> Data { get; set; }
     }
 
     public class WhiteUsersResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public List<WhiteUserData> Data { get; set; }
     }
 

@@ -9,7 +9,7 @@ namespace SensngGame.ClientSDK.Contract
     public class AwardsResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public List<AwardData> Data { get; set; }
     }
 

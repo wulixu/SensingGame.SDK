@@ -21,9 +21,9 @@ namespace SensngGame.ClientSDK
         /// <summary>
         /// The service host.
         /// </summary>
-        private const string ServiceHost = "http://wx.troncell.com/api/v1/WeixinApi";
+        //private const string ServiceHost = "http://wx.troncell.com/api/v1/WeixinApi";
 
-        //private const string ServiceHost = "http://localhost:4469/api/v1/WeixinApi";
+        private const string ServiceHost = "http://localhost:4469/api/v1/WeixinApi";
 
         /// <summary>
         /// The json header
@@ -90,7 +90,7 @@ namespace SensngGame.ClientSDK
         /// The subscription key.
         /// </summary>
         private string _subscriptionKey;
-        private string gameId;
+        private string gameNo;
         private string clientUniueId;
         #endregion
 
@@ -115,11 +115,16 @@ namespace SensngGame.ClientSDK
             s_httpClient.Timeout = TimeSpan.FromSeconds(15);
         }
 
-        public GameServiceClient(string subscriptionKeyForActivity, string gameId)
+        public GameServiceClient(string subscriptionKeyForActivity, string gameNo)
         {
             this._subscriptionKey = subscriptionKeyForActivity;
-            this.gameId = gameId;
+            this.gameNo = gameNo;
             this.clientUniueId = MacIPHelper.GetClientMac();
+        }
+
+        public void Initialize()
+        {
+
         }
 
         #region QrcodeClient
@@ -600,12 +605,12 @@ namespace SensngGame.ClientSDK
 
         private string GetBasicFormNameValues()
         {
-            return $"gameId={gameId}&clientUniueId={clientUniueId}&subscriptionKey={_subscriptionKey}";
+            return $"gameNo={gameNo}&clientUniueId={clientUniueId}&subscriptionKey={_subscriptionKey}";
         }
 
         private void AddBasicNameValues(NameValueCollection collections)
         {
-            collections.Add("gameId", gameId);
+            collections.Add("gameNo", gameNo);
             collections.Add("clientUniueId", clientUniueId);
             collections.Add("subscriptionKey", _subscriptionKey);
         }

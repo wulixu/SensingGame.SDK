@@ -9,7 +9,7 @@ namespace SensngGame.ClientSDK.Contract
     public class QrCodeResult
     {
         public string Status { get; set; }
-        public string ErrMessage { get; set; }
+        public string Message { get; set; }
         public QrCodeData Data { get; set; }
     }
 
