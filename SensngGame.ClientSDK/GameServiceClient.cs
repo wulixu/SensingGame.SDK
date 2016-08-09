@@ -85,6 +85,8 @@ namespace SensngGame.ClientSDK
 
         private const string GetActivityGameInfoQuery = "GetActivityGameInfo";
 
+        private const string GetGameInfoQuery = "GetGameInfo";
+
         #region Inner Keys.
         /// <summary>
         /// The subscription key.
@@ -120,11 +122,6 @@ namespace SensngGame.ClientSDK
             this._subscriptionKey = subscriptionKeyForActivity;
             this.gameNo = gameNo;
             this.clientUniueId = MacIPHelper.GetClientMac();
-        }
-
-        public void Initialize()
-        {
-
         }
 
         #region QrcodeClient
@@ -344,7 +341,23 @@ namespace SensngGame.ClientSDK
         #endregion
 
 
-
+        #region Game
+        public async Task<GameResult> GetGameInfo()
+        {
+            var absolutePath = $"{ServiceHost}/{GetGameInfoQuery}";
+            var formNameValues = $"{GetBasicFormNameValues()}";
+            try
+            {
+                var gameResult = await SendRequestAsync<string, GameResult>(HttpMethod.Post, absolutePath, formNameValues);
+                return gameResult;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetGameInfo", ex);
+            }
+            return default(GameResult);
+        }
+        #endregion
 
         #region Awards Apis
 
@@ -577,7 +590,6 @@ namespace SensngGame.ClientSDK
                     {
                         responseContent = await response.Content.ReadAsStringAsync();
                     }
-
                     if (!string.IsNullOrWhiteSpace(responseContent))
                     {
                         return JsonConvert.DeserializeObject<TResponse>(responseContent, s_settings);
