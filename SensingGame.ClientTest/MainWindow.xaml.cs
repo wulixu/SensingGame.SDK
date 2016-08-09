@@ -333,5 +333,19 @@ namespace SensingGame.ClientTest
         {
 
         }
+
+        private async void gameDetails_Click(object sender, RoutedEventArgs e)
+        {
+            activityDetails.Text = "";
+            var gameData = await gameSvc.GetGameInfo();
+            if(gameData != null && gameData.Data != null)
+            {
+                activityDetails.Text += $"Game Name:{gameData.Data.Name}" + Environment.NewLine;
+                activityDetails.Text += $"Game Code:{gameData.Data.Code}" + Environment.NewLine;
+                activityDetails.Text += $"GameType:{gameData.Data.GameType}" + Environment.NewLine;
+                activityDetails.Text += $"EnvType:{gameData.Data.EnvType}" + Environment.NewLine;
+                activityDetails.Text += $"Owner:{gameData.Data.Owner}" + Environment.NewLine;
+            }
+        }
     }
 }
