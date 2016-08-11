@@ -42,5 +42,7 @@ namespace SensngGame.ClientSDK.Contract
         public bool IsGameStarted { get; set; }
 
         public bool IsNeedCheckBeforScanQRCode { get; set; }
+
+        public string ActivityAuthorizationType { get; set; }
     }
 }

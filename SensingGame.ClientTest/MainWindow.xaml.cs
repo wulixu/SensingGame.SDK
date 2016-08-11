@@ -328,6 +328,7 @@ namespace SensingGame.ClientTest
             {
                 activityGameDetails.Text += $"Activity Name:{activityGame.Data.Name}" + Environment.NewLine;
                 activityGameDetails.Text += $"Package Zip:{activityGame.Data.MaterialPacketUrl}" + Environment.NewLine;
+                activityGameDetails.Text += $"AuthorizationType:{activityGame.Data.ActivityAuthorizationType}" + Environment.NewLine;
             }
         }
 

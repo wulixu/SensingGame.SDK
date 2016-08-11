@@ -62,11 +62,11 @@
             <Label x:Name="label_Copy" Content="活动信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="68" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115"/>
             <Label x:Name="label_Copy4" Content="游戏信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="68" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="1"/>
             <Label x:Name="label_Copy5" Content="活动游戏信息:" HorizontalAlignment="Left" Margin="7,7,0,0" Width="92" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="2"/>
-            <TextBlock x:Name="activityDetails" HorizontalAlignment="Left" Height="77" Margin="12,34,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227"/>
-            <TextBlock x:Name="gameInfoDetails" HorizontalAlignment="Left" Height="77" Margin="10,33,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="1"/>
-            <TextBlock x:Name="activityGameDetails" HorizontalAlignment="Left" Height="77" Margin="13,38,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="2"/>
-            <Label x:Name="label_Copy6" Content="活动游戏信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="92" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="3"/>
-            <TextBlock x:Name="awardDetails" HorizontalAlignment="Left" Height="77" Margin="13,34,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="3"/>
+            <TextBlock x:Name="activityDetails" HorizontalAlignment="Left" Height="77" Margin="12,31,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227"/>
+            <TextBlock x:Name="gameInfoDetails" HorizontalAlignment="Left" Height="77" Margin="10,31,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="1"/>
+            <TextBlock x:Name="activityGameDetails" HorizontalAlignment="Left" Height="77" Margin="13,31,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="2"/>
+            <Label x:Name="label_Copy6" Content="奖品信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="92" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="3"/>
+            <TextBlock x:Name="awardDetails" HorizontalAlignment="Left" Height="77" Margin="13,31,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="3"/>
             <Label x:Name="rankMsg" Content="" HorizontalAlignment="Left" Margin="17,275,0,0" Width="222" Grid.Column="3" Grid.Row="2" Height="26" VerticalAlignment="Top"/>
         </Grid>
     </ScrollViewer>
