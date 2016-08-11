@@ -9,10 +9,10 @@
     <ScrollViewer>
         <Grid ShowGridLines="True">
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="260"/>
-                <RowDefinition Height="300"/>
-                <RowDefinition Height="320"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="324"/>
+                <RowDefinition Height="293"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250*"/>
@@ -20,54 +20,54 @@
                 <ColumnDefinition Width="250*"/>
                 <ColumnDefinition Width="250*"/>
             </Grid.ColumnDefinitions>
-            <Image x:Name="image" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Height="200" Margin="28,13,0,0" VerticalAlignment="Top" Width="200" Source="bg.png"/>
-            <Image x:Name="avatorImg" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Left" Height="200" Margin="29,25,0,0" VerticalAlignment="Top" Width="200"/>
+            <Image x:Name="qrCodeImg" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Height="200" Margin="28,117,0,0" VerticalAlignment="Top" Width="200" Source="bg.png"/>
+            <Image x:Name="avatorImg" Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Left" Height="200" Margin="28,83,0,0" VerticalAlignment="Top" Width="200"/>
 
-            <Image x:Name="image1" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Height="200" Margin="19,74,0,0" VerticalAlignment="Top" Width="200"/>
-            <Image x:Name="avatorImg1" Grid.Column="1" Grid.Row="2"  HorizontalAlignment="Left" Height="200" Margin="23,48,0,0" VerticalAlignment="Top" Width="200"/>
-            <Button x:Name="button" Content="请先扫码&#xD;&#xA;后点击获取头像" HorizontalAlignment="Left" Height="35" Margin="229,3,0,0" VerticalAlignment="Top" Width="105" Click="button_Click" Grid.ColumnSpan="2" Grid.Row="2"/>
-            <Label x:Name="label" Content="扫码玩游戏" HorizontalAlignment="Left" Height="25" Margin="85,237,0,0" VerticalAlignment="Top" Width="70" Grid.Row="1"/>
-            <Label x:Name="label_Copy1" Content="最近扫码用户头像" HorizontalAlignment="Left" Height="25" Margin="75,237,0,0" VerticalAlignment="Top" Width="113" Grid.Column="1" Grid.Row="1"/>
-            <Label x:Name="label_Copy2" Content="最近扫码用户头像" HorizontalAlignment="Left" Height="25" Margin="75,253,0,0" VerticalAlignment="Top" Width="118" Grid.Column="1" Grid.Row="2"/>
-            <Button x:Name="PostDataByUser" Content="PostDataByUser" Grid.Column="2" HorizontalAlignment="Left" Height="35" Margin="82,165,0,0" VerticalAlignment="Top" Width="105" Click="PostDataByUserClick" Grid.Row="1"/>
-            <Label x:Name="label1" Content="ActivityGame Key:" HorizontalAlignment="Left" Margin="7,18,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="subKey" HorizontalAlignment="Left" Height="20" Margin="109,22,0,0" TextWrapping="Wrap" Text="7af76686a5d34551ae5e5ddae7e01993" VerticalAlignment="Top" Width="364" RenderTransformOrigin="0.545,1" Grid.ColumnSpan="2" TextChanged="subKey_TextChanged"/>
-            <Label x:Name="label1_Copy" Content="Game No:" HorizontalAlignment="Left" Margin="109,17,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-            <TextBox x:Name="gameId" HorizontalAlignment="Left" Height="20" Margin="181,21,0,0" TextWrapping="Wrap" Text="OFF-M-FindDiff-001" VerticalAlignment="Top" Width="115" RenderTransformOrigin="0.545,1" Grid.Column="2" Grid.ColumnSpan="2"/>
-            <Button x:Name="acitivityDetails" Content="活动信息" Grid.Column="3" HorizontalAlignment="Left" Height="35" Margin="8,10,0,0" VerticalAlignment="Top" Width="55" Grid.Row="1" Click="AcitivityDetails_Click"/>
-            <Button x:Name="ActivityWinner" Content="随机抽奖" Grid.Column="2" HorizontalAlignment="Left" Height="35" Margin="62,7,0,0" VerticalAlignment="Top" Width="125" Grid.Row="2" Click="ActivityWinner_Click"/>
-            <Image x:Name="avatorWinnerImg" Grid.Column="2" Grid.Row="2"  HorizontalAlignment="Left" Height="200" Margin="28,49,0,0" VerticalAlignment="Top" Width="200"/>
-            <Label x:Name="label_Copy3" Content="获奖用户" HorizontalAlignment="Left" Margin="99,255,0,-1" Width="70" Grid.Column="2" Grid.Row="2" RenderTransformOrigin="4.3,-0.04" Height="25" VerticalAlignment="Top"/>
-            <Button x:Name="GetRankUsers" Content="获取排名用户" Grid.Column="3" HorizontalAlignment="Left" Height="35" Margin="16,7,0,0" VerticalAlignment="Top" Width="105" Grid.Row="2" Click="GetRankUsers_Click"/>
-            <Label x:Name="label1_Copy2" Content="Game Score:" HorizontalAlignment="Left" Margin="28,50,0,0" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1"/>
-            <TextBox x:Name="score" HorizontalAlignment="Left" Height="20" Margin="109,54,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.545,1" Grid.Column="2" Grid.Row="1"/>
+            <Button x:Name="button" Content="获取扫码用户头像" HorizontalAlignment="Left" Height="35" Margin="61,39,0,0" VerticalAlignment="Top" Width="132" Click="ScannedAvator_Click" Grid.Row="2" Grid.Column="1"/>
+            <Label x:Name="label" Content="二维码类型" HorizontalAlignment="Left" Height="25" Margin="8,7,0,0" VerticalAlignment="Top" Width="70" Grid.Row="2"/>
+            <Label x:Name="label_Copy1" Content="最近扫码用户头像" HorizontalAlignment="Left" Margin="75,293,0,0" Width="113" Grid.Column="1" Grid.Row="2" Height="26" VerticalAlignment="Top"/>
+            <Button x:Name="PostDataByUser" Content="PostDataByUser" Grid.Column="2" HorizontalAlignment="Left" Height="35" Margin="82,165,0,0" VerticalAlignment="Top" Width="105" Click="PostDataByUserClick" Grid.Row="2"/>
+            <Label x:Name="label1" Content="ActivityGame Key:" HorizontalAlignment="Left" Margin="7,18,0,0" VerticalAlignment="Top" Height="26" Width="105"/>
+            <TextBox x:Name="subKey" HorizontalAlignment="Left" Height="20" Margin="109,22,0,0" TextWrapping="Wrap" Text="c25e2e19b2dc42f3bb40c5c8ba60d2c8" VerticalAlignment="Top" Width="364" RenderTransformOrigin="0.545,1" Grid.ColumnSpan="2"/>
+            <Label x:Name="label1_Copy" Content="Game No:" Margin="7,17,179,0" VerticalAlignment="Top" Grid.Column="2" Height="26"/>
+            <Button x:Name="ActivityWinner" Content="随机抽奖" HorizontalAlignment="Left" Height="35" Margin="63,10,0,0" VerticalAlignment="Top" Width="125" Grid.Row="3" Click="ActivityWinner_Click"/>
+            <Image x:Name="avatorWinnerImg" Grid.Row="3"  HorizontalAlignment="Left" Height="200" Margin="22,52,0,0" VerticalAlignment="Top" Width="200"/>
+            <Label x:Name="label_Copy3" Content="获奖用户" HorizontalAlignment="Left" Margin="91,263,0,0" Width="70" Grid.Column="1" Grid.Row="3" RenderTransformOrigin="4.3,-0.04" Height="25" VerticalAlignment="Top"/>
+            <Button x:Name="GetRankUsers" Content="获取排名用户" Grid.Column="3" HorizontalAlignment="Left" Height="35" Margin="11,24,0,0" VerticalAlignment="Top" Width="105" Grid.Row="2" Click="GetRankUsers_Click"/>
+            <Label x:Name="label1_Copy2" Content="Game Score:" HorizontalAlignment="Left" Margin="28,50,0,0" VerticalAlignment="Top" Grid.Column="2" Grid.Row="2" Height="26" Width="76"/>
+            <TextBox x:Name="score" HorizontalAlignment="Left" Height="20" Margin="109,54,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.545,1" Grid.Column="2" Grid.Row="2"/>
             <Button x:Name="serviceCreate" Content="Create Service" Background="Red" Grid.Column="3" HorizontalAlignment="Left" Height="22" Margin="73,21,0,0" VerticalAlignment="Top" Width="100" Click="ServiceCreate_Click"/>
-            <Button x:Name="button1" Content="游戏玩完，生成二维码" HorizontalAlignment="Left" Height="32" Margin="49,34,0,0" Grid.Row="2" VerticalAlignment="Top" Width="145" Click="button1_Click"/>
-            <Label x:Name="label1_Copy3" Content="Game Score:" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Grid.Row="2"/>
-            <TextBox x:Name="scoreafter" HorizontalAlignment="Left" Height="22" Margin="98,7,0,0" Grid.Row="2" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="73"/>
-            <Image x:Name="avatorRank" Grid.Column="3" Grid.Row="2"  HorizontalAlignment="Left" Height="200" Margin="31,52,0,0" VerticalAlignment="Top" Width="200"/>
-            <Label x:Name="rankMsg" Content="第一名" HorizontalAlignment="Left" Margin="0,253,0,0" Width="254" Grid.Column="3" Grid.Row="2" RenderTransformOrigin="4.3,-0.04" Height="25" VerticalAlignment="Top"/>
-            <TextBlock x:Name="activityDetails" Grid.Column="3" HorizontalAlignment="Left" Height="186" Margin="33,49,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="190"/>
-            <Label x:Name="label1_Copy4" Content="By:" HorizontalAlignment="Left" Margin="128,12,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3"/>
-            <TextBox x:Name="orderby" HorizontalAlignment="Left" Height="22" Margin="157,15,0,0" Grid.Row="2" TextWrapping="Wrap" Text="score" VerticalAlignment="Top" Width="56" Grid.Column="3"/>
-            <Label x:Name="label1_Copy5" Content="扫描人(去重）：" HorizontalAlignment="Left" Margin="82,2,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
-            <Label x:Name="scanCountBefore" Content="" HorizontalAlignment="Left" Margin="177,2,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Width="54"/>
-            <Label x:Name="label1_Copy6" Content="扫描人(去重）：" HorizontalAlignment="Left" Margin="85,4,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2"/>
-            <Label x:Name="scanCountAfter" Content="" HorizontalAlignment="Left" Margin="176,4,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Width="54"/>
-            <TextBox x:Name="rankPos" HorizontalAlignment="Left" Height="22" Margin="218,15,0,0" Grid.Row="2" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="26" Grid.Column="3" />
-            <Button x:Name="createWinUser" Content="特定用户中奖" HorizontalAlignment="Left" Height="35" Margin="19,10,0,0" VerticalAlignment="Top" Width="105" Grid.Row="3" Click="CreateWinUser_Click" />
-            <Label x:Name="winnerID" Content="中奖用户ID：&#xD;&#xA;" HorizontalAlignment="Left" Margin="19,60,0,0" Width="81" Grid.Row="3" RenderTransformOrigin="4.3,-0.04" Height="25" VerticalAlignment="Top"/>
-            <TextBox x:Name="winnerIDBox" HorizontalAlignment="Left" Height="22" Margin="100,63,0,0" Grid.Row="3" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="141" />
-            <Label x:Name="awardID" Content="奖品ID：&#xA;" HorizontalAlignment="Left" Margin="42,90,0,0" Width="56" Grid.Row="3" RenderTransformOrigin="4.3,-0.04" Height="25" VerticalAlignment="Top"/>
-            <TextBox x:Name="awardIDBox" HorizontalAlignment="Left" Height="22" Margin="100,90,0,0" Grid.Row="3" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="141" />
-            <Image x:Name="awardUserImg" Grid.Row="3"  HorizontalAlignment="Left" Height="200" Margin="28,120,0,0" VerticalAlignment="Top" Width="200"/>
-            <Button x:Name="startActivity" Margin="10,10,83,261" Grid.Row="3" Grid.Column="1" Click="startActivity_Click">Start Activity</Button>
-            <Button x:Name="stopAcitivy" Margin="10,63,83,208" Grid.Row="3" Grid.Column="1" Click="stopAcitivy_Click">Stop Activity</Button>
-            <TextBlock x:Name="activityStatus" Foreground="Black" Margin="180,20,18,250" Height="50" Grid.Row="3" Grid.Column="1"></TextBlock>
-            <Button x:Name="startActivity_Copy" Margin="72,16,22,255" Grid.Row="3" Grid.Column="2" Click="startActivity_Click" Content="Start Activity"/>
-            <Button x:Name="acitivityGameDetails" Content="活动游戏信息" Grid.Column="3" HorizontalAlignment="Left" Height="35" Margin="73,9,0,0" VerticalAlignment="Top" Width="78" Grid.Row="1" Click="acitivityGameDetails_Click"/>
-            <Button x:Name="gameDetails" Content="游戏信息" Grid.Column="3" HorizontalAlignment="Left" Height="35" Margin="165,9,0,0" VerticalAlignment="Top" Width="66" Grid.Row="1" Click="gameDetails_Click"/>
-
+            <Button x:Name="createQrCode" Content="生成二维码" HorizontalAlignment="Left" Height="32" Margin="58,69,0,0" Grid.Row="2" VerticalAlignment="Top" Width="145" Click="CreateQrcode_Click" Background="#FF70F006"/>
+            <Label x:Name="label1_Copy3" Content="Game Score:" HorizontalAlignment="Left" Margin="22,37,0,0" VerticalAlignment="Top" Grid.Row="2" Height="26" Width="76"/>
+            <TextBox x:Name="scoreafter" HorizontalAlignment="Left" Height="22" Margin="115,40,0,0" Grid.Row="2" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="73"/>
+            <Image x:Name="avatorRank" Grid.Column="3" Grid.Row="2"  HorizontalAlignment="Left" Height="200" Margin="30,64,0,0" VerticalAlignment="Top" Width="200"/>
+            <Label x:Name="label1_Copy4" Content="By:" HorizontalAlignment="Left" Margin="123,29,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" Height="26" Width="25"/>
+            <TextBox x:Name="orderby" HorizontalAlignment="Left" Height="22" Margin="152,32,0,0" Grid.Row="2" TextWrapping="Wrap" Text="score" VerticalAlignment="Top" Width="56" Grid.Column="3"/>
+            <Label x:Name="label1_Copy5" Content="扫描人(去重）：" HorizontalAlignment="Left" Margin="29,5,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Height="26" Width="98"/>
+            <Label x:Name="scanCountBefore" Content="" HorizontalAlignment="Left" Margin="135,5,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Width="54" Height="26"/>
+            <Label x:Name="scanCountAfter" Content="" HorizontalAlignment="Left" Margin="176,4,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3" Width="54" Height="26"/>
+            <TextBox x:Name="rankPos" HorizontalAlignment="Left" Height="22" Margin="213,32,0,0" Grid.Row="2" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="26" Grid.Column="3" />
+            <Button x:Name="createWinUser" Content="特定用户中奖" HorizontalAlignment="Left" Height="35" Margin="15,7,0,0" VerticalAlignment="Top" Width="105" Grid.Row="3" Click="CreateWinUser_Click" Grid.Column="1" />
+            <Label x:Name="winnerID" Content="中奖用户ID：&#xD;&#xA;" HorizontalAlignment="Left" Margin="16,49,0,0" Width="81" Grid.Row="3" RenderTransformOrigin="4.3,-0.04" Height="25" VerticalAlignment="Top" Grid.Column="1"/>
+            <TextBox x:Name="winnerIDBox" HorizontalAlignment="Left" Height="22" Margin="97,52,0,0" Grid.Row="3" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="141" Grid.Column="1" />
+            <Label x:Name="awardID" Content="奖品ID：&#xA;" HorizontalAlignment="Left" Margin="39,76,0,0" Width="56" Grid.Row="3" RenderTransformOrigin="4.3,-0.04" Height="25" VerticalAlignment="Top" Grid.Column="1"/>
+            <TextBox x:Name="awardIDBox" HorizontalAlignment="Left" Height="22" Margin="97,79,0,0" Grid.Row="3" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="141" Grid.Column="1" />
+            <Image x:Name="awardUserImg" Grid.Row="3"  HorizontalAlignment="Left" Height="163" Margin="46,104,0,0" VerticalAlignment="Top" Width="163" Grid.Column="1"/>
+            <Button x:Name="startActivity" Margin="47,43,46,200" Grid.Row="3" Grid.Column="2" Click="startActivity_Click">Start Activity</Button>
+            <Button x:Name="stopAcitivy" Margin="47,118,46,127" Grid.Row="3" Grid.Column="2" Click="stopAcitivy_Click">Stop Activity</Button>
+            <TextBlock x:Name="activityStatus" Foreground="Black" Margin="180,20,18,165" Grid.Row="4" Grid.Column="1"/>
+            <Button x:Name="startActivity_Copy" Margin="17,24,76,229" Grid.Row="3" Grid.Column="3" Click="startActivity_Click" Content="Start Activity"/>
+            <ComboBox x:Name="gameNoCBox" Grid.Column="2" HorizontalAlignment="Left" Margin="72,20,0,0" VerticalAlignment="Top" Width="168" Height="22"/>
+            <ComboBox x:Name="qrCodeCBox" HorizontalAlignment="Left" Margin="83,9,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" Height="22"/>
+            <Label x:Name="label_Copy" Content="活动信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="68" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115"/>
+            <Label x:Name="label_Copy4" Content="游戏信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="68" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="1"/>
+            <Label x:Name="label_Copy5" Content="活动游戏信息:" HorizontalAlignment="Left" Margin="7,7,0,0" Width="92" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="2"/>
+            <TextBlock x:Name="activityDetails" HorizontalAlignment="Left" Height="77" Margin="12,34,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227"/>
+            <TextBlock x:Name="gameInfoDetails" HorizontalAlignment="Left" Height="77" Margin="10,33,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="1"/>
+            <TextBlock x:Name="activityGameDetails" HorizontalAlignment="Left" Height="77" Margin="13,38,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="2"/>
+            <Label x:Name="label_Copy6" Content="活动游戏信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="92" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="3"/>
+            <TextBlock x:Name="awardDetails" HorizontalAlignment="Left" Height="77" Margin="13,34,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="3"/>
+            <Label x:Name="rankMsg" Content="" HorizontalAlignment="Left" Margin="17,275,0,0" Width="222" Grid.Column="3" Grid.Row="2" Height="26" VerticalAlignment="Top"/>
         </Grid>
     </ScrollViewer>
 </Window>

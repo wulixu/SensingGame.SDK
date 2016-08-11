@@ -158,10 +158,10 @@ namespace SensngGame.ClientSDK
         }
 
 
-        public async Task<QrCodeResult> GetQrCode4LoginAsync(bool isSendWeChatMsg = false,string roomNo="")
+        public async Task<QrCodeResult> GetQrCode4LoginAsync(EnumQRStatus qrType = EnumQRStatus.BeforeGame, bool isSendWeChatMsg = false,string roomNo="")
         {
             var absolutePath = $"{ServiceHost}/{QrCode4LoginQuery}";
-            var formNameValues = $"roomNo={roomNo}&isSendWeChatMsg={isSendWeChatMsg}&{GetBasicFormNameValues()}";
+            var formNameValues = $"qrType={qrType}&roomNo={roomNo}&isSendWeChatMsg={isSendWeChatMsg}&{GetBasicFormNameValues()}";
             try
             {
                 return await SendRequestAsync<object, QrCodeResult>(HttpMethod.Post, absolutePath, formNameValues);
