@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensingGame.ClientTest", "SensingGame.ClientTest\SensingGame.ClientTest.csproj", "{BB7BEEB7-39CE-4EAE-8014-AF9365871CAD}"
 EndProject
@@ -21,6 +21,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hooters.ClientSDK", "Hooters.ClientSDK\Hooters.ClientSDK.csproj", "{9955CFDC-C1AB-405B-AE8D-45D7C746BD62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hooters.TestClient", "Hooters.TestClient\Hooters.TestClient.csproj", "{FD69F0A0-6EC2-4957-BE38-4DFF5027B726}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SensingGame.SDK", "SensingGame.SDK\SensingGame.SDK.xproj", "{D86F006E-DF49-4E56-BDAC-FB21014ED274}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,10 @@ Global
 		{FD69F0A0-6EC2-4957-BE38-4DFF5027B726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD69F0A0-6EC2-4957-BE38-4DFF5027B726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD69F0A0-6EC2-4957-BE38-4DFF5027B726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D86F006E-DF49-4E56-BDAC-FB21014ED274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D86F006E-DF49-4E56-BDAC-FB21014ED274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D86F006E-DF49-4E56-BDAC-FB21014ED274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D86F006E-DF49-4E56-BDAC-FB21014ED274}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

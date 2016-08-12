@@ -41,8 +41,7 @@
             <Label x:Name="label1_Copy3" Content="Game Score:" HorizontalAlignment="Left" Margin="22,37,0,0" VerticalAlignment="Top" Grid.Row="2" Height="26" Width="76"/>
             <TextBox x:Name="scoreafter" HorizontalAlignment="Left" Height="22" Margin="115,40,0,0" Grid.Row="2" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="73"/>
             <Image x:Name="avatorRank" Grid.Column="3" Grid.Row="2"  HorizontalAlignment="Left" Height="200" Margin="30,64,0,0" VerticalAlignment="Top" Width="200"/>
-            <Label x:Name="label1_Copy4" Content="By:" HorizontalAlignment="Left" Margin="123,29,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" Height="26" Width="25"/>
-            <TextBox x:Name="orderby" HorizontalAlignment="Left" Height="22" Margin="152,32,0,0" Grid.Row="2" TextWrapping="Wrap" Text="score" VerticalAlignment="Top" Width="56" Grid.Column="3"/>
+            <Label x:Name="label1_Copy4" Content="By:" HorizontalAlignment="Left" Margin="117,28,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" Height="26" Width="25"/>
             <Label x:Name="label1_Copy5" Content="扫描人(去重）：" HorizontalAlignment="Left" Margin="29,5,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Height="26" Width="98"/>
             <Label x:Name="scanCountBefore" Content="" HorizontalAlignment="Left" Margin="135,5,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Width="54" Height="26"/>
             <Label x:Name="scanCountAfter" Content="" HorizontalAlignment="Left" Margin="176,4,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3" Width="54" Height="26"/>
@@ -68,6 +67,7 @@
             <Label x:Name="label_Copy6" Content="奖品信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="92" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="3"/>
             <TextBlock x:Name="awardDetails" HorizontalAlignment="Left" Height="77" Margin="13,31,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="3"/>
             <Label x:Name="rankMsg" Content="" HorizontalAlignment="Left" Margin="17,275,0,0" Width="222" Grid.Column="3" Grid.Row="2" Height="26" VerticalAlignment="Top"/>
+            <ComboBox x:Name="orderByCBox" HorizontalAlignment="Left" Margin="142,31,0,0" Grid.Row="2" VerticalAlignment="Top" Width="61" Height="22" Grid.Column="3"/>
         </Grid>
     </ScrollViewer>
 </Window>

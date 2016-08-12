@@ -11,7 +11,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Serialization;
 using System.Collections.Specialized;
-using LogService;
+using System.Diagnostics;
 
 namespace SensngGame.ClientSDK
 {
@@ -21,7 +21,6 @@ namespace SensngGame.ClientSDK
         public static string SignalRPath = "http://wx.troncell.com/signalr";
 
         public static  string ServerBase = "http://game.troncell.com/";
-
         /// <summary>
         /// The service host.
         /// </summary>
@@ -102,7 +101,7 @@ namespace SensngGame.ClientSDK
         private string clientUniueId;
         #endregion
 
-        private static readonly IBizLogger logger = ServerLogFactory.GetLogger(typeof(GameServiceClient));
+        //private static readonly IBizLogger logger = ServerLogFactory.GetLogger(typeof(GameServiceClient));
 
         /// <summary>
         /// The default resolver.
@@ -127,7 +126,8 @@ namespace SensngGame.ClientSDK
         {
             this._subscriptionKey = subscriptionKeyForActivity;
             this.gameNo = gameNo;
-            this.clientUniueId = MacIPHelper.GetClientMac();
+            //this.clientUniueId = MacIPHelper.GetClientMac();
+            this.clientUniueId = "001001001";
         }
 
         #region QrcodeClient
@@ -142,7 +142,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("FindScanQrCodeUserAysnc", ex);
+                Debug.WriteLine("FindScanQrCodeUserAysnc Exception happened" +  ex.Message);
             }
             return default(UserActionResult);
         }
@@ -158,7 +158,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("FindScanQrCodeUserAysnc", ex);
+                Debug.WriteLine("FindScanQrCodeUserAysnc" + ex);
             }
             return default(UserActionsResult);
         }
@@ -174,7 +174,7 @@ namespace SensngGame.ClientSDK
             }
            catch (Exception ex)
             {
-                logger.Error("GetQrCode4LoginAsync", ex);
+                Debug.WriteLine("GetQrCode4LoginAsync" + ex);
             }
             return default(QrCodeResult);
         }
@@ -204,7 +204,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("PostData4ScanAsync", ex);
+                Debug.WriteLine("PostData4ScanAsync" + ex);
             }
             return default(QrCodeResult);
         }
@@ -235,7 +235,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("PostData4ScanAsync", ex);
+                Debug.WriteLine("PostData4ScanAsync" + ex);
             }
             return default(UserActionResult);
         }
@@ -256,7 +256,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("UpdateActivityGameAsyc", ex);
+                Debug.WriteLine("UpdateActivityGameAsyc", ex);
             }
             return default(UserActionResult);
 
@@ -273,7 +273,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetUsersByActivitiy", ex);
+                Debug.WriteLine("GetUsersByActivitiy" + ex.Message);
             }
             return default(UserInfosResult);
         }
@@ -289,7 +289,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetUsersByActivitiy", ex);
+                Debug.WriteLine("GetUsersByActivitiy" + ex.Message);
             }
             return default(UserActionsResult);
         }
@@ -307,7 +307,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetUsersByActivitiy", ex);
+                Debug.WriteLine("GetUsersByActivitiy" + ex.Message);
             }
             return default(UserActionsResult);
         }
@@ -323,7 +323,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetUsersByActivitiy", ex);
+                Debug.WriteLine("GetUsersByActivitiy" + ex.Message);
             }
             return default(ActivityResult);
         }
@@ -339,7 +339,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetUsersByActivitiy", ex);
+                Debug.WriteLine("GetUsersByActivitiy" + ex.Message);
             }
             return default(WhiteUsersResult);
         }
@@ -359,7 +359,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetGameInfo", ex);
+                Debug.WriteLine("GetGameInfo" + ex.Message);
             }
             return default(GameResult);
         }
@@ -378,7 +378,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetAwardsByActivity", ex);
+                Debug.WriteLine("GetAwardsByActivity" + ex.Message);
             }
             return default(AwardsResult);
         }
@@ -395,7 +395,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("WinAwardByActionId", ex);
+                Debug.WriteLine("WinAwardByActionId" + ex.Message);
             }
             return default(UserAwardResult);
         }
@@ -411,7 +411,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("WinAwardByActionId", ex);
+                Debug.WriteLine("WinAwardByActionId" + ex.Message);
             }
             return default(UserAwardsResult);
         }
@@ -428,7 +428,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("WinAwardByRandom", ex);
+                Debug.WriteLine("WinAwardByRandom" + ex.Message);
             }
             return default(UserAwardResult);
         }
@@ -444,7 +444,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("WinAwardByRandom", ex);
+                Debug.WriteLine("WinAwardByRandom" + ex.Message);
             }
             return default(UserAwardResult);
         }
@@ -460,7 +460,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetCanWinUsers", ex);
+                Debug.WriteLine("GetCanWinUsers" + ex.Message);
             }
             return default(UserAwardsResult);
         }
@@ -477,7 +477,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetActivityGameInfo", ex);
+                Debug.WriteLine("GetActivityGameInfo" + ex.Message);
             }
             return default(GameActivityResult);
         }
@@ -496,7 +496,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetChartMessage", ex);
+                Debug.WriteLine("GetChartMessage" + ex.Message);
             }
             return default(ChatMessageResult);
         }
@@ -515,7 +515,7 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("GetUserInfoData",ex);
+                Debug.WriteLine("GetUserInfoData" + ex.Message);
             }
             return default(UserDataResult);
         }

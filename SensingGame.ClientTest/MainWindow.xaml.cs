@@ -52,7 +52,13 @@ namespace SensingGame.ClientTest
             {
                 qrCodeCBox.Items.Add(pair.Key);
             }
-            qrCodeCBox.SelectedItem = 1;
+            qrCodeCBox.SelectedIndex = 1;
+
+            orderByCBox.Items.Add("score");
+            orderByCBox.Items.Add("likecount");
+            orderByCBox.Items.Add("viewcount");
+
+            orderByCBox.SelectedIndex = 1;
         }
 
         private void AssembleGames()
@@ -270,7 +276,8 @@ namespace SensingGame.ClientTest
         private async void GetRankUsers_Click(object sender, RoutedEventArgs e)
         {
             var rankMax = int.Parse(rankPos.Text);
-            var rankUser = await gameSvc.GetRankUsersByActivity(orderby.Text, rankMax);
+            var orderby = orderByCBox.SelectedValue as string;
+            var rankUser = await gameSvc.GetRankUsersByActivity(orderby, rankMax);
 
             if (rankUser != null && rankUser.Data != null)
             {
@@ -339,7 +346,7 @@ namespace SensingGame.ClientTest
             if (gameData != null && gameData.Data != null)
             {
                 gameInfoDetails.Text += $"Game Name:{gameData.Data.Name}" + Environment.NewLine;
-                //gameInfoDetails.Text += $"Game Code:{gameData.Data.Code}" + Environment.NewLine;
+                gameInfoDetails.Text += $"Game Code:{gameData.Data.Code}" + Environment.NewLine;
                 gameInfoDetails.Text += $"GameType:{gameData.Data.GameType}" + Environment.NewLine;
                 gameInfoDetails.Text += $"EnvType:{gameData.Data.EnvType}" + Environment.NewLine;
                 //gameInfoDetails.Text += $"Owner:{gameData.Data.Owner}" + Environment.NewLine;
