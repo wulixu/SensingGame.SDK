@@ -20,7 +20,7 @@ namespace SensngGame.ClientSDK
 
         public static string SignalRPath = "http://wx.troncell.com/signalr";
 
-        public static  string ServerBase = "http://game.troncell.com/";
+        public static  string ServerBase = "http://wx.troncell.com/";
         /// <summary>
         /// The service host.
         /// </summary>
