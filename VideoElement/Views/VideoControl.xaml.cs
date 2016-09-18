@@ -40,8 +40,8 @@ namespace VideoElement
         public VideoControl()
         {
             _model = new VideoControlViewModel();
-            gameSvc = new GameServiceClient("j;lajdf;jaiuefjf", AppConfig.WeixinAppId, "2", AppConfig.ActivityId);
-            SensingBase.Utils.Position p = new SensingBase.Utils.Position();
+            gameSvc = new GameServiceClient(AppConfig.WeixinAppId, "OFF-K-Camera-001");
+           // SensingBase.Utils.Position p = new SensingBase.Utils.Position();
 
             InitializeComponent();
             InitPlayer();

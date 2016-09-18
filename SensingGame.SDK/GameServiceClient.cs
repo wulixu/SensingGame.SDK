@@ -18,13 +18,13 @@ namespace SensngGame.ClientSDK
     public class GameServiceClient : IGameServiceClient
     {
 
-        public static string SignalRPath = "http://wx.troncell.com/signalr";
+        public static string SignalRPath = "http://game.troncell.com/signalr";
 
-        public static  string ServerBase = "http://wx.troncell.com/";
+        public static  string ServerBase = "http://game.troncell.com/";
         /// <summary>
         /// The service host.
         /// </summary>
-        private const string ServiceHost = "http://wx.troncell.com/api/v1/WeixinApi";
+        private const string ServiceHost = "http://game.troncell.com/api/v1/WeixinApi";
 
         //private const string ServiceHost = "http://localhost:4469/api/v1/WeixinApi";
 
