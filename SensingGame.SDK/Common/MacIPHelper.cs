@@ -16,7 +16,7 @@ namespace SensingSite.ClientSDK.Common
         public static string GetClientMac()
         {
             string macAddresses = "";
-
+#if !WINDOWS_UWP
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (nic.OperationalStatus == OperationalStatus.Up)
@@ -25,8 +25,10 @@ namespace SensingSite.ClientSDK.Common
                     break;
                 }
             }
+#endif
             return macAddresses;
         }
+
 
     }
 }
