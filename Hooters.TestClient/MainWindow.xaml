@@ -39,5 +39,6 @@
         <Button x:Name="DeleteOne" Content="Delete One" HorizontalAlignment="Left" Height="30" Margin="687,49,0,0" VerticalAlignment="Top" Width="70" RenderTransformOrigin="1.323,0.633" Click="DeleteOne_Click"/>
         <Button x:Name="GroupInfoBtn" Content="Group Info" HorizontalAlignment="Left" Height="30" Margin="355,126,0,0" VerticalAlignment="Top" Width="85" Click="GroupInfoBtn_Click"/>
         <Button x:Name="UploadSalesDataBtn" Content="Upload Sales Data" HorizontalAlignment="Left" Height="30" Margin="380,170,0,0" VerticalAlignment="Top" Width="111" Click="UploadSalesDataBtn_Click"/>
+        <Button x:Name="GetReportsBtn" Content="All Reports" HorizontalAlignment="Left" Height="30" Margin="655,136,0,0" VerticalAlignment="Top" Width="85" Click="GetReportsBtn_Click"/>
     </Grid>
 </Window>

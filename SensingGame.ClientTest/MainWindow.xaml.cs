@@ -187,13 +187,13 @@ namespace SensingGame.ClientTest
 
         public static BitmapSource UriToImage(string imageUrl)
         {
-            if (imageUrl.Contains("mp.weixin.qq.com/cgi-bin/showqrcode") || imageUrl.Contains("wx.qlogo.cn"))
+            //if (imageUrl.Contains("mp.weixin.qq.com/cgi-bin/showqrcode") || imageUrl.Contains("wx.qlogo.cn"))
             {
                 return WebImageToImage(imageUrl);
             }
-            else
+            //else
             {
-                return ValueToImage(imageUrl);
+                //return ValueToImage(imageUrl);
             }
         }
 

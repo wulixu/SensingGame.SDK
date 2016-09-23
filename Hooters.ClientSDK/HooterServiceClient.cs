@@ -39,6 +39,14 @@ namespace Hooters.ClientSDK
 
         private const string PostSalesDataQuery = "/PosSalesData";
 
+
+
+        private const string ServiceDataHost = "http://hooters.troncell.com/api/v0/ReportDataApi";
+
+        private const string GetAllReportsQuery = "/GetAllReports";
+        private const string GetDataByReportIdQuery = "/GetDataByReportId";
+
+
         /// <summary>
         /// The json header
         /// </summary>
@@ -198,6 +206,48 @@ namespace Hooters.ClientSDK
             }
             return default(GroupResult);
         }
+
+
+        public async Task<ReportsResult> GetAllReports()
+        {
+            var absolutePath = $"{ServiceDataHost}/{GetAllReportsQuery}?SubscriptionKey={subscriptionKey}";
+            try
+            {
+                var reportsResult = await SendRequestAsync<string, ReportsResult>(HttpMethod.Get, absolutePath, null);
+                return reportsResult;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("PostCountersByDevice", ex);
+            }
+            return default(ReportsResult);
+        }
+
+
+        public async Task<ReportDataResult> GetDataByReportId(int reportId, DateTime startTime, DateTime endTime)
+        {
+            var absolutePath = $"{ServiceDataHost}/{GetDataByReportIdQuery}?SubscriptionKey={subscriptionKey}";
+
+            var postData = new { reportId = reportId.ToString(), startTime = startTime.ToLongDateString(), endTime = endTime.ToLongDateString() };
+            //nameValues.Add("reportId", );
+            //nameValues.Add("startTime", startTime.ToLongTimeString());
+            //nameValues.Add("endTime", endTime.ToLongTimeString());
+
+            try
+            {
+                var reportDataResult = await SendRequestAsync<object, ReportDataResult>(HttpMethod.Post, absolutePath, postData);
+                return reportDataResult;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("PostCountersByDevice", ex);
+            }
+            return default(ReportDataResult);
+        }
+
+        #region 
+
+        #endregion
 
         #region the json client
         private async Task<TResponse> SendRequestAsync<TRequest, TResponse>(HttpMethod httpMethod, string requestUrl, TRequest requestBody,string type="json")

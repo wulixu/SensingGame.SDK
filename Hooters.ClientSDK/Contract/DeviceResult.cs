@@ -26,4 +26,37 @@ namespace Hooters.ClientSDK.Contract
         public string Message { get; set; }
     }
 
+    public class ReportsResult
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<ReportInfo> Data { get; set; }
+    }
+
+    public class ReportInfo
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public string Type { get; set; }
+    }
+
+    public class ReportDataResult
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public List<ReportDataInfo> Data { get; set; }
+    }
+
+    public class ReportDataInfo
+    {
+        public string DataSource { get; set; }
+
+        public string Date { get; set; }
+
+        public string Time { get; set; }
+
+        public string Value { get; set; }
+    }
+
 }

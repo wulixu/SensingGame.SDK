@@ -186,5 +186,17 @@ namespace Hooters.TestClient
             }
             var result = await hooterService.PostSalesData(datas);
         }
+
+        ReportsResult reports;
+
+        private async void GetReportsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            reports = await hooterService.GetAllReports();
+
+            foreach(var report in reports.Data)
+            {
+                var data = await hooterService.GetDataByReportId(report.Id, DateTime.Now.AddDays(-2), DateTime.Now);
+            }
+        }
     }
 }
