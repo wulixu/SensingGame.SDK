@@ -12,9 +12,9 @@
         <Label x:Name="label" Content="Device Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="DeviceName" HorizontalAlignment="Left" Height="21" Margin="100,14,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="115" Text="CBC001" />
         <Label x:Name="label_Copy" Content="Device Mac:" HorizontalAlignment="Left" Margin="222,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="DeviceMac" HorizontalAlignment="Left" Height="21" Margin="308,14,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="115" Text="66-55-44-33-33-23"/>
+        <TextBox x:Name="DeviceMac" HorizontalAlignment="Left" Height="21" Margin="308,14,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Text="66-55-44-33-33-23"/>
         <Label x:Name="label_Copy1" Content="Sub_Key:" HorizontalAlignment="Left" Margin="432,11,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="SubKey" HorizontalAlignment="Left" Height="21" Margin="490,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Text="383b7a49e06b47a380743836f8217074" />
+        <TextBox x:Name="SubKey" HorizontalAlignment="Left" Height="21" Margin="490,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Text="32159f3b87f945a5b04b4f357715d135" />
         <Button x:Name="CreateBtn" Content="生成服务" HorizontalAlignment="Left" Height="21" Margin="768,14,0,0" VerticalAlignment="Top" Width="61" Background="#FFF50B0B" Click="CreateBtn_Click"/>
         <Rectangle Fill="#FFE619E6" HorizontalAlignment="Left" Height="1" Stroke="#FF1AEEAA" VerticalAlignment="Top" Width="840" Margin="0,45,0,0"/>
 

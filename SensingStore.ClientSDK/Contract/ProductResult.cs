@@ -30,16 +30,25 @@ namespace SensingStore.ClientSDK.Contract
         public string Pic_url { get; set; }
 
         public string QRCodeUrl { get; set; }
-        public int ProductCategoryId { get; set; }
-        public List<ProductImage> ProductImages { get; set; }
+        //public int ProductCategoryId { get; set; }
+        public List<ProductImageInfo> ProductImages { get; set; }
+        public List<ProductCategoryInfo> productCategorys { get; set; }
     }
 
-    public class ProductImage
+    public class ProductImageInfo
     {
         public int Id { get; set; }
         public string ImageUrl { get; set; }
         public string ImageSizeType { get; set; }
 
         public int ProductId { get; set; }
+    }
+
+    public class ProductCategoryInfo
+    {
+        public int Id { get; set; }
+        public int ProductId { get; set; }
+        public int CategoryNum { get; set; }
+        public string CategoryName { get; set; }
     }
 }
