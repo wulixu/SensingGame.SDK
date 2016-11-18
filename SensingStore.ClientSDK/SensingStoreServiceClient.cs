@@ -16,7 +16,7 @@ namespace SesingStore.ClientSDK
     public class SensingStoreServiceClient : ISensingStoreServiceClient
     {
 
-        public const string ServerBase = "http://139.224.15.28:252/";
+        public const string ServerBase = "http://store.troncell.com/";
         //public const string ServerBase = "http://wx.troncell.com/";
         //public const string ServerBase = "http://localhost:4469.troncell.com/";
 
