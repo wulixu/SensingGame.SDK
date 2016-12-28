@@ -16,7 +16,10 @@ namespace SensngGame.ClientSDK.Contract
     public class ChartMessage
     {
         public int Id { get; set; }
+
         public string Message { get; set; }
+
+        public string OwnerUrl { get; set; }
     }
 
    

@@ -20,7 +20,7 @@ namespace SensngGame.ClientSDK
 
         public const string ServerBase = "http://game.troncell.com/";
         //public const string ServerBase = "http://wx.troncell.com/";
-        //public const string ServerBase = "http://localhost:4469.troncell.com/";
+        //public const string ServerBase = "http://localhost:4469/";
 
         public const string SignalRPath = ServerBase + "signalr";
         private const string ServiceHost = ServerBase + "api/v1/WeixinApi";

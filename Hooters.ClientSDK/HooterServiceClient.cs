@@ -13,6 +13,16 @@ using System.Threading.Tasks;
 
 namespace Hooters.ClientSDK
 {
+
+    public enum Timescale
+    {
+        hour,
+        day,
+        week,
+        month,
+        year
+    }
+
     public class HooterServiceClient
     {
         public const string ApiOK = "OK";
@@ -45,6 +55,10 @@ namespace Hooters.ClientSDK
 
         private const string GetAllReportsQuery = "/GetAllReports";
         private const string GetDataByReportIdQuery = "/GetDataByReportId";
+
+        private const string GetDigitalDataByReportIdQuery = "/GetDigitReportById";
+
+        
 
 
         /// <summary>
@@ -224,11 +238,11 @@ namespace Hooters.ClientSDK
         }
 
 
-        public async Task<ReportDataResult> GetDataByReportId(int reportId, DateTime startTime, DateTime endTime)
+        public async Task<ReportDataResult> GetDataByReportId(int reportId, DateTime startTime, DateTime endTime, Timescale scale = Timescale.day)
         {
             var absolutePath = $"{ServiceDataHost}/{GetDataByReportIdQuery}?SubscriptionKey={subscriptionKey}";
 
-            var postData = new { reportId = reportId.ToString(), startTime = startTime.ToLongDateString(), endTime = endTime.ToLongDateString() };
+            var postData = new { reportId = reportId.ToString(), startTime = startTime.ToLongDateString(), endTime = endTime.ToLongDateString(),scale = scale };
             //nameValues.Add("reportId", );
             //nameValues.Add("startTime", startTime.ToLongTimeString());
             //nameValues.Add("endTime", endTime.ToLongTimeString());
@@ -243,6 +257,28 @@ namespace Hooters.ClientSDK
                 logger.Error("PostCountersByDevice", ex);
             }
             return default(ReportDataResult);
+        }
+
+
+        public async Task<ReportDigitalDataResult> GetDigitalDataByReportId(int reportId)
+        {
+            var absolutePath = $"{ServiceDataHost}/{GetDigitalDataByReportIdQuery}?SubscriptionKey={subscriptionKey}";
+
+            var postData = new { reportId = reportId.ToString() };
+            //nameValues.Add("reportId", );
+            //nameValues.Add("startTime", startTime.ToLongTimeString());
+            //nameValues.Add("endTime", endTime.ToLongTimeString());
+
+            try
+            {
+                var reportDataResult = await SendRequestAsync<object, ReportDigitalDataResult>(HttpMethod.Post, absolutePath, postData);
+                return reportDataResult;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetDigitalDataByReportId", ex);
+            }
+            return default(ReportDigitalDataResult);
         }
 
         #region 

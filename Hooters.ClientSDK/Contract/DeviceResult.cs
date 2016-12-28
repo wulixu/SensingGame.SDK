@@ -59,4 +59,20 @@ namespace Hooters.ClientSDK.Contract
         public string Value { get; set; }
     }
 
+
+
+    public class ReportDigitalDataResult
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public ReportDigitalDataInfo Data { get; set; }
+    }
+
+    public class  ReportDigitalDataInfo
+    {
+        public decimal CurrentValue { get; set; }
+        
+        public decimal DenomValue { get; set; }
+    }
+
 }
