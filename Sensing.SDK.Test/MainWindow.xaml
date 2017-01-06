@@ -1,0 +1,50 @@
+﻿<Window x:Class="Sensing.SDK.Test.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sensing.SDK.Test"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <StackPanel>
+        <StackPanel HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Orientation="Horizontal">
+            <Label>SubKey:</Label>
+            <TextBox x:Name="SubKeyTB" Width="200"></TextBox>
+
+            <Label>ClientNo:</Label>
+            <TextBox x:Name="ClientNoTB" Width="150"></TextBox>
+
+            <Button Margin="100,0,100,0" Width="105" Background="#FFF10C7F" Foreground="White" Click="Button_Click">Create Service</Button>
+        </StackPanel>
+        <Label x:Name="label_Copy4" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155"/>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="600">
+            <TabItem Header="Behavior">
+                <Grid Background="#FFE5E5E5">
+                    <Label x:Name="label" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="155"/>
+                    <TextBox x:Name="ThingNoTB" HorizontalAlignment="Left" Height="23" Margin="170,37,0,0" TextWrapping="Wrap" Text="ThingNO" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="234"/>
+                    <Label x:Name="label_Copy" Content="Action(关注Thing的行为):" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="155"/>
+                    <Label x:Name="label_Copy1" Content="Time(关注Thing的时间):" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Width="155"/>
+                    <TextBox x:Name="CollectTimeTB" HorizontalAlignment="Left" Height="23" Margin="170,114,0,0" TextWrapping="Wrap" Text="" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="234"/>
+                    <Label x:Name="label_Copy2" Content="Increments(这段时间内关注的次数):" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top" Width="207"/>
+                    <TextBox x:Name="IncrementTB" HorizontalAlignment="Left" Height="23" Margin="237,152,0,0" TextWrapping="Wrap" Text="" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="167"/>
+                    <Button x:Name="UploadBehaviorDataBtn" Content="上传数据" HorizontalAlignment="Left" Margin="256,209,0,0" VerticalAlignment="Top" Width="148" Click="UploadBehaviorDataBtn_Click"/>
+                    <ComboBox x:Name="ActionComboBox" HorizontalAlignment="Left" Margin="170,76,0,0" VerticalAlignment="Top" Width="234">
+                        <ComboBoxItem IsSelected="True">Click</ComboBoxItem>
+                        <ComboBoxItem>Take</ComboBoxItem>
+                        <ComboBoxItem>Buy</ComboBoxItem>
+                        <ComboBoxItem>Scan</ComboBoxItem>
+                        <ComboBoxItem>Like</ComboBoxItem>
+                    </ComboBox>
+                    <Label x:Name="label_Copy3" Content="*不填写时，为当前机器时间" HorizontalAlignment="Left" Margin="420,113,0,0" VerticalAlignment="Top" Width="170" Background="{x:Null}" Foreground="#FFF50505"/>
+                    <TextBlock x:Name="BMessage" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="29,265,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
+                    <Label x:Name="label_Copy5" Content="Api回掉信息" HorizontalAlignment="Left" Margin="24,234,0,0" VerticalAlignment="Top" Width="207"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Ads">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+
+    </StackPanel>
+</Window>
