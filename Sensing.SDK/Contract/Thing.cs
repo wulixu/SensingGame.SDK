@@ -76,6 +76,10 @@ namespace Sensing.SDK.Contract
         public IEnumerable<TCategoryViewModel> TCategories { get; set; }
 
         public IEnumerable<TagViewModel> Tas { get; set; }
+
+        public IEnumerable<int> CategoryIds { get; set; }
+
+        public TaobaoThingDetailViewModel TaobaoThing { get; set; }
     }
 
 
@@ -144,5 +148,60 @@ namespace Sensing.SDK.Contract
         public int Id { get; set; }
 
         public string Value { get; set; }
+    }
+
+
+    public class TaobaoThingDetailViewModel
+    {
+        public int Id { get; set; }
+
+
+        /// <summary>
+        /// 事物都该有个名字来表示
+        /// </summary>
+        public string Name { get; set; }
+
+
+        /// <summary>
+        /// 淘宝商品SPU唯一Id
+        /// </summary>
+        public string ItemId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string SkuId { get; set; }
+        /// <summary>
+        /// 数量 库存
+        /// </summary>
+        public int TaobaoQuantity { get; set; }
+
+        public string TaobaoStatus { get; set; }
+        /// <summary>
+        /// 淘宝名称
+        /// </summary>
+        public string TaobaoName { get; set; }
+        /// <summary>
+        /// 淘宝价格
+        /// </summary>
+        public double TaobaoPrice { get; set; }
+        /// <summary>
+        /// 淘宝二维码
+        /// </summary>
+        public string TaobaoQRCodeUrl { get; set; }
+        /// <summary>
+        /// 淘宝主图
+        /// </summary>
+
+        public string TaobaoPic_Url { get; set; }
+        /// <summary>
+        /// 淘宝描述
+        /// </summary>
+
+        public string TaobaoDescription { get; set; }
+
+        /// <summary>
+        /// 主图片集/属性图片集
+        /// </summary>
+        public virtual List<ResourceFileViewModel> ItemImages { get; set; }
     }
 }

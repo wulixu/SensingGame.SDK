@@ -19,9 +19,9 @@
             <Button Margin="50,0,0,0" x:Name="CreateBtn" Width="105" Background="#FFF10C7F" Foreground="White" Click="Button_Click">Create Service</Button>
         </StackPanel>
         <Label x:Name="label_Copy4" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155"/>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="600">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="601">
             <TabItem Header="Behavior">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,103">
                     <Label x:Name="label" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="155"/>
                     <TextBox x:Name="ThingNoTB" HorizontalAlignment="Left" Height="23" Margin="170,37,0,0" TextWrapping="Wrap" Text="ThingNO" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="234"/>
                     <Label x:Name="label_Copy" Content="Action(关注Thing的行为):" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="155"/>
@@ -44,10 +44,11 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Things">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,104">
                     <Button x:Name="GetThings" Content="获取Thing列表" HorizontalAlignment="Left" Margin="44,32,0,0" VerticalAlignment="Top" Width="128" Height="34" Click="GetThings_Click" />
                     <TextBlock x:Name="ThingMsg" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="44,111,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
                     <Label x:Name="label1" Content="Api结果如下:" HorizontalAlignment="Left" Margin="44,82,0,0" VerticalAlignment="Top" Width="105"/>
+                    <Button x:Name="GetCategoriesBtn" Content="获取TCategory列表" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Height="34" Margin="218,32,0,0" Click="GetCategoriesBtn_Click" />
                 </Grid>
             </TabItem>
             <TabItem Header="Ads">

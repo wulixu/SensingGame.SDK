@@ -66,5 +66,20 @@ namespace Sensing.SDK.Test
                 ThingMsg.Text = "failed" + Environment.NewLine;
             }
         }
+
+        private async void GetCategoriesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ThingMsg.Text = "loading..." + Environment.NewLine;
+            var data = await _sensingWebClient.GetTCategories();
+            if (data != null)
+            {
+                ThingMsg.Text = "Successfully" + Environment.NewLine;
+                ThingMsg.Text += $"Categories Count {data.Count()}" + Environment.NewLine;
+            }
+            else
+            {
+                ThingMsg.Text = "failed" + Environment.NewLine;
+            }
+        }
     }
 }
