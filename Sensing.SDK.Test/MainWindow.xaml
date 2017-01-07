@@ -18,7 +18,7 @@
 
             <Button Margin="50,0,0,0" x:Name="CreateBtn" Width="105" Background="#FFF10C7F" Foreground="White" Click="Button_Click">Create Service</Button>
         </StackPanel>
-        <Label x:Name="label_Copy4" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155"/>
+        <Label x:Name="label_Copy4" Content="Api测试功能一览：" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155"/>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="601">
             <TabItem Header="Behavior">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,103">
