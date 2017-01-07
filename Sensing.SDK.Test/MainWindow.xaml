@@ -9,12 +9,14 @@
     <StackPanel>
         <StackPanel HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Orientation="Horizontal">
             <Label>SubKey:</Label>
-            <TextBox x:Name="SubKeyTB" Width="200"></TextBox>
+            <TextBox x:Name="SubKeyTB" Width="200" VerticalContentAlignment="Center"></TextBox>
 
-            <Label>ClientNo:</Label>
-            <TextBox x:Name="ClientNoTB" Width="150"></TextBox>
+            <Label >ClientNo:</Label>
+            <TextBox x:Name="ClientNoTB" VerticalContentAlignment="Center" Width="150"></TextBox>
 
-            <Button Margin="100,0,100,0" Width="105" Background="#FFF10C7F" Foreground="White" Click="Button_Click">Create Service</Button>
+            <Label Foreground="Red">（*请填写Mac地址）</Label>
+
+            <Button Margin="50,0,0,0" x:Name="CreateBtn" Width="105" Background="#FFF10C7F" Foreground="White" Click="Button_Click">Create Service</Button>
         </StackPanel>
         <Label x:Name="label_Copy4" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155"/>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="600">
@@ -39,6 +41,13 @@
                     <TextBlock x:Name="BMessage" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="29,265,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
                     <Label x:Name="label_Copy5" Content="Api回掉信息" HorizontalAlignment="Left" Margin="24,234,0,0" VerticalAlignment="Top" Width="207"/>
 
+                </Grid>
+            </TabItem>
+            <TabItem Header="Things">
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="GetThings" Content="获取Thing列表" HorizontalAlignment="Left" Margin="44,32,0,0" VerticalAlignment="Top" Width="128" Height="34" Click="GetThings_Click" />
+                    <TextBlock x:Name="ThingMsg" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="44,111,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
+                    <Label x:Name="label1" Content="Api结果如下:" HorizontalAlignment="Left" Margin="44,82,0,0" VerticalAlignment="Top" Width="105"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Ads">

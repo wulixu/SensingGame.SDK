@@ -30,6 +30,13 @@ namespace Sensing.SDK.Test
             InitializeComponent();
             this.ClientNoTB.Text = MacIPHelper.GetClientMac();
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var subKey = SubKeyTB.Text;
+            var mac = ClientNoTB.Text;
+            _sensingWebClient = new SensingWebClient(subKey, "123456", mac);
+            CreateBtn.Background = Brushes.Green;
+        }
 
         private async void UploadBehaviorDataBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -42,11 +49,22 @@ namespace Sensing.SDK.Test
             BMessage.Text += result + Environment.NewLine;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+
+
+        private async void GetThings_Click(object sender, RoutedEventArgs e)
         {
-            var subKey = SubKeyTB.Text;
-            var mac = ClientNoTB.Text;
-            _sensingWebClient = new SensingWebClient(subKey, "123456", mac);
+            ThingMsg.Text = "loading..." + Environment.NewLine;
+            var data = await _sensingWebClient.GetThings();
+            if(data != null)
+            {
+                ThingMsg.Text = "Successfully" + Environment.NewLine;
+                ThingMsg.Text += $"Thing Count {data.Count()}" + Environment.NewLine;
+            }
+            else
+            {
+                ThingMsg.Text = "failed" + Environment.NewLine;
+            }
         }
     }
 }

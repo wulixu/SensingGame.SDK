@@ -183,7 +183,7 @@ namespace Sensing.SDK
         }
 
 
-        private string GetBasicFormNameValues()
+        private string GetBasicNameValuesQueryString()
         {
             return $"softwareNo={_softwareNo}&clientNo={_clientNo}&subKey={_subKey}";
         }
