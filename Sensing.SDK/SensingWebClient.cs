@@ -17,7 +17,8 @@ namespace Sensing.SDK
 
         //public const string ServerBase = "http://game.troncell.com/";
         //public const string ServerBase = "http://wx.troncell.com/";
-        public const string ServerBase = "http://localhost:5000/";
+        //public const string ServerBase = "http://localhost:5000/";
+        public const string ServerBase = "http://139.224.15.28:141/";
 
         public const string SignalRPath = ServerBase + "signalr";
         private const string ServiceHost = ServerBase + "api/v1";

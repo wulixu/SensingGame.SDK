@@ -34,6 +34,8 @@ namespace Sensing.SDK.Test
         {
             var subKey = SubKeyTB.Text;
             var mac = ClientNoTB.Text;
+            subKey = "12345";
+            mac = "aa:bb:cc:dd:ee:f0";
             _sensingWebClient = new SensingWebClient(subKey, "123456", mac);
             CreateBtn.Background = Brushes.Green;
         }
