@@ -137,6 +137,9 @@ namespace Sensing.SDK.Contract
         public string ImageUrl { get; set; }
 
 
+        public string IconUrl { get; set; }
+
+
         public bool IsLocal { get; set; }
 
 
