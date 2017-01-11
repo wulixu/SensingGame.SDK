@@ -14,6 +14,7 @@ namespace Sensing.SDK
         /// </summary>
         private const string ThingBaseUrl = "things";
         private const string GetThingsQuery = ThingBaseUrl + "/getall";
+        private const string GetFinalThingsQuery = ThingBaseUrl + "/finals";
 
 
         private const string GetTCategoriesQuery = "tcategory/getall";
@@ -34,6 +35,26 @@ namespace Sensing.SDK
             return null;
         }
 
+
+        public async Task<IEnumerable<FinalThingViewModel>> GetFinalThings(int maxCount = 500)
+        {
+            var absolutePath = $"{ServiceHost}/{GetFinalThingsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}";
+            try
+            {
+                var pagedList = await SendRequestAsync<string, PagedList<FinalThingViewModel>>(HttpMethod.Get, absolutePath, null);
+                return pagedList.Data;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetFinalThings:" + ex.InnerException);
+            }
+            return null;
+        }
+
+
+
+        
 
         public async Task<IEnumerable<TCategoryViewModel>> GetTCategories(int maxCount = 100)
         {

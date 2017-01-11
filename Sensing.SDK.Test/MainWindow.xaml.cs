@@ -83,5 +83,20 @@ namespace Sensing.SDK.Test
                 ThingMsg.Text = "failed" + Environment.NewLine;
             }
         }
+
+        private async void GetFinalThings_Click(object sender, RoutedEventArgs e)
+        {
+            ThingMsg.Text = "loading..." + Environment.NewLine;
+            var data = await _sensingWebClient.GetFinalThings();
+            if (data != null)
+            {
+                ThingMsg.Text = "Successfully" + Environment.NewLine;
+                ThingMsg.Text += $"Thing Count {data.Count()}" + Environment.NewLine;
+            }
+            else
+            {
+                ThingMsg.Text = "failed" + Environment.NewLine;
+            }
+        }
     }
 }
