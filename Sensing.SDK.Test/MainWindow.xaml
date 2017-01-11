@@ -49,12 +49,14 @@
                     <TextBlock x:Name="ThingMsg" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="44,111,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
                     <Label x:Name="label1" Content="Api结果如下:" HorizontalAlignment="Left" Margin="44,82,0,0" VerticalAlignment="Top" Width="105"/>
                     <Button x:Name="GetCategoriesBtn" Content="获取TCategory列表" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Height="34" Margin="218,32,0,0" Click="GetCategoriesBtn_Click" />
+                    <Button x:Name="GetFinalThings" Content="获取Thing列表" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Height="34" Margin="376,33,0,0" Click="GetFinalThings_Click" />
                 </Grid>
             </TabItem>
             <TabItem Header="Ads">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
+        <Button x:Name="GetThings_Copy" Content="获取Thing列表" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Height="34" Click="GetThings_Click" />
 
     </StackPanel>
 </Window>

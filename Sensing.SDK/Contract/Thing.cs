@@ -153,7 +153,6 @@ namespace Sensing.SDK.Contract
         public string Value { get; set; }
     }
 
-
     public class TaobaoThingDetailViewModel
     {
         public int Id { get; set; }
@@ -206,5 +205,67 @@ namespace Sensing.SDK.Contract
         /// 主图片集/属性图片集
         /// </summary>
         public virtual List<ResourceFileViewModel> ItemImages { get; set; }
+    }
+
+
+    public class FinalThingViewModel
+    {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// 事物都该有个名字来表示
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 在当今社会,任何事物都是可以明码标价的,难道不是!
+        /// </summary>
+        public double Price { get; set; }
+
+        /// <summary>
+        /// 二维码这么流行,没个这玩意都不好意思说我在编程.
+        /// </summary>
+        public string QRCodeUrl { get; set; }
+
+
+        /// <summary>
+        /// 数量 库存
+        /// </summary>
+        public int Quantity { get; set; }
+
+
+        /// <summary>
+        /// 万物总有属于他自己的关键字,让别人好找到它.
+        /// </summary>
+        public string Keywords { get; set; }
+
+
+        public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// Thing被专门喜欢的此处.
+        /// </summary>
+        public int LikeCount { get; set; }
+
+        //public IEnumerable<ResourceFileViewModel> Files { get; set; }
+
+        public string Description { get; set; }
+
+
+        public IEnumerable<TagViewModel> Tags { get; set; }
+
+        public IEnumerable<int> CategoryIds { get; set; }
+
+        /// <summary>
+        /// 淘宝商品SPU唯一Id
+        /// </summary>
+        public string ItemId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string SkuId { get; set; }
+
+
     }
 }
