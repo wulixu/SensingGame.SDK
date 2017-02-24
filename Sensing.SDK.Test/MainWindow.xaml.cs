@@ -96,5 +96,11 @@ namespace Sensing.SDK.Test
                 ThingMsg.Text = "failed" + Environment.NewLine;
             }
         }
+
+        private async void CouponBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //todo:Zaric
+            var data = _sensingWebClient.GetCoupons();
+        }
     }
 }
