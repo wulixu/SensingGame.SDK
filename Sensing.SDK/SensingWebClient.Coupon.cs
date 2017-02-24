@@ -12,16 +12,16 @@ namespace Sensing.SDK
         /// <summary>
         /// Get all the things.
         /// </summary>
-        private const string CouponBaseUrl = "things";
-        private const string GetCouponsQuery = ThingBaseUrl + "/getall";
+        private const string CouponBaseUrl = "taobao";
+        private const string GetCouponsQuery = CouponBaseUrl + "/All";
 
-        public async Task<IEnumerable<ThingViewModel>> GetCoupons(int maxCount=300)
+        public async Task<IEnumerable<CouponViewModel>> GetCoupons(int maxCount=300)
         {
             var absolutePath = $"{ServiceHost}/{GetCouponsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}";
             try
             {
-                var pagedList = await SendRequestAsync<string,List<ThingViewModel>>(HttpMethod.Get, absolutePath,null);
-                return pagedList;
+                var couponList = await SendRequestAsync<string,List<CouponViewModel>>(HttpMethod.Get, absolutePath,null);
+                return couponList;
             }
             catch (Exception ex)
             {

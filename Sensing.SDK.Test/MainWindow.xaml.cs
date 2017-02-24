@@ -100,7 +100,17 @@ namespace Sensing.SDK.Test
         private async void CouponBtn_Click(object sender, RoutedEventArgs e)
         {
             //todo:Zaric
-            var data = _sensingWebClient.GetCoupons();
+            CouponMsg.Text = "loading..." + Environment.NewLine;
+            var data = await _sensingWebClient.GetCoupons();
+            if (data != null)
+            {
+                ThingMsg.Text = "Successfully" + Environment.NewLine;
+                ThingMsg.Text += $"Coupon Count {data.Count()}" + Environment.NewLine;
+            }
+            else
+            {
+                ThingMsg.Text = "failed" + Environment.NewLine;
+            }
         }
     }
 }
