@@ -4,6 +4,7 @@ namespace Sensing.SDK
 {
     /// <summary>
     /// Container of ClientError and Error Entity.
+    /// add new comments.
     /// </summary>
     public class ClientError
     {
