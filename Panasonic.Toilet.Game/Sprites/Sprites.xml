@@ -1,9 +1,0 @@
-<Sprites>
-  <Sprite Source="001.png" ColideRect="0,0,200,200" Score="30" TileHeight="200" TileWidth="200"> </Sprite>
-  <Sprite Source="002.png" ColideRect="0,0,200,200" Score="30" TileHeight="200" TileWidth="200"> </Sprite>
-  <Sprite Source="003.png" ColideRect="0,0,200,200" Score="30" TileHeight="200" TileWidth="200"> </Sprite>
-  <Sprite Source="004.png" ColideRect="0,0,200,200" Score="30" TileHeight="200" TileWidth="200"> </Sprite>
-  <Sprite Source="005.png" ColideRect="0,0,200,200" Score="30" TileHeight="200" TileWidth="200"> </Sprite>
-  <Sprite Source="006.png" ColideRect="0,0,200,200" Score="30" TileHeight="200" TileWidth="200"> </Sprite>
-  <Sprite Source="007.png" ColideRect="0,0,200,200" Score="30" TileHeight="200" TileWidth="200"> </Sprite>
-</Sprites>

@@ -52,9 +52,11 @@
     <Compile Include="ClientError.cs" />
     <Compile Include="ClientException.cs" />
     <Compile Include="Contract\BehaviorRecord.cs" />
+    <Compile Include="Contract\CouponViewModel.cs" />
     <Compile Include="Contract\PagedList.cs" />
     <Compile Include="Contract\Thing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SensingWebClient.Coupon.cs" />
     <Compile Include="SensingWebClient.Thing.cs" />
     <Compile Include="SensingWebClient.Behavior.cs" />
     <Compile Include="SensingWebClient.cs" />

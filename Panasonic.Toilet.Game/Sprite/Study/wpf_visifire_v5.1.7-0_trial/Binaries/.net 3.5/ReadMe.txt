@@ -1,1 +1,0 @@
-Current version of Visifire for WPF supports .Net Framework 3.5 and above.
