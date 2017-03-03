@@ -18,6 +18,7 @@ namespace Sensing.SDK
 
 
         private const string GetTCategoriesQuery = "tcategory/getall";
+        private const string SendEmailQuery = "things/email";
 
         public async Task<IEnumerable<ThingViewModel>> GetThings(int maxCount=300)
         {
@@ -70,6 +71,22 @@ namespace Sensing.SDK
                 Console.WriteLine("GetTCategories:" + ex.InnerException);
             }
             return null;
+        }
+
+        public async Task<bool> SendEmail(string receiver, string thingId)
+        {
+            var absolutePath = $"{ServiceHost}/{SendEmailQuery}";
+            try
+            {
+                var pagedList = await SendRequestAsync<string, string>(HttpMethod.Post, absolutePath, $"{GetBasicNameValuesQueryString()}&receiver={receiver}&thingId={thingId}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetTCategories:" + ex.InnerException);
+            }
+            return false;
         }
     }
 }

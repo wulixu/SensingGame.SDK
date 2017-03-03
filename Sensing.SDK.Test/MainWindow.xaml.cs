@@ -34,7 +34,7 @@ namespace Sensing.SDK.Test
         {
             var subKey = SubKeyTB.Text;
             var mac = ClientNoTB.Text;
-            subKey = "12345";
+            subKey = "hahaha";
             mac = "aa:bb:cc:dd:ee:f0";
             _sensingWebClient = new SensingWebClient(subKey, "123456", mac);
             CreateBtn.Background = Brushes.Green;
@@ -108,6 +108,20 @@ namespace Sensing.SDK.Test
             {
                 ThingMsg.Text = "Successfully" + Environment.NewLine;
                 ThingMsg.Text += $"Coupon Count {data.Count()}" + Environment.NewLine;
+            }
+            else
+            {
+                ThingMsg.Text = "failed" + Environment.NewLine;
+            }
+        }
+
+        private async void EmailBtn_Click(object sender, RoutedEventArgs e)
+        {
+            EmailMsg.Text = "loading..." + Environment.NewLine;
+            var data = await _sensingWebClient.SendEmail("757518614@qq.com", "2");
+            if (data)
+            {
+                ThingMsg.Text = "Successfully" + Environment.NewLine;
             }
             else
             {

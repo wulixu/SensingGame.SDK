@@ -61,6 +61,12 @@
                     <TextBlock x:Name="CouponMsg" Background="White" Margin="0,159,0,0"></TextBlock>
                 </Grid>
             </TabItem>
+            <TabItem Header="Email">
+                <Grid Background="#FFE5E5E5">
+                    <Button Margin="24,18,591,510" x:Name="EmailBtn" Click="EmailBtn_Click">Send Email</Button>
+                    <TextBlock x:Name="EmailMsg" Background="White" Margin="0,159,0,0"></TextBlock>
+                </Grid>
+            </TabItem>
         </TabControl>
         <Button x:Name="GetThings_Copy" Content="获取Thing列表" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Height="34" Click="GetThings_Click" />
 

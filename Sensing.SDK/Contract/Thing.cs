@@ -135,6 +135,7 @@ namespace Sensing.SDK.Contract
         /// 分类的图片
         /// </summary>
         public string ImageUrl { get; set; }
+        public string ImageUrl2 { get; set; }
 
 
         public string IconUrl { get; set; }
