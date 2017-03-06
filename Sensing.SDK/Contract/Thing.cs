@@ -108,6 +108,7 @@ namespace Sensing.SDK.Contract
         public DateTime? Created { get; set; }
 
         public int GroupId { get; set; }
+        public string ThumbnailUrl { get; set; }
     }
 
 
