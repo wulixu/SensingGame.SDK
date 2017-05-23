@@ -18,9 +18,9 @@ namespace Sensing.SDK
         //public const string ServerBase = "http://game.troncell.com/";
         //public const string ServerBase = "http://wx.troncell.com/";
         //public const string ServerBase = "http://localhost:10832/";
-        public const string ServerBase = "http://139.224.15.28:142/";
+       // public const string ServerBase = "http://139.196.240.230:2100/";
         //public const string ServerBase = "http://behavior.troncell.com/";
-       // public const string ServerBase = "http://store.troncell.com/";
+        public const string ServerBase = "http://store.troncell.com/";
         public const string SignalRPath = ServerBase + "signalr";
         private const string ServiceHost = ServerBase + "api/v1";
 
@@ -58,7 +58,7 @@ namespace Sensing.SDK
 
         static SensingWebClient()
         {
-            s_httpClient.Timeout = TimeSpan.FromSeconds(15);
+            s_httpClient.Timeout = TimeSpan.FromSeconds(50);
         }
 
         public SensingWebClient(string subscriptionKey, string softwareNo,string mac)

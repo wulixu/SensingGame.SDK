@@ -19,7 +19,7 @@ namespace SensngGame.ClientSDK
     {
 
         public const string ServerBase = "http://game.troncell.com/";
-        //public const string ServerBase = "http://wx.troncell.com/";
+       // public const string ServerBase = "http://wx.troncell.com/";
         //public const string ServerBase = "http://localhost:4469/";
 
         public const string SignalRPath = ServerBase + "signalr";
@@ -116,7 +116,7 @@ namespace SensngGame.ClientSDK
 
         static GameServiceClient()
         {
-            s_httpClient.Timeout = TimeSpan.FromSeconds(15);
+            //s_httpClient.Timeout = TimeSpan.FromSeconds(40);
         }
 
         public GameServiceClient(string subscriptionKeyForActivity, string gameNo)
