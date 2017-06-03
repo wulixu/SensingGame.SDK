@@ -58,7 +58,13 @@
             <TabItem Header="Coupons">
                 <Grid Background="#FFE5E5E5">
                     <Button Margin="24,18,591,510" x:Name="CouponBtn" Click="CouponBtn_Click">GetCoupons</Button>
-                    <TextBlock Background="White" Margin="0,159,0,0"></TextBlock>
+                    <TextBlock x:Name="CouponMsg" Background="White" Margin="0,159,0,0"></TextBlock>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Email">
+                <Grid Background="#FFE5E5E5">
+                    <Button Margin="24,18,591,510" x:Name="EmailBtn" Click="EmailBtn_Click">Send Email</Button>
+                    <TextBlock x:Name="EmailMsg" Background="White" Margin="0,159,0,0"></TextBlock>
                 </Grid>
             </TabItem>
         </TabControl>

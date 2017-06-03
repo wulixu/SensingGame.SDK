@@ -65,7 +65,7 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public int LikeCount { get; set; }
 
-        public IEnumerable<ResourceFileViewModel> Files { get; set; }
+        public IEnumerable<FileViewModel> Files { get; set; }
 
         public string Description { get; set; }
 
@@ -80,6 +80,12 @@ namespace Sensing.SDK.Contract
         public IEnumerable<int> CategoryIds { get; set; }
 
         public TaobaoThingDetailViewModel TaobaoThing { get; set; }
+    }
+
+    public class FileViewModel
+    {
+        public string Type { get; set; }
+        public ResourceFileViewModel ResourceFileViewModel { get; set; }
     }
 
 
@@ -102,6 +108,7 @@ namespace Sensing.SDK.Contract
         public DateTime? Created { get; set; }
 
         public int GroupId { get; set; }
+        public string ThumbnailUrl { get; set; }
     }
 
 
@@ -135,6 +142,7 @@ namespace Sensing.SDK.Contract
         /// 分类的图片
         /// </summary>
         public string ImageUrl { get; set; }
+        public string ImageUrl2 { get; set; }
 
 
         public string IconUrl { get; set; }
