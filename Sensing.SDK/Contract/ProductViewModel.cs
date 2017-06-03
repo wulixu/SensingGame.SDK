@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sensing.SDK.Contract
 {
-    public class ProductViewModel
+    public class ProductSDKModel
     {
         public int Id { get; set; }
 
@@ -36,13 +36,8 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public string Keywords { get; set; }
 
-        /// <summary>
-        /// Thing(商品/服务/需要上下架)
-        /// </summary>
-        public string AuditStatus { get; set; }
 
         public int GroupId { get; set; }
-        public string GroupName { get; set; }
 
 
         public string PicUrl { get; set; }
@@ -54,17 +49,13 @@ namespace Sensing.SDK.Contract
 
         public string Description { get; set; }
 
-        public DateTime? Created { get; set; }
-
-        public DateTime? LastUpdated { get; set; }
-
         public int OrderNumber { get; set; }
 
-        public IEnumerable<ProductCategoryViewModel> P_ProductCategories { get; set; }
+        public IEnumerable<PCategoryIdModel> P_ProductCategories { get; set; }
 
         public IEnumerable<TagViewModel> ProductTags { get; set; }
 
-        public IEnumerable<SkuViewModel> Skus { get; set; }
+        public IEnumerable<SkuSDKModel> Skus { get; set; }
 
         public IEnumerable<ProductFileViewModel> ItemImagesOrVedios { get; set; }
 
@@ -73,7 +64,7 @@ namespace Sensing.SDK.Contract
         public string SellerId { get; set; }
     }
 
-    public class ProductCategoryViewModel
+    public class ProductCategorySDKModel
     {
         public int Id { get; set; }
 
@@ -86,18 +77,13 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        /// 父分类
-        /// </summary>
-        public int? ParentCategoryId { get; set; }
 
-        public string ParentCategoryName { get; set; }
+        public ProductCategorySDKModel ParentCategory { get; set; }
 
         /// <summary>
         /// 分类所属组
         /// </summary>
         public int GroupId { get; set; }
-        public string GroupName { get; set; }
 
         /// <summary>
         /// 分类的图片
@@ -114,7 +100,12 @@ namespace Sensing.SDK.Contract
         public bool IsSpecial { get; set; }
 
         public string FromType { get; set; }
-        public DateTime Created { get; set; }
+    }
+
+
+    public class PCategoryIdModel
+    {
+        public int Id { get; set; }
     }
 
     public class ProductFileViewModel

@@ -18,12 +18,12 @@ namespace Sensing.SDK
 
         private const string GetTCategoriesQuery = ThingBaseUrl + "/ProductCategories";
 
-        public async Task<PagedList<ProductViewModel>> GetProducts(int page = 1,int maxCount=300)
+        public async Task<PagedList<ProductSDKModel>> GetProducts(int page = 1,int maxCount=300)
         {
             var absolutePath = $"{ServiceHost}/{GetProductsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string,WebApiResult<PagedList<ProductViewModel>>>(HttpMethod.Get, absolutePath,null);
+                var webResult = await SendRequestAsync<string,WebApiResult<PagedList<ProductSDKModel>>>(HttpMethod.Get, absolutePath,null);
                 if(webResult.status == ApiStatus.OK)
                 {
                     return webResult.data;
@@ -43,12 +43,12 @@ namespace Sensing.SDK
 
         
 
-        public async Task<IEnumerable<TCategoryViewModel>> GetProductCategories(int maxCount = 200)
+        public async Task<IEnumerable<ProductCategorySDKModel>> GetProductCategories(int maxCount = 200)
         {
             var absolutePath = $"{ServiceHost}/{GetTCategoriesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}";
             try
             {
-                var pagedList = await SendRequestAsync<string, PagedList<TCategoryViewModel>>(HttpMethod.Get, absolutePath, null);
+                var pagedList = await SendRequestAsync<string, PagedList<ProductCategorySDKModel>>(HttpMethod.Get, absolutePath, null);
                 return pagedList?.Data;
             }
             catch (Exception ex)
