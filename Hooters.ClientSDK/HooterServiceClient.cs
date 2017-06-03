@@ -30,7 +30,8 @@ namespace Hooters.ClientSDK
         /// <summary>
         /// The service host.
         /// </summary>
-        private const string ServiceHost = "http://hooters.troncell.com/api/v0/CounterApi";
+        private const string ServiceHost = "http://139.196.240.230:118/api/v0/CounterApi";
+        //private const string ServiceHost = "http://hooters.troncell.com/api/v0/CounterApi";
 
         //private const string ServiceHost = "http://localhost:4469/api/v0/CounterApi";
 
@@ -47,11 +48,12 @@ namespace Hooters.ClientSDK
         private const string GetGroupInfoQuery = "/GetGroupInfo";
 
 
-        private const string PostSalesDataQuery = "/PosSalesData";
+        private const string PostSalesDataQuery = "PosSalesData";
 
 
 
-        private const string ServiceDataHost = "http://hooters.troncell.com/api/v0/ReportDataApi";
+        //private const string ServiceDataHost = "http://hooters.troncell.com/api/v0/ReportDataApi";
+        private const string ServiceDataHost = "http://139.196.240.230:118/api/v0/ReportDataApi";
 
         private const string GetAllReportsQuery = "/GetAllReports";
         private const string GetDataByReportIdQuery = "/GetDataByReportId";
