@@ -53,9 +53,47 @@ namespace Sensing.SDK
             return null;
         }
 
+        public async Task<IEnumerable<FinalThingViewModel>> GetAllFinalThings()
+        {
+            List<FinalThingViewModel> things = new List<FinalThingViewModel>();
+            int maxPageSize = 1000;
+            var absolutePath = $"{ServiceHost}/{GetFinalThingsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxPageSize}";
+            try
+            {
+                var pagedList = await SendRequestAsync<string, PagedList<FinalThingViewModel>>(HttpMethod.Get, absolutePath, null);
+                things.AddRange(pagedList.Data);
+                if(pagedList.TotalCount < maxPageSize)
+                {
+                    return things;
+                }
+                int pages = (pagedList.TotalCount + maxPageSize - 1) / maxPageSize;
+                for (int page = 2; page <= pages; page++)
+                {
+                    try
+                    {
+                        pagedList = await SendRequestAsync<string, PagedList<FinalThingViewModel>>(HttpMethod.Get, absolutePath + $"&page={page}", null);
+                        things.AddRange(pagedList.Data);
+                    }
+                    catch (Exception)
+                    {
+                        break;
+                    }
+                }
+                if(things.Count == pagedList.TotalCount)
+                {
+                    return things;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetFinalThings:" + ex.InnerException);
+            }
+            return null;
+        }
 
 
-        
 
         public async Task<IEnumerable<TCategoryViewModel>> GetTCategories(int maxCount = 100)
         {
