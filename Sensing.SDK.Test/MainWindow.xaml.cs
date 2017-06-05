@@ -34,10 +34,11 @@ namespace Sensing.SDK.Test
         {
             var subKey = SubKeyTB.Text;
             var mac = ClientNoTB.Text;
-            subKey = "hahaha";
-            mac = "aa:bb:cc:dd:ee:f0";
+            //subKey = "hahaha";
+            //mac = "aa:bb:cc:dd:ee:f0";
             _sensingWebClient = new SensingWebClient(subKey, "123456", mac);
             CreateBtn.Background = Brushes.Green;
+            tabControl.IsEnabled = true;
         }
 
         private async void UploadBehaviorDataBtn_Click(object sender, RoutedEventArgs e)
@@ -57,11 +58,11 @@ namespace Sensing.SDK.Test
         private async void GetThings_Click(object sender, RoutedEventArgs e)
         {
             ThingMsg.Text = "loading..." + Environment.NewLine;
-            var data = await _sensingWebClient.GetThings();
-            if(data != null)
+            var data = await _sensingWebClient.GetProducts();
+            if(data != null && data.Data != null)
             {
                 ThingMsg.Text = "Successfully" + Environment.NewLine;
-                ThingMsg.Text += $"Thing Count {data.Count()}" + Environment.NewLine;
+                ThingMsg.Text += $"Thing Count {data.Data.Count()}" + Environment.NewLine;
             }
             else
             {
@@ -72,26 +73,11 @@ namespace Sensing.SDK.Test
         private async void GetCategoriesBtn_Click(object sender, RoutedEventArgs e)
         {
             ThingMsg.Text = "loading..." + Environment.NewLine;
-            var data = await _sensingWebClient.GetTCategories();
+            var data = await _sensingWebClient.GetProductCategories();
             if (data != null)
             {
                 ThingMsg.Text = "Successfully" + Environment.NewLine;
                 ThingMsg.Text += $"Categories Count {data.Count()}" + Environment.NewLine;
-            }
-            else
-            {
-                ThingMsg.Text = "failed" + Environment.NewLine;
-            }
-        }
-
-        private async void GetFinalThings_Click(object sender, RoutedEventArgs e)
-        {
-            ThingMsg.Text = "loading..." + Environment.NewLine;
-            var data = await _sensingWebClient.GetFinalThings();
-            if (data != null)
-            {
-                ThingMsg.Text = "Successfully" + Environment.NewLine;
-                ThingMsg.Text += $"Thing Count {data.Count()}" + Environment.NewLine;
             }
             else
             {
@@ -115,17 +101,17 @@ namespace Sensing.SDK.Test
             }
         }
 
-        private async void EmailBtn_Click(object sender, RoutedEventArgs e)
+        private async void GetAds_Click(object sender, RoutedEventArgs e)
         {
-            EmailMsg.Text = "loading..." + Environment.NewLine;
-            var data = await _sensingWebClient.SendEmail("757518614@qq.com", "2");
-            if (data)
+            var data = await _sensingWebClient.GetAds();
+            if (data != null)
             {
-                ThingMsg.Text = "Successfully" + Environment.NewLine;
+                AdsMessage.Text = "Successfully" + Environment.NewLine;
+                AdsMessage.Text += $"Ads Count {data.Data.Count()}" + Environment.NewLine;
             }
             else
             {
-                ThingMsg.Text = "failed" + Environment.NewLine;
+                AdsMessage.Text = "failed" + Environment.NewLine;
             }
         }
     }

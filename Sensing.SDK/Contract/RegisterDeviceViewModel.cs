@@ -69,5 +69,7 @@ namespace Sensing.SDK.Contract
         public double Resolution_Width { get; set; }
 
         public double Resolution_Height { get; set; }
+
+        public string OS { get; set; }
     }
 }

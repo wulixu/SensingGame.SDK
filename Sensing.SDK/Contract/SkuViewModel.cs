@@ -2,7 +2,7 @@
 
 namespace Sensing.SDK.Contract
 {
-    public class SkuViewModel
+    public class SkuSDKModel
     {
         public int Id { get; set; }
 
@@ -28,41 +28,24 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public string QRCodeUrl { get; set; }
 
+        public int LikeCount { get; set; }
         /// <summary>
         /// 万物总有属于他自己的关键字,让别人好找到它.
         /// </summary>
         public string Keywords { get; set; }
 
-        /// <summary>
-        /// Thing(商品/服务/需要上下架)
-        /// </summary>
-        public string AuditStatus { get; set; }
-
         public int GroupId { get; set; }
-        public string GroupName { get; set; }
-
 
         public string PicUrl { get; set; }
 
         public bool HasSelfImage { get; set; }
-        ///// <summary>
-        ///// Thing被专门喜欢的此处.
-        ///// </summary>
-        //public int LikeCount { get; set; }
 
         public string Description { get; set; }
 
-        public DateTime? Created { get; set; }
-
-        public DateTime? LastUpdated { get; set; }
-
         public int OrderNumber { get; set; }
 
+        public string OuterId { get; set; }
 
-        //public IEnumerable<ProductCategoryViewModel> P_ProductCategories { get; set; }
-
-        //public IEnumerable<TagViewModel> ProductTags { get; set; }
-
-
+        public string[] Tags { get; set; }
     }
 }

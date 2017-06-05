@@ -19,7 +19,7 @@
             <Button Margin="50,0,0,0" x:Name="CreateBtn" Width="105" Background="#FFF10C7F" Foreground="White" Click="Button_Click">Create Service</Button>
         </StackPanel>
         <Label x:Name="label_Copy4" Content="Api测试功能一览：" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155"/>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="601">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="601" IsEnabled="False">
             <TabItem Header="Behavior">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,103">
                     <Label x:Name="label" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="155"/>
@@ -43,28 +43,24 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Things">
+            <TabItem Header="Products">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,104">
-                    <Button x:Name="GetThings" Content="获取Thing列表" HorizontalAlignment="Left" Margin="44,32,0,0" VerticalAlignment="Top" Width="128" Height="34" Click="GetThings_Click" />
+                    <Button x:Name="GetThings" Content="获取Products列表" HorizontalAlignment="Left" Margin="44,32,0,0" VerticalAlignment="Top" Width="128" Height="34" Click="GetThings_Click" />
                     <TextBlock x:Name="ThingMsg" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="44,111,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
                     <Label x:Name="label1" Content="Api结果如下:" HorizontalAlignment="Left" Margin="44,82,0,0" VerticalAlignment="Top" Width="105"/>
                     <Button x:Name="GetCategoriesBtn" Content="获取TCategory列表" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Height="34" Margin="218,32,0,0" Click="GetCategoriesBtn_Click" />
-                    <Button x:Name="GetFinalThings" Content="获取FinalThings列表" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Height="34" Margin="376,33,0,0" Click="GetFinalThings_Click" />
                 </Grid>
             </TabItem>
             <TabItem Header="Ads">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <Button x:Name="GetAds" Content="Get Ads" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Margin="48,33,0,0" Height="26" Click="GetAds_Click"/>
+                    <TextBlock x:Name="AdsMessage" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="44,111,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
+                </Grid>
             </TabItem>
             <TabItem Header="Coupons">
                 <Grid Background="#FFE5E5E5">
                     <Button Margin="24,18,591,510" x:Name="CouponBtn" Click="CouponBtn_Click">GetCoupons</Button>
                     <TextBlock x:Name="CouponMsg" Background="White" Margin="0,159,0,0"></TextBlock>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Email">
-                <Grid Background="#FFE5E5E5">
-                    <Button Margin="24,18,591,510" x:Name="EmailBtn" Click="EmailBtn_Click">Send Email</Button>
-                    <TextBlock x:Name="EmailMsg" Background="White" Margin="0,159,0,0"></TextBlock>
                 </Grid>
             </TabItem>
         </TabControl>
