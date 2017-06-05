@@ -26,7 +26,7 @@ namespace Sensing.SDK.Contract
         public DateTime? Created { get; set; }
         public string ResourType { get; set; }
 
-        public string Imgurl { get; set; }
+        public string Fileurl { get; set; }
 
         public string ThumbnailUrl { get; set; }
 

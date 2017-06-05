@@ -107,7 +107,7 @@ namespace Sensing.SDK.Test
             if (data != null)
             {
                 AdsMessage.Text = "Successfully" + Environment.NewLine;
-                AdsMessage.Text += $"Ads Count {data.Count()}" + Environment.NewLine;
+                AdsMessage.Text += $"Ads Count {data.Data.Count()}" + Environment.NewLine;
             }
             else
             {

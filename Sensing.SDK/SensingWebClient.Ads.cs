@@ -15,12 +15,12 @@ namespace Sensing.SDK
         private const string AdsBaseUrl = "StoreSdk";
         private const string GetAdsQuery = AdsBaseUrl + "/Ads";
 
-        public async Task<List<DeviceAdsViewModel>> GetAds(int page = 1,int maxCount=300)
+        public async Task<PagedList<DeviceAdsViewModel>> GetAds(int page = 1,int maxCount=300)
         {
             var absolutePath = $"{ServiceHost}/{GetAdsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string,WebApiResult<List<DeviceAdsViewModel>>>(HttpMethod.Get, absolutePath,null);
+                var webResult = await SendRequestAsync<string,WebApiResult<PagedList<DeviceAdsViewModel>>>(HttpMethod.Get, absolutePath,null);
                 if(webResult.status == ApiStatus.OK)
                 {
                     return webResult.data;

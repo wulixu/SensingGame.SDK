@@ -44,6 +44,8 @@ namespace Sensing.SDK.Contract
 
         public int OrderNumber { get; set; }
 
+        public string OuterId { get; set; }
+
         public string[] Tags { get; set; }
     }
 }

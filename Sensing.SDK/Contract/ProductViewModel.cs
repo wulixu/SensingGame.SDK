@@ -62,6 +62,7 @@ namespace Sensing.SDK.Contract
         public bool IsFromBrand { get; set; }
         public string SumPropsName { get; set; }
         public string SellerId { get; set; }
+        public string OuterId { get; set; }
     }
 
     public class ProductCategorySDKModel
