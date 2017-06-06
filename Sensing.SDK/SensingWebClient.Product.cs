@@ -43,13 +43,17 @@ namespace Sensing.SDK
 
         
 
-        public async Task<IEnumerable<ProductCategorySDKModel>> GetProductCategories(int maxCount = 200)
+        public async Task<IEnumerable<ProductCategorySDKModel>> GetProductCategories(int maxCount = 300)
         {
             var absolutePath = $"{ServiceHost}/{GetTCategoriesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}";
             try
             {
-                var pagedList = await SendRequestAsync<string, PagedList<ProductCategorySDKModel>>(HttpMethod.Get, absolutePath, null);
-                return pagedList?.Data;
+                var webResult = await SendRequestAsync<string, WebApiResult<PagedList<ProductCategorySDKModel>>>(HttpMethod.Get, absolutePath, null);
+                if (webResult.status == ApiStatus.OK)
+                {
+                    return webResult?.data.Data;
+                }
+                return null;
             }
             catch (Exception ex)
             {

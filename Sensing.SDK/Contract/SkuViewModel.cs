@@ -46,6 +46,8 @@ namespace Sensing.SDK.Contract
 
         public string OuterId { get; set; }
 
+        public string ColorName { get; set; }
+
         public string[] Tags { get; set; }
     }
 }
