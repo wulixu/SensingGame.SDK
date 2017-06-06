@@ -58,7 +58,7 @@ namespace Sensing.SDK
 
         static SensingWebClient()
         {
-            s_httpClient.Timeout = TimeSpan.FromSeconds(15);
+            s_httpClient.Timeout = TimeSpan.FromSeconds(60);
         }
 
         public SensingWebClient(string subscriptionKey, string softwareNo,string mac)
