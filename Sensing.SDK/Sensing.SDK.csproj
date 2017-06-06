@@ -55,6 +55,8 @@
     <Compile Include="Contract\CouponViewModel.cs" />
     <Compile Include="Contract\DeviceAdsViewModel.cs" />
     <Compile Include="Contract\GroupViewModel.cs" />
+    <Compile Include="Contract\LikeInfoViewModel.cs" />
+    <Compile Include="Contract\MatchInfoViewModel.cs" />
     <Compile Include="Contract\PagedList.cs" />
     <Compile Include="Contract\ProductViewModel.cs" />
     <Compile Include="Contract\RegisterDeviceViewModel.cs" />

@@ -19,7 +19,7 @@
             <Button Margin="50,0,0,0" x:Name="CreateBtn" Width="105" Background="#FFF10C7F" Foreground="White" Click="Button_Click">Create Service</Button>
         </StackPanel>
         <Label x:Name="label_Copy4" Content="Api测试功能一览：" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155"/>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="601" IsEnabled="False">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="601" IsEnabled="False" SelectionChanged="tabControl_SelectionChanged">
             <TabItem Header="Behavior">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,103">
                     <Label x:Name="label" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="155"/>
@@ -61,6 +61,18 @@
                 <Grid Background="#FFE5E5E5">
                     <Button Margin="24,18,591,510" x:Name="CouponBtn" Click="CouponBtn_Click">GetCoupons</Button>
                     <TextBlock x:Name="CouponMsg" Background="White" Margin="0,159,0,0"></TextBlock>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Matches">
+                <Grid Background="#FFE5E5E5">
+                    <Button Margin="24,18,591,510" x:Name="MatchBtn" Click="MatchBtn_Click">GetMatches</Button>
+                    <TextBlock x:Name="MatchMsg" Background="White" Margin="0,159,0,0"></TextBlock>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Likes">
+                <Grid Background="#FFE5E5E5">
+                    <Button Margin="24,18,591,510" x:Name="LikesBtn" FontSize="20" Click="LikesBtn_Click">GetLikes</Button>
+                    <TextBlock x:Name="LikeMsg" Background="White" Margin="0,159,0,0"></TextBlock>
                 </Grid>
             </TabItem>
         </TabControl>

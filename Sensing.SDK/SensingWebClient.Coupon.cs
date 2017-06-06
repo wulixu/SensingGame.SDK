@@ -12,21 +12,27 @@ namespace Sensing.SDK
         /// <summary>
         /// Get all the things.
         /// </summary>
-        private const string CouponBaseUrl = "taobao";
-        private const string GetCouponsQuery = CouponBaseUrl + "/All";
+        private const string CouponsBaseUrl = "StoreSdk";
 
-        public async Task<IEnumerable<CouponViewModel>> GetCoupons(int maxCount=300)
+        private const string GetCouponsQuery = CouponsBaseUrl + "/Coupons";
+
+        public async Task<PagedList<CouponViewModel>> GetCoupons(int page = 1,int maxCount=300)
         {
-            var absolutePath = $"{ServiceHost}/{GetCouponsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}";
+            var absolutePath = $"{ServiceHost}/{GetCouponsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var couponList = await SendRequestAsync<string,List<CouponViewModel>>(HttpMethod.Get, absolutePath,null);
-                return couponList;
+                var webResult = await SendRequestAsync<string, WebApiResult<PagedList<CouponViewModel>>>(HttpMethod.Get, absolutePath, null);
+                if (webResult.status == ApiStatus.OK)
+                {
+                    return webResult.data;
+                }
+                Console.WriteLine("GetCoupons:" + webResult.message);
+                return null;
             }
             catch (Exception ex)
             {
                 //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("GetThings:" + ex.InnerException);
+                Console.WriteLine("GetCoupons:" + ex.InnerException);
             }
             return null;
         }

@@ -17,6 +17,8 @@ namespace Sensing.SDK
 
 
         private const string GetTCategoriesQuery = ThingBaseUrl + "/ProductCategories";
+        private const string GetMatchesQuery = ThingBaseUrl + "/MatchInfos";
+        private const string GetLikesQuery = ThingBaseUrl + "/LikeInfos";
 
         public async Task<PagedList<ProductSDKModel>> GetProducts(int page = 1,int maxCount=300)
         {
@@ -34,18 +36,14 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("GetThings:" + ex.InnerException);
+                Console.WriteLine("GetProducts:" + ex.InnerException);
             }
             return null;
         }
 
-
-
-        
-
-        public async Task<IEnumerable<ProductCategorySDKModel>> GetProductCategories(int maxCount = 300)
+        public async Task<IEnumerable<ProductCategorySDKModel>> GetProductCategories(int page = 1,int maxCount = 500)
         {
-            var absolutePath = $"{ServiceHost}/{GetTCategoriesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}";
+            var absolutePath = $"{ServiceHost}/{GetTCategoriesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
                 var webResult = await SendRequestAsync<string, WebApiResult<PagedList<ProductCategorySDKModel>>>(HttpMethod.Get, absolutePath, null);
@@ -58,7 +56,47 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("GetTCategories:" + ex.InnerException);
+                Console.WriteLine("GetProductCategories:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedList<MatchInfoViewModel>> GetMatchInfos(int page = 1,int maxCount = 1000)
+        {
+            var absolutePath = $"{ServiceHost}/{GetMatchesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, WebApiResult<PagedList<MatchInfoViewModel>>>(HttpMethod.Get, absolutePath, null);
+                if (webResult.status == ApiStatus.OK)
+                {
+                    return webResult?.data;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetMatchInfos:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedList<LikeInfoViewModel>> GetLikeInfos(int page = 1, int maxCount = 1000)
+        {
+            var absolutePath = $"{ServiceHost}/{GetLikesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, WebApiResult<PagedList<LikeInfoViewModel>>>(HttpMethod.Get, absolutePath, null);
+                if (webResult.status == ApiStatus.OK)
+                {
+                    return webResult?.data;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetLikeInfos:" + ex.InnerException);
             }
             return null;
         }

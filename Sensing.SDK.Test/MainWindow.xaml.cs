@@ -92,12 +92,12 @@ namespace Sensing.SDK.Test
             var data = await _sensingWebClient.GetCoupons();
             if (data != null)
             {
-                ThingMsg.Text = "Successfully" + Environment.NewLine;
-                ThingMsg.Text += $"Coupon Count {data.Count()}" + Environment.NewLine;
+                CouponMsg.Text = "Successfully" + Environment.NewLine;
+                CouponMsg.Text += $"Coupon Count {data.Data.Count()}" + Environment.NewLine;
             }
             else
             {
-                ThingMsg.Text = "failed" + Environment.NewLine;
+                CouponMsg.Text = "failed" + Environment.NewLine;
             }
         }
 
@@ -112,6 +112,39 @@ namespace Sensing.SDK.Test
             else
             {
                 AdsMessage.Text = "failed" + Environment.NewLine;
+            }
+        }
+
+        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private async void LikesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var data = await _sensingWebClient.GetLikeInfos();
+            if (data != null)
+            {
+                LikeMsg.Text = "Successfully" + Environment.NewLine;
+                LikeMsg.Text += $"Likes Count {data.Data.Count()}" + Environment.NewLine;
+            }
+            else
+            {
+                LikeMsg.Text = "failed" + Environment.NewLine;
+            }
+        }
+
+        private async void MatchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var data = await _sensingWebClient.GetMatchInfos();
+            if (data != null)
+            {
+                MatchMsg.Text = "Successfully" + Environment.NewLine;
+                MatchMsg.Text += $"Matches Count {data.Data.Count()}" + Environment.NewLine;
+            }
+            else
+            {
+                MatchMsg.Text = "failed" + Environment.NewLine;
             }
         }
     }
