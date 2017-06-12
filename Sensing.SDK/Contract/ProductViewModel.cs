@@ -63,6 +63,7 @@ namespace Sensing.SDK.Contract
         public string SumPropsName { get; set; }
         public string SellerId { get; set; }
         public string OuterId { get; set; }
+        public string FromType { get; set; }
     }
 
     public class ProductCategorySDKModel

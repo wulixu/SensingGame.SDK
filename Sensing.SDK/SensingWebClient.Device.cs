@@ -19,12 +19,12 @@ namespace Sensing.SDK
         private const string GroupInfoQuery = DeviceBaseUrl + "/GroupInfo";
         private const string DeviceInfoQuery = DeviceBaseUrl + "/DeviceInfo";
 
-        public async Task<WebApiResult<DeviceViewModel>> RegisterDeviceAsyn(RegisterDeviceViewModel device)
+        public async Task<WebApiResult<DeviceSdkModel>> RegisterDeviceAsyn(RegisterDeviceViewModel device)
         {
             var absolutePath = $"{ServiceHost}/{RegisterDeviceQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var pagedList = await SendRequestAsync<RegisterDeviceViewModel, WebApiResult<DeviceViewModel>>(HttpMethod.Post, absolutePath, device);
+                var pagedList = await SendRequestAsync<RegisterDeviceViewModel, WebApiResult<DeviceSdkModel>>(HttpMethod.Post, absolutePath, device);
                 return pagedList;
             }
             catch (Exception ex)
@@ -35,12 +35,12 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<WebApiResult<DeviceViewModel>> GetDeviceInfo()
+        public async Task<WebApiResult<DeviceSdkModel>> GetDeviceInfo()
         {
             var absolutePath = $"{ServiceHost}/{DeviceInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var pagedList = await SendRequestAsync<string, WebApiResult<DeviceViewModel>>(HttpMethod.Get, absolutePath, null);
+                var pagedList = await SendRequestAsync<string, WebApiResult<DeviceSdkModel>>(HttpMethod.Get, absolutePath, null);
                 return pagedList;
             }
             catch (Exception ex)

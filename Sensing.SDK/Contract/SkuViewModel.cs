@@ -49,5 +49,7 @@ namespace Sensing.SDK.Contract
         public string ColorName { get; set; }
 
         public string[] Tags { get; set; }
+
+        public string FromType { get; set; }
     }
 }
