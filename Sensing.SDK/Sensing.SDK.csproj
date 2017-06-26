@@ -54,6 +54,7 @@
     <Compile Include="Contract\BehaviorRecord.cs" />
     <Compile Include="Contract\CouponViewModel.cs" />
     <Compile Include="Contract\DeviceAdsViewModel.cs" />
+    <Compile Include="Contract\DeviceSoftwareViewModel.cs" />
     <Compile Include="Contract\GroupViewModel.cs" />
     <Compile Include="Contract\LikeInfoViewModel.cs" />
     <Compile Include="Contract\MatchInfoViewModel.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Contract\Thing.cs" />
     <Compile Include="Contract\WebApiResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SensingWebClient.App.cs" />
     <Compile Include="SensingWebClient.Coupon.cs" />
     <Compile Include="SensingWebClient.Device.cs" />
     <Compile Include="SensingWebClient.Ads.cs" />

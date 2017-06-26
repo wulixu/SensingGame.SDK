@@ -30,10 +30,11 @@ namespace Hooters.ClientSDK
         /// <summary>
         /// The service host.
         /// </summary>
-        private const string ServiceHost = "http://139.196.240.230:118/api/v0/CounterApi";
+        //private const string ServiceHost = "http://139.196.240.230:118/api/v0/CounterApi";
         //private const string ServiceHost = "http://hooters.troncell.com/api/v0/CounterApi";
 
         //private const string ServiceHost = "http://localhost:4469/api/v0/CounterApi";
+        private const string ServiceHost = "http://www.dcustomer-data.com/api/v0/CounterApi";
 
         private const string CreateCountersByDeviceQuery = "/CreateCountersByDevice";
         private const string PostSnapShotByDeviceQuery = "/PostSnapShotByDevice";
