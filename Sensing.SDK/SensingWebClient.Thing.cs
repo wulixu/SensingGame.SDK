@@ -76,15 +76,16 @@ namespace Sensing.SDK
         public async Task<bool> SendEmail(string receiver, string thingId)
         {
             var absolutePath = $"{ServiceHost}/{SendEmailQuery}";
+            var body = $"{GetBasicNameValuesQueryString()}&receiver={receiver}&thingId={thingId}";
             try
             {
-                var pagedList = await SendRequestAsync<string, string>(HttpMethod.Post, absolutePath, $"{GetBasicNameValuesQueryString()}&receiver={receiver}&thingId={thingId}");
+                var pagedList = await SendRequestAsync<string, string>(HttpMethod.Post, absolutePath, body);
                 return true;
             }
             catch (Exception ex)
             {
-                //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("GetTCategories:" + ex.InnerException);
+                logger.Error($"SendEmail with body={body}", ex);
+                //Console.WriteLine("SendEmail:" + ex.InnerException);
             }
             return false;
         }
