@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Sensing.SDK.Contract
 {
@@ -51,5 +52,49 @@ namespace Sensing.SDK.Contract
         public string[] Tags { get; set; }
 
         public string FromType { get; set; }
+
+        public IEnumerable<SkuOnlineStoreInfoViewModel> OnlineStoreInfos { get; set; }
+    }
+
+    public class SkuOnlineStoreInfoViewModel
+    {
+        public int Id { get; set; }
+
+        public int SkuId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public long ItemId { get; set; }
+
+        /// <summary>
+        /// 线上商场的Id.
+        /// </summary>
+        public string StoreId { get; set; }
+
+        /// <summary>
+        /// 线上商城的类型.
+        /// </summary>
+        public OnlineStore Type { get; set; }
+
+        /// <summary>
+        /// 线上商城的PID
+        /// </summary>
+        public string PID { get; set; }
+
+        /// <summary>
+        /// 线上商场Product的价格.
+        /// </summary>
+        public double? Price { get; set; }
+
+        /// <summary>
+        /// 线上商城的库存.
+        /// </summary>
+        public int? Inventory { get; set; }
+
+        /// <summary>
+        /// 线上商城的二维码.
+        /// </summary>
+        public string Qrcode { get; set; }
     }
 }

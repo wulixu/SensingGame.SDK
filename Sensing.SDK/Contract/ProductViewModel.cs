@@ -59,6 +59,8 @@ namespace Sensing.SDK.Contract
 
         public IEnumerable<ProductFileViewModel> ItemImagesOrVedios { get; set; }
 
+        public IEnumerable<ProductOnlineStoreInfoViewModel> OnlineStoreInfos { get; set; }
+
         public bool IsFromBrand { get; set; }
         public string SumPropsName { get; set; }
         public string SellerId { get; set; }
@@ -126,13 +128,73 @@ namespace Sensing.SDK.Contract
         public ExternalEnum FromType { get; set; }
     }
 
+    public class ProductOnlineStoreInfoViewModel
+    {
+        public int ProductId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public long ItemId { get; set; }
+
+        /// <summary>
+        /// 线上商场的Id.
+        /// </summary>
+        public string StoreId { get; set; }
+
+        /// <summary>
+        /// 线上商城的类型.
+        /// </summary>
+        public OnlineStore Type { get; set; }
+
+        /// <summary>
+        /// 线上商品的PID
+        /// </summary>
+        public string PID { get; set; }
+
+        /// <summary>
+        /// 线上商场Product的价格.
+        /// </summary>
+        public double? Price { get; set; }
+
+        /// <summary>
+        /// 线上商城的库存.
+        /// </summary>
+        public int? Inventory { get; set; }
+
+        /// <summary>
+        /// 线上商城的二维码.
+        /// </summary>
+        public string Qrcode { get; set; }
+    }
+
+    public enum OnlineStore
+    {
+        [Display(Name = "官方电商")]
+        MyStore,
+        [Display(Name = "淘宝电商")]
+        Taobao,
+        [Display(Name = "京东电商")]
+        JD,
+        [Display(Name = "苏宁电商")]
+        Suning,
+        [Display(Name = "商派电商")]
+        Shangpai,
+    }
+
     public enum ExternalEnum
     {
         [Display(Name = "平台分类")]
         Platform,
         [Display(Name = "淘宝分类")]
         Taobao,
-        [Display(Name = "Oracle分类")]
-        Oracle
+        [Display(Name = "Oracle分类")]//
+        Oracle,
+        [Display(Name = "京东")]
+        JD,
+        [Display(Name = "百盛ERP")]
+        BaiSheng,
+        [Display(Name = "商派ERP")]
+        Shangpai,
     }
 }
