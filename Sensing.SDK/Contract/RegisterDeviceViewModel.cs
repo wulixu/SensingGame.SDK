@@ -80,6 +80,8 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public string SubKey { get; set; }
         public string OS { get; set; }
+
+        public OnlineStore OnlineTrafficTarget { get; set; }
     }
 
     public class GroupSdkModel
@@ -94,5 +96,4 @@ namespace Sensing.SDK.Contract
         public string Description { get; set; }
         public string OmniStoreId { get; set; }
     }
-
 }
