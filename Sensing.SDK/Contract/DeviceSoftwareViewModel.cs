@@ -12,12 +12,10 @@ namespace Sensing.SDK.Contract
 
         public int SoftwareId { get; set; }
         public int DeviceId { get; set; }
-
+        public bool IsDefault { get; set; }
         public string CustomizeSetting { get; set; }
-
         public string GroupSoftwareSetting { get; set; }
         public string MaterialPacketUrl { get; set; }
-
         public SoftwareViewModel Software { get; set; }
     }
 
