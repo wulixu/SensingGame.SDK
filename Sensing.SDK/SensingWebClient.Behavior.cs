@@ -12,9 +12,8 @@ namespace Sensing.SDK
         /// <summary>
         /// The qrcode4login.
         /// </summary>
-
-
-        private const string PostBehaviorQuery = CouponsBaseUrl + "/Behavior";
+        /// 
+        private const string PostBehaviorQuery = "/Behavior";
 
         public async Task<bool> PostBehaviorRecordsAsync(IEnumerable<BehaviorRecord> records)
         {

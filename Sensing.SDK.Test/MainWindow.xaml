@@ -19,7 +19,7 @@
             <Button Margin="50,0,0,0" x:Name="CreateBtn" Width="105" Background="#FFF10C7F" Foreground="White" Click="Button_Click">Create Service</Button>
         </StackPanel>
         <Label x:Name="label_Copy4" Content="Api测试功能一览：" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155"/>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="601" IsEnabled="False" SelectionChanged="tabControl_SelectionChanged">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="792" Height="601" IsEnabled="True" SelectionChanged="tabControl_SelectionChanged">
             <TabItem Header="Behavior">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,103">
                     <Label x:Name="label" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="155"/>
@@ -40,6 +40,12 @@
                     <Label x:Name="label_Copy3" Content="*不填写时，为当前机器时间" HorizontalAlignment="Left" Margin="420,113,0,0" VerticalAlignment="Top" Width="170" Background="{x:Null}" Foreground="#FFF50505"/>
                     <TextBlock x:Name="BMessage" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="29,265,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
                     <Label x:Name="label_Copy5" Content="Api回掉信息" HorizontalAlignment="Left" Margin="24,234,0,0" VerticalAlignment="Top" Width="207"/>
+                    <Label x:Name="label_Copy7" Content="Thing类型" HorizontalAlignment="Left" Margin="420,36,0,0" VerticalAlignment="Top" Width="94"/>
+                    <ComboBox x:Name="ThingType" HorizontalAlignment="Left" Margin="496,38,0,0" VerticalAlignment="Top" Width="152">
+                        <ComboBoxItem IsSelected="True" Content="Ads"/>
+                        <ComboBoxItem Content="Product"/>
+                        <ComboBoxItem Content="App"/>
+                    </ComboBox>
 
                 </Grid>
             </TabItem>
@@ -77,6 +83,14 @@
             </TabItem>
         </TabControl>
         <Button x:Name="GetThings_Copy" Content="获取Thing列表" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Height="34" Click="GetThings_Click" />
+        <Label x:Name="label_Copy6" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155"/>
+        <ComboBox x:Name="ActionComboBox_Copy" HorizontalAlignment="Left" VerticalAlignment="Top" Width="234">
+            <ComboBoxItem IsSelected="True" Content="Click"/>
+            <ComboBoxItem Content="Take"/>
+            <ComboBoxItem Content="Buy"/>
+            <ComboBoxItem Content="Scan"/>
+            <ComboBoxItem Content="Like"/>
+        </ComboBox>
 
     </StackPanel>
 </Window>

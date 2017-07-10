@@ -44,10 +44,11 @@ namespace Sensing.SDK.Test
         private async void UploadBehaviorDataBtn_Click(object sender, RoutedEventArgs e)
         {
             var action = ActionComboBox.SelectedValue.ToString();
+            var category = ThingType.SelectedValue.ToString();
             var sku = ThingNoTB.Text;
             var increment = int.Parse(IncrementTB.Text);
             var records = new List<BehaviorRecord>();
-            records.Add(new BehaviorRecord { Action = action, Sku = sku, CollectTime = DateTime.Now, From = ClientNoTB.Text, Increment = increment });
+            records.Add(new BehaviorRecord { Action = action,ThingId = sku, CollectTime = DateTime.Now, Increment = increment,Category = category });
             var result = await _sensingWebClient.PostBehaviorRecordsAsync(records);
             BMessage.Text += result + Environment.NewLine;
         }
