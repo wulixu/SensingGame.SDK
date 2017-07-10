@@ -31,5 +31,10 @@ namespace Sensing.SDK.Contract
         /// 这个时间是设备传过来，最终的效果是 2016/09/19 10：00：05 这个时间点的增量，比如5分钟单位集合
         /// </summary>
         public DateTime CollectTime { get; set; }
+
+        /// <summary>
+        /// 来自于那个软件
+        /// </summary>
+        public string Software { get; set; }
     }
 }

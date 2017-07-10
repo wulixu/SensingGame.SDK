@@ -17,7 +17,7 @@ namespace Sensing.SDK
 
         public async Task<bool> PostBehaviorRecordsAsync(IEnumerable<BehaviorRecord> records)
         {
-            var absolutePath = $"{ServiceHost}/{PostBehaviorQuery}";
+            var absolutePath = $"{ServiceHost}/{PostBehaviorQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var successed = await SendRequestAsync<IEnumerable<BehaviorRecord>, bool>(HttpMethod.Post, absolutePath, records);
