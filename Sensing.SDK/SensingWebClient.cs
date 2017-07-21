@@ -8,7 +8,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
-using LogService;
+using log4net;
+using System.Reflection;
 
 namespace Sensing.SDK
 {
@@ -33,7 +34,7 @@ namespace Sensing.SDK
         private string _clientNo;
         #endregion
 
-        private static readonly IBizLogger logger = ServerLogFactory.GetLogger(typeof(SensingWebClient));
+        private static readonly ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// The json header
