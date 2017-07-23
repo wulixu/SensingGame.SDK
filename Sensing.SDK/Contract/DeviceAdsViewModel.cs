@@ -42,5 +42,6 @@ namespace Sensing.SDK.Contract
         public string Transition { get; set; }
 
         public string ProductAttributes { get; set; }
+        public string Tags { get; set; }
     }
 }
