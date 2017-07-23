@@ -40,5 +40,7 @@ namespace Sensing.SDK.Contract
         /// 页面切换的动画.
         /// </summary>
         public string Transition { get; set; }
+
+        public string ProductAttributes { get; set; }
     }
 }

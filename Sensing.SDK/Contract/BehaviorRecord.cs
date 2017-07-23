@@ -36,5 +36,10 @@ namespace Sensing.SDK.Contract
         /// 来自于那个软件
         /// </summary>
         public string Software { get; set; }
+
+        /// <summary>
+        /// 附件信息.
+        /// </summary>
+        public string Comments { get; set; }
     }
 }
