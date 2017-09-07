@@ -11,7 +11,7 @@ namespace Sensing.SDK.Contract
     {
         public int Id { get; set; }
 
-        public long ItemId { get; set; }
+        public string ItemId { get; set; }
 
         public long Num { get; set; }
 
