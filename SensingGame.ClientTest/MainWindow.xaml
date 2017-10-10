@@ -68,6 +68,7 @@
             <TextBlock x:Name="awardDetails" HorizontalAlignment="Left" Height="77" Margin="13,31,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="3"/>
             <Label x:Name="rankMsg" Content="" HorizontalAlignment="Left" Margin="17,275,0,0" Width="222" Grid.Column="3" Grid.Row="2" Height="26" VerticalAlignment="Top"/>
             <ComboBox x:Name="orderByCBox" HorizontalAlignment="Left" Margin="142,31,0,0" Grid.Row="2" VerticalAlignment="Top" Width="61" Height="22" Grid.Column="3"/>
+            <Button x:Name="TaoUploadBtn" Content="Upload Tao" Foreground="White" Background="Purple" Grid.Column="3" HorizontalAlignment="Left" Height="22" Margin="117,9,0,0" VerticalAlignment="Top" Width="100"  Grid.Row="1" Click="TaoUploadBtn_Click"/>
         </Grid>
     </ScrollViewer>
 </Window>

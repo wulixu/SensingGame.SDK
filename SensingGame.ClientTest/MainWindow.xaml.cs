@@ -402,5 +402,10 @@ namespace SensingGame.ClientTest
         }
 
         #endregion
+
+        private async void TaoUploadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var result = await gameSvc.PostImageToTao(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), 10);
+        }
     }
 }

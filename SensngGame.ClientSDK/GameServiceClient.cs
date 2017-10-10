@@ -500,6 +500,36 @@ namespace SensngGame.ClientSDK
 
         #endregion
 
+
+        #region
+        public async Task<string> PostImageToTao(string gameImage, int score)
+        {
+            var absolutePath = $"https://m.shiwan66.top/taobao/saveImage";
+            var nameValues = new NameValueCollection();
+            AddBasicNameValues(nameValues);
+            nameValues.Add("score", score.ToString());
+            try
+            {
+                var files = new List<string>();
+                var names = new List<string>();
+                if (!string.IsNullOrEmpty(gameImage) && File.Exists(gameImage))
+                {
+                    files.Add(gameImage);
+                    names.Add("img");
+                }
+                var result = await SendMultipartFormRequestAsync<WebApiResult>(absolutePath, files.ToArray(), names.ToArray(), nameValues);
+                if(result.Status == "OK")
+                {
+                    return result.Data;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("PostData4ScanAsync", ex);
+            }
+            return null;
+        }
+        #endregion
         public async Task<UserDataResult> GetUserInfoData(string openId)
         {
             var absolutePath = $"{ServiceHost}/{FindWeixinUserQuery}";
@@ -646,5 +676,12 @@ namespace SensngGame.ClientSDK
         }
         #endregion
 
+    }
+
+    public class WebApiResult
+    {
+        public string Status { get; set; }
+        public string Message { get; set; }
+        public string Data { get; set; }
     }
 }

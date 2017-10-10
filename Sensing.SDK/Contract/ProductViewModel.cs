@@ -105,8 +105,6 @@ namespace Sensing.SDK.Contract
 
         public string FromType { get; set; }
     }
-
-
     public class PCategoryIdModel
     {
         public int Id { get; set; }

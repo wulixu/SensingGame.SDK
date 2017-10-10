@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensingGame.ClientTest", "SensingGame.ClientTest\SensingGame.ClientTest.csproj", "{BB7BEEB7-39CE-4EAE-8014-AF9365871CAD}"
 EndProject
@@ -31,6 +31,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensing.Mqtt", "Sensing.Mqtt\Sensing.Mqtt.csproj", "{5D128D07-6441-431E-A07A-65A18B74EB56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mqtt.Test", "Mqtt.Test\Mqtt.Test.csproj", "{A2637889-C1B2-432E-92B9-C163D1964537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppPod.DataAccess", "AppPod.DataAccess\AppPod.DataAccess.csproj", "{C1CC1644-6E92-445F-9346-99A66028CED7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -204,11 +206,30 @@ Global
 		{A2637889-C1B2-432E-92B9-C163D1964537}.Release|x64.Build.0 = Release|Any CPU
 		{A2637889-C1B2-432E-92B9-C163D1964537}.Release|x86.ActiveCfg = Release|Any CPU
 		{A2637889-C1B2-432E-92B9-C163D1964537}.Release|x86.Build.0 = Release|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Debug|x64.Build.0 = Debug|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Debug|x86.Build.0 = Debug|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Release|ARM.Build.0 = Release|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Release|x64.ActiveCfg = Release|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Release|x64.Build.0 = Release|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Release|x86.ActiveCfg = Release|Any CPU
+		{C1CC1644-6E92-445F-9346-99A66028CED7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{62176A09-A9F2-4589-9F3F-0A30AC263740} = {9956EBCB-3413-4A62-8B40-2D47E3D342FA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B7D1969-1F4C-4107-A101-9F83666C05E0}
 	EndGlobalSection
 EndGlobal
