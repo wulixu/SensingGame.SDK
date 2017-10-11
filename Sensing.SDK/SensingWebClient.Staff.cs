@@ -12,12 +12,12 @@ namespace Sensing.SDK
         /// <summary>
         /// Get all the things.
         /// </summary>
-        private const string AdsBaseUrl = "SensingDevice";
-        private const string GetAdsQuery = AdsBaseUrl + "/Ads";
+        private const string StaffBaseUrl = "SensingDevice";
+        private const string GetStaffsQuery = StaffBaseUrl + "/Staffs";
 
-        public async Task<PagedList<AdsSdkModel>> GetAds(int page = 1,int maxCount=300)
+        public async Task<PagedList<AdsSdkModel>> GetStaffs(int page = 1,int maxCount=300)
         {
-            var absolutePath = $"{ServiceHost}/{GetAdsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
+            var absolutePath = $"{ServiceHost}/{GetStaffsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
                 var webResult = await SendRequestAsync<string,WebApiResult<PagedList<AdsSdkModel>>>(HttpMethod.Get, absolutePath,null);

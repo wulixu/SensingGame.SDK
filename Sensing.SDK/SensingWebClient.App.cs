@@ -15,12 +15,12 @@ namespace Sensing.SDK
         private const string AppBaseUrl = "StoreSdk";
         private const string GetAppsQuery = AppBaseUrl + "/Apps";
 
-        public async Task<List<DeviceSoftwareViewModel>> GetApps()
+        public async Task<List<DeviceSoftwareSdkModel>> GetApps()
         {
             var absolutePath = $"{ServiceHost}/{GetAppsQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var webResult = await SendRequestAsync<string,WebApiResult<List<DeviceSoftwareViewModel>>>(HttpMethod.Get, absolutePath,null);
+                var webResult = await SendRequestAsync<string,WebApiResult<List<DeviceSoftwareSdkModel>>>(HttpMethod.Get, absolutePath,null);
                 if(webResult.status == ApiStatus.OK)
                 {
                     return webResult.data;

@@ -7,39 +7,22 @@ using System.Threading.Tasks;
 
 namespace Sensing.SDK.Contract
 {
-    public class ProductSDKModel
+    public class ProductSdkModel
     {
         public int Id { get; set; }
-
         public string ItemId { get; set; }
-
         public long Num { get; set; }
-
-        public string PropsName { get; set; }
-        /// <summary>
-        /// 事物都该有个名字来表示
-        /// </summary>
+        public int GroupId { get; set; }
         public string Title { get; set; }
-
         /// <summary>
         /// 在当今社会,任何事物都是可以明码标价的,难道不是!
         /// </summary>
         public double Price { get; set; }
 
         /// <summary>
-        /// 二维码这么流行,没个这玩意都不好意思说我在编程.
-        /// </summary>
-        public string QRCodeUrl { get; set; }
-
-        /// <summary>
         /// 万物总有属于他自己的关键字,让别人好找到它.
         /// </summary>
         public string Keywords { get; set; }
-
-
-        public int GroupId { get; set; }
-
-
         public string PicUrl { get; set; }
 
         /// <summary>
@@ -51,21 +34,32 @@ namespace Sensing.SDK.Contract
 
         public int OrderNumber { get; set; }
 
-        public IEnumerable<PCategoryIdModel> P_ProductCategories { get; set; }
+        public bool IsFromBrand { get; set; }
 
-        public IEnumerable<TagViewModel> ProductTags { get; set; }
+        public string SellerId { get; set; }
 
-        public IEnumerable<SkuSDKModel> Skus { get; set; }
+        public string OuterId { get; set; }
 
-        public IEnumerable<ProductFileViewModel> ItemImagesOrVedios { get; set; }
+        public string FromType { get; set; }
+
+        public string GroupQrCodeInfo { get; set; }
+
+        public IEnumerable<ProductDecideImageViewModel> PropImgs { get; set; }
+
+        public int[] CategoryIds { get; set; }
+
+        public string[] Tags { get; set; }
+        public IEnumerable<SkuSdkModel> Skus { get; set; }
+
+        public IEnumerable<ProductFileSdkModel> ItemImagesOrVedios { get; set; }
 
         public IEnumerable<ProductOnlineStoreInfoViewModel> OnlineStoreInfos { get; set; }
+    }
 
-        public bool IsFromBrand { get; set; }
-        public string SumPropsName { get; set; }
-        public string SellerId { get; set; }
-        public string OuterId { get; set; }
-        public string FromType { get; set; }
+    public class ProductDecideImageViewModel
+    {
+        public string PropertyName { get; set; }
+        public string ImageUrl { get; set; }
     }
 
     public class ProductCategorySDKModel
@@ -105,29 +99,20 @@ namespace Sensing.SDK.Contract
 
         public string FromType { get; set; }
     }
-    public class PCategoryIdModel
+
+    public class ProductFileSdkModel
     {
         public int Id { get; set; }
-    }
-
-    public class ProductFileViewModel
-    {
-        public int ProductId { get; set; }
-
-        public int ResourceId { get; set; }
-
         public string Name { get; set; }
-
-        /// <summary>
-        /// 资源的地址途径
-        /// </summary>
         public string FileUrl { get; set; }
-
-        public ExternalEnum FromType { get; set; }
+        public string FromType { get; set; }
+        public string ResourType { get; set; }
+        public string Content { get; set; }
     }
 
     public class ProductOnlineStoreInfoViewModel
     {
+        public int Id { get; set; }
         public int ProductId { get; set; }
 
         /// <summary>
@@ -144,6 +129,7 @@ namespace Sensing.SDK.Contract
         /// 线上商城的类型.
         /// </summary>
         public OnlineStore Type { get; set; }
+        public string OnlineStoreType { get; set; }
 
         /// <summary>
         /// 线上商品的PID

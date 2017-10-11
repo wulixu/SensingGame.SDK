@@ -1,9 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sensing.SDK.Contract
 {
-    public class SkuSDKModel
+    public enum AuditStatus
+    {
+        //当前什么状态都不是,如新建一个设备后就是None,为默认值.
+        [Display(Name = "未上线")]
+        None,
+        //当前设备没有入组,处于
+        [Display(Name = "下线")]
+        Offline,
+        //上线审核中...
+        [Display(Name = "上线审核中")]
+        OnlineAuditing,
+        //审核通过,在线
+        [Display(Name = "上线")]
+        Online,
+        //上线审核被拒绝.
+        [Display(Name = "上线审核被拒绝")]
+        OnlineAuditRejected,
+        //下线审核中...
+        [Display(Name = "下线审核中")]
+        OfflineAuiting,
+        //下线审核被拒绝.
+        [Display(Name = "下线审核被拒绝")]
+        OfflineAuditRejected
+    }
+    public class SkuSdkModel
     {
         public int Id { get; set; }
 
@@ -11,9 +36,12 @@ namespace Sensing.SDK.Contract
 
         public string SkuId { get; set; }
 
-        public long Num { get; set; }
+        public long Quantity { get; set; }
+
+        public AuditStatus AuditStatus { get; set; }
 
         public string PropsName { get; set; }
+
         /// <summary>
         /// 事物都该有个名字来表示
         /// </summary>
@@ -24,48 +52,32 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public double Price { get; set; }
 
-        /// <summary>
-        /// 二维码这么流行,没个这玩意都不好意思说我在编程.
-        /// </summary>
-        public string QRCodeUrl { get; set; }
-
         public int LikeCount { get; set; }
         /// <summary>
         /// 万物总有属于他自己的关键字,让别人好找到它.
         /// </summary>
         public string Keywords { get; set; }
 
-        public int GroupId { get; set; }
-
         public string PicUrl { get; set; }
-
-        public bool HasSelfImage { get; set; }
 
         public string Description { get; set; }
 
-        public int OrderNumber { get; set; }
-
         public string OuterId { get; set; }
 
-        public string ColorName { get; set; }
+        public int OrderNumber { get; set; }
 
         public string[] Tags { get; set; }
 
         public string FromType { get; set; }
 
-        public IEnumerable<SkuOnlineStoreInfoViewModel> OnlineStoreInfos { get; set; }
-    }
+        public string ColorName { get; set; }
 
-    public class SkuOnlineStoreInfoViewModel
+        public IEnumerable<SkuOnlineStoreInfoSdkModel> OnlineStoreInfos { get; set; }
+    }
+    public class SkuOnlineStoreInfoSdkModel
     {
         public int Id { get; set; }
-
         public int SkuId { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ItemId { get; set; }
 
         /// <summary>
         /// 线上商场的Id.
@@ -76,6 +88,7 @@ namespace Sensing.SDK.Contract
         /// 线上商城的类型.
         /// </summary>
         public OnlineStore Type { get; set; }
+        public string OnlineStoreType { get; set; }
 
         /// <summary>
         /// 线上商城的PID

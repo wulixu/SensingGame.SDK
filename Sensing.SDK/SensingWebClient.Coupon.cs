@@ -12,7 +12,7 @@ namespace Sensing.SDK
         /// <summary>
         /// Get all the things.
         /// </summary>
-        private const string CouponsBaseUrl = "StoreSdk";
+        private const string CouponsBaseUrl = "SensingDevice";
 
         private const string GetCouponsQuery = CouponsBaseUrl + "/Coupons";
 

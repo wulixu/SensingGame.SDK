@@ -12,7 +12,7 @@ namespace Sensing.SDK
         /// <summary>
         /// Get all the things.
         /// </summary>
-        private const string ThingBaseUrl = "StoreSdk";
+        private const string ThingBaseUrl = "SensingDevice";
         private const string GetProductsQuery = ThingBaseUrl + "/Products";
 
 
@@ -20,12 +20,12 @@ namespace Sensing.SDK
         private const string GetMatchesQuery = ThingBaseUrl + "/MatchInfos";
         private const string GetLikesQuery = ThingBaseUrl + "/LikeInfos";
 
-        public async Task<PagedList<ProductSDKModel>> GetProducts(int page = 1,int maxCount=300)
+        public async Task<PagedList<ProductSdkModel>> GetProducts(int page = 1,int maxCount=300)
         {
             var absolutePath = $"{ServiceHost}/{GetProductsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string,WebApiResult<PagedList<ProductSDKModel>>>(HttpMethod.Get, absolutePath,null);
+                var webResult = await SendRequestAsync<string,WebApiResult<PagedList<ProductSdkModel>>>(HttpMethod.Get, absolutePath,null);
                 if(webResult.status == ApiStatus.OK)
                 {
                     return webResult.data;

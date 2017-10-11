@@ -12,7 +12,7 @@ namespace Sensing.SDK
         /// <summary>
         /// Get all the things.
         /// </summary>
-        private const string DeviceBaseUrl = "StoreSdk";
+        private const string DeviceBaseUrl = "SensingDevice";
         private const string RegisterDeviceQuery = DeviceBaseUrl + "/RegisterDevice";
         private const string DeviceHeartBeatQuery = DeviceBaseUrl + "/DeviceHeartBeat";
 

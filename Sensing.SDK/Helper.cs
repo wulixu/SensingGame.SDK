@@ -9,7 +9,7 @@ namespace Sensing.SDK
 {
     public class Helper
     {
-        public static void GetQrcode(ProductSDKModel product)
+        public static void GetQrcode(ProductSdkModel product)
         {
 
         }
