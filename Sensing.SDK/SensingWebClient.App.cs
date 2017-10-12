@@ -12,7 +12,7 @@ namespace Sensing.SDK
         /// <summary>
         /// Get all the things.
         /// </summary>
-        private const string AppBaseUrl = "StoreSdk";
+        private const string AppBaseUrl = "SensingDevice";
         private const string GetAppsQuery = AppBaseUrl + "/Apps";
 
         public async Task<List<DeviceSoftwareSdkModel>> GetApps()
