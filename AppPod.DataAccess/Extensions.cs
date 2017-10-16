@@ -1,4 +1,5 @@
-﻿using Sensing.SDK.Contract;
+﻿using AppPod.DataAccess.Models;
+using Sensing.SDK.Contract;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,6 +18,19 @@ namespace AppPod.DataAccess
             return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\{localPath}";
         }
 
+        public static string GetLocalCategoryIcon(this ProductCategorySDKModel category)
+        {
+            if (category == null || string.IsNullOrEmpty(category.IconUrl)) return null;
+            var localPath = ExtractSchema(category.IconUrl);
+            return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\{localPath}";
+        }
+
+        public static string GetLocalImage(this ShowProductInfo productInfo)
+        {
+            if (productInfo == null || string.IsNullOrEmpty(productInfo.ImageUrl)) return null;
+            var localPath = ExtractSchema(productInfo.ImageUrl);
+            return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\{localPath}";
+        }
         public static string ExtractSchema(string fileName)
         {
             if (fileName == null) return null;
