@@ -1,4 +1,5 @@
-﻿using Sensing.SDK.Contract;
+﻿using AppPod.DataAccess.Models;
+using Sensing.SDK.Contract;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,8 @@ namespace AppPod.DataAccess
         //ProductInfo FindByProductId(int productId);
         //ProductInfo FindByScanId(string scanId);
         //List<ProductInfo> FindSimilar(int itemId);
+        ProductSdkModel FindByProductId(int productId);
+        List<ShowProductInfo> QueryShowProducts(bool onlySpu);
         List<ProductSdkModel> GetProductsByCategroyName(string categroyName);
 
         List<AdsSdkModel> Ads { get; set; }

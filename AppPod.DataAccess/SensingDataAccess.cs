@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AppPod.DataAccess.Models;
+using Newtonsoft.Json;
 using Sensing.SDK.Contract;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,89 @@ namespace AppPod.DataAccess
             throw new NotImplementedException();
         }
 
-        ProductSdkModel FindByProductId(int productId)
+        //public ProductSdkModel FindByProductId(int id)
+        //{
+        //    return Products?.Find(p => p.Id == id);
+        //}
+
+        public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
+        {
+            if (Products == null || Products.Count == 0) return null;
+            if(onlySpu)
+            {
+                var infos = Products.Select(pModel => new ShowProductInfo
+                {
+                    Id = pModel.Id,
+                    ImageUrl = pModel.PicUrl,
+                    Name = pModel.Title,
+                    Price = pModel.Price,
+                    Type = ProductType.Product
+                }).ToList();
+                return infos;
+            }
+            else
+            {
+                var showProducts = new List<ShowProductInfo>();
+                foreach(var prod in Products)
+                {
+                    if(prod.Skus == null)
+                    {
+                        if (prod.HasRealSkus == false)
+                        {
+                            showProducts.Add(new ShowProductInfo
+                            {
+                                Id = prod.Id,
+                                ImageUrl = prod.PicUrl,
+                                Name = prod.Title,
+                                Price = prod.Price,
+                                Quantity = prod.Num,
+                                Type = ProductType.Product
+                            });
+                        }
+                        continue;
+                    }
+                    if(prod.Skus != null && prod.Skus.Count() == 0)
+                    {
+                        if (!prod.HasRealSkus)
+                        {
+                            showProducts.Add(new ShowProductInfo
+                            {
+                                Id = prod.Id,
+                                ImageUrl = prod.PicUrl,
+                                Quantity = prod.Num,
+                                Name = prod.Title,
+                                Price = prod.Price,
+                                Type = ProductType.Product
+                            });
+                        }
+                        continue;
+                    }
+                    if(prod.PropImgs != null && prod.PropImgs.Count() > 0)
+                    {
+                        foreach(var pImg in prod.PropImgs)
+                        { 
+                            var keyProps = pImg.PropertyName;
+                            var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps));
+                            if(firstSku != null)
+                            {
+                                showProducts.Add(new ShowProductInfo
+                                {
+                                    Id = firstSku.Id,
+                                    ImageUrl = pImg.ImageUrl,
+                                    Quantity = firstSku.Quantity,
+                                    Name = firstSku.Title,
+                                    Price = firstSku.Price,
+                                    Type = ProductType.Sku
+                                });
+                            }
+                        }
+                    }
+                }
+                return showProducts;
+            }
+        }
+
+        public ProductSdkModel FindByProductId(int productId)
         {
             return Products?.Find(p => p.Id == productId);
         }

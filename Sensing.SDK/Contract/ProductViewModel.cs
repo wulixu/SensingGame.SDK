@@ -36,6 +36,8 @@ namespace Sensing.SDK.Contract
 
         public bool IsFromBrand { get; set; }
 
+        public bool HasRealSkus { get; set; }
+
         public string SellerId { get; set; }
 
         public string OuterId { get; set; }
