@@ -32,10 +32,15 @@ namespace AppPod.DataAccess
             throw new NotImplementedException();
         }
 
-        //public ProductSdkModel FindByProductId(int id)
-        //{
-        //    return Products?.Find(p => p.Id == id);
-        //}
+        public ProductSdkModel FindByProductId(int id)
+        {
+            return Products?.Find(p => p.Id == id);
+        }
+
+        public ProductSdkModel FindByScanId(string skc)
+        {
+            throw new Exception();
+        }
 
         public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
         {
@@ -114,10 +119,6 @@ namespace AppPod.DataAccess
             }
         }
 
-        public ProductSdkModel FindByProductId(int productId)
-        {
-            return Products?.Find(p => p.Id == productId);
-        }
 
         public List<ProductSdkModel> GetProductsByCategroyName(string categroyName)
         {
@@ -156,6 +157,44 @@ namespace AppPod.DataAccess
         public List<int> FindCategoryIdsByNames(string[] categoryNames)
         {
             return PCategories.Where(p => categoryNames.Any(c => c ==p.Name)).Select(s => s.Id).ToList();
+        }
+        public List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true)
+        {
+            return PCategories.Where(p => p.IsSpecial).ToList();
+        }
+
+        public List<CouponViewModel> GetCoupons()
+        {
+            return Coupons.ToList();
+        }
+
+        public List<ProductSdkModel> SearchProducts(float minPrice, float maxPrice, List<string> colors, List<int> categoryIds, List<string> tags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ProductSdkModel> SearchProductsByName(string searchTerm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Like(ProductSdkModel productInfo)
+        {
+            throw new NotImplementedException();
+        }
+        public List<AdsSdkModel> GetAdsInfos()
+        {
+            return Ads;
+        }
+
+        public List<ShowProductInfo> FindSimilar(int itemId)
+        {
+            //todo 
+            return QueryShowProducts(true);
+        }
+        public bool IsCompleted()
+        {
+            return true;
         }
         #endregion
 
@@ -291,5 +330,6 @@ namespace AppPod.DataAccess
             Likes = await ReadProductLikesAsync();
 
         }
+
     }
 }

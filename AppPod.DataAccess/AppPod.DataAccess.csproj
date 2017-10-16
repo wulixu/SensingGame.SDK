@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>E:\Git\productgrid\ExternalDLLs\</OutputPath>
+    <OutputPath>C:\Users\quleo\Documents\work\ProductWall\ExternalDLLs</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
