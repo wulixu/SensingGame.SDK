@@ -26,9 +26,13 @@ namespace AppPod.DataAccess
         }
 
         #region Bussiness Logical Data
-        public async Task<string> GetStaffOnlineStoreId(int staffId, OnlineStore storeType)
+        public async Task<string> GetOnlineStoreStaffId(int staffId, string storeType)
         {
-            throw new NotImplementedException();
+            var staff = Staffs.Find(s => s.Id == staffId);
+            if (staff == null) return null;
+            var onlineStaff = staff.OnlineStoreProfiles.AsQueryable().FirstOrDefault(s => s.OnlineStoreType == storeType);
+            if (onlineStaff == null) return staff.Code;
+            return onlineStaff.Code;
         }
 
         ProductSdkModel FindByProductId(int productId)
