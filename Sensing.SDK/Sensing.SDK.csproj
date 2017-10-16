@@ -63,7 +63,6 @@
     <Compile Include="Contract\RegisterDeviceViewModel.cs" />
     <Compile Include="Contract\SkuViewModel.cs" />
     <Compile Include="Contract\StaffSdkModel.cs" />
-    <Compile Include="Contract\Thing.cs" />
     <Compile Include="Contract\WebApiResult.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

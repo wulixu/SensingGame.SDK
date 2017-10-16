@@ -10,22 +10,17 @@ namespace Sensing.SDK.Contract
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string RFIDCode { get; set; }
         public string Code { get; set; }
         public string RCode { get; set; }
         public string AvatarUrl { get; set; }
         public string Gender { get; set; }
-        public IEnumerable<OnlineStoreProfileViewModel> OnlineStoreProfiles { get; set; }
-        public string Comments { get; set; }
+        public IEnumerable<OnlineStoreProfileSdkModel> OnlineStoreProfiles { get; set; }
     }
 
-    public class OnlineStoreProfileViewModel
+    public class OnlineStoreProfileSdkModel
     {
-        public int Id { get; set; }
         public string OnlineStoreType { get; set; }
-        public int StaffId { get; set; }
-        public string StaffCode { get; set; }
-        public string StaffName { get; set; }
         public string Code { get; set; }
-        public string Comments { get; set; }
     }
 }

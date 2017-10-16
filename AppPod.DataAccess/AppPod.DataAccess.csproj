@@ -1,13 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>E:\Git\productgrid\ExternalDLLs\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Sensing.SDK">
-      <HintPath>..\..\..\Git\AppPod\Build\Debug\Sensing.SDK.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+    <PackageReference Include="Prism.Unity" Version="6.3.0" />
+    <PackageReference Include="System.Interactive" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sensing.SDK\Sensing.SDK.csproj" />
   </ItemGroup>
 
 </Project>
