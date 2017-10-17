@@ -15,25 +15,35 @@ namespace AppPod.DataAccess
         {
             if (category == null || string.IsNullOrEmpty(category.ImageUrl)) return null;
             var localPath = ExtractSchema(category.ImageUrl);
-            return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\{localPath}";
+            return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\res\\{localPath}";
         }
 
         public static string GetLocalCategoryIcon(this ProductCategorySDKModel category)
         {
             if (category == null || string.IsNullOrEmpty(category.IconUrl)) return null;
             var localPath = ExtractSchema(category.IconUrl);
-            return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\{localPath}";
+            return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\res\\{localPath}";
         }
 
         public static string GetLocalImage(this ShowProductInfo productInfo)
         {
             if (productInfo == null || string.IsNullOrEmpty(productInfo.ImageUrl)) return null;
             var localPath = ExtractSchema(productInfo.ImageUrl);
-            return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\{localPath}";
+            return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\res\\{localPath}";
         }
+
+        public static string GetLocalFile(this AdsSdkModel ads)
+        {
+            if (ads == null || string.IsNullOrEmpty(ads.FileUrl)) return null;
+            var localPath = ExtractSchema(ads.FileUrl);
+            return $"{SensingDataAccess.AppPodDataDirectory}\\ads\\res\\{localPath}";
+        }
+
+            
 
         public static ShowProductInfo ToShowProductInfo(this ProductSdkModel productInfo)
         {
+            if (productInfo == null) return null;
             return new ShowProductInfo
             {
                 Id = productInfo.Id,

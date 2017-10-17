@@ -11,7 +11,7 @@ namespace AppPod.DataAccess
     {
         //ProductInfo FindByProductId(int productId);
         ProductSdkModel FindByScanId(string scanId);
-        List<ShowProductInfo> FindSimilar(int itemId);
+        List<ShowProductInfo> FindSimilar(ShowProductInfo itemId, bool useSameSpu = true, bool useSameCategories = false);
         ProductSdkModel FindByProductId(int productId);
         List<ShowProductInfo> QueryShowProducts(bool onlySpu);
         List<ProductSdkModel> GetProductsByCategroyName(string categroyName);
@@ -43,13 +43,13 @@ namespace AppPod.DataAccess
         //string GetLocalCategoryIcon(CategroyInfo ca);
         //string GetProgress();
         bool IsCompleted();
-        Task Intialize();
-        Task<List<AdsSdkModel>> ReadAdsAsync();
-        Task<List<MatchInfoViewModel>> ReadProductMatchesAsync();
-        Task<List<LikeInfoViewModel>> ReadProductLikesAsync();
-        Task<List<CouponViewModel>> ReadCouponsAsync();
-        Task<List<ProductSdkModel>> ReadProductsAsync();
-        Task<List<ProductCategorySDKModel>> ReadCategorysAsync();
-        Task<List<StaffSdkModel>> ReadStaffsAsync();
+        bool Intialize();
+        List<AdsSdkModel> ReadAds();
+        List<MatchInfoViewModel> ReadProductMatches();
+        List<LikeInfoViewModel> ReadProductLikes();
+        List<CouponViewModel> ReadCoupons();
+        List<ProductSdkModel> ReadProducts();
+        List<ProductCategorySDKModel> ReadCategorys();
+        List<StaffSdkModel> ReadStaffs();
     }
 }
