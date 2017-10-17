@@ -10,11 +10,12 @@ namespace AppPod.DataAccess
     public interface ILocalSensingDataAccess
     {
         //ProductInfo FindByProductId(int productId);
-        //ProductInfo FindByScanId(string scanId);
-        //List<ProductInfo> FindSimilar(int itemId);
+        ProductSdkModel FindByScanId(string scanId);
+        List<ShowProductInfo> FindSimilar(int itemId);
         ProductSdkModel FindByProductId(int productId);
         List<ShowProductInfo> QueryShowProducts(bool onlySpu);
         List<ProductSdkModel> GetProductsByCategroyName(string categroyName);
+        List<ProductSdkModel> GetProductsByCategroyNames(string[] categroyNames);
 
         List<AdsSdkModel> Ads { get; set; }
         List<StaffSdkModel> Staffs { get; set; }
@@ -26,22 +27,22 @@ namespace AppPod.DataAccess
         List<LikeInfoViewModel> Likes { get; set; }
 
         //List<ProductInfo> GetProductsByCategroyName(IEnumerable<string> categroyNames);
-        //List<ProductInfo> SearchProductsBySku(string sku);
+        List<ProductSdkModel> SearchProductsByName(string searchTerm);
         //ProductInfo FindProductByAttribute(string productAttribute);
-        //List<ProductInfo> SearchProducts(Range<float> price, List<string> colors, List<int> categoryIds, List<string> tags);
-        //List<CategroyInfo> GetCategroyInfos(bool isSpecial = true);
+        List<ProductSdkModel> SearchProducts(float minPrice, float maxPrice, List<string> colors, List<int> categoryIds, List<string> tags);
+         List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true);
         //List<ProductInfo> GetProductInfos();
-        //List<CouponInfo> GetCoupons();
-        //List<AdsInfo> GetAdsInfos();
+        List<CouponViewModel> GetCoupons();
+        List<AdsSdkModel> GetAdsInfos();
         //List<StaffInfo> GetStaffInfos();
-        //void Like(ProductInfo productInfo);
+        void Like(ProductSdkModel productInfo);
         //void Click(ProductInfo productInfo);
         //void LoadProducts();
         //string GetLocalImage(ProductInfo p);
         //string GetLocalCategroyImage(CategroyInfo ca);
         //string GetLocalCategoryIcon(CategroyInfo ca);
         //string GetProgress();
-        //bool IsCompleted();
+        bool IsCompleted();
         Task Intialize();
         Task<List<AdsSdkModel>> ReadAdsAsync();
         Task<List<MatchInfoViewModel>> ReadProductMatchesAsync();

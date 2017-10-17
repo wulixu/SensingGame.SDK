@@ -31,6 +31,33 @@ namespace AppPod.DataAccess
             var localPath = ExtractSchema(productInfo.ImageUrl);
             return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\{localPath}";
         }
+
+        public static ShowProductInfo ToShowProductInfo(this ProductSdkModel productInfo)
+        {
+            return new ShowProductInfo
+            {
+                Id = productInfo.Id,
+                ImageUrl = productInfo.PicUrl,
+                Name = productInfo.Title,
+                Price = productInfo.Price,
+                Quantity = productInfo.Num,
+                Type = ProductType.Product
+            };
+        }
+
+        public static List<ShowProductInfo> ToShowProductInfo(this List<ProductSdkModel> productInfos)
+        {
+            return productInfos.Select(p => new ShowProductInfo
+            {
+                Id = p.Id,
+                ImageUrl = p.PicUrl,
+                Name = p.Title,
+                Price = p.Price,
+                Quantity = p.Num,
+                Type = ProductType.Product
+            }).ToList();
+        }
+
         public static string ExtractSchema(string fileName)
         {
             if (fileName == null) return null;
