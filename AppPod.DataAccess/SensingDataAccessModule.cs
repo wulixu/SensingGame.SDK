@@ -4,7 +4,7 @@ using Prism.Events;
 using Prism.Modularity;
 using System.Threading;
 
-namespace ProductProvider
+namespace AppPod.DataAccess
 {
     public class SensingDataAccessModule : IModule
     {
@@ -16,13 +16,14 @@ namespace ProductProvider
             mEventAggregator = eventAggregator;
         }
 
-        public async  void Initialize()
+        public void Initialize()
         {
             SensingDataAccess sensingDataAccess = new SensingDataAccess();
             //mEventAggregator.GetEvent<MessageUpdateEvent>().Publish(new MessageUpdateEvent { Message = "加载数据" });
-            await sensingDataAccess.Intialize();
+            sensingDataAccess.Intialize();
             //ShareData.Instance.ProductProvider = sensingDataAccess;
             mUnityContainer.RegisterInstance<ILocalSensingDataAccess>(sensingDataAccess);
+
         }
     }
 }

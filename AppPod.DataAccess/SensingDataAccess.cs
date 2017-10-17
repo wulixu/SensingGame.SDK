@@ -46,6 +46,15 @@ namespace AppPod.DataAccess
             throw new Exception();
         }
 
+
+        public static string GetLocalImagePath(string path,string category)
+        {
+            if (string.IsNullOrEmpty(path)) return null;
+            var localPath = Extensions.ExtractSchema(path);
+            return $"{SensingDataAccess.AppPodDataDirectory}\\{category}\\res\\{localPath}";
+        }
+
+
         public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
         {
             if (Products == null || Products.Count == 0) return null;
@@ -54,7 +63,7 @@ namespace AppPod.DataAccess
                 var infos = Products.Select(pModel => new ShowProductInfo
                 {
                     Id = pModel.Id,
-                    ImageUrl = pModel.PicUrl,
+                    ImageUrl = GetLocalImagePath(pModel.PicUrl,"Product"),
                     Name = pModel.Title,
                     Price = pModel.Price,
                     Type = ProductType.Product
@@ -73,7 +82,7 @@ namespace AppPod.DataAccess
                             showProducts.Add(new ShowProductInfo
                             {
                                 Id = prod.Id,
-                                ImageUrl = prod.PicUrl,
+                                ImageUrl = GetLocalImagePath(prod.PicUrl,"Products"),
                                 Name = prod.Title,
                                 Price = prod.Price,
                                 Quantity = prod.Num,
@@ -89,7 +98,7 @@ namespace AppPod.DataAccess
                             showProducts.Add(new ShowProductInfo
                             {
                                 Id = prod.Id,
-                                ImageUrl = prod.PicUrl,
+                                ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
                                 Quantity = prod.Num,
                                 Name = prod.Title,
                                 Price = prod.Price,
@@ -109,7 +118,7 @@ namespace AppPod.DataAccess
                                 showProducts.Add(new ShowProductInfo
                                 {
                                     Id = firstSku.Id,
-                                    ImageUrl = pImg.ImageUrl,
+                                    ImageUrl = GetLocalImagePath(pImg.ImageUrl, "Products"),
                                     Quantity = firstSku.Quantity,
                                     Name = firstSku.Title,
                                     Price = firstSku.Price,
@@ -164,7 +173,7 @@ namespace AppPod.DataAccess
         }
         public List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true)
         {
-            return PCategories.Where(p => p.IsSpecial).ToList();
+            return PCategories?.Where(p => p.IsSpecial).ToList();
         }
 
         public List<CouponViewModel> GetCoupons()
@@ -190,12 +199,6 @@ namespace AppPod.DataAccess
         {
             return Ads;
         }
-
-        public List<ShowProductInfo> FindSimilar(int itemId)
-        {
-            //todo 
-            return QueryShowProducts(true);
-        }
         public bool IsCompleted()
         {
             return true;
@@ -211,7 +214,7 @@ namespace AppPod.DataAccess
             {
                 if (File.Exists(Path.Combine(root.FullName, "AppPod.exe")))
                 {
-                    return root.FullName + "/";
+                    return root.FullName + @"\AppPodData\";
                 }
                 root = root.Parent;
             }
@@ -245,64 +248,64 @@ namespace AppPod.DataAccess
 
 
         #region Read Data from Local Json.
-        public async Task<List<AdsSdkModel>> ReadAdsAsync()
+        public List<AdsSdkModel> ReadAds()
         {
             var path = $"{AppPodDataDirectory}/Ads/Ads.json";
             if (!File.Exists(path)) return null;
-            string json = await ReadTextAsync(path);
+            string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<List<AdsSdkModel>>(json);
         }
 
-        public async Task<List<MatchInfoViewModel>> ReadProductMatchesAsync()
+        public List<MatchInfoViewModel> ReadProductMatches()
         {
             var path = $"{AppPodDataDirectory}/Products/Matches.json";
             if (!File.Exists(path)) return null;
-            string json = await ReadTextAsync(path);
+            string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<List<MatchInfoViewModel>>(json);
         }
 
-        public async Task<List<LikeInfoViewModel>> ReadProductLikesAsync()
+        public List<LikeInfoViewModel> ReadProductLikes()
         {
             var path = $"{AppPodDataDirectory}/Products/Likes.json";
             if (!File.Exists(path)) return null;
-            string json = await ReadTextAsync(path);
+            string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<List<LikeInfoViewModel>>(json);
         }
 
-        public async Task<List<CouponViewModel>> ReadCouponsAsync()
+        public List<CouponViewModel> ReadCoupons()
         {
             var path = $"{AppPodDataDirectory}/Products/Coupons.json";
             if (!File.Exists(path)) return null;
-            string json = await ReadTextAsync(path);
+            string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<List<CouponViewModel>>(json);
         }
 
-        public async Task<List<ProductSdkModel>> ReadProductsAsync()
+        public List<ProductSdkModel> ReadProducts()
         {
             var path = $"{AppPodDataDirectory}/Products/Products.json";
             if (!File.Exists(path)) return null;
-            string json = await ReadTextAsync(path);
+            string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<List<ProductSdkModel>>(json);
         }
 
-        public async Task<List<ProductCategorySDKModel>> ReadCategorysAsync()
+        public List<ProductCategorySDKModel> ReadCategorys()
         {
             var path = $"{AppPodDataDirectory}/Products/Categories.json";
             if (!File.Exists(path)) return null;
-            string json = await ReadTextAsync(path);
+            string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<List<ProductCategorySDKModel>>(json);
 
         }
 
-        public async Task<List<StaffSdkModel>> ReadStaffsAsync()
+        public List<StaffSdkModel> ReadStaffs()
         {
             var path = $"{AppPodDataDirectory}/Staffs/Staffs.json";
             if (!File.Exists(path)) return null;
-            string json = await ReadTextAsync(path);
+            string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<List<StaffSdkModel>>(json);
         }
 
-        public static async Task<string> ReadTextAsync(string filePath)
+        public static async Task<string> ReadText(string filePath)
         {
             using (FileStream sourceStream = new FileStream(filePath,
                 FileMode.Open, FileAccess.Read, FileShare.Read,
@@ -323,17 +326,74 @@ namespace AppPod.DataAccess
         }
         #endregion
 
-        public async Task Intialize()
+        public bool Intialize()
         {
-            Ads = await ReadAdsAsync();
-            Staffs = await ReadStaffsAsync();
-            Products = await ReadProductsAsync();
-            PCategories = await ReadCategorysAsync();
-            Coupons = await ReadCouponsAsync();
-            Matches = await ReadProductMatchesAsync();
-            Likes = await ReadProductLikesAsync();
-
+            Ads = ReadAds();
+            Staffs = ReadStaffs();
+            Products = ReadProducts();
+            PCategories = ReadCategorys();
+            Coupons = ReadCoupons();
+            Matches = ReadProductMatches();
+            Likes = ReadProductLikes();
+            return true;
         }
 
+        public List<ShowProductInfo>  DistinctShowProducts(ProductSdkModel prod,int exceptSkuId = -1)
+        {
+            if (prod == null) return null;
+            if (prod.PropImgs != null && prod.PropImgs.Count() > 0)
+            {
+                var showProducts = new List<ShowProductInfo>();
+                foreach (var pImg in prod.PropImgs)
+                {
+                    var keyProps = pImg.PropertyName;
+                    var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps));
+                    if (firstSku != null)
+                    {
+                        if (firstSku.Id != exceptSkuId)
+                        {
+                            showProducts.Add(new ShowProductInfo
+                            {
+                                Id = firstSku.Id,
+                                ImageUrl = GetLocalImagePath(pImg.ImageUrl, "Products"),
+                                Quantity = firstSku.Quantity,
+                                Name = firstSku.Title,
+                                Price = firstSku.Price,
+                                Type = ProductType.Sku
+                            });
+                        }
+                    }
+                }
+                return showProducts;
+            }
+            return null;
+        }
+
+        public List<ShowProductInfo> FindSimilar(ShowProductInfo productInfo, bool useSameSpu = true, bool useSameCategories = false)
+        {
+            //todo:Qu.
+            if (productInfo == null) return null;
+            List<ShowProductInfo> similarSkus = new List<ShowProductInfo>();
+            if (useSameSpu == false && useSameCategories == false)
+            {
+                similarSkus.Add(productInfo);
+                return similarSkus;
+            }
+            if(productInfo.Type == ProductType.Product)
+            {
+
+            }
+            if(productInfo.Type == ProductType.Sku)
+            {
+                if (useSameSpu)
+                {
+                    var spu = Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == productInfo.Id));
+                    similarSkus = DistinctShowProducts(spu, productInfo.Id);
+                    similarSkus.Insert(0, productInfo);
+                }
+                return similarSkus;
+            }
+            return null;
+        }
     }
 }
