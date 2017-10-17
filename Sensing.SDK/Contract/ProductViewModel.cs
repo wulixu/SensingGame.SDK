@@ -25,6 +25,8 @@ namespace Sensing.SDK.Contract
         public string Keywords { get; set; }
         public string PicUrl { get; set; }
 
+        public string Promotions { get; set; }
+
         /// <summary>
         /// Thing被专门喜欢的此处.
         /// </summary>

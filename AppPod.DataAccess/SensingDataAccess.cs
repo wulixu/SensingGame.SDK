@@ -41,6 +41,18 @@ namespace AppPod.DataAccess
             return Products?.Find(p => p.Id == id);
         }
 
+        public ProductSdkModel FindBySkuId(int skuId)
+        {
+            return Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == skuId));
+        }
+
+        public ProductSdkModel FindByShowProduct(ShowProductInfo showProductInfo)
+        {
+            if (showProductInfo == null) return null;
+            if (showProductInfo.Type == ProductType.Product) return FindByProductId(showProductInfo.Id);
+            return FindBySkuId(showProductInfo.Id);
+        }
+
         public ProductSdkModel FindByScanId(string skc)
         {
             throw new Exception();
@@ -393,6 +405,16 @@ namespace AppPod.DataAccess
                 }
                 return similarSkus;
             }
+            return null;
+        }
+
+        public PropertyInfo GetKeyPropertyInfo(ProductSdkModel product)
+        {
+            return null;
+        }
+
+        public List<PropertyInfo> GetKeyPropertyInfos(ProductSdkModel product)
+        {
             return null;
         }
     }

@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AppPod.DataAccess.Models
+{
+    public class PropertyValueInfo
+    {
+        public string Name { get; set; }
+        public string ImageUrl { get; set; }
+    }
+
+    public class PropertyInfo
+    {
+        public string Name { get; set; }
+        public bool IsKey { get; set; }
+        public List<PropertyValueInfo> Values { get; set; }
+    }
+}
