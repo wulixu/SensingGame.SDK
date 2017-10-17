@@ -4,7 +4,7 @@ using Prism.Events;
 using Prism.Modularity;
 using System.Threading;
 
-namespace ProductProvider
+namespace AppPod.DataAccess
 {
     public class SensingDataAccessModule : IModule
     {
