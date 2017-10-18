@@ -13,11 +13,13 @@ namespace AppPod.DataAccess
     public class SensingDataAccess : ILocalSensingDataAccess
     {
         public static string AppPodDataDirectory { get; set; }
+        public static DeviceSetting DeviceSetting { get; set; }
         public SensingDataAccess(bool isAutoFindAppPodDataDirecotry = true)
         {
             if(isAutoFindAppPodDataDirecotry)
             {
                 AppPodDataDirectory = FindAppPodDataFolder();
+                DeviceSetting = FindDeviceSetting();
             }
         }
 
@@ -27,19 +29,21 @@ namespace AppPod.DataAccess
         }
 
         #region Bussiness Logical Data
-        public async Task<string> GetOnlineStoreStaffId(int staffId, string storeType)
+        public string GetOnlineStoreStaffId(int staffId)
         {
+            var storeType = GetStoreType();
             var staff = Staffs.Find(s => s.Id == staffId);
             if (staff == null) return null;
             var onlineStaff = staff.OnlineStoreProfiles.AsQueryable().FirstOrDefault(s => s.OnlineStoreType == storeType);
             if (onlineStaff == null) return staff.Code;
             return onlineStaff.Code;
-        }
+       }
 
         public ProductSdkModel FindByProductId(int id)
         {
             return Products?.Find(p => p.Id == id);
         }
+
 
         public ProductSdkModel FindByScanId(string skc)
         {
@@ -58,6 +62,7 @@ namespace AppPod.DataAccess
         public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
         {
             if (Products == null || Products.Count == 0) return null;
+            string storeType = GetStoreType();
             if(onlySpu)
             {
                 var infos = Products.Select(pModel => new ShowProductInfo
@@ -66,6 +71,7 @@ namespace AppPod.DataAccess
                     ImageUrl = GetLocalImagePath(pModel.PicUrl,"Product"),
                     Name = pModel.Title,
                     Price = pModel.Price,
+                    QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                     Type = ProductType.Product
                 }).ToList();
                 return infos;
@@ -102,6 +108,7 @@ namespace AppPod.DataAccess
                                 Quantity = prod.Num,
                                 Name = prod.Title,
                                 Price = prod.Price,
+                                QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 Type = ProductType.Product
                             });
                         }
@@ -122,6 +129,7 @@ namespace AppPod.DataAccess
                                     Quantity = firstSku.Quantity,
                                     Name = firstSku.Title,
                                     Price = firstSku.Price,
+                                    QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                     Type = ProductType.Sku
                                 });
                             }
@@ -206,7 +214,7 @@ namespace AppPod.DataAccess
         #endregion
 
         #region AppPod Base
-        public static string FindAppPodDataFolder()
+        public static string FindAppPodRootFolder()
         {
             var exeRoot = AppDomain.CurrentDomain.BaseDirectory;
             DirectoryInfo root = new DirectoryInfo(exeRoot);
@@ -214,11 +222,29 @@ namespace AppPod.DataAccess
             {
                 if (File.Exists(Path.Combine(root.FullName, "AppPod.exe")))
                 {
-                    return root.FullName + @"\AppPodData\";
+                    return root.FullName;
                 }
                 root = root.Parent;
             }
             return null;
+        }
+
+        public static string FindAppPodDataFolder()
+        {
+            var rootFolder = FindAppPodRootFolder();
+            if (rootFolder == null)
+                return null;
+            return Path.Combine(rootFolder, "AppPodData");
+             
+        }
+
+        private static DeviceSetting FindDeviceSetting()
+        {
+            var rootFolder = FindAppPodRootFolder();
+            if (rootFolder == null)
+                return null;
+            var sqlconnection = new SQLite.SQLiteConnection(rootFolder + "/_data/AppPodData.db");
+            return sqlconnection.Table<DeviceSetting>().FirstOrDefault();
         }
 
         private static string FindResourceFolder()
@@ -394,6 +420,13 @@ namespace AppPod.DataAccess
                 return similarSkus;
             }
             return null;
+        }
+
+        public string GetStoreType()
+        {
+            if (DeviceSetting == null)
+                return "Taobao";
+            return DeviceSetting.OnlineTrafficTarget.ToString();
         }
     }
 }
