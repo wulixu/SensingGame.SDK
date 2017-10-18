@@ -418,7 +418,16 @@ namespace AppPod.DataAccess
             }
             if (productInfo.Type == ProductType.Product)
             {
-
+                if(useSameSpu)
+                {
+                    var product = FindByShowProduct(productInfo);
+                    similarSkus = DistinctShowProducts(product, productInfo.Id);
+                    if (similarSkus == null) similarSkus = new List<ShowProductInfo>();
+                    if(similarSkus.Count == 0)
+                    {
+                        similarSkus.Insert(0, productInfo);
+                    }
+                }
             }
             if (productInfo.Type == ProductType.Sku)
             {
@@ -426,11 +435,11 @@ namespace AppPod.DataAccess
                 {
                     var spu = Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == productInfo.Id));
                     similarSkus = DistinctShowProducts(spu, productInfo.Id);
+                    if(similarSkus == null ) similarSkus = new List<ShowProductInfo>();
                     similarSkus.Insert(0, productInfo);
                 }
-                return similarSkus;
             }
-            return null;
+            return similarSkus;
         }
 
         public PropertyInfo GetKeyPropertyInfoInSkus(ProductSdkModel product)
@@ -541,6 +550,60 @@ namespace AppPod.DataAccess
             if (DeviceSetting == null)
                 return "Taobao";
             return DeviceSetting.OnlineTrafficTarget.ToString();
+        }
+
+        /// <summary>
+        /// nameValue must like that, 颜色:红色
+        /// </summary>
+        /// <param name="nameValues"></param>
+        /// <returns></returns>
+        public List<PropertyInfo> FindReminderAvailablePropertiesInSkus(ShowProductInfo showProduct, params string[] nameValues)
+        {
+            var productSdkModel = FindByShowProduct(showProduct);
+            if (productSdkModel == null || productSdkModel.Skus == null || productSdkModel.Skus.Count() == 0 || nameValues.Length == 0) return null;
+            var pInfos = new List<PropertyInfo>();
+            List<SkuSdkModel> includeSkus = null;
+
+            includeSkus = productSdkModel.Skus.Where(s => ContainsAll(s.PropsName, nameValues)).ToList();
+
+            foreach (var sku in includeSkus)
+            {
+                var props = GetPropertyNames(sku.PropsName);
+                foreach (var prop in props)
+                {
+                    var info = pInfos.Find(p => p.Name == prop.Key);
+                    if (info == null)
+                    {
+                        info = new PropertyInfo { Name = prop.Key };
+                        pInfos.Add(info);
+                    }
+                    if (!info.Values.Any(p => p.Name == prop.Value))
+                    {
+                        info.Values.Add(new PropertyValueInfo { Name = prop.Value });
+                    }
+                }
+            }
+            foreach (var nameValue in nameValues)
+            {
+                var keyValueArrary = nameValue.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+                if (keyValueArrary.Length != 2) continue;
+                var key = keyValueArrary[0];
+                var value = keyValueArrary[1];
+                var existedPInfo = pInfos.Find(p => p.Name == key);
+                if (existedPInfo != null) pInfos.Remove(existedPInfo);
+            }
+            return pInfos;
+        }
+
+
+        public static bool ContainsAll(string propNames,string[] keyValues)
+        {
+            if (string.IsNullOrEmpty(propNames) || keyValues.Length == 0) return false;
+            foreach(var value in keyValues)
+            {
+                if (!propNames.Contains(value)) return false;
+            }
+            return true;
         }
     }
 }

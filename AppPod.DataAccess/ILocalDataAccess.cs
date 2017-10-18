@@ -9,6 +9,7 @@ namespace AppPod.DataAccess
 {
     public interface ILocalSensingDataAccess
     {
+        List<PropertyInfo> FindReminderAvailablePropertiesInSkus(ShowProductInfo productSdkModel, params string[] nameValues);
         PropertyInfo GetKeyPropertyInfoInSkus(ProductSdkModel product);
 
         List<PropertyInfo> GetPropertyInfosInSkus(ProductSdkModel product);
