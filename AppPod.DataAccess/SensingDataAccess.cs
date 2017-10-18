@@ -14,6 +14,8 @@ namespace AppPod.DataAccess
     {
         public static string AppPodDataDirectory { get; set; }
         public static DeviceSetting DeviceSetting { get; set; }
+
+        private List<ShowProductInfo> mShowProducts;
         public SensingDataAccess(bool isAutoFindAppPodDataDirecotry = true)
         {
             if (isAutoFindAppPodDataDirecotry)
@@ -58,7 +60,7 @@ namespace AppPod.DataAccess
 
         public ProductSdkModel FindByScanId(string skc)
         {
-            throw new Exception();
+            throw new NotImplementedException();
         }
 
 
@@ -73,6 +75,8 @@ namespace AppPod.DataAccess
         public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
         {
             if (Products == null || Products.Count == 0) return null;
+            if (mShowProducts != null)
+                return mShowProducts;
             string storeType = GetStoreType();
             if(onlySpu)
             {
@@ -83,8 +87,10 @@ namespace AppPod.DataAccess
                     Name = pModel.Title,
                     Price = pModel.Price,
                     QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
-                    Type = ProductType.Product
+                    Type = ProductType.Product,
+                    Product = pModel
                 }).ToList();
+                mShowProducts = infos;
                 return infos;
             }
             else
@@ -103,7 +109,8 @@ namespace AppPod.DataAccess
                                 Name = prod.Title,
                                 Price = prod.Price,
                                 Quantity = prod.Num,
-                                Type = ProductType.Product
+                                Type = ProductType.Product,
+                                Product = prod
                             });
                         }
                         continue;
@@ -120,7 +127,8 @@ namespace AppPod.DataAccess
                                 Name = prod.Title,
                                 Price = prod.Price,
                                 QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
-                                Type = ProductType.Product
+                                Type = ProductType.Product,
+                                Product = prod
                             });
                         }
                         continue;
@@ -141,15 +149,18 @@ namespace AppPod.DataAccess
                                     Name = firstSku.Title,
                                     Price = firstSku.Price,
                                     QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
-                                    Type = ProductType.Sku
+                                    Type = ProductType.Sku,
+                                    Product = prod
                                 });
                             }
                         }
                     }
                 }
+                mShowProducts = showProducts;
                 return showProducts;
             }
         }
+
 
 
         public List<ProductSdkModel> GetProductsByCategroyName(string categroyName)
@@ -158,6 +169,16 @@ namespace AppPod.DataAccess
             if (category != null)
             {
                 return Products.Where(p => p.CategoryIds != null && p.CategoryIds.Contains(category.Id)).ToList();
+            }
+            return null;
+        }
+
+        public List<ShowProductInfo> GetShowProductsByCategroyName(string categroyName)
+        {
+            var category = FindCategoryByName(categroyName);
+            if (category != null)
+            {
+                return mShowProducts.Where(p => p.Product.CategoryIds != null && p.Product.CategoryIds.Contains(category.Id)).ToList();
             }
             return null;
         }
@@ -181,6 +202,11 @@ namespace AppPod.DataAccess
             return prods;
         }
 
+        public List<ShowProductInfo> GetShowProductByCategoryNames(int[] categroyIds)
+        {
+            return mShowProducts.Where(p => p.Product.CategoryIds.Intersect(categroyIds).Count() > 0).ToList();
+        }
+
         public ProductCategorySDKModel FindCategoryByName(string categoryName)
         {
             return PCategories.Find(p => p.Name.Contains(categoryName));
@@ -192,7 +218,7 @@ namespace AppPod.DataAccess
         }
         public List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true)
         {
-            return PCategories?.Where(p => p.IsSpecial).ToList();
+            return PCategories?.Where(p => p.IsSpecial == isSpecial).ToList();
         }
 
         public List<CouponViewModel> GetCoupons()
@@ -200,14 +226,18 @@ namespace AppPod.DataAccess
             return Coupons.ToList();
         }
 
-        public List<ProductSdkModel> SearchProducts(float minPrice, float maxPrice, List<string> colors, List<int> categoryIds, List<string> tags)
+        public List<ShowProductInfo> SearchProducts(float minPrice, float maxPrice, List<string> colors, List<int> categoryIds, List<string> tags)
         {
             throw new NotImplementedException();
         }
 
-        public List<ProductSdkModel> SearchProductsByName(string searchTerm)
+        public List<ShowProductInfo> SearchShowProductsByName(string searchTerm)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(searchTerm))
+                return new List<ShowProductInfo>();
+
+            //TODO : 拼音搜索商品的名称
+            return mShowProducts.Where(p => p.Type == ProductType.Sku && p.Id.ToString() == searchTerm).ToList();
         }
 
         public void Like(ProductSdkModel productInfo)

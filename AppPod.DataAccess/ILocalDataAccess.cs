@@ -22,6 +22,8 @@ namespace AppPod.DataAccess
         List<ShowProductInfo> QueryShowProducts(bool onlySpu);
         List<ProductSdkModel> GetProductsByCategroyName(string categroyName);
         List<ProductSdkModel> GetProductsByCategroyNames(string[] categroyNames);
+        List<ShowProductInfo> GetShowProductsByCategroyName(string categroyName);
+        List<ShowProductInfo> GetShowProductByCategoryNames(int[] categroyIds);
         string GetOnlineStoreStaffId(int staffId);
         string GetStoreType();
 
@@ -35,9 +37,9 @@ namespace AppPod.DataAccess
         List<LikeInfoViewModel> Likes { get; set; }
 
         //List<ProductInfo> GetProductsByCategroyName(IEnumerable<string> categroyNames);
-        List<ProductSdkModel> SearchProductsByName(string searchTerm);
+        List<ShowProductInfo> SearchShowProductsByName(string searchTerm);
         //ProductInfo FindProductByAttribute(string productAttribute);
-        List<ProductSdkModel> SearchProducts(float minPrice, float maxPrice, List<string> colors, List<int> categoryIds, List<string> tags);
+        List<ShowProductInfo> SearchProducts(float minPrice, float maxPrice, List<string> colors, List<int> categoryIds, List<string> tags);
          List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true);
         //List<ProductInfo> GetProductInfos();
         List<CouponViewModel> GetCoupons();

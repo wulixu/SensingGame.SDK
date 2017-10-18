@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sensing.SDK.Contract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,5 +23,6 @@ namespace AppPod.DataAccess.Models
         public string ImageUrl { get; set; }
         public string TagIconUrl { get; set; }
         public string QrcodeUrl { get; set; }
+        public ProductSdkModel Product { get; set; }
     }
 }
