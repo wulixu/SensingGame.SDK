@@ -9,9 +9,12 @@ namespace AppPod.DataAccess
 {
     public interface ILocalSensingDataAccess
     {
-        PropertyInfo GetKeyPropertyInfo(ProductSdkModel product);
+        PropertyInfo GetKeyPropertyInfoInSkus(ProductSdkModel product);
 
-        List<PropertyInfo> GetKeyPropertyInfos(ProductSdkModel product);
+        List<PropertyInfo> GetPropertyInfosInSkus(ProductSdkModel product);
+
+        List<PropertyInfo> GetPropertyInfosInSkus(ShowProductInfo product);
+
         ProductSdkModel FindByScanId(string scanId);
         List<ShowProductInfo> FindSimilar(ShowProductInfo itemId, bool useSameSpu = true, bool useSameCategories = false);
         ProductSdkModel FindByProductId(int productId);

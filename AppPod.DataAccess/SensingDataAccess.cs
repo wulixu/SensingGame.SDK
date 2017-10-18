@@ -15,7 +15,7 @@ namespace AppPod.DataAccess
         public static string AppPodDataDirectory { get; set; }
         public SensingDataAccess(bool isAutoFindAppPodDataDirecotry = true)
         {
-            if(isAutoFindAppPodDataDirecotry)
+            if (isAutoFindAppPodDataDirecotry)
             {
                 AppPodDataDirectory = FindAppPodDataFolder();
             }
@@ -59,7 +59,7 @@ namespace AppPod.DataAccess
         }
 
 
-        public static string GetLocalImagePath(string path,string category)
+        public static string GetLocalImagePath(string path, string category)
         {
             if (string.IsNullOrEmpty(path)) return null;
             var localPath = Extensions.ExtractSchema(path);
@@ -70,12 +70,12 @@ namespace AppPod.DataAccess
         public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
         {
             if (Products == null || Products.Count == 0) return null;
-            if(onlySpu)
+            if (onlySpu)
             {
                 var infos = Products.Select(pModel => new ShowProductInfo
                 {
                     Id = pModel.Id,
-                    ImageUrl = GetLocalImagePath(pModel.PicUrl,"Product"),
+                    ImageUrl = GetLocalImagePath(pModel.PicUrl, "Product"),
                     Name = pModel.Title,
                     Price = pModel.Price,
                     Type = ProductType.Product
@@ -85,16 +85,16 @@ namespace AppPod.DataAccess
             else
             {
                 var showProducts = new List<ShowProductInfo>();
-                foreach(var prod in Products)
+                foreach (var prod in Products)
                 {
-                    if(prod.Skus == null)
+                    if (prod.Skus == null)
                     {
                         if (prod.HasRealSkus == false)
                         {
                             showProducts.Add(new ShowProductInfo
                             {
                                 Id = prod.Id,
-                                ImageUrl = GetLocalImagePath(prod.PicUrl,"Products"),
+                                ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
                                 Name = prod.Title,
                                 Price = prod.Price,
                                 Quantity = prod.Num,
@@ -103,7 +103,7 @@ namespace AppPod.DataAccess
                         }
                         continue;
                     }
-                    if(prod.Skus != null && prod.Skus.Count() == 0)
+                    if (prod.Skus != null && prod.Skus.Count() == 0)
                     {
                         if (!prod.HasRealSkus)
                         {
@@ -119,13 +119,13 @@ namespace AppPod.DataAccess
                         }
                         continue;
                     }
-                    if(prod.PropImgs != null && prod.PropImgs.Count() > 0)
+                    if (prod.PropImgs != null && prod.PropImgs.Count() > 0)
                     {
-                        foreach(var pImg in prod.PropImgs)
-                        { 
+                        foreach (var pImg in prod.PropImgs)
+                        {
                             var keyProps = pImg.PropertyName;
                             var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps));
-                            if(firstSku != null)
+                            if (firstSku != null)
                             {
                                 showProducts.Add(new ShowProductInfo
                                 {
@@ -160,9 +160,9 @@ namespace AppPod.DataAccess
             var ids = FindCategoryIdsByNames(categroyNames);
             if (Products == null || ids == null) return null;
             var prods = new List<ProductSdkModel>();
-            foreach(var p in Products)
+            foreach (var p in Products)
             {
-                foreach(var id in ids)
+                foreach (var id in ids)
                 {
                     if (p.CategoryIds.Contains(id))
                     {
@@ -181,7 +181,7 @@ namespace AppPod.DataAccess
 
         public List<int> FindCategoryIdsByNames(string[] categoryNames)
         {
-            return PCategories.Where(p => categoryNames.Any(c => c ==p.Name)).Select(s => s.Id).ToList();
+            return PCategories.Where(p => categoryNames.Any(c => c == p.Name)).Select(s => s.Id).ToList();
         }
         public List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true)
         {
@@ -350,7 +350,7 @@ namespace AppPod.DataAccess
             return true;
         }
 
-        public List<ShowProductInfo>  DistinctShowProducts(ProductSdkModel prod,int exceptSkuId = -1)
+        public List<ShowProductInfo> DistinctShowProducts(ProductSdkModel prod, int exceptSkuId = -1)
         {
             if (prod == null) return null;
             if (prod.PropImgs != null && prod.PropImgs.Count() > 0)
@@ -391,11 +391,11 @@ namespace AppPod.DataAccess
                 similarSkus.Add(productInfo);
                 return similarSkus;
             }
-            if(productInfo.Type == ProductType.Product)
+            if (productInfo.Type == ProductType.Product)
             {
 
             }
-            if(productInfo.Type == ProductType.Sku)
+            if (productInfo.Type == ProductType.Sku)
             {
                 if (useSameSpu)
                 {
@@ -408,14 +408,103 @@ namespace AppPod.DataAccess
             return null;
         }
 
-        public PropertyInfo GetKeyPropertyInfo(ProductSdkModel product)
+        public PropertyInfo GetKeyPropertyInfoInSkus(ProductSdkModel product)
         {
-            return null;
+            if (product == null || product.PropImgs == null || product.PropImgs.Count() == 0) return null;
+            PropertyInfo propInfo = null;
+            foreach (var propImg in product.PropImgs)
+            {
+                if (product.Skus != null)
+                {
+                    var first = product.Skus.FirstOrDefault(s => s.PropsName.Contains(propImg.PropertyName));
+                    if (first != null)
+                    {
+                        var propName = propImg.PropertyName;
+                        var info = GetPropertyName(propName);
+                        if (info.Key == null) continue;
+                        if (propInfo == null)
+                        {
+                            propInfo = new PropertyInfo { IsKey = true, Name = info.Key };
+                            propInfo.Values.Add(new PropertyValueInfo { Name = info.Value, ImageUrl = propImg.ImageUrl });
+                        }
+                        else
+                        {
+                            if (propInfo.Name != info.Key)
+                            {
+                                var existedValue = propInfo.Values.Find(v => v.Name == info.Value);
+                                if (existedValue != null) continue;
+                                propInfo.Values.Add(new PropertyValueInfo { Name = info.Value, ImageUrl = propImg.ImageUrl });
+                            }
+                        }
+                    }
+                }
+            }
+            return propInfo;
         }
 
-        public List<PropertyInfo> GetKeyPropertyInfos(ProductSdkModel product)
+        public (string Key, string Value) GetPropertyName(string properties)
         {
-            return null;
+            if (string.IsNullOrEmpty(properties)) return (null, null);
+            var values = properties.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+            if (values == null || values.Length != 4) return (null, null);
+            if (values != null && values.Length == 4)
+            {
+                return (values[2], values[3]);
+            }
+            return (null, null);
+        }
+
+
+        public Dictionary<string, string> GetPropertyNames(string properties)
+        {
+            if (string.IsNullOrEmpty(properties)) return null;
+            var props = properties.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+            if (props == null) return null;
+            var keyValues = new Dictionary<string, string>();
+            foreach (var prop in props)
+            {
+                var values = prop.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+                if (values == null || values.Length != 4) continue;
+                keyValues.Add(values[2], values[3]);
+            }
+            return keyValues;
+        }
+
+        public List<PropertyInfo> GetPropertyInfosInSkus(ProductSdkModel product)
+        {
+            
+            if (product == null || product.Skus == null || product.Skus.Count() == 0) return null;
+            var pInfos = new List<PropertyInfo>();
+            var keyPInfo = GetKeyPropertyInfoInSkus(product);
+            foreach (var sku in product.Skus)
+            {
+                var props = GetPropertyNames(sku.PropsName);
+                foreach (var prop in props)
+                {
+                    var info = pInfos.Find(p => p.Name == prop.Key);
+                    if(info == null)
+                    {
+                        info = new PropertyInfo { Name = prop.Key };
+                        pInfos.Add(info);
+                    }
+                    if (!info.Values.Any(p => p.Name == prop.Value))
+                    {
+                        info.Values.Add(new PropertyValueInfo { Name = prop.Value });
+                    }
+                }
+            }
+            if (keyPInfo != null)
+            {
+                var key = pInfos.Find(p => p.Name == keyPInfo.Name);
+                if (key != null) key.IsKey = true;
+            }
+            return pInfos;
+        }
+
+        public List<PropertyInfo> GetPropertyInfosInSkus(ShowProductInfo product)
+        {
+            var productSdkInfo = FindByShowProduct(product);
+            return GetPropertyInfosInSkus(productSdkInfo);
         }
     }
 }

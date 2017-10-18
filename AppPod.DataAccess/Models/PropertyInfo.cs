@@ -14,6 +14,10 @@ namespace AppPod.DataAccess.Models
 
     public class PropertyInfo
     {
+        public PropertyInfo()
+        {
+            Values = new List<PropertyValueInfo>();
+        }
         public string Name { get; set; }
         public bool IsKey { get; set; }
         public List<PropertyValueInfo> Values { get; set; }
