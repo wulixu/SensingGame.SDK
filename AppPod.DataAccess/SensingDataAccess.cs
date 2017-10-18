@@ -551,7 +551,11 @@ namespace AppPod.DataAccess
             if (keyPInfo != null)
             {
                 var key = pInfos.Find(p => p.Name == keyPInfo.Name);
-                if (key != null) key.IsKey = true;
+                if (key != null)
+                {
+                    pInfos.Remove(key);
+                    pInfos.Insert(0, keyPInfo);
+                }
             }
             return pInfos;
         }
