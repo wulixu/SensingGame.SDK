@@ -21,5 +21,6 @@ namespace AppPod.DataAccess.Models
         public double Price { get; set; }
         public string ImageUrl { get; set; }
         public string TagIconUrl { get; set; }
+        public string QrcodeUrl { get; set; }
     }
 }

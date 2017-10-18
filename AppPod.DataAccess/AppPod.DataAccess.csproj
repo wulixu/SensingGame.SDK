@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>E:\Git\productgrid\ExternalDLLs\</OutputPath>
+    <OutputPath>C:\Users\quleo\Documents\work\ProductGrid\ExternalDLLs</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

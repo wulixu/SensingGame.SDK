@@ -21,7 +21,9 @@ namespace AppPod.DataAccess
         List<ShowProductInfo> QueryShowProducts(bool onlySpu);
         List<ProductSdkModel> GetProductsByCategroyName(string categroyName);
         List<ProductSdkModel> GetProductsByCategroyNames(string[] categroyNames);
-        List<ShowProductInfo> DistinctShowProducts(ProductSdkModel prod, int exceptSkuId = -1);
+        string GetOnlineStoreStaffId(int staffId);
+        string GetStoreType();
+
         List<AdsSdkModel> Ads { get; set; }
         List<StaffSdkModel> Staffs { get; set; }
         List<ProductSdkModel> Products { get; set; }
