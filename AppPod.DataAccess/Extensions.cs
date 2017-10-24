@@ -55,6 +55,26 @@ namespace AppPod.DataAccess
             };
         }
 
+        public static string GetLocalFile(this PropertyValueInfo pValueInfo)
+        {
+            if (pValueInfo == null || string.IsNullOrEmpty(pValueInfo.ImageUrl)) return null;
+            var localPath = ExtractSchema(pValueInfo.ImageUrl);
+            return $"{SensingDataAccess.AppPodDataDirectory}\\products\\res\\{localPath}";
+        }
+
+        public static string GetLocalFilePath(this ProductFileSdkModel prodcutFileSdkModel)
+        {
+            if (prodcutFileSdkModel == null || string.IsNullOrEmpty(prodcutFileSdkModel.FileUrl)) return null;
+            var localPath = ExtractSchema(prodcutFileSdkModel.FileUrl);
+            return $"{SensingDataAccess.AppPodDataDirectory}\\products\\res\\{localPath}";
+        }
+        public static string GetLocalIconFile(this TagSdkModel tagSdkModel)
+        {
+            if (tagSdkModel == null || string.IsNullOrEmpty(tagSdkModel.IconUrl)) return null;
+            var localPath = ExtractSchema(tagSdkModel.IconUrl);
+            return $"{SensingDataAccess.AppPodDataDirectory}\\products\\res\\{localPath}";
+        }
+
         public static List<ShowProductInfo> ToShowProductInfo(this List<ProductSdkModel> productInfos)
         {
             return productInfos.Select(p => new ShowProductInfo

@@ -52,7 +52,7 @@ namespace Sensing.SDK.Contract
 
         public int[] CategoryIds { get; set; }
 
-        public string[] Tags { get; set; }
+        public int[] Tags { get; set; }
         public IEnumerable<SkuSdkModel> Skus { get; set; }
 
         public IEnumerable<ProductFileSdkModel> ItemImagesOrVedios { get; set; }

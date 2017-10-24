@@ -30,6 +30,37 @@ namespace AppPod.DataAccess
             AppPodDataDirectory = appPodDataDirectory;
         }
 
+
+        public string GetQrcode(ShowProductInfo showProductInfo, string staffId)
+        {
+            if (showProductInfo == null) return null;
+            string qrcode = string.Empty;
+            var storeType = GetStoreType();
+            if (showProductInfo.Type == ProductType.Product)
+            {
+                var pModel = FindByShowProduct(showProductInfo);
+                qrcode = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
+            }
+            else
+            {
+                var sModel = FindSkuById(showProductInfo.Id);
+                qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
+            }
+            if (string.IsNullOrEmpty(qrcode)) return null;
+            if(!string.IsNullOrEmpty(staffId))
+            {
+                if (qrcode.EndsWith("&"))
+                {
+                    qrcode = $"{qrcode}staffId={staffId}";
+                }
+                else
+                {
+                    qrcode = $"{qrcode}&staffId={staffId}";
+                }
+            }
+            return qrcode;
+        }
+
         #region Bussiness Logical Data
         public string GetOnlineStoreStaffId(int staffId)
         {
@@ -58,6 +89,11 @@ namespace AppPod.DataAccess
             return FindBySkuId(showProductInfo.Id);
         }
 
+        public SkuSdkModel FindSkuById(int skuId)
+        {
+            return Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == skuId)).Skus.FirstOrDefault(s => s.Id == skuId);
+        }
+
         public ProductSdkModel FindByScanId(string skc)
         {
             throw new NotImplementedException();
@@ -71,6 +107,13 @@ namespace AppPod.DataAccess
             return $"{SensingDataAccess.AppPodDataDirectory}\\{category}\\res\\{localPath}";
         }
 
+        private string FindTagIcon(int[] tagIds)
+        {
+            if (Tags == null || Tags.Count == 0) return null;
+            var tag = Tags.Find(t => tagIds.Any(id => id == t.Id) && t.IsSpecial == true);
+            if (tag != null) return tag.GetLocalIconFile();
+            return null;
+        }
 
         public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
         {
@@ -86,8 +129,9 @@ namespace AppPod.DataAccess
                     ImageUrl = GetLocalImagePath(pModel.PicUrl, "Product"),
                     Name = pModel.Title,
                     Price = pModel.Price,
-                    QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                    //QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                     Type = ProductType.Product,
+                    TagIconUrl = FindTagIcon(pModel.Tags),
                     Product = pModel
                 }).ToList();
                 mShowProducts = infos;
@@ -110,6 +154,7 @@ namespace AppPod.DataAccess
                                 Price = prod.Price,
                                 Quantity = prod.Num,
                                 Type = ProductType.Product,
+                                TagIconUrl = FindTagIcon(prod.Tags),
                                 Product = prod
                             });
                         }
@@ -126,8 +171,9 @@ namespace AppPod.DataAccess
                                 Quantity = prod.Num,
                                 Name = prod.Title,
                                 Price = prod.Price,
-                                QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                                //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 Type = ProductType.Product,
+                                TagIconUrl = FindTagIcon(prod.Tags),
                                 Product = prod
                             });
                         }
@@ -148,7 +194,8 @@ namespace AppPod.DataAccess
                                     Quantity = firstSku.Quantity,
                                     Name = firstSku.Title,
                                     Price = firstSku.Price,
-                                    QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                                    //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                                    TagIconUrl = FindTagIcon(firstSku.Tags),
                                     Type = ProductType.Sku,
                                     Product = prod
                                 });
@@ -306,6 +353,7 @@ namespace AppPod.DataAccess
 
         public List<AdsSdkModel> Ads { get; set; }
         public List<StaffSdkModel> Staffs { get; set; }
+        public List<TagSdkModel> Tags { get; set; }
         public List<ProductSdkModel> Products { get; set; }
         public List<CouponViewModel> Coupons { get; set; }
         public List<ProductCategorySDKModel> PCategories { get; set; }
@@ -364,6 +412,14 @@ namespace AppPod.DataAccess
 
         }
 
+        public List<TagSdkModel> ReadTags()
+        {
+            var path = $"{AppPodDataDirectory}/Products/Tags.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<List<TagSdkModel>>(json);
+        }
+
         public List<StaffSdkModel> ReadStaffs()
         {
             var path = $"{AppPodDataDirectory}/Staffs/Staffs.json";
@@ -397,6 +453,7 @@ namespace AppPod.DataAccess
         {
             Ads = ReadAds();
             Staffs = ReadStaffs();
+            Tags = ReadTags();
             Products = ReadProducts();
             PCategories = ReadCategorys();
             Coupons = ReadCoupons();
@@ -472,6 +529,11 @@ namespace AppPod.DataAccess
             return similarSkus;
         }
 
+        public PropertyInfo GetKeyPropertyInfoInSkus(ShowProductInfo info)
+        {
+            var productSdkModel = FindByShowProduct(info);
+            return GetKeyPropertyInfoInSkus(productSdkModel);
+        }
         public PropertyInfo GetKeyPropertyInfoInSkus(ProductSdkModel product)
         {
             if (product == null || product.PropImgs == null || product.PropImgs.Count() == 0) return null;
@@ -493,7 +555,7 @@ namespace AppPod.DataAccess
                         }
                         else
                         {
-                            if (propInfo.Name != info.Key)
+                            if (propInfo.Name == info.Key)
                             {
                                 var existedValue = propInfo.Values.Find(v => v.Name == info.Value);
                                 if (existedValue != null) continue;

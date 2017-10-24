@@ -66,7 +66,7 @@ namespace Sensing.SDK.Contract
 
         public int OrderNumber { get; set; }
 
-        public string[] Tags { get; set; }
+        public int[] Tags { get; set; }
 
         public string FromType { get; set; }
 

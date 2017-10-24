@@ -9,11 +9,13 @@ namespace AppPod.DataAccess
 {
     public interface ILocalSensingDataAccess
     {
+        string GetQrcode(ShowProductInfo showProductInfo, string staffId);
         List<PropertyInfo> FindReminderAvailablePropertiesInSkus(ShowProductInfo productSdkModel, params string[] nameValues);
         PropertyInfo GetKeyPropertyInfoInSkus(ProductSdkModel product);
 
+        ProductSdkModel FindByShowProduct(ShowProductInfo showProductInfo);
         List<PropertyInfo> GetPropertyInfosInSkus(ProductSdkModel product);
-
+        PropertyInfo GetKeyPropertyInfoInSkus(ShowProductInfo info);
         List<PropertyInfo> GetPropertyInfosInSkus(ShowProductInfo product);
 
         ProductSdkModel FindByScanId(string scanId);
@@ -32,6 +34,7 @@ namespace AppPod.DataAccess
         List<ProductSdkModel> Products { get; set; }
         List<CouponViewModel> Coupons { get; set; }
         List<ProductCategorySDKModel> PCategories { get; set; }
+
 
         List<MatchInfoViewModel> Matches { get; set; }
         List<LikeInfoViewModel> Likes { get; set; }
@@ -60,6 +63,7 @@ namespace AppPod.DataAccess
         List<CouponViewModel> ReadCoupons();
         List<ProductSdkModel> ReadProducts();
         List<ProductCategorySDKModel> ReadCategorys();
+        List<TagSdkModel> ReadTags();
         List<StaffSdkModel> ReadStaffs();
     }
 }
