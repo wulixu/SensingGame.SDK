@@ -10,6 +10,11 @@ using System.Threading.Tasks;
 
 namespace AppPod.DataAccess
 {
+    public class Range<T>
+    {
+        public T Min { get; set; }
+        public T Max { get; set; }
+    }
     public class SensingDataAccess : ILocalSensingDataAccess
     {
         public static string AppPodDataDirectory { get; set; }
@@ -51,11 +56,11 @@ namespace AppPod.DataAccess
             {
                 if (qrcode.EndsWith("&"))
                 {
-                    qrcode = $"{qrcode}staffId={staffId}";
+                    qrcode = $"{qrcode}sellerId={staffId}";
                 }
                 else
                 {
-                    qrcode = $"{qrcode}&staffId={staffId}";
+                    qrcode = $"{qrcode}&sellerId={staffId}";
                 }
             }
             return qrcode;
@@ -118,15 +123,14 @@ namespace AppPod.DataAccess
         public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
         {
             if (Products == null || Products.Count == 0) return null;
-            if (mShowProducts != null)
-                return mShowProducts;
+            if (mShowProducts != null) return mShowProducts;
             string storeType = GetStoreType();
             if(onlySpu)
             {
                 var infos = Products.Select(pModel => new ShowProductInfo
                 {
                     Id = pModel.Id,
-                    ImageUrl = GetLocalImagePath(pModel.PicUrl, "Product"),
+                    ImageUrl = GetLocalImagePath(pModel.PicUrl, "Products"),
                     Name = pModel.Title,
                     Price = pModel.Price,
                     //QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
@@ -273,9 +277,253 @@ namespace AppPod.DataAccess
             return Coupons.ToList();
         }
 
-        public List<ShowProductInfo> SearchProducts(float minPrice, float maxPrice, List<string> colors, List<int> categoryIds, List<string> tags)
+        public bool CanAddFilter(ProductSdkModel product, List<Range<float>> priceRanges, List<string> colors, List<int> tags,List<int> categories)
         {
-            throw new NotImplementedException();
+            var priceOk = false;
+            if (priceRanges != null && priceRanges.Count > 0)
+            {
+                foreach (var range in priceRanges)
+                {
+                    if (product.Price >= range.Min && product.Price <= range.Max)
+                    {
+                        priceOk = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                priceOk = true;
+            }
+
+            var colorOK = false;
+            if (colors != null && colors.Count > 0)
+            {
+                foreach (var color in colors)
+                {
+                    if((!string.IsNullOrEmpty(product.Title) && product.Title.Contains(color)) 
+                        || (!string.IsNullOrEmpty(product.Description) && product.Description.Contains(color)))
+                    {
+                        colorOK = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                colorOK = true;
+            }
+
+            var tagOK = false;
+            if (tags != null && tags.Count > 0)
+            {
+                if (product.Tags != null)
+                    {
+                    foreach (var tag in tags)
+                    {
+                        if (product.Tags.Contains(tag))
+                        {
+                            tagOK = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                tagOK = true;
+            }
+
+            var categoryOK = false;
+            if (categories != null && categories.Count > 0)
+            {
+                if (product.CategoryIds != null)
+                {
+                    foreach (var category in categories)
+                    {
+                        if (product.CategoryIds.Contains(category))
+                        {
+                            categoryOK = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                categoryOK = true;
+            }
+
+
+            return priceOk && colorOK && tagOK && categoryOK;
+        }
+
+        public bool CanAddFilter(SkuSdkModel sku, List<Range<float>> priceRanges, List<string> colors, List<int> tags)
+        {
+            var priceOk = false;
+            if (priceRanges != null && priceRanges.Count > 0)
+            {
+                foreach (var range in priceRanges)
+                {
+                    if (sku.Price >= range.Min && sku.Price <= range.Max)
+                    {
+                        priceOk = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                priceOk = true;
+            }
+
+            var colorOK = false;
+            if (colors != null && colors.Count > 0)
+            {
+                foreach (var color in colors)
+                {
+                    if ((!string.IsNullOrEmpty(sku.Title) && sku.Title.Contains(color))
+                        || (!string.IsNullOrEmpty(sku.Description) && sku.Description.Contains(color))
+                        || (!string.IsNullOrEmpty(sku.ColorName) && sku.ColorName.Contains(color))
+                        || (!string.IsNullOrEmpty(sku.PropsName) && sku.PropsName.Contains(color))
+                        )
+                    {
+                        colorOK = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                colorOK = true;
+            }
+
+            var tagOK = false;
+            if (tags != null && tags.Count > 0)
+            {
+                if (sku.Tags != null)
+                {
+                    foreach (var tag in tags)
+                    {
+                        if (sku.Tags.Contains(tag))
+                        {
+                            tagOK = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                tagOK = true;
+            }
+
+            return priceOk && colorOK && tagOK;
+        }
+
+        private bool ProductIsOK(ProductSdkModel product, List<int> categories)
+        {
+            if (categories == null) return true;
+            if (categories.Count < 1) return true;
+            if (categories.Intersect(product.CategoryIds).Count() > 0) return true;
+            return false;
+        }
+        public List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, bool onlySpu = false)
+        {
+            if (Products == null || Products.Count == 0) return null;
+            string storeType = GetStoreType();
+            if (onlySpu)
+            {
+                var infos = Products.Where(p => CanAddFilter(p,priceRanges,colors,tags,categories)).Select(pModel => new ShowProductInfo
+                {
+                    Id = pModel.Id,
+                    ImageUrl = GetLocalImagePath(pModel.PicUrl, "Products"),
+                    Name = pModel.Title,
+                    Price = pModel.Price,
+                    //QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                    Type = ProductType.Product,
+                    TagIconUrl = FindTagIcon(pModel.Tags),
+                    Product = pModel
+                }).ToList();
+                return infos;
+            }
+            else
+            {
+                var showProducts = new List<ShowProductInfo>();
+                foreach (var prod in Products)
+                {
+                    if (prod.Skus == null)
+                    {
+                        if (prod.HasRealSkus == false)
+                        {
+                            if (CanAddFilter(prod, priceRanges, colors, tags, categories))
+                            {
+                                showProducts.Add(new ShowProductInfo
+                                {
+                                    Id = prod.Id,
+                                    ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
+                                    Name = prod.Title,
+                                    Price = prod.Price,
+                                    Quantity = prod.Num,
+                                    Type = ProductType.Product,
+                                    TagIconUrl = FindTagIcon(prod.Tags),
+                                    Product = prod
+                                });
+                            }
+                        }
+                        continue;
+                    }
+                    if (prod.Skus != null && prod.Skus.Count() == 0)
+                    {
+                        if (!prod.HasRealSkus)
+                        {
+                            if (CanAddFilter(prod, priceRanges, colors, tags, categories))
+                            {
+                                showProducts.Add(new ShowProductInfo
+                                {
+                                    Id = prod.Id,
+                                    ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
+                                    Quantity = prod.Num,
+                                    Name = prod.Title,
+                                    Price = prod.Price,
+                                    //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                                    Type = ProductType.Product,
+                                    TagIconUrl = FindTagIcon(prod.Tags),
+                                    Product = prod
+                                });
+                            }
+                        }
+                        continue;
+                    }
+                    if (prod.PropImgs != null && prod.PropImgs.Count() > 0)
+                    {
+                        if (ProductIsOK(prod, categories))
+                        {
+                            foreach (var pImg in prod.PropImgs)
+                            {
+                                var keyProps = pImg.PropertyName;
+                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags));
+                                if (firstSku != null)
+                                {
+                                    showProducts.Add(new ShowProductInfo
+                                    {
+                                        Id = firstSku.Id,
+                                        ImageUrl = GetLocalImagePath(pImg.ImageUrl, "Products"),
+                                        Quantity = firstSku.Quantity,
+                                        Name = firstSku.Title,
+                                        Price = firstSku.Price,
+                                        //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                                        TagIconUrl = FindTagIcon(firstSku.Tags),
+                                        Type = ProductType.Sku,
+                                        Product = prod
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                return showProducts;
+            }
         }
 
         public List<ShowProductInfo> SearchShowProductsByName(string searchTerm)

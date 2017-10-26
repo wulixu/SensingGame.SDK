@@ -32,6 +32,13 @@ namespace AppPod.DataAccess
             return $"{SensingDataAccess.AppPodDataDirectory}\\Products\\res\\{localPath}";
         }
 
+        public static string GetLocalImage(this StaffSdkModel staffSdkModel)
+        {
+            if (staffSdkModel == null || string.IsNullOrEmpty(staffSdkModel.AvatarUrl)) return null;
+            var localPath = ExtractSchema(staffSdkModel.AvatarUrl);
+            return $"{SensingDataAccess.AppPodDataDirectory}\\Staffs\\res\\{localPath}";
+        }
+
         public static string GetLocalFile(this AdsSdkModel ads)
         {
             if (ads == null || string.IsNullOrEmpty(ads.FileUrl)) return null;
@@ -39,7 +46,7 @@ namespace AppPod.DataAccess
             return $"{SensingDataAccess.AppPodDataDirectory}\\ads\\res\\{localPath}";
         }
 
-            
+
 
         public static ShowProductInfo ToShowProductInfo(this ProductSdkModel productInfo)
         {
