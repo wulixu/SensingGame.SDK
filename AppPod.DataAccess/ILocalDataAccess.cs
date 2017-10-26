@@ -27,6 +27,7 @@ namespace AppPod.DataAccess
         List<ShowProductInfo> GetShowProductsByCategroyName(string categroyName);
         List<ShowProductInfo> GetShowProductByCategoryNames(int[] categroyIds);
         string GetOnlineStoreStaffId(int staffId);
+        string GetOnlineStoreStaffIdByRFID(string rfidCode);
         string GetStoreType();
 
         List<AdsSdkModel> Ads { get; set; }
@@ -43,7 +44,7 @@ namespace AppPod.DataAccess
         List<ShowProductInfo> SearchShowProductsByName(string searchTerm);
         //ProductInfo FindProductByAttribute(string productAttribute);
         List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, bool onlySpu = false);
-         List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true);
+        List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true);
         //List<ProductInfo> GetProductInfos();
         List<CouponViewModel> GetCoupons();
         List<AdsSdkModel> GetAdsInfos();

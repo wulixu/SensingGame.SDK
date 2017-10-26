@@ -52,7 +52,7 @@ namespace AppPod.DataAccess
                 qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
             }
             if (string.IsNullOrEmpty(qrcode)) return null;
-            if(!string.IsNullOrEmpty(staffId))
+            if (!string.IsNullOrEmpty(staffId))
             {
                 if (qrcode.EndsWith("&"))
                 {
@@ -75,7 +75,14 @@ namespace AppPod.DataAccess
             var onlineStaff = staff.OnlineStoreProfiles.AsQueryable().FirstOrDefault(s => s.OnlineStoreType == storeType);
             if (onlineStaff == null) return staff.Code;
             return onlineStaff.Code;
-       }
+        }
+
+        public string GetOnlineStoreStaffIdByRFID(string rfidCode)
+        {
+            var staff = Staffs.Find(s => s.RFIDCode == rfidCode);
+            if (staff == null) return null;
+            return GetOnlineStoreStaffId(staff.Id);
+        }
 
         public ProductSdkModel FindByProductId(int id)
         {
@@ -125,7 +132,7 @@ namespace AppPod.DataAccess
             if (Products == null || Products.Count == 0) return null;
             if (mShowProducts != null) return mShowProducts;
             string storeType = GetStoreType();
-            if(onlySpu)
+            if (onlySpu)
             {
                 var infos = Products.Select(pModel => new ShowProductInfo
                 {
@@ -277,7 +284,7 @@ namespace AppPod.DataAccess
             return Coupons.ToList();
         }
 
-        public bool CanAddFilter(ProductSdkModel product, List<Range<float>> priceRanges, List<string> colors, List<int> tags,List<int> categories)
+        public bool CanAddFilter(ProductSdkModel product, List<Range<float>> priceRanges, List<string> colors, List<int> tags, List<int> categories)
         {
             var priceOk = false;
             if (priceRanges != null && priceRanges.Count > 0)
@@ -301,7 +308,7 @@ namespace AppPod.DataAccess
             {
                 foreach (var color in colors)
                 {
-                    if((!string.IsNullOrEmpty(product.Title) && product.Title.Contains(color)) 
+                    if ((!string.IsNullOrEmpty(product.Title) && product.Title.Contains(color))
                         || (!string.IsNullOrEmpty(product.Description) && product.Description.Contains(color)))
                     {
                         colorOK = true;
@@ -318,7 +325,7 @@ namespace AppPod.DataAccess
             if (tags != null && tags.Count > 0)
             {
                 if (product.Tags != null)
-                    {
+                {
                     foreach (var tag in tags)
                     {
                         if (product.Tags.Contains(tag))
@@ -434,7 +441,7 @@ namespace AppPod.DataAccess
             string storeType = GetStoreType();
             if (onlySpu)
             {
-                var infos = Products.Where(p => CanAddFilter(p,priceRanges,colors,tags,categories)).Select(pModel => new ShowProductInfo
+                var infos = Products.Where(p => CanAddFilter(p, priceRanges, colors, tags, categories)).Select(pModel => new ShowProductInfo
                 {
                     Id = pModel.Id,
                     ImageUrl = GetLocalImagePath(pModel.PicUrl, "Products"),
@@ -571,7 +578,7 @@ namespace AppPod.DataAccess
             if (rootFolder == null)
                 return null;
             return Path.Combine(rootFolder, "AppPodData");
-             
+
         }
 
         private static DeviceSetting FindDeviceSetting()
@@ -753,12 +760,12 @@ namespace AppPod.DataAccess
             }
             if (productInfo.Type == ProductType.Product)
             {
-                if(useSameSpu)
+                if (useSameSpu)
                 {
                     var product = FindByShowProduct(productInfo);
                     similarSkus = DistinctShowProducts(product, productInfo.Id);
                     if (similarSkus == null) similarSkus = new List<ShowProductInfo>();
-                    if(similarSkus.Count == 0)
+                    if (similarSkus.Count == 0)
                     {
                         similarSkus.Insert(0, productInfo);
                     }
@@ -770,7 +777,7 @@ namespace AppPod.DataAccess
                 {
                     var spu = Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == productInfo.Id));
                     similarSkus = DistinctShowProducts(spu, productInfo.Id);
-                    if(similarSkus == null ) similarSkus = new List<ShowProductInfo>();
+                    if (similarSkus == null) similarSkus = new List<ShowProductInfo>();
                     similarSkus.Insert(0, productInfo);
                 }
             }
@@ -846,7 +853,7 @@ namespace AppPod.DataAccess
 
         public List<PropertyInfo> GetPropertyInfosInSkus(ProductSdkModel product)
         {
-            
+
             if (product == null || product.Skus == null || product.Skus.Count() == 0) return null;
             var pInfos = new List<PropertyInfo>();
             var keyPInfo = GetKeyPropertyInfoInSkus(product);
@@ -856,7 +863,7 @@ namespace AppPod.DataAccess
                 foreach (var prop in props)
                 {
                     var info = pInfos.Find(p => p.Name == prop.Key);
-                    if(info == null)
+                    if (info == null)
                     {
                         info = new PropertyInfo { Name = prop.Key };
                         pInfos.Add(info);
@@ -936,10 +943,10 @@ namespace AppPod.DataAccess
         }
 
 
-        public static bool ContainsAll(string propNames,string[] keyValues)
+        public static bool ContainsAll(string propNames, string[] keyValues)
         {
             if (string.IsNullOrEmpty(propNames) || keyValues.Length == 0) return false;
-            foreach(var value in keyValues)
+            foreach (var value in keyValues)
             {
                 if (!propNames.Contains(value)) return false;
             }
