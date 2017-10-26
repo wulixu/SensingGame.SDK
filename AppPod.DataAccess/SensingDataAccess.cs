@@ -537,7 +537,7 @@ namespace AppPod.DataAccess
 
         public void Like(ProductSdkModel productInfo)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         public List<AdsSdkModel> GetAdsInfos()
         {
