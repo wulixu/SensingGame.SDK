@@ -66,6 +66,13 @@ namespace AppPod.DataAccess
             return qrcode;
         }
 
+        public string GetOnlineStoreStaffIdByRFID(string rfidCode)
+        {
+            var staff = Staffs.Find(s => s.RFIDCode == rfidCode);
+            if (staff == null) return null;
+            return GetOnlineStoreStaffId(staff.Id);
+        }
+
         #region Bussiness Logical Data
         public string GetOnlineStoreStaffId(int staffId)
         {
@@ -544,7 +551,7 @@ namespace AppPod.DataAccess
 
         public void Like(ProductSdkModel productInfo)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         public List<AdsSdkModel> GetAdsInfos()
         {
