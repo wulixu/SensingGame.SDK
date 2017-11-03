@@ -35,7 +35,6 @@ namespace AppPod.DataAccess
             AppPodDataDirectory = appPodDataDirectory;
         }
 
-
         public string GetQrcode(ShowProductInfo showProductInfo, string staffId)
         {
             if (showProductInfo == null) return null;
@@ -51,6 +50,47 @@ namespace AppPod.DataAccess
                 var sModel = FindSkuById(showProductInfo.Id);
                 qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
             }
+            if (string.IsNullOrEmpty(qrcode)) return null;
+            if (!string.IsNullOrEmpty(staffId))
+            {
+                if (qrcode.EndsWith("&"))
+                {
+                    qrcode = $"{qrcode}sellerId={staffId}";
+                }
+                else
+                {
+                    qrcode = $"{qrcode}&sellerId={staffId}";
+                }
+            }
+            return qrcode;
+        }
+
+        public string GetQrcode(ProductSdkModel pModel, string staffId)
+        {
+            if (pModel == null) return null;
+            string qrcode = string.Empty;
+            var storeType = GetStoreType();
+            qrcode = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
+            if (string.IsNullOrEmpty(qrcode)) return null;
+            if (!string.IsNullOrEmpty(staffId))
+            {
+                if (qrcode.EndsWith("&"))
+                {
+                    qrcode = $"{qrcode}sellerId={staffId}";
+                }
+                else
+                {
+                    qrcode = $"{qrcode}&sellerId={staffId}";
+                }
+            }
+            return qrcode;
+        }
+
+        public string GetQrcode(SkuSdkModel sModel, string staffId)
+        {
+            if (sModel == null) return null;
+            var storeType = GetStoreType();
+            string qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
             if (string.IsNullOrEmpty(qrcode)) return null;
             if (!string.IsNullOrEmpty(staffId))
             {
@@ -806,7 +846,7 @@ namespace AppPod.DataAccess
                         if (propInfo == null)
                         {
                             propInfo = new PropertyInfo { IsKey = true, Name = info.Key };
-                            propInfo.Values.Add(new PropertyValueInfo { Name = info.Value, ImageUrl = propImg.ImageUrl, });
+                            propInfo.Values.Add(new PropertyValueInfo { Name = info.Value, ImageUrl = propImg.ImageUrl, Sku = first });
                         }
                         else
                         {
@@ -814,7 +854,7 @@ namespace AppPod.DataAccess
                             {
                                 var existedValue = propInfo.Values.Find(v => v.Name == info.Value);
                                 if (existedValue != null) continue;
-                                propInfo.Values.Add(new PropertyValueInfo { Name = info.Value, ImageUrl = propImg.ImageUrl });
+                                propInfo.Values.Add(new PropertyValueInfo { Name = info.Value, ImageUrl = propImg.ImageUrl, Sku = first });
                             }
                         }
                     }

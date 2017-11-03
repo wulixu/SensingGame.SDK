@@ -9,6 +9,8 @@ namespace AppPod.DataAccess
 {
     public interface ILocalSensingDataAccess
     {
+        string GetQrcode(SkuSdkModel pModel, string staffId);
+        string GetQrcode(ProductSdkModel pModel, string staffId);
         string GetQrcode(ShowProductInfo showProductInfo, string staffId);
         List<PropertyInfo> FindReminderAvailablePropertiesInSkus(ShowProductInfo productSdkModel, params string[] nameValues);
         PropertyInfo GetKeyPropertyInfoInSkus(ProductSdkModel product);
