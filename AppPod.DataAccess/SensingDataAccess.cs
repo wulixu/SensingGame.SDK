@@ -806,7 +806,7 @@ namespace AppPod.DataAccess
                         if (propInfo == null)
                         {
                             propInfo = new PropertyInfo { IsKey = true, Name = info.Key };
-                            propInfo.Values.Add(new PropertyValueInfo { Name = info.Value, ImageUrl = propImg.ImageUrl });
+                            propInfo.Values.Add(new PropertyValueInfo { Name = info.Value, ImageUrl = propImg.ImageUrl, });
                         }
                         else
                         {
@@ -951,6 +951,13 @@ namespace AppPod.DataAccess
                 if (!propNames.Contains(value)) return false;
             }
             return true;
+        }
+
+        public SkuSdkModel GetSkuSdkModelByShowProduct(ShowProductInfo showProductInfo)
+        {
+            if (showProductInfo == null || showProductInfo.Type == ProductType.Product) return null;
+            var spu = Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == showProductInfo.Id));
+            return spu.Skus.FirstOrDefault(s => s.Id == showProductInfo.Id);
         }
     }
 }

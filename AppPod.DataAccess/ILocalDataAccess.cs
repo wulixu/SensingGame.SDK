@@ -12,12 +12,12 @@ namespace AppPod.DataAccess
         string GetQrcode(ShowProductInfo showProductInfo, string staffId);
         List<PropertyInfo> FindReminderAvailablePropertiesInSkus(ShowProductInfo productSdkModel, params string[] nameValues);
         PropertyInfo GetKeyPropertyInfoInSkus(ProductSdkModel product);
-
+        SkuSdkModel GetSkuSdkModelByShowProduct(ShowProductInfo showProductInfo);
         ProductSdkModel FindByShowProduct(ShowProductInfo showProductInfo);
         List<PropertyInfo> GetPropertyInfosInSkus(ProductSdkModel product);
         PropertyInfo GetKeyPropertyInfoInSkus(ShowProductInfo info);
         List<PropertyInfo> GetPropertyInfosInSkus(ShowProductInfo product);
-
+        (string Key, string Value) GetPropertyName(string properties);
         ProductSdkModel FindByScanId(string scanId);
         List<ShowProductInfo> FindSimilar(ShowProductInfo itemId, bool useSameSpu = true, bool useSameCategories = false);
         ProductSdkModel FindByProductId(int productId);

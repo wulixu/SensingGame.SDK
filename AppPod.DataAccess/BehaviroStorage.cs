@@ -73,7 +73,7 @@ namespace AppPod.DataAccess
             record.IsSynced = false;
             m_db.Insert(record);
 
-            var records = m_db.Table<SqlLiteBehaviorRecord>().Where(r => r.IsSynced == false).Take(10);
+            var records = m_db.Table<SqlLiteBehaviorRecord>().Where(r => r.IsSynced == false).Take(10).ToList();
             if (records.Count() > 0)
             {
                 bool success = sesingWebClient.PostBehaviorRecordsAsync(records).GetAwaiter().GetResult();
