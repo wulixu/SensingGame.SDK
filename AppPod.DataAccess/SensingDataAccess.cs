@@ -319,6 +319,21 @@ namespace AppPod.DataAccess
             return PCategories?.Where(p => p.IsSpecial == isSpecial).ToList();
         }
 
+        public List<ProductCategorySDKModel> GetUsefulCategroyInfos()
+        {
+            if (PCategories == null || PCategories.Count == 0) return null;
+            if (Products == null || Products.Count == 0) return null;
+            List<ProductCategorySDKModel> results = new List<ProductCategorySDKModel>();
+            foreach (var pCategory in PCategories)
+            {
+                if(Products.Any(p => p.CategoryIds.Contains(pCategory.Id)))
+                {
+                    results.Add(pCategory);
+                }
+            }
+            return results;
+        }
+
         public List<CouponViewModel> GetCoupons()
         {
             return Coupons.ToList();
