@@ -1,5 +1,7 @@
 ﻿using AppPod.DataAccess.Models;
 using Newtonsoft.Json;
+using Pinyin4net;
+using Pinyin4net.Format;
 using Sensing.SDK.Contract;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,8 @@ namespace AppPod.DataAccess
                 AppPodDataDirectory = FindAppPodDataFolder();
                 DeviceSetting = FindDeviceSetting();
             }
+
+            Initialize();
         }
 
         public SensingDataAccess(string appPodDataDirectory)
@@ -326,7 +330,7 @@ namespace AppPod.DataAccess
             List<ProductCategorySDKModel> results = new List<ProductCategorySDKModel>();
             foreach (var pCategory in PCategories)
             {
-                if(Products.Any(p => p.CategoryIds.Contains(pCategory.Id)))
+                if (Products.Any(p => p.CategoryIds.Contains(pCategory.Id)))
                 {
                     results.Add(pCategory);
                 }
@@ -588,14 +592,100 @@ namespace AppPod.DataAccess
             }
         }
 
+        static HanyuPinyinOutputFormat format;
+        public void Initialize()
+        {
+            format = new HanyuPinyinOutputFormat();
+            format.CaseType = HanyuPinyinCaseType.UPPERCASE;
+            format.ToneType = HanyuPinyinToneType.WITHOUT_TONE;
+        }
+
+        public static string FirstChars(string name)
+        {
+            string returnString = "";
+            char[] chars = name.ToCharArray();
+            foreach (char c in chars)
+            {
+                if (IsChineseChar(c))
+                {
+                    string[] result = PinyinHelper.ToHanyuPinyinStringArray(c, format);
+                    if (result.Length > 0)
+                    {
+                        var first = result[0];
+                        if (first.Length > 0)
+                        {
+                            returnString += first[0];
+                        }
+                    }
+                }
+                else
+                {
+                    returnString += c;
+                }
+            }
+            return returnString;
+        }
+        public static bool IsChineseChar(char c)
+        {
+            if (c >= 0x4e00 && c <= 0x9fbb)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
         public List<ShowProductInfo> SearchShowProductsByName(string searchTerm)
         {
-            if (string.IsNullOrEmpty(searchTerm))
-                return new List<ShowProductInfo>();
+            if (string.IsNullOrEmpty(searchTerm)) return mShowProducts;
 
-            //TODO : 拼音搜索商品的名称
-            return mShowProducts.Where(p => p.Type == ProductType.Sku && p.Id.ToString() == searchTerm).ToList();
+            List<ShowProductInfo> resultProductList = new List<ShowProductInfo>();
+
+            foreach (var productInfo in Products)
+            {
+                if (productInfo.ItemId.Contains(searchTerm) || productInfo.Title.Contains(searchTerm) || productInfo.Keywords.Contains(searchTerm) || FirstChars(productInfo.Title).Contains(searchTerm))   // 搜索 Product 
+                {
+                    resultProductList.Add(new ShowProductInfo()
+                    {
+                        Id = productInfo.Id,
+                        Name = productInfo.Title,
+                        ImageUrl = GetLocalImagePath(productInfo.PicUrl, "Products"),
+                        Price = productInfo.Price,
+                        Product = productInfo,
+                        Quantity = productInfo.Num,
+                        Type = ProductType.Product
+                    });
+                }
+
+                if (productInfo.Skus.Count() > 0 && productInfo.HasRealSkus)
+                {
+                    foreach (var skuInfo in productInfo.Skus)
+                    {
+                        if (skuInfo.ItemId.Contains(searchTerm) || skuInfo.Title.Contains(searchTerm) || skuInfo.Keywords.Contains(searchTerm) || FirstChars(skuInfo.Title).Contains(searchTerm))   // 搜索 sku 
+                        {
+                            resultProductList.Add(new ShowProductInfo()
+                            {
+                                Id = skuInfo.Id,
+                                Name = skuInfo.Title,
+                                ImageUrl = GetLocalImagePath(skuInfo.PicUrl, "Products"),
+                                Price = skuInfo.Price,
+                                Quantity = skuInfo.Quantity,
+                                Type = ProductType.Sku
+                            });
+                        }
+                    }
+                }
+            }
+            return resultProductList;
         }
+
+        //public List<ShowProductInfo> SearchShowProductsById(string searchTerm)
+        //{
+        //    if (string.IsNullOrEmpty(searchTerm))
+        //        return new List<ShowProductInfo>();
+
+        //    return mShowProducts.Where(p => p.Type == ProductType.Sku && p.Id.ToString() == searchTerm).ToList();
+        //}
 
         public void Like(ProductSdkModel productInfo)
         {

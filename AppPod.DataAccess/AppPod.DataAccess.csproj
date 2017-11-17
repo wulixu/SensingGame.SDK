@@ -5,12 +5,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>E:\Git\productgrid\ExternalDLLs\</OutputPath>
+    <OutputPath>D:\TronCell\ProductGrid\ExternalDLLs\</OutputPath>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+    <PackageReference Include="pinyin4net" Version="1.0.0" />
     <PackageReference Include="System.Interactive" Version="3.1.1" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
   </ItemGroup>
