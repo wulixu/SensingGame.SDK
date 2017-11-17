@@ -138,7 +138,7 @@ namespace AppPod.DataAccess
             return Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == skuId));
         }
 
-        public ShowProductInfo GetShowProductInfoById(ProductType type ,int id)
+        public ShowProductInfo GetShowProductInfoById(ProductType type, int id)
         {
             if (type == ProductType.Product)
             {
@@ -158,7 +158,7 @@ namespace AppPod.DataAccess
                     };
                 }
             }
-            if(type == ProductType.Sku)
+            if (type == ProductType.Sku)
             {
                 var pModel = FindBySkuId(id);
                 var firstSku = FindSkuById(id);
@@ -483,7 +483,6 @@ namespace AppPod.DataAccess
                 categoryOK = true;
             }
 
-
             return priceOk && colorOK && tagOK && categoryOK;
         }
 
@@ -704,41 +703,21 @@ namespace AppPod.DataAccess
 
             List<ShowProductInfo> resultProductList = new List<ShowProductInfo>();
 
-            foreach (var productInfo in Products)
+            foreach (var showInfo in mShowProducts)
             {
-                if (productInfo.ItemId.Contains(searchTerm) || productInfo.Title.Contains(searchTerm) || productInfo.Keywords.Contains(searchTerm) || FirstChars(productInfo.Title).Contains(searchTerm))   // 搜索 Product 
-                {
-                    resultProductList.Add(new ShowProductInfo()
-                    {
-                        Id = productInfo.Id,
-                        Name = productInfo.Title,
-                        ImageUrl = GetLocalImagePath(productInfo.PicUrl, "Products"),
-                        Price = productInfo.Price,
-                        Product = productInfo,
-                        Quantity = productInfo.Num,
-                        Type = ProductType.Product
-                    });
-                }
+                bool isNameContains = showInfo.Name.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0;  // 英文情况，模糊大小写判断是否包含
 
-                if (productInfo.Skus.Count() > 0 && productInfo.HasRealSkus)
+                if (showInfo.Product.ItemId.Contains(searchTerm) || isNameContains || FirstChars(showInfo.Name).Contains(searchTerm))
                 {
-                    foreach (var skuInfo in productInfo.Skus)
-                    {
-                        if (skuInfo.ItemId.Contains(searchTerm) || skuInfo.Title.Contains(searchTerm) || skuInfo.Keywords.Contains(searchTerm) || FirstChars(skuInfo.Title).Contains(searchTerm))   // 搜索 sku 
-                        {
-                            resultProductList.Add(new ShowProductInfo()
-                            {
-                                Id = skuInfo.Id,
-                                Name = skuInfo.Title,
-                                ImageUrl = GetLocalImagePath(skuInfo.PicUrl, "Products"),
-                                Price = skuInfo.Price,
-                                Quantity = skuInfo.Quantity,
-                                Type = ProductType.Sku
-                            });
-                        }
-                    }
+                    resultProductList.Add(showInfo);
                 }
             }
+
+            if (resultProductList.Count == 0)
+            {
+                return mShowProducts;
+            }
+
             return resultProductList;
         }
 
