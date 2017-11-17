@@ -138,6 +138,50 @@ namespace AppPod.DataAccess
             return Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == skuId));
         }
 
+        public ShowProductInfo GetShowProductInfoById(ProductType type ,int id)
+        {
+            if (type == ProductType.Product)
+            {
+                var pModel = Products?.Find(p => p.Id == id);
+                if (pModel != null)
+                {
+                    return new ShowProductInfo
+                    {
+                        Id = id,
+                        ImageUrl = GetLocalImagePath(pModel.PicUrl, "Products"),
+                        Name = pModel.Title,
+                        Price = pModel.Price,
+                        //QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                        Type = ProductType.Product,
+                        TagIconUrl = FindTagIcon(pModel.Tags),
+                        Product = pModel
+                    };
+                }
+            }
+            if(type == ProductType.Sku)
+            {
+                var pModel = FindBySkuId(id);
+                var firstSku = FindSkuById(id);
+                if (firstSku != null && pModel != null)
+                {
+                    var keyImage = pModel.PropImgs.FirstOrDefault(p => firstSku.PropsName.Contains(p.PropertyName));
+                    return new ShowProductInfo
+                    {
+                        Id = firstSku.Id,
+                        ImageUrl = GetLocalImagePath(keyImage.ImageUrl, "Products"),
+                        Quantity = firstSku.Quantity,
+                        Name = firstSku.Title,
+                        Price = firstSku.Price,
+                        //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                        TagIconUrl = FindTagIcon(firstSku.Tags),
+                        Type = ProductType.Sku,
+                        Product = pModel
+                    };
+                }
+            }
+            return null;
+        }
+
         public ProductSdkModel FindByShowProduct(ShowProductInfo showProductInfo)
         {
             if (showProductInfo == null) return null;
@@ -255,6 +299,25 @@ namespace AppPod.DataAccess
                                     Product = prod
                                 });
                             }
+                        }
+                    }
+                    else
+                    {
+                        var firstSku = prod.Skus.First();
+                        if (firstSku != null)
+                        {
+                            showProducts.Add(new ShowProductInfo
+                            {
+                                Id = firstSku.Id,
+                                ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
+                                Quantity = firstSku.Quantity,
+                                Name = firstSku.Title,
+                                Price = firstSku.Price,
+                                //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                                TagIconUrl = FindTagIcon(firstSku.Tags),
+                                Type = ProductType.Sku,
+                                Product = prod
+                            });
                         }
                     }
                 }

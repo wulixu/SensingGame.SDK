@@ -9,6 +9,7 @@ namespace AppPod.DataAccess
 {
     public interface ILocalSensingDataAccess
     {
+        ShowProductInfo GetShowProductInfoById(ProductType type, int id);
         string GetQrcode(SkuSdkModel pModel, string staffId);
         string GetQrcode(ProductSdkModel pModel, string staffId);
         string GetQrcode(ShowProductInfo showProductInfo, string staffId);
