@@ -215,6 +215,13 @@ namespace AppPod.DataAccess
             return null;
         }
 
+        public List<TagSdkModel> GetTagInfos()
+        {
+            if (Tags == null || Tags.Count == 0) return null;
+            var tags = Tags.Where(t => t.IsSpecial == true).ToList();
+            return tags;
+        }
+
         public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
         {
             if (Products == null || Products.Count == 0) return null;
@@ -711,11 +718,6 @@ namespace AppPod.DataAccess
                 {
                     resultProductList.Add(showInfo);
                 }
-            }
-
-            if (resultProductList.Count == 0)
-            {
-                return mShowProducts;
             }
 
             return resultProductList;

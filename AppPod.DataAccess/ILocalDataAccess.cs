@@ -33,6 +33,8 @@ namespace AppPod.DataAccess
         string GetOnlineStoreStaffIdByRFID(string rfidCode);
         string GetStoreType();
 
+        List<TagSdkModel> GetTagInfos();
+
         List<AdsSdkModel> Ads { get; set; }
         List<StaffSdkModel> Staffs { get; set; }
         List<ProductSdkModel> Products { get; set; }
