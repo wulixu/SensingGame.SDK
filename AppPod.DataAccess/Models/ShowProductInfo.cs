@@ -17,11 +17,11 @@ namespace AppPod.DataAccess.Models
         public int Id { get; set; }
         public ProductType Type { get; set; }
         public string Name { get; set; }
-
         public long Quantity { get; set; }
         public double Price { get; set; }
         public string ImageUrl { get; set; }
         public string TagIconUrl { get; set; }
+        public string Keyword { get; set; }
         //public string QrcodeUrl { get; set; }
         public ProductSdkModel Product { get; set; }
     }

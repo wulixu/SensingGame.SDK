@@ -413,7 +413,7 @@ namespace AppPod.DataAccess
             return Coupons.ToList();
         }
 
-        public bool CanAddFilter(ProductSdkModel product, List<Range<float>> priceRanges, List<string> colors, List<int> tags, List<int> categories)
+        public bool CanAddFilter(ProductSdkModel product, List<Range<float>> priceRanges, List<string> colors, List<int> tags, List<int> categories, List<string> keywords)
         {
             var priceOk = false;
             if (priceRanges != null && priceRanges.Count > 0)
@@ -490,10 +490,30 @@ namespace AppPod.DataAccess
                 categoryOK = true;
             }
 
-            return priceOk && colorOK && tagOK && categoryOK;
+            var keywordOK = false;
+            if (keywords != null && keywords.Count > 0)
+            {
+                if (product.Keywords != null)
+                {
+                    foreach (var keyword in keywords)
+                    {
+                        if (product.Keywords.Contains(keyword))
+                        {
+                            categoryOK = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                categoryOK = true;
+            }
+
+            return priceOk && colorOK && tagOK && categoryOK && keywordOK;
         }
 
-        public bool CanAddFilter(SkuSdkModel sku, List<Range<float>> priceRanges, List<string> colors, List<int> tags)
+        public bool CanAddFilter(SkuSdkModel sku, List<Range<float>> priceRanges, List<string> colors, List<int> tags, List<string> keywords)
         {
             var priceOk = false;
             if (priceRanges != null && priceRanges.Count > 0)
@@ -553,7 +573,27 @@ namespace AppPod.DataAccess
                 tagOK = true;
             }
 
-            return priceOk && colorOK && tagOK;
+            var keywordOK = false;
+            if (keywords != null && keywords.Count > 0)
+            {
+                if (sku.Keywords != null)
+                {
+                    foreach (var keyword in keywords)
+                    {
+                        if (sku.Keywords.Contains(keyword))
+                        {
+                            keywordOK = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                keywordOK = true;
+            }
+
+            return priceOk && colorOK && tagOK && keywordOK;
         }
 
         private bool ProductIsOK(ProductSdkModel product, List<int> categories)
@@ -563,13 +603,13 @@ namespace AppPod.DataAccess
             if (categories.Intersect(product.CategoryIds).Count() > 0) return true;
             return false;
         }
-        public List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, bool onlySpu = false)
+        public List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, bool onlySpu = false)
         {
             if (Products == null || Products.Count == 0) return null;
             string storeType = GetStoreType();
             if (onlySpu)
             {
-                var infos = Products.Where(p => CanAddFilter(p, priceRanges, colors, tags, categories)).Select(pModel => new ShowProductInfo
+                var infos = Products.Where(p => CanAddFilter(p, priceRanges, colors, tags, categories, keywords)).Select(pModel => new ShowProductInfo
                 {
                     Id = pModel.Id,
                     ImageUrl = GetLocalImagePath(pModel.PicUrl, "Products"),
@@ -578,7 +618,8 @@ namespace AppPod.DataAccess
                     //QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                     Type = ProductType.Product,
                     TagIconUrl = FindTagIcon(pModel.Tags),
-                    Product = pModel
+                    Product = pModel,
+                    Keyword = pModel.Keywords
                 }).ToList();
                 return infos;
             }
@@ -591,7 +632,7 @@ namespace AppPod.DataAccess
                     {
                         if (prod.HasRealSkus == false)
                         {
-                            if (CanAddFilter(prod, priceRanges, colors, tags, categories))
+                            if (CanAddFilter(prod, priceRanges, colors, tags, categories, keywords))
                             {
                                 showProducts.Add(new ShowProductInfo
                                 {
@@ -602,7 +643,8 @@ namespace AppPod.DataAccess
                                     Quantity = prod.Num,
                                     Type = ProductType.Product,
                                     TagIconUrl = FindTagIcon(prod.Tags),
-                                    Product = prod
+                                    Product = prod,
+                                    Keyword = prod.Keywords
                                 });
                             }
                         }
@@ -612,7 +654,7 @@ namespace AppPod.DataAccess
                     {
                         if (!prod.HasRealSkus)
                         {
-                            if (CanAddFilter(prod, priceRanges, colors, tags, categories))
+                            if (CanAddFilter(prod, priceRanges, colors, tags, categories, keywords))
                             {
                                 showProducts.Add(new ShowProductInfo
                                 {
@@ -624,7 +666,8 @@ namespace AppPod.DataAccess
                                     //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                     Type = ProductType.Product,
                                     TagIconUrl = FindTagIcon(prod.Tags),
-                                    Product = prod
+                                    Product = prod,
+                                    Keyword = prod.Keywords
                                 });
                             }
                         }
@@ -637,7 +680,7 @@ namespace AppPod.DataAccess
                             foreach (var pImg in prod.PropImgs)
                             {
                                 var keyProps = pImg.PropertyName;
-                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags));
+                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags, keywords));
                                 if (firstSku != null)
                                 {
                                     showProducts.Add(new ShowProductInfo
@@ -650,7 +693,8 @@ namespace AppPod.DataAccess
                                         //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                         TagIconUrl = FindTagIcon(firstSku.Tags),
                                         Type = ProductType.Sku,
-                                        Product = prod
+                                        Product = prod,
+                                        Keyword = prod.Keywords
                                     });
                                 }
                             }
