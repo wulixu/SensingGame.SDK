@@ -74,7 +74,7 @@ namespace AppPod.DataAccess
             if (pModel == null) return null;
             string qrcode = string.Empty;
             var storeType = GetStoreType();
-            qrcode = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
+            qrcode = pModel.OnlineStoreInfos?.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
             if (string.IsNullOrEmpty(qrcode)) return null;
             if (!string.IsNullOrEmpty(staffId))
             {
@@ -196,11 +196,10 @@ namespace AppPod.DataAccess
 
         public ProductSdkModel FindByScanId(string skc)
         {
-            throw new NotImplementedException();
+            return Products?.FirstOrDefault(p => p.Skus.Any(s => s.SkuId.Contains(skc)));
         }
 
-
-        public static string GetLocalImagePath(string path, string category)
+        public string GetLocalImagePath(string path, string category)
         {
             if (string.IsNullOrEmpty(path)) return null;
             var localPath = Extensions.ExtractSchema(path);
@@ -864,7 +863,22 @@ namespace AppPod.DataAccess
             var path = $"{AppPodDataDirectory}/Products/Matches.json";
             if (!File.Exists(path)) return null;
             string json = File.ReadAllText(path);
-            return JsonConvert.DeserializeObject<List<MatchInfoViewModel>>(json);
+
+            var matches = JsonConvert.DeserializeObject<List<MatchInfoViewModel>>(json);
+
+            foreach (var match in matches)
+            {
+                foreach (var item in match.MatchItems)
+                {
+                    var product = FindBySkuId(item.SkuId.Value);
+
+                    if (product != null)
+                    {
+                        item.SkuPicUrl = GetLocalImagePath(product.PicUrl, "Products");
+                    }
+                }
+            }
+            return matches;
         }
 
         public List<LikeInfoViewModel> ReadProductLikes()
@@ -872,7 +886,21 @@ namespace AppPod.DataAccess
             var path = $"{AppPodDataDirectory}/Products/Likes.json";
             if (!File.Exists(path)) return null;
             string json = File.ReadAllText(path);
-            return JsonConvert.DeserializeObject<List<LikeInfoViewModel>>(json);
+
+            var likes = JsonConvert.DeserializeObject<List<LikeInfoViewModel>>(json);
+            foreach (var like in likes)
+            {
+                foreach (var item in like.LikeItems)
+                {
+                    var product = FindBySkuId(item.SkuId.Value);
+
+                    if (product != null)
+                    {
+                        item.SkuPicUrl = GetLocalImagePath(product.PicUrl, "Products");
+                    }
+                }
+            }
+            return likes;
         }
 
         public List<CouponViewModel> ReadCoupons()

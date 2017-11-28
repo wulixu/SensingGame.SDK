@@ -24,6 +24,8 @@ namespace AppPod.DataAccess
         ProductSdkModel FindByScanId(string scanId);
         List<ShowProductInfo> FindSimilar(ShowProductInfo itemId, bool useSameSpu = true, bool useSameCategories = false);
         ProductSdkModel FindByProductId(int productId);
+        ProductSdkModel FindBySkuId(int skuId);
+        SkuSdkModel FindSkuById(int skuId);
         List<ShowProductInfo> QueryShowProducts(bool onlySpu);
         List<ProductSdkModel> GetProductsByCategroyName(string categroyName);
         List<ProductSdkModel> GetProductsByCategroyNames(string[] categroyNames);
@@ -32,6 +34,7 @@ namespace AppPod.DataAccess
         string GetOnlineStoreStaffId(int staffId);
         string GetOnlineStoreStaffIdByRFID(string rfidCode);
         string GetStoreType();
+        string GetLocalImagePath(string path, string category);
 
         List<TagSdkModel> GetTagInfos();
 
