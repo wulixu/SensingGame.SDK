@@ -18,6 +18,7 @@ namespace Sensing.SDK.Contract
         /// 在当今社会,任何事物都是可以明码标价的,难道不是!
         /// </summary>
         public double Price { get; set; }
+        public double Prom_Price { get; set; }
 
         /// <summary>
         /// 万物总有属于他自己的关键字,让别人好找到它.
@@ -47,6 +48,8 @@ namespace Sensing.SDK.Contract
         public string FromType { get; set; }
 
         public string GroupQrCodeInfo { get; set; }
+
+        public int[] PropValueIds { get; set; }
 
         public IEnumerable<ProductDecideImageViewModel> PropImgs { get; set; }
 

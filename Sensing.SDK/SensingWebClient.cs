@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Collections.Specialized;
 using log4net;
 using System.Reflection;
+using System.Configuration;
 
 namespace Sensing.SDK
 {
@@ -21,9 +22,9 @@ namespace Sensing.SDK
         //public const string ServerBase = "http://localhost:33227/";
         //public const string ServerBase = "http://139.224.15.28:142/";
         //public const string ServerBase = "http://behavior.troncell.com/";
-        public const string ServerBase = "http://store.troncell.com/";
-        public const string SignalRPath = ServerBase + "signalr";
-        private const string ServiceHost = ServerBase + "api/v1";
+        public readonly static string ServerBase = "http://store.troncell.com/";
+        public readonly static string SignalRPath = ServerBase + "signalr";
+        private readonly static string ServiceHost = ServerBase + "api/v1";
 
         #region Inner Keys.
         /// <summary>
@@ -60,6 +61,14 @@ namespace Sensing.SDK
         static SensingWebClient()
         {
             s_httpClient.Timeout = TimeSpan.FromSeconds(60);
+
+            var appConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
+            var url = appConfig.AppSettings?.Settings["CloudServerUrl"]?.Value;
+            if(!string.IsNullOrEmpty(url))
+            {
+                ServerBase = url;
+                ServiceHost = ServerBase + "api/v1";
+            }
         }
 
         public SensingWebClient(string subscriptionKey, string softwareNo,string mac)

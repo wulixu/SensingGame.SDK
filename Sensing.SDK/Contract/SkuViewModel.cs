@@ -42,6 +42,8 @@ namespace Sensing.SDK.Contract
 
         public string PropsName { get; set; }
 
+        public int[] PropValueIds { get; set; }
+
         /// <summary>
         /// 事物都该有个名字来表示
         /// </summary>
@@ -51,6 +53,11 @@ namespace Sensing.SDK.Contract
         /// 在当今社会,任何事物都是可以明码标价的,难道不是!
         /// </summary>
         public double Price { get; set; }
+
+        /// <summary>
+        /// 促销价格
+        /// </summary>
+        public double Prom_Price { get; set; }
 
         public int LikeCount { get; set; }
         /// <summary>
