@@ -61,6 +61,7 @@
     <Compile Include="Contract\MatchInfoViewModel.cs" />
     <Compile Include="Contract\PagedList.cs" />
     <Compile Include="Contract\ProductViewModel.cs" />
+    <Compile Include="Contract\PropertyViewModel.cs" />
     <Compile Include="Contract\RegisterDeviceViewModel.cs" />
     <Compile Include="Contract\SkuViewModel.cs" />
     <Compile Include="Contract\StaffSdkModel.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Contract\WebApiResult.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SensingWebClient.Property.cs" />
     <Compile Include="SensingWebClient.Tags.cs" />
     <Compile Include="SensingWebClient.Staff.cs" />
     <Compile Include="SensingWebClient.App.cs" />

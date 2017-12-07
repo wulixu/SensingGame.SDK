@@ -61,6 +61,7 @@ namespace Sensing.SDK
             return null;
         }
 
+
         public async Task<PagedList<MatchInfoViewModel>> GetMatchInfos(int page = 1,int maxCount = 1000)
         {
             var absolutePath = $"{ServiceHost}/{GetMatchesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
