@@ -47,6 +47,7 @@ namespace AppPod.DataAccess
 
         List<MatchInfoViewModel> Matches { get; set; }
         List<LikeInfoViewModel> Likes { get; set; }
+        List<PropertyViewModel> Properties { get; set; }
 
         //List<ProductInfo> GetProductsByCategroyName(IEnumerable<string> categroyNames);
         List<ShowProductInfo> SearchShowProductsByName(string searchTerm);

@@ -848,6 +848,8 @@ namespace AppPod.DataAccess
         public List<MatchInfoViewModel> Matches { get; set; }
         public List<LikeInfoViewModel> Likes { get; set; }
 
+        public List<PropertyViewModel> Properties { get; set; }
+
 
         #region Read Data from Local Json.
         public List<AdsSdkModel> ReadAds()
@@ -901,6 +903,16 @@ namespace AppPod.DataAccess
                 }
             }
             return likes;
+        }
+
+        public List<PropertyViewModel> ReadProperties()
+        {
+            var path = $"{AppPodDataDirectory}/Products/Properties.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+
+            var properties = JsonConvert.DeserializeObject<List<PropertyViewModel>>(json);
+            return properties;
         }
 
         public List<CouponViewModel> ReadCoupons()
@@ -975,6 +987,7 @@ namespace AppPod.DataAccess
             Coupons = ReadCoupons();
             Matches = ReadProductMatches();
             Likes = ReadProductLikes();
+            Properties = ReadProperties();
             return true;
         }
 
