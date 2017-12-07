@@ -1233,5 +1233,10 @@ namespace AppPod.DataAccess
             var spu = Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == showProductInfo.Id));
             return spu.Skus.FirstOrDefault(s => s.Id == showProductInfo.Id);
         }
+
+        public List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string, string> keyValues)
+        {
+            return null;
+        }
     }
 }
