@@ -33,6 +33,11 @@ namespace Sensing.SDK.Contract
         public DateTime CollectTime { get; set; }
 
         /// <summary>
+        /// 数据统计的结束时间
+        /// </summary>
+        public DateTime CollectEndTime { get; set; }
+
+        /// <summary>
         /// 来自于那个软件
         /// </summary>
         public string Software { get; set; }
