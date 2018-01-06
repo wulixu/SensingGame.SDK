@@ -59,11 +59,11 @@ namespace AppPod.DataAccess
             {
                 if (qrcode.EndsWith("&"))
                 {
-                    qrcode = $"{qrcode}sellerId={staffId}";
+                    qrcode = $"{qrcode}saleId={staffId}";
                 }
                 else
                 {
-                    qrcode = $"{qrcode}&sellerId={staffId}";
+                    qrcode = $"{qrcode}&saleId={staffId}";
                 }
             }
             return qrcode;
@@ -80,11 +80,11 @@ namespace AppPod.DataAccess
             {
                 if (qrcode.EndsWith("&"))
                 {
-                    qrcode = $"{qrcode}sellerId={staffId}";
+                    qrcode = $"{qrcode}saleId={staffId}";
                 }
                 else
                 {
-                    qrcode = $"{qrcode}&sellerId={staffId}";
+                    qrcode = $"{qrcode}&saleId={staffId}";
                 }
             }
             return qrcode;
@@ -100,11 +100,11 @@ namespace AppPod.DataAccess
             {
                 if (qrcode.EndsWith("&"))
                 {
-                    qrcode = $"{qrcode}sellerId={staffId}";
+                    qrcode = $"{qrcode}saleId={staffId}";
                 }
                 else
                 {
-                    qrcode = $"{qrcode}&sellerId={staffId}";
+                    qrcode = $"{qrcode}&saleId={staffId}";
                 }
             }
             return qrcode;
