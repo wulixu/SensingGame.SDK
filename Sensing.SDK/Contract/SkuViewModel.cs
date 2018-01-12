@@ -80,6 +80,25 @@ namespace Sensing.SDK.Contract
         public string ColorName { get; set; }
 
         public IEnumerable<SkuOnlineStoreInfoSdkModel> OnlineStoreInfos { get; set; }
+
+        /// <summary>
+        /// Sku 针对年龄段
+        /// 例：该Sku适合20-25岁，且适合60-70岁的场合，填入【20-25,60-70】多年龄段半角逗号隔开，为空代表无针对。
+        /// </summary>
+        public string AgeScope { get; set; }
+
+        /// <summary>
+        /// Sku 针对性别
+        /// 例：男=Male，女=Female 。为空代表无针对。
+        /// </summary>
+        public string Gender { get; set; }
+
+        /// <summary>
+        /// RFID编号
+        /// </summary>
+        public string RfidCode { get; set; }
+
+        public double? Price2 { get; set; }
     }
     public class SkuOnlineStoreInfoSdkModel
     {

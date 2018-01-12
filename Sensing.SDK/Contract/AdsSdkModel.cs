@@ -21,5 +21,15 @@ namespace Sensing.SDK.Contract
         public int Postion { get; set; }
         public string Transition { get; set; }
         public TimeSpan? Duration { get; set; }
+
+        public bool IsFromOthers { get; set; }
+        public string AgeScope { get; set; }
+
+        /// <summary>
+        /// 例：男=Male，女=Female 。为空代表无针对。
+        /// </summary>
+        public string Gender { get; set; }
+
+        public string ExtraInfo { get; set; }
     }
 }
