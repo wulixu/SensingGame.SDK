@@ -22,6 +22,7 @@ namespace AppPod.DataAccess
         List<PropertyInfo> GetPropertyInfosInSkus(ShowProductInfo product);
         (string Key, string Value) GetPropertyName(string properties);
         ProductSdkModel FindByScanId(string scanId);
+        ProductSdkModel FindByRfidCode(string rfid);
         List<ShowProductInfo> FindSimilar(ShowProductInfo itemId, bool useSameSpu = true, bool useSameCategories = false);
         ProductSdkModel FindByProductId(int productId);
         ProductSdkModel FindBySkuId(int skuId);
