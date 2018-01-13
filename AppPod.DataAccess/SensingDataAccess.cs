@@ -201,7 +201,7 @@ namespace AppPod.DataAccess
 
         public ProductSdkModel FindByRfidCode(string rfid)
         {
-            return Products?.FirstOrDefault(p => p.Skus.Any(s => s.RfidCode.Contains(rfid)));
+            return Products?.FirstOrDefault(p => p.Skus.Any(s => s.RfidCode != null && s.RfidCode.Contains(rfid)));
         }
 
         public string GetLocalImagePath(string path, string category)
