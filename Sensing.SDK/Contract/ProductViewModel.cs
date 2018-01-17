@@ -14,6 +14,7 @@ namespace Sensing.SDK.Contract
         public long Num { get; set; }
         public int GroupId { get; set; }
         public string Title { get; set; }
+        public string SubTitle { get; set; }
         /// <summary>
         /// 在当今社会,任何事物都是可以明码标价的,难道不是!
         /// </summary>
