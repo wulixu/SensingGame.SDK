@@ -99,6 +99,8 @@ namespace Sensing.SDK.Contract
         public string RfidCode { get; set; }
 
         public double? Price2 { get; set; }
+
+        public int SalesVolumn { get; set; }
     }
     public class SkuOnlineStoreInfoSdkModel
     {

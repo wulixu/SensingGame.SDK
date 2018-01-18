@@ -18,6 +18,7 @@ namespace Sensing.SDK
 
         private const string GroupInfoQuery = DeviceBaseUrl + "/GroupInfo";
         private const string DeviceInfoQuery = DeviceBaseUrl + "/DeviceInfo";
+        private const string LoginInfoQuery = DeviceBaseUrl + "/Login";
 
         public async Task<WebApiResult<DeviceSdkModel>> RegisterDeviceAsyn(RegisterDeviceViewModel device)
         {
@@ -67,6 +68,20 @@ namespace Sensing.SDK
             return null;
         }
 
-
+        public async Task<WebApiResult<DeviceStaffLoginResultViewModel>> DeviceLogin(DeviceSdkLoginViewModel loginVM)
+        {
+            var absolutePath = $"{ServiceHost}/{LoginInfoQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var loginResult = await SendRequestAsync<string, WebApiResult<DeviceStaffLoginResultViewModel>>(HttpMethod.Post, absolutePath, null);
+                return loginResult;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("DeviceLogin:" + ex.InnerException);
+            }
+            return null;
+        }
     }
 }

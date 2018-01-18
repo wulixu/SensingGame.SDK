@@ -26,4 +26,20 @@ namespace Sensing.SDK.Contract
         public string Language { get; set; }
         public string ExePath { get; set; }
     }
+
+    public class DeviceSdkLoginViewModel
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string Mac { get; set; }
+    }
+
+    public class DeviceStaffLoginResultViewModel
+    {
+        public string SubKey { get; set; }
+        public int StaffId { get; set; }
+        public string StaffOutId { get; set; }
+
+
+    }
 }
