@@ -11,6 +11,7 @@ namespace AppPod.DataAccess
     {
         ShowProductInfo GetShowProductInfoById(ProductType type, int id);
         string GetQrcode(SkuSdkModel pModel, string staffId);
+        string GetLocalQrcode(SkuSdkModel sModel, string staffId, string webAddess, string shopId);
         string GetQrcode(ProductSdkModel pModel, string staffId);
         string GetQrcode(ShowProductInfo showProductInfo, string staffId);
         List<PropertyInfo> FindReminderAvailablePropertiesInSkus(ShowProductInfo productSdkModel, params string[] nameValues);
@@ -39,6 +40,9 @@ namespace AppPod.DataAccess
 
         List<TagSdkModel> GetTagInfos();
 
+        HashSet<string> GetMaterialsInfo();
+        HashSet<string> GetGendersInfo();
+
         List<AdsSdkModel> Ads { get; set; }
         List<StaffSdkModel> Staffs { get; set; }
         List<ProductSdkModel> Products { get; set; }
@@ -53,7 +57,7 @@ namespace AppPod.DataAccess
         List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string,string> keyValues);
         List<ShowProductInfo> SearchShowProductsByName(string searchTerm);
         //ProductInfo FindProductByAttribute(string productAttribute);
-        List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, bool onlySpu = false);
+        List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, PropsName propsNames, bool onlySpu = false);
         List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true);
         List<ProductCategorySDKModel> GetUsefulCategroyInfos();
         //List<ProductInfo> GetProductInfos();

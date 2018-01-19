@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace AppPod.DataAccess
 {
+    public class PropsName
+    {
+        public List<string> materials;
+        public List<string> styles;
+    }
     public class Range<T>
     {
         public T Min { get; set; }
@@ -90,6 +95,8 @@ namespace AppPod.DataAccess
             return qrcode;
         }
 
+       
+
         public string GetQrcode(SkuSdkModel sModel, string staffId)
         {
             if (sModel == null) return null;
@@ -109,6 +116,18 @@ namespace AppPod.DataAccess
             }
             return qrcode;
         }
+
+        public string GetLocalQrcode(SkuSdkModel sModel, string staffId, string webAddess, string shopId)
+        {
+
+            if (sModel == null) return null;
+            var storeType = GetStoreType();
+
+            string qrcode = webAddess + "?productid=" + sModel.ItemId + "&shopid=" + shopId + "&no=" + sModel.ItemId;
+            if (string.IsNullOrEmpty(qrcode)) return null;
+            return qrcode;
+        }
+
 
         #region Bussiness Logical Data
         public string GetOnlineStoreStaffId(int staffId)
@@ -199,6 +218,8 @@ namespace AppPod.DataAccess
             return Products?.FirstOrDefault(p => p.Skus.Any(s => s.SkuId.Contains(skc)));
         }
 
+      
+
         public ProductSdkModel FindByRfidCode(string rfid)
         {
             return Products?.FirstOrDefault(p => p.Skus.Any(s => s.RfidCode != null && s.RfidCode.Contains(rfid)));
@@ -214,6 +235,7 @@ namespace AppPod.DataAccess
         private string FindTagIcon(int[] tagIds)
         {
             if (Tags == null || Tags.Count == 0) return null;
+            if (tagIds == null) return null;
             var tag = Tags.Find(t => tagIds.Any(id => id == t.Id) && t.IsSpecial == true);
             if (tag != null) return tag.GetLocalIconFile();
             return null;
@@ -224,6 +246,52 @@ namespace AppPod.DataAccess
             if (Tags == null || Tags.Count == 0) return null;
             var tags = Tags.Where(t => t.IsSpecial == true).ToList();
             return tags;
+        }
+
+        public HashSet<string> GetMaterialsInfo()
+        {
+            HashSet<string> MaterialsSet = new HashSet<string>();
+            foreach (var prod in Products)
+            {
+                string pmId = prod.ItemId;
+                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.ItemId == pmId);
+                string tempStr = firstSku.PropsName;
+                int indexStart = tempStr.IndexOf("材质");
+                if (indexStart > 0)
+                {
+                    int indexEnd = tempStr.IndexOf(";", indexStart);
+                    string material = tempStr.Substring(indexStart + 3, indexEnd - (indexStart + 3));
+                    MaterialsSet.Add(material);
+                }
+            }
+            return MaterialsSet;
+        }
+
+        public HashSet<string> GetGendersInfo()
+        {
+            HashSet<string> GendersSet = new HashSet<string>();
+            foreach (var prod in Products)
+            {
+                string pmId = prod.ItemId;
+                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.ItemId == pmId);
+                string tempStr = firstSku.PropsName;
+                int indexStart = tempStr.IndexOf("首饰类别");
+                if (indexStart > 0)
+                {
+                    int indexEnd = tempStr.IndexOf(";", indexStart);
+                    if (indexEnd > 0)
+                    {
+                        string material = tempStr.Substring(indexStart + 5, indexEnd - (indexStart + 5));
+                        GendersSet.Add(material);
+                    }
+                    else
+                    {
+                        string material = tempStr.Substring(indexStart + 5, tempStr.Length - (indexStart + 5));
+                        GendersSet.Add(material);
+                    }
+                }
+            }
+            return GendersSet;
         }
 
         public List<ShowProductInfo> QueryShowProducts(bool onlySpu = false)
@@ -252,6 +320,10 @@ namespace AppPod.DataAccess
                 var showProducts = new List<ShowProductInfo>();
                 foreach (var prod in Products)
                 {
+                    if (File.Exists(GetLocalImagePath(prod.PicUrl, "Products")) == false)
+                    {
+                        continue;
+                    }
                     if (prod.Skus == null)
                     {
                         if (prod.HasRealSkus == false)
@@ -517,7 +589,7 @@ namespace AppPod.DataAccess
             return priceOk && colorOK && tagOK && categoryOK && keywordOK;
         }
 
-        public bool CanAddFilter(SkuSdkModel sku, List<Range<float>> priceRanges, List<string> colors, List<int> tags, List<string> keywords)
+        public bool CanAddFilter(SkuSdkModel sku, List<Range<float>> priceRanges, List<string> colors, List<int> tags, List<string> keywords, PropsName propsNames)
         {
             var priceOk = false;
             if (priceRanges != null && priceRanges.Count > 0)
@@ -597,7 +669,44 @@ namespace AppPod.DataAccess
                 keywordOK = true;
             }
 
-            return priceOk && colorOK && tagOK && keywordOK;
+            var materialOk = false;
+            if (propsNames.materials != null && propsNames.materials.Count > 0)
+            {
+
+                foreach (var material in propsNames.materials)
+                {
+                    if (sku.PropsName.Contains(material))
+                    {
+                        materialOk = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                materialOk = true;
+            }
+
+            var styleOk = false;
+            if (propsNames.styles != null && propsNames.styles.Count > 0)
+            {
+
+                foreach (var style in propsNames.styles)
+                {
+                    if (sku.PropsName.Contains(style))
+                    {
+                        styleOk = true;
+                        break;
+                    }
+                }
+
+            }
+            else
+            {
+                styleOk = true;
+            }
+
+            return priceOk && colorOK && tagOK && keywordOK && materialOk && styleOk;
         }
 
         private bool ProductIsOK(ProductSdkModel product, List<int> categories)
@@ -607,7 +716,7 @@ namespace AppPod.DataAccess
             if (categories.Intersect(product.CategoryIds).Count() > 0) return true;
             return false;
         }
-        public List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, bool onlySpu = false)
+        public List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, PropsName propsNames, bool onlySpu = false)
         {
             if (Products == null || Products.Count == 0) return null;
             string storeType = GetStoreType();
@@ -632,6 +741,10 @@ namespace AppPod.DataAccess
                 var showProducts = new List<ShowProductInfo>();
                 foreach (var prod in Products)
                 {
+                    if (File.Exists(GetLocalImagePath(prod.PicUrl, "Products")) == false)
+                    {
+                        continue;
+                    }
                     if (prod.Skus == null)
                     {
                         if (prod.HasRealSkus == false)
@@ -684,7 +797,7 @@ namespace AppPod.DataAccess
                             foreach (var pImg in prod.PropImgs)
                             {
                                 var keyProps = pImg.PropertyName;
-                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags, keywords));
+                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags, keywords, propsNames));
                                 if (firstSku != null)
                                 {
                                     showProducts.Add(new ShowProductInfo
@@ -1010,6 +1123,10 @@ namespace AppPod.DataAccess
                     {
                         if (firstSku.Id != exceptSkuId)
                         {
+                            if (File.Exists(GetLocalImagePath(firstSku.PicUrl, "Products")) == false)
+                            {
+                                continue;
+                            }
                             showProducts.Add(new ShowProductInfo
                             {
                                 Id = firstSku.Id,
