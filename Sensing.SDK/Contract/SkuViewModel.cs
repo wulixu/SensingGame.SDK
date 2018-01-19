@@ -79,6 +79,8 @@ namespace Sensing.SDK.Contract
 
         public string ColorName { get; set; }
 
+        public string Barcode { get; set; }
+
         public IEnumerable<SkuOnlineStoreInfoSdkModel> OnlineStoreInfos { get; set; }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public string Keywords { get; set; }
         public string PicUrl { get; set; }
-
+        public string Barcode { get; set; }
         public string Promotions { get; set; }
 
         /// <summary>
@@ -135,6 +135,7 @@ namespace Sensing.SDK.Contract
         public string FromType { get; set; }
         public string ResourType { get; set; }
         public string Content { get; set; }
+        public string Type { get; set; }
     }
 
     public class ProductOnlineStoreInfoViewModel
