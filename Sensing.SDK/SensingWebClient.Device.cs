@@ -36,6 +36,26 @@ namespace Sensing.SDK
             return null;
         }
 
+        public async Task<bool> DeviceHeartBeatAsync(DeviceHeartBeatViewModel device)
+        {
+            var absolutePath = $"{ServiceHost}/{RegisterDeviceQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var result = await SendRequestAsync<DeviceHeartBeatViewModel, WebApiResult<object>>(HttpMethod.Post, absolutePath, device);
+                if(result != null)
+                {
+                    return result.status == ApiStatus.OK ? true : false;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("RegisterDevice:" + ex.InnerException);
+            }
+            return false;
+        }
+
         public async Task<WebApiResult<DeviceSdkModel>> GetDeviceInfo()
         {
             var absolutePath = $"{ServiceHost}/{DeviceInfoQuery}?{GetBasicNameValuesQueryString()}";

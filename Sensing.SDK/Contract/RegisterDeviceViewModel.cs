@@ -98,4 +98,9 @@ namespace Sensing.SDK.Contract
         public string Description { get; set; }
         public string OmniStoreId { get; set; }
     }
+
+    public class DeviceHeartBeatViewModel
+    {
+
+    }
 }
