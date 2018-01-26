@@ -503,7 +503,7 @@ namespace AppPod.DataAccess
                     {
                         if (product.Keywords.Contains(keyword))
                         {
-                            categoryOK = true;
+                            keywordOK = true;
                             break;
                         }
                     }
@@ -511,7 +511,7 @@ namespace AppPod.DataAccess
             }
             else
             {
-                categoryOK = true;
+                keywordOK = true;
             }
 
             return priceOk && colorOK && tagOK && categoryOK && keywordOK;
