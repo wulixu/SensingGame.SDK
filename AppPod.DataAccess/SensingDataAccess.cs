@@ -380,7 +380,24 @@ namespace AppPod.DataAccess
 
         public List<ShowProductInfo> GetShowProductByCategoryNames(int[] categroyIds)
         {
-            return mShowProducts.Where(p => p.Product.CategoryIds.Intersect(categroyIds).Count() > 0).ToList();
+            return mShowProducts.Where(p => CategoryIntersect(p.Product.CategoryIds, categroyIds)).ToList();
+        }
+
+        /// <summary>
+        /// 包含父分类的比较
+        /// </summary>
+        /// <param name="categoryIds"></param>
+        /// <param name="selectedCategoryIds"></param>
+        /// <returns></returns>
+        private bool CategoryIntersect(IEnumerable<int> categoryIds , IEnumerable<int> selectedCategoryIds)
+        {
+            foreach (var id in categoryIds)
+            {
+                var category = PCategories.FirstOrDefault(p => p.Id == id);
+                if (category.Paths.Intersect(selectedCategoryIds).Count() > 0)
+                    return true;
+            }
+            return false;
         }
 
         public ProductCategorySDKModel FindCategoryByName(string categoryName)
@@ -401,14 +418,16 @@ namespace AppPod.DataAccess
         {
             if (PCategories == null || PCategories.Count == 0) return null;
             if (Products == null || Products.Count == 0) return null;
-            List<ProductCategorySDKModel> results = new List<ProductCategorySDKModel>();
+            List<int> categoryIds = new List<int>();
             foreach (var pCategory in PCategories)
             {
                 if (Products.Any(p => p.CategoryIds.Contains(pCategory.Id)))
                 {
-                    results.Add(pCategory);
+                    categoryIds.AddRange(pCategory.Paths);
                 }
             }
+            categoryIds = categoryIds.Distinct().ToList();
+            var results = PCategories.Where(p => categoryIds.Contains(p.Id)).ToList();
             return results;
         }
 
@@ -604,7 +623,7 @@ namespace AppPod.DataAccess
         {
             if (categories == null) return true;
             if (categories.Count < 1) return true;
-            if (categories.Intersect(product.CategoryIds).Count() > 0) return true;
+            if (CategoryIntersect(product.CategoryIds, categories)) return true;
             return false;
         }
         public List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, bool onlySpu = false)
@@ -989,11 +1008,38 @@ namespace AppPod.DataAccess
             Tags = ReadTags();
             Products = ReadProducts();
             PCategories = ReadCategorys();
+            BuildCategoryPaths();
             Coupons = ReadCoupons();
             Matches = ReadProductMatches();
             Likes = ReadProductLikes();
             Properties = ReadProperties();
             return true;
+        }
+
+        public void BuildCategoryPaths()
+        {
+            //读取根分类
+            var roots = PCategories.Where(p => p.ParentCategoryId == 0 || p.ParentCategoryId == p.Id);
+            Queue<ProductCategorySDKModel> queue = new Queue<ProductCategorySDKModel>();
+            foreach (var root in roots)
+            {
+                root.Paths = new List<int> { 0};
+                queue.Enqueue(root);
+            }
+            //使用队列从根分类逐级读取子分类
+            while(queue.Count > 0)
+            {
+                var catetory = queue.Dequeue();
+                var children = PCategories.Where(p => p.ParentCategoryId == catetory.Id);
+                foreach (var child in children)
+                {
+                    //设置子分类到根目录的路径
+                    child.Paths = new List<int>();
+                    child.Paths.AddRange(catetory.Paths);
+                    child.Paths.Add(child.Id);
+                    queue.Enqueue(child);
+                }
+            }
         }
 
         public List<ShowProductInfo> DistinctShowProducts(ProductSdkModel prod, int exceptSkuId = -1)

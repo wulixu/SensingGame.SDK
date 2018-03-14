@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -102,6 +103,7 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public string Name { get; set; }
 
+        public int ParentCategoryId { get; set; }
 
         public ProductCategorySDKModel ParentCategory { get; set; }
 
@@ -125,6 +127,9 @@ namespace Sensing.SDK.Contract
         public bool IsSpecial { get; set; }
 
         public string FromType { get; set; }
+
+        [JsonIgnore]
+        public List<int> Paths { get; set; } //分类路径
     }
 
     public class ProductFileSdkModel
