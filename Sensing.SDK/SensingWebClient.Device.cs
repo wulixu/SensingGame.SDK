@@ -38,7 +38,7 @@ namespace Sensing.SDK
 
         public async Task<bool> DeviceHeartBeatAsync(DeviceHeartBeatViewModel device)
         {
-            var absolutePath = $"{ServiceHost}/{RegisterDeviceQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{ServiceHost}/{DeviceHeartBeatQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var result = await SendRequestAsync<DeviceHeartBeatViewModel, WebApiResult<object>>(HttpMethod.Post, absolutePath, device);
