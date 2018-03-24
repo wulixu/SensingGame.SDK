@@ -294,7 +294,7 @@ namespace AppPod.DataAccess
                         foreach (var pImg in prod.PropImgs)
                         {
                             var keyProps = pImg.PropertyName;
-                            var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps));
+                            var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName != null && s.PropsName.Contains(keyProps));
                             if (firstSku != null)
                             {
                                 showProducts.Add(new ShowProductInfo
@@ -703,7 +703,7 @@ namespace AppPod.DataAccess
                             foreach (var pImg in prod.PropImgs)
                             {
                                 var keyProps = pImg.PropertyName;
-                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags, keywords));
+                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName != null && s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags, keywords));
                                 if (firstSku != null)
                                 {
                                     showProducts.Add(new ShowProductInfo
@@ -1023,7 +1023,7 @@ namespace AppPod.DataAccess
             Queue<ProductCategorySDKModel> queue = new Queue<ProductCategorySDKModel>();
             foreach (var root in roots)
             {
-                root.Paths = new List<int> { 0};
+                root.Paths = new List<int> { root.Id};
                 queue.Enqueue(root);
             }
             //使用队列从根分类逐级读取子分类
@@ -1051,7 +1051,7 @@ namespace AppPod.DataAccess
                 foreach (var pImg in prod.PropImgs)
                 {
                     var keyProps = pImg.PropertyName;
-                    var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps));
+                    var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName != null && s.PropsName.Contains(keyProps));
                     if (firstSku != null)
                     {
                         if (firstSku.Id != exceptSkuId)
@@ -1122,7 +1122,7 @@ namespace AppPod.DataAccess
             {
                 if (product.Skus != null)
                 {
-                    var first = product.Skus.FirstOrDefault(s => s.PropsName.Contains(propImg.PropertyName));
+                    var first = product.Skus.FirstOrDefault(s => s.PropsName != null && s.PropsName.Contains(propImg.PropertyName));
                     if (first != null)
                     {
                         var propName = propImg.PropertyName;
