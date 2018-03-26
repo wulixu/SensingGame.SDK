@@ -1057,7 +1057,7 @@ namespace AppPod.DataAccess
             while (queue.Count > 0)
             {
                 var catetory = queue.Dequeue();
-                var children = PCategories.Where(p => p.ParentCategoryId == catetory.Id);
+                var children = PCategories.Where(p => p.ParentCategoryId == catetory.Id && p.ParentCategoryId != p.Id);
                 foreach (var child in children)
                 {
                     //设置子分类到根目录的路径
