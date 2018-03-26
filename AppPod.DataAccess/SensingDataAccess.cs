@@ -201,7 +201,34 @@ namespace AppPod.DataAccess
 
         public ProductSdkModel FindByRfidCode(string rfid)
         {
-            return Products?.FirstOrDefault(p => p.Skus.Any(s => s.RfidCode != null && s.RfidCode.Contains(rfid)));
+            //  return Products?.FirstOrDefault(p => p.Skus.Any(s => s.RfidCode != null && s.RfidCode.Contains(rfid)));
+
+            //var product = Products?.FirstOrDefault(p => p.Skus.Any(s => (s.RfidCode != null && s.RfidCode.Contains(rfid)) ||
+            //                                                                                        (s.SkuId != null && s.SkuId.Contains(rfid)) ||
+            //                                                                                        (s.OuterId != null && s.OuterId.Contains(rfid))));
+            //if (product != null) return product;
+
+            //product = Products?.FirstOrDefault(s => (s.RfidCode != null && s.RfidCode.Contains(rfid)) ||
+            //                                                                           (s.ItemId != null && s.ItemId.Contains(rfid)) ||
+            //                                                                           (s.OuterId != null && s.OuterId.Contains(rfid)));
+
+            // Find SkuInfo
+            var product = Products?.FirstOrDefault(p => p.Skus.Any(s => (s.RfidCode != null && s.RfidCode.Contains(rfid))));
+            if (product != null) return product;
+            product = Products?.FirstOrDefault(p => p.Skus.Any(s => (s.SkuId != null && s.SkuId.Contains(rfid))));
+            if (product != null) return product;
+            product = Products?.FirstOrDefault(p => p.Skus.Any(s => (s.OuterId != null && s.OuterId.Contains(rfid))));
+            if (product != null) return product;
+
+            // FindProduct
+            product = Products?.FirstOrDefault(s => (s.RfidCode != null && s.RfidCode.Contains(rfid)));
+            if (product != null) return product;
+            product = Products?.FirstOrDefault(s => (s.ItemId != null && s.ItemId.Contains(rfid)));
+            if (product != null) return product;
+            product = Products?.FirstOrDefault(s => (s.OuterId != null && s.OuterId.Contains(rfid)));
+            if (product != null) return product;
+
+            return product;
         }
 
         public string GetLocalImagePath(string path, string category)
@@ -389,7 +416,7 @@ namespace AppPod.DataAccess
         /// <param name="categoryIds"></param>
         /// <param name="selectedCategoryIds"></param>
         /// <returns></returns>
-        private bool CategoryIntersect(IEnumerable<int> categoryIds , IEnumerable<int> selectedCategoryIds)
+        private bool CategoryIntersect(IEnumerable<int> categoryIds, IEnumerable<int> selectedCategoryIds)
         {
             foreach (var id in categoryIds)
             {
@@ -1023,11 +1050,11 @@ namespace AppPod.DataAccess
             Queue<ProductCategorySDKModel> queue = new Queue<ProductCategorySDKModel>();
             foreach (var root in roots)
             {
-                root.Paths = new List<int> { root.Id};
+                root.Paths = new List<int> { root.Id };
                 queue.Enqueue(root);
             }
             //使用队列从根分类逐级读取子分类
-            while(queue.Count > 0)
+            while (queue.Count > 0)
             {
                 var catetory = queue.Dequeue();
                 var children = PCategories.Where(p => p.ParentCategoryId == catetory.Id);
