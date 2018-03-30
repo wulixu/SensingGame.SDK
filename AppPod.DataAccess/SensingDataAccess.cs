@@ -269,6 +269,7 @@ namespace AppPod.DataAccess
                     //QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                     Type = ProductType.Product,
                     TagIconUrl = FindTagIcon(pModel.Tags),
+                    Tags = pModel.Tags,
                     Product = pModel
                 }).ToList();
                 mShowProducts = infos;
@@ -292,7 +293,8 @@ namespace AppPod.DataAccess
                                 Quantity = prod.Num,
                                 Type = ProductType.Product,
                                 TagIconUrl = FindTagIcon(prod.Tags),
-                                Product = prod
+                                Product = prod,
+                                Tags = prod.Tags
                             });
                         }
                         continue;
@@ -311,7 +313,8 @@ namespace AppPod.DataAccess
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 Type = ProductType.Product,
                                 TagIconUrl = FindTagIcon(prod.Tags),
-                                Product = prod
+                                Product = prod,
+                                Tags=prod.Tags
                             });
                         }
                         continue;
@@ -334,6 +337,7 @@ namespace AppPod.DataAccess
                                     //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                     TagIconUrl = FindTagIcon(firstSku.Tags),
                                     Type = ProductType.Sku,
+                                    Tags=firstSku.Tags,
                                     Product = prod
                                 });
                             }
@@ -354,6 +358,7 @@ namespace AppPod.DataAccess
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 TagIconUrl = FindTagIcon(firstSku.Tags),
                                 Type = ProductType.Sku,
+                                Tags=firstSku.Tags,
                                 Product = prod
                             });
                         }
