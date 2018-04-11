@@ -255,6 +255,8 @@ namespace AppPod.DataAccess
             {
                 string pmId = prod.ItemId;
                 var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.ItemId == pmId);
+                if (firstSku == null)
+                    continue;
                 string tempStr = firstSku.PropsName;
                 int indexStart = tempStr.IndexOf("材质");
                 if (indexStart > 0)
@@ -274,6 +276,8 @@ namespace AppPod.DataAccess
             {
                 string pmId = prod.ItemId;
                 var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.ItemId == pmId);
+                if (firstSku == null)
+                    continue;
                 string tempStr = firstSku.PropsName;
                 int indexStart = tempStr.IndexOf("首饰类别");
                 if (indexStart > 0)
