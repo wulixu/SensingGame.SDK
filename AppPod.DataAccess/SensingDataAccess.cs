@@ -248,7 +248,7 @@ namespace AppPod.DataAccess
 
         public List<TagSdkModel> GetTagInfos()
         {
-            if (Tags == null || Tags.Count == 0) return null;
+            if (Tags == null) return null;
             var tags = Tags.Where(t => t.IsSpecial == true).ToList();
             return tags;
         }
