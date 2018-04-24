@@ -19,6 +19,7 @@ namespace Sensing.SDK
         private const string GetTCategoriesQuery = ThingBaseUrl + "/ProductCategories";
         private const string GetMatchesQuery = ThingBaseUrl + "/MatchInfos";
         private const string GetLikesQuery = ThingBaseUrl + "/LikeInfos";
+        private const string AllProductCommentsQuery = ThingBaseUrl + "/AllProductComments";
 
         public async Task<PagedList<ProductSdkModel>> GetProducts(int page = 1,int maxCount=300)
         {
@@ -101,5 +102,27 @@ namespace Sensing.SDK
             }
             return null;
         }
+
+        public async Task<PagedList<ProductCommentModel>> ProductComments(int page = 1, int maxCount = 300)
+        {
+            var absolutePath = $"{ServiceHost}/{AllProductCommentsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, WebApiResult<PagedList<ProductCommentModel>>>(HttpMethod.Get, absolutePath, null);
+                if (webResult.status == ApiStatus.OK)
+                {
+                    return webResult.data;
+                }
+                Console.WriteLine("GetProducts:" + webResult.message);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetProducts:" + ex.InnerException);
+            }
+            return null;
+        }
+
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="Contract\LikeInfoViewModel.cs" />
     <Compile Include="Contract\MatchInfoViewModel.cs" />
     <Compile Include="Contract\PagedList.cs" />
+    <Compile Include="Contract\ProductCommentModel.cs" />
     <Compile Include="Contract\ProductViewModel.cs" />
     <Compile Include="Contract\PropertyViewModel.cs" />
     <Compile Include="Contract\RegisterDeviceViewModel.cs" />
