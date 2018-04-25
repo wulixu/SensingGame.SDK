@@ -905,6 +905,7 @@ namespace AppPod.DataAccess
         public List<LikeInfoViewModel> Likes { get; set; }
 
         public List<PropertyViewModel> Properties { get; set; }
+        public List<ProductCommentModel> ProductComments { get; set; }
 
 
         #region Read Data from Local Json.
@@ -1012,6 +1013,16 @@ namespace AppPod.DataAccess
             return JsonConvert.DeserializeObject<List<StaffSdkModel>>(json);
         }
 
+        public List<ProductCommentModel> ReadProductComments()
+        {
+            var path = $"{AppPodDataDirectory}/Products/ProductComments.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+
+            var properties = JsonConvert.DeserializeObject<List<ProductCommentModel>>(json);
+            return properties;
+        }
+
         public static async Task<string> ReadText(string filePath)
         {
             using (FileStream sourceStream = new FileStream(filePath,
@@ -1045,6 +1056,7 @@ namespace AppPod.DataAccess
             Matches = ReadProductMatches();
             Likes = ReadProductLikes();
             Properties = ReadProperties();
+            ProductComments = ReadProductComments();
             return true;
         }
 
@@ -1320,6 +1332,15 @@ namespace AppPod.DataAccess
         public List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string, string> keyValues)
         {
             return null;
+        }
+
+        public async Task<List<ProductCommentModel>> GetProductComments(int productId)
+        {
+            if (ProductComments == null)
+                return new List<ProductCommentModel>();
+            return await Task.Factory.StartNew(() => {
+                return ProductComments.Where(p => p.ProductId == productId).ToList();
+            });
         }
     }
 }

@@ -61,6 +61,8 @@ namespace AppPod.DataAccess
         List<AdsSdkModel> GetAdsInfos();
         //List<StaffInfo> GetStaffInfos();
         void Like(ProductSdkModel productInfo);
+        Task<List<ProductCommentModel>> GetProductComments(int productId);
+
         //void Click(ProductInfo productInfo);
         //void LoadProducts();
         //string GetLocalImage(ProductInfo p);
