@@ -36,6 +36,7 @@ namespace Sensing.SDK.Contract
         public int LikeCount { get; set; }
 
         public string Description { get; set; }
+        public string Desc { get; set; }
 
         public int OrderNumber { get; set; }
 

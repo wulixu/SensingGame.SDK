@@ -1063,7 +1063,7 @@ namespace AppPod.DataAccess
         public void BuildCategoryPaths()
         {
             //读取根分类
-            var roots = PCategories.Where(p => p.ParentCategoryId == 0 || p.ParentCategoryId == p.Id);
+            var roots = GetRootCategories();
             Queue<ProductCategorySDKModel> queue = new Queue<ProductCategorySDKModel>();
             foreach (var root in roots)
             {
@@ -1084,6 +1084,27 @@ namespace AppPod.DataAccess
                     queue.Enqueue(child);
                 }
             }
+        }
+
+        /// <summary>
+        /// 获取一级分类
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ProductCategorySDKModel> GetRootCategories()
+        {
+            var roots = PCategories.Where(p => p.ParentCategoryId == 0 || p.ParentCategoryId == p.Id);
+            return roots.ToList();
+        }
+
+        /// <summary>
+        /// 根据父分类id获取子分类
+        /// </summary>
+        /// <param name="parentCategoryId"></param>
+        /// <returns></returns>
+        public IEnumerable<ProductCategorySDKModel> GetChildrenCategory(int parentCategoryId)
+        {
+            var children = PCategories.Where(p => p.ParentCategoryId == parentCategoryId && p.ParentCategoryId != p.Id);
+            return children.ToList();
         }
 
         public List<ShowProductInfo> DistinctShowProducts(ProductSdkModel prod, int exceptSkuId = -1)

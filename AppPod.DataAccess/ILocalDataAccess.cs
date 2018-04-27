@@ -55,6 +55,18 @@ namespace AppPod.DataAccess
         //ProductInfo FindProductByAttribute(string productAttribute);
         List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, bool onlySpu = false);
         List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true);
+        /// <summary>
+        /// 获取一级分类
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ProductCategorySDKModel> GetRootCategories();
+
+        /// <summary>
+        /// 根据父分类id获取子分类
+        /// </summary>
+        /// <param name="parentCategoryId"></param>
+        /// <returns></returns>
+        IEnumerable<ProductCategorySDKModel> GetChildrenCategory(int parentCategoryId);
         List<ProductCategorySDKModel> GetUsefulCategroyInfos();
         //List<ProductInfo> GetProductInfos();
         List<CouponViewModel> GetCoupons();
