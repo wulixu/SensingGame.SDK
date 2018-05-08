@@ -146,4 +146,18 @@ namespace SensngGame.ClientSDK.Contract
         public bool IsSigned { get; set; }
         public int AwardID { get; set; }
     }
+
+    public enum ActionStatus
+    {
+        Start,
+        Waitting,
+        Playing,
+        Done,
+        Register,
+        AwardEdit,
+        //未中奖，因为奖品已发完
+        NotGetPrizeWithNoAward,
+        //未中奖
+        NotGetPrize
+    }
 }

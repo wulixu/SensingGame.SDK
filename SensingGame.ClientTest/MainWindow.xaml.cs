@@ -48,7 +48,10 @@ namespace SensingGame.ClientTest
             InitializeComponent();
             Loaded += MainWindow_Loaded;
             AssembleGames();
-            foreach(var pair in qrcodeTypes)
+            platformCBox.Items.Add("WeChat");
+            platformCBox.Items.Add("Taobao");
+
+            foreach (var pair in qrcodeTypes)
             {
                 qrCodeCBox.Items.Add(pair.Key);
             }
@@ -187,13 +190,14 @@ namespace SensingGame.ClientTest
 
         public static BitmapSource UriToImage(string imageUrl)
         {
-            //if (imageUrl.Contains("mp.weixin.qq.com/cgi-bin/showqrcode") || imageUrl.Contains("wx.qlogo.cn"))
+            if (string.IsNullOrEmpty(imageUrl)) return null;
+            if (imageUrl.Contains("mp.weixin.qq.com/cgi-bin/showqrcode") || imageUrl.Contains("wx.qlogo.cn"))
             {
                 return WebImageToImage(imageUrl);
             }
-            //else
+            else
             {
-                //return ValueToImage(imageUrl);
+                return ValueToImage(imageUrl);
             }
         }
 
@@ -248,28 +252,37 @@ namespace SensingGame.ClientTest
 
         private async void CreateQrcode_Click(object sender, RoutedEventArgs e)
         {
-            var qrcodeTypeString = qrCodeCBox.SelectedValue as string;
-            var qrcodeType = qrcodeTypes[qrcodeTypeString];
-
-            if (qrcodeType == EnumQRStatus.AfterGame)
+            var platformType = platformCBox.SelectedValue as string;
+            if (platformType == "WeChat")
             {
-                var postBack = await gameSvc.PostData4ScanAsync(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), System.IO.Path.Combine(Environment.CurrentDirectory, "playing.png"), Convert.ToInt16(scoreafter.Text));
-                if (postBack != null && postBack.Data != null)
+                var qrcodeTypeString = qrCodeCBox.SelectedValue as string;
+                var qrcodeType = qrcodeTypes[qrcodeTypeString];
+
+                if (qrcodeType == EnumQRStatus.AfterGame)
                 {
-                    var qrcode = postBack.Data;
-                    afterQrCode = qrcode.QrCodeId;
-                    qrCodeImg.Source = UriToImage(qrcode.QrCodeUrl);
+                    var postBack = await gameSvc.PostData4ScanAsync(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), System.IO.Path.Combine(Environment.CurrentDirectory, "playing.png"), Convert.ToInt16(scoreafter.Text));
+                    if (postBack != null && postBack.Data != null)
+                    {
+                        var qrcode = postBack.Data;
+                        afterQrCode = qrcode.QrCodeId;
+                        qrCodeImg.Source = UriToImage(qrcode.QrCodeUrl);
+                    }
+                }
+                else
+                {
+                    var data = await gameSvc.GetQrCode4LoginAsync(qrcodeType);
+                    if (data != null && data.Data != null)
+                    {
+                        var qrcode = data.Data;
+                        firstQrCode = qrcode.QrCodeId;
+                        qrCodeImg.Source = UriToImage(qrcode.QrCodeUrl);
+                    }
                 }
             }
             else
             {
-                var data = await gameSvc.GetQrCode4LoginAsync(qrcodeType);
-                if (data != null && data.Data != null)
-                {
-                    var qrcode = data.Data;
-                    firstQrCode = qrcode.QrCodeId;
-                    qrCodeImg.Source = UriToImage(qrcode.QrCodeUrl);
-                }
+                var postBack = await gameSvc.PostActionToTao4Qrcode(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), "TestGame", 100, ActionStatus.Register);
+                qrCodeImg.Source = UriToImage(postBack);
             }
         }
 
@@ -405,7 +418,7 @@ namespace SensingGame.ClientTest
 
         private async void TaoUploadBtn_Click(object sender, RoutedEventArgs e)
         {
-            var result = await gameSvc.PostImageToTao(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), 10);
+            var result = await gameSvc.PostActionToTao4Qrcode(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"),"TestGame", 10, ActionStatus.Register);
         }
     }
 }

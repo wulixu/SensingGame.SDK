@@ -501,13 +501,16 @@ namespace SensngGame.ClientSDK
         #endregion
 
 
-        #region
-        public async Task<string> PostImageToTao(string gameImage, int score)
+        #region Taobao Game Action.
+        public async Task<string> PostActionToTao4Qrcode(string gameImage, string gameName, int score,ActionStatus actionStatus)
         {
-            var absolutePath = $"https://m.shiwan66.top/taobao/saveImage";
+            //var absolutePath = $"https://taobao.troncell.com/Taobao/PostData4Qrcode";
+            var absolutePath = $"http://localhost:61084/api/v1/Taobao/PostData4Qrcode";
             var nameValues = new NameValueCollection();
-            AddBasicNameValues(nameValues);
+            nameValues.Add("subKey", _subscriptionKey);
             nameValues.Add("score", score.ToString());
+            nameValues.Add("status", actionStatus.ToString());
+            nameValues.Add("game", gameName);
             try
             {
                 var files = new List<string>();
@@ -515,7 +518,7 @@ namespace SensngGame.ClientSDK
                 if (!string.IsNullOrEmpty(gameImage) && File.Exists(gameImage))
                 {
                     files.Add(gameImage);
-                    names.Add("img");
+                    names.Add("gameimage");
                 }
                 var result = await SendMultipartFormRequestAsync<WebApiResult>(absolutePath, files.ToArray(), names.ToArray(), nameValues);
                 if(result.Status == "OK")
@@ -525,11 +528,12 @@ namespace SensngGame.ClientSDK
             }
             catch (Exception ex)
             {
-                logger.Error("PostData4ScanAsync", ex);
+                logger.Error("PostImageToTao", ex);
             }
             return null;
         }
         #endregion
+
         public async Task<UserDataResult> GetUserInfoData(string openId)
         {
             var absolutePath = $"{ServiceHost}/{FindWeixinUserQuery}";
