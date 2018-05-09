@@ -1,4 +1,5 @@
 ﻿using Sensing.SDK.Contract;
+using SensingStoreCloud.Devices.Dto.SensingDevice;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -20,12 +21,12 @@ namespace Sensing.SDK
             var absolutePath = $"{ServiceHost}/{GetAppsQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var webResult = await SendRequestAsync<string,WebApiResult<List<DeviceSoftwareSdkModel>>>(HttpMethod.Get, absolutePath,null);
-                if(webResult.status == ApiStatus.OK)
+                var webResult = await SendRequestAsync<string, AjaxResponse<List<DeviceSoftwareSdkModel>>>(HttpMethod.Get, absolutePath,null);
+                if(webResult.Success)
                 {
-                    return webResult.data;
+                    return webResult.Result;
                 }
-                Console.WriteLine("GetApps:" + webResult.message);
+                Console.WriteLine("GetApps:" + webResult.Error.Message);
                 return null;
             }
             catch (Exception ex)

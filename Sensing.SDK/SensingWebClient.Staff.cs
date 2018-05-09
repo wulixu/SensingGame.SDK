@@ -15,22 +15,16 @@ namespace Sensing.SDK
         private const string StaffBaseUrl = "SensingDevice";
         private const string GetStaffsQuery = StaffBaseUrl + "/Staffs";
 
-        public async Task<PagedList<StaffSdkModel>> GetStaffs(int page = 1,int maxCount=300)
+        public async Task<PagedResultDto<StaffSdkModel>> GetStaffs(int page = 1,int maxCount=300)
         {
             var absolutePath = $"{ServiceHost}/{GetStaffsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string,WebApiResult<PagedList<StaffSdkModel>>>(HttpMethod.Get, absolutePath,null);
-                if(webResult.status == ApiStatus.OK)
-                {
-                    return webResult.data;
-                }
-                Console.WriteLine("GetAds:" + webResult.message);
-                return null;
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<StaffSdkModel>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
             }
             catch (Exception ex)
             {
-                //logger.Error("PostBehaviorRecordsAsync", ex);
                 Console.WriteLine("GetAds:" + ex.InnerException);
             }
             return null;

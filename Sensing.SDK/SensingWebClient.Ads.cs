@@ -1,4 +1,5 @@
 ﻿using Sensing.SDK.Contract;
+using SensingStoreCloud.Devices.Dto.SensingDevice;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -15,17 +16,17 @@ namespace Sensing.SDK
         private const string AdsBaseUrl = "SensingDevice";
         private const string GetAdsQuery = AdsBaseUrl + "/Ads";
 
-        public async Task<PagedList<AdsSdkModel>> GetAds(int page = 1,int maxCount=300)
+        public async Task<PagedResultDto<AdsSdkModel>> GetAds(int page = 1,int maxCount=300)
         {
             var absolutePath = $"{ServiceHost}/{GetAdsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string,WebApiResult<PagedList<AdsSdkModel>>>(HttpMethod.Get, absolutePath,null);
-                if(webResult.status == ApiStatus.OK)
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<AdsSdkModel>>>(HttpMethod.Get, absolutePath,null);
+                if(webResult.Success)
                 {
-                    return webResult.data;
+                    return webResult.Result;
                 }
-                Console.WriteLine("GetAds:" + webResult.message);
+                Console.WriteLine("GetAds:" + webResult.Error.Message);
                 return null;
             }
             catch (Exception ex)

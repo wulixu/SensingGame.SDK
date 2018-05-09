@@ -15,18 +15,13 @@ namespace Sensing.SDK
         private const string PropertyBaseUrl = "SensingDevice";
         private const string GetPropertiesQuery = PropertyBaseUrl + "/Properties";
 
-        public async Task<PagedList<PropertyViewModel>> GetProperties(int page = 1,int maxCount=300)
+        public async Task<PagedResultDto<PropertyViewModel>> GetProperties(int page = 1,int maxCount=300)
         {
             var absolutePath = $"{ServiceHost}/{GetPropertiesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string,WebApiResult<PagedList<PropertyViewModel>>>(HttpMethod.Get, absolutePath,null);
-                if(webResult.status == ApiStatus.OK)
-                {
-                    return webResult.data;
-                }
-                Console.WriteLine("GetProperties:" + webResult.message);
-                return null;
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PropertyViewModel>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
             }
             catch (Exception ex)
             {

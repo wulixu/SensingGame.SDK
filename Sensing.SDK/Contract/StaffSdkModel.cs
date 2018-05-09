@@ -1,26 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Sensing.SDK.Contract
 {
     public class StaffSdkModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string RFIDCode { get; set; }
-        public string Code { get; set; }
-        public string RCode { get; set; }
-        public string AvatarUrl { get; set; }
+        public string PhoneNumber { get; set; }
+        public string EmailAddress { get; set; }
+        public string UserName { get; set; }
+        public string FullName { get; set; }
+        public DateTime? LastLoginTime { get; set; }
+        
+        public string OuterId { get; set; }
+
+        public bool CanApiAccess { get; set; }
+
+        public bool IsStaff { get; set; }
+
+        /// <summary>
+        /// male,female.
+        /// </summary>
         public string Gender { get; set; }
-        public IEnumerable<OnlineStoreProfileSdkModel> OnlineStoreProfiles { get; set; }
+
+        public string RfidCode { get; set; }
+
+        public IEnumerable<OnlineStoreProfileSdkModel> OnlineStoreInfos { get; set; }
     }
 
     public class OnlineStoreProfileSdkModel
     {
-        public string OnlineStoreType { get; set; }
+        public string OnlineStoreName { get; set; }
+
         public string Code { get; set; }
     }
 }

@@ -16,18 +16,13 @@ namespace Sensing.SDK
 
         private const string GetCouponsQuery = CouponsBaseUrl + "/Coupons";
 
-        public async Task<PagedList<CouponViewModel>> GetCoupons(int page = 1,int maxCount=300)
+        public async Task<PagedResultDto<CouponViewModel>> GetCoupons(int page = 1,int maxCount=300)
         {
             var absolutePath = $"{ServiceHost}/{GetCouponsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string, WebApiResult<PagedList<CouponViewModel>>>(HttpMethod.Get, absolutePath, null);
-                if (webResult.status == ApiStatus.OK)
-                {
-                    return webResult.data;
-                }
-                Console.WriteLine("GetCoupons:" + webResult.message);
-                return null;
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<CouponViewModel>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
             }
             catch (Exception ex)
             {

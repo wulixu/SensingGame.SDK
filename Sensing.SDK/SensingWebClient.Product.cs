@@ -20,18 +20,13 @@ namespace Sensing.SDK
         private const string GetMatchesQuery = ThingBaseUrl + "/MatchInfos";
         private const string GetLikesQuery = ThingBaseUrl + "/LikeInfos";
 
-        public async Task<PagedList<ProductSdkModel>> GetProducts(int page = 1,int maxCount=300)
+        public async Task<PagedResultDto<ProductSdkModel>> GetProducts(int page = 1,int maxCount=300)
         {
             var absolutePath = $"{ServiceHost}/{GetProductsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string,WebApiResult<PagedList<ProductSdkModel>>>(HttpMethod.Get, absolutePath,null);
-                if(webResult.status == ApiStatus.OK)
-                {
-                    return webResult.data;
-                }
-                Console.WriteLine("GetProducts:" + webResult.message);
-                return null;
+                var webResult = await SendRequestAsync<string,AjaxResponse<PagedResultDto<ProductSdkModel>>>(HttpMethod.Get, absolutePath,null);
+                return webResult.Result;
             }
             catch (Exception ex)
             {
@@ -41,17 +36,14 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<IEnumerable<ProductCategorySDKModel>> GetProductCategories(int page = 1,int maxCount = 500)
+        public async Task<PagedResultDto<ProductCategorySDKModel>> GetProductCategories(int page = 1,int maxCount = 500)
         {
             var absolutePath = $"{ServiceHost}/{GetTCategoriesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string, WebApiResult<PagedList<ProductCategorySDKModel>>>(HttpMethod.Get, absolutePath, null);
-                if (webResult.status == ApiStatus.OK)
-                {
-                    return webResult?.data.Data;
-                }
-                return null;
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<ProductCategorySDKModel>>>(HttpMethod.Get, absolutePath, null);
+
+                return webResult.Result;
             }
             catch (Exception ex)
             {
@@ -62,17 +54,14 @@ namespace Sensing.SDK
         }
 
 
-        public async Task<PagedList<MatchInfoViewModel>> GetMatchInfos(int page = 1,int maxCount = 1000)
+        public async Task<PagedResultDto<MatchInfoViewModel>> GetMatchInfos(int page = 1, int maxCount = 1000)
         {
             var absolutePath = $"{ServiceHost}/{GetMatchesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string, WebApiResult<PagedList<MatchInfoViewModel>>>(HttpMethod.Get, absolutePath, null);
-                if (webResult.status == ApiStatus.OK)
-                {
-                    return webResult?.data;
-                }
-                return null;
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<MatchInfoViewModel>>>(HttpMethod.Get, absolutePath, null);
+
+                return webResult.Result;
             }
             catch (Exception ex)
             {
@@ -82,17 +71,15 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<PagedList<LikeInfoViewModel>> GetLikeInfos(int page = 1, int maxCount = 1000)
+        public async Task<PagedResultDto<LikeInfoViewModel>> GetLikeInfos(int page = 1, int maxCount = 1000)
         {
             var absolutePath = $"{ServiceHost}/{GetLikesQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
             try
             {
-                var webResult = await SendRequestAsync<string, WebApiResult<PagedList<LikeInfoViewModel>>>(HttpMethod.Get, absolutePath, null);
-                if (webResult.status == ApiStatus.OK)
-                {
-                    return webResult?.data;
-                }
-                return null;
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<LikeInfoViewModel>>>(HttpMethod.Get, absolutePath, null);
+
+                    return webResult.Result;
+                
             }
             catch (Exception ex)
             {

@@ -16,7 +16,6 @@ namespace Sensing.SDK
 {
     public partial class SensingWebClient
     {
-
         //public const string ServerBase = "http://game.troncell.com/";
         //public const string ServerBase = "http://wx.troncell.com/";
         //public const string ServerBase = "http://localhost:33227/";

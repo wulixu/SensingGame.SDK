@@ -1,4 +1,5 @@
 ﻿using Sensing.SDK.Contract;
+using SensingStoreCloud.Devices.Dto;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -20,13 +21,16 @@ namespace Sensing.SDK
         private const string DeviceInfoQuery = DeviceBaseUrl + "/DeviceInfo";
         private const string LoginInfoQuery = DeviceBaseUrl + "/Login";
 
-        public async Task<WebApiResult<DeviceSdkModel>> RegisterDeviceAsyn(RegisterDeviceViewModel device)
+        public async Task<DeviceOutput> RegisterDeviceAsyn(RegisterDeviceInput device)
         {
             var absolutePath = $"{ServiceHost}/{RegisterDeviceQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var pagedList = await SendRequestAsync<RegisterDeviceViewModel, WebApiResult<DeviceSdkModel>>(HttpMethod.Post, absolutePath, device);
-                return pagedList;
+                var pagedList = await SendRequestAsync<RegisterDeviceInput, AjaxResponse<DeviceOutput>>(HttpMethod.Post, absolutePath, device);
+                if(pagedList.Success)
+                {
+                    return pagedList.Result;
+                }
             }
             catch (Exception ex)
             {
@@ -36,15 +40,15 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<bool> DeviceHeartBeatAsync(DeviceHeartBeatViewModel device)
+        public async Task<bool> DeviceHeartBeatAsync(DeviceHeartBeatInput device)
         {
             var absolutePath = $"{ServiceHost}/{DeviceHeartBeatQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var result = await SendRequestAsync<DeviceHeartBeatViewModel, WebApiResult<object>>(HttpMethod.Post, absolutePath, device);
+                var result = await SendRequestAsync<DeviceHeartBeatInput, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, device);
                 if(result != null)
                 {
-                    return result.status == ApiStatus.OK ? true : false;
+                    return result.Success;
                 }
                 return false;
             }
@@ -56,13 +60,13 @@ namespace Sensing.SDK
             return false;
         }
 
-        public async Task<WebApiResult<DeviceSdkModel>> GetDeviceInfo()
+        public async Task<DeviceOutput> GetDeviceInfo()
         {
             var absolutePath = $"{ServiceHost}/{DeviceInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var pagedList = await SendRequestAsync<string, WebApiResult<DeviceSdkModel>>(HttpMethod.Get, absolutePath, null);
-                return pagedList;
+                var pagedList = await SendRequestAsync<string, AjaxResponse<DeviceOutput>>(HttpMethod.Get, absolutePath, null);
+                return pagedList.Result;
             }
             catch (Exception ex)
             {
@@ -72,13 +76,13 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<WebApiResult<GroupViewModel>> GetGroupInfo()
+        public async Task<TenantAndOrganizationUnitOutput> GetTenantAndOrganizationUnitInfo()
         {
             var absolutePath = $"{ServiceHost}/{GroupInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var groupResult = await SendRequestAsync<string, WebApiResult<GroupViewModel>>(HttpMethod.Get, absolutePath, null);
-                return groupResult;
+                var groupResult = await SendRequestAsync<string, AjaxResponse<TenantAndOrganizationUnitOutput>>(HttpMethod.Get, absolutePath, null);
+                return groupResult.Result;
             }
             catch (Exception ex)
             {
@@ -88,13 +92,13 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<WebApiResult<DeviceStaffLoginResultViewModel>> DeviceLogin(DeviceSdkLoginViewModel loginVM)
+        public async Task<DeviceStaffLoginResultViewModel> DeviceLogin(DeviceSdkLoginViewModel loginVM)
         {
             var absolutePath = $"{ServiceHost}/{LoginInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var loginResult = await SendRequestAsync<string, WebApiResult<DeviceStaffLoginResultViewModel>>(HttpMethod.Post, absolutePath, null);
-                return loginResult;
+                var loginResult = await SendRequestAsync<string, AjaxResponse<DeviceStaffLoginResultViewModel>>(HttpMethod.Post, absolutePath, null);
+                return loginResult.Result;
             }
             catch (Exception ex)
             {
