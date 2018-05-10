@@ -47,12 +47,12 @@ namespace AppPod.DataAccess
             if (showProductInfo.Type == ProductType.Product)
             {
                 var pModel = FindByShowProduct(showProductInfo);
-                qrcode = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
+                qrcode = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreName == storeType)?.Qrcode;
             }
             else
             {
                 var sModel = FindSkuById(showProductInfo.Id);
-                qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
+                qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreName == storeType)?.Qrcode;
             }
             if (string.IsNullOrEmpty(qrcode)) return null;
             if (!string.IsNullOrEmpty(staffId))
@@ -74,7 +74,7 @@ namespace AppPod.DataAccess
             if (pModel == null) return null;
             string qrcode = string.Empty;
             var storeType = GetStoreType();
-            qrcode = pModel.OnlineStoreInfos?.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
+            qrcode = pModel.OnlineStoreInfos?.FirstOrDefault(s => s.OnlineStoreName == storeType)?.Qrcode;
             if (string.IsNullOrEmpty(qrcode)) return null;
             if (!string.IsNullOrEmpty(staffId))
             {
@@ -94,7 +94,7 @@ namespace AppPod.DataAccess
         {
             if (sModel == null) return null;
             var storeType = GetStoreType();
-            string qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode;
+            string qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreName == storeType)?.Qrcode;
             if (string.IsNullOrEmpty(qrcode)) return null;
             if (!string.IsNullOrEmpty(staffId))
             {
@@ -114,7 +114,7 @@ namespace AppPod.DataAccess
         public string GetOnlineStoreStaffId(int staffId)
         {
             var storeType = GetStoreType();
-            var staff = Staffs.Find(s => s.Id == staffId);
+            var staff = Staffs.Find(s => s == staffId);
             if (staff == null) return null;
             var onlineStaff = staff.OnlineStoreProfiles.AsQueryable().FirstOrDefault(s => s.OnlineStoreType == storeType);
             if (onlineStaff == null) return staff.Code;
