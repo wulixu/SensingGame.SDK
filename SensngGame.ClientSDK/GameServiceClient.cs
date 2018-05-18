@@ -504,8 +504,8 @@ namespace SensngGame.ClientSDK
         #region Taobao Game Action.
         public async Task<string> PostActionToTao4Qrcode(string gameImage, string gameName, int score,ActionStatus actionStatus)
         {
-            //var absolutePath = $"https://taobao.troncell.com/Taobao/PostData4Qrcode";
-            var absolutePath = $"https://taobao.troncell.com/api/v1/Taobao/PostData4Qrcode";
+            var absolutePath =   $"https://taobao.troncell.com/api/v1/Taobao/PostData4Qrcode";
+            //var absolutePath = $"http://localhost:61084/api/v1/Taobao/PostData4Qrcode";
             var nameValues = new NameValueCollection();
             nameValues.Add("subKey", _subscriptionKey);
             nameValues.Add("score", score.ToString());

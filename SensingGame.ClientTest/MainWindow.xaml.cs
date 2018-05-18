@@ -281,7 +281,7 @@ namespace SensingGame.ClientTest
             }
             else
             {
-                var postBack = await gameSvc.PostActionToTao4Qrcode(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), "TestGame", 100, ActionStatus.Register);
+                var postBack = await gameSvc.PostActionToTao4Qrcode(System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"), "TestGame", 100, ActionStatus.Done);
                 qrCodeImg.Source = UriToImage(postBack);
             }
         }
