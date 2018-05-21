@@ -14,7 +14,7 @@ namespace AppPod.DataAccess.Models
     }
     public class ShowProductInfo
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public ProductType Type { get; set; }
         public string Name { get; set; }
         public long Quantity { get; set; }

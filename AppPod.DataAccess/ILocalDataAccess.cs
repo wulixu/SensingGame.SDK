@@ -9,7 +9,7 @@ namespace AppPod.DataAccess
 {
     public interface ILocalSensingDataAccess
     {
-        ShowProductInfo GetShowProductInfoById(ProductType type, int id);
+        ShowProductInfo GetShowProductInfoById(ProductType type, long id);
         string GetQrcode(SkuSdkModel pModel, string staffId);
         string GetQrcode(ProductSdkModel pModel, string staffId);
         string GetQrcode(ShowProductInfo showProductInfo, string staffId);
@@ -24,15 +24,15 @@ namespace AppPod.DataAccess
         ProductSdkModel FindByScanId(string scanId);
         ProductSdkModel FindByRfidCode(string rfid);
         List<ShowProductInfo> FindSimilar(ShowProductInfo itemId, bool useSameSpu = true, bool useSameCategories = false);
-        ProductSdkModel FindByProductId(int productId);
-        ProductSdkModel FindBySkuId(int skuId);
-        SkuSdkModel FindSkuById(int skuId);
+        ProductSdkModel FindByProductId(long productId);
+        ProductSdkModel FindBySkuId(long skuId);
+        SkuSdkModel FindSkuById(long skuId);
         List<ShowProductInfo> QueryShowProducts(bool onlySpu);
         List<ProductSdkModel> GetProductsByCategroyName(string categroyName);
         List<ProductSdkModel> GetProductsByCategroyNames(string[] categroyNames);
         List<ShowProductInfo> GetShowProductsByCategroyName(string categroyName);
         List<ShowProductInfo> GetShowProductByCategoryNames(int[] categroyIds);
-        string GetOnlineStoreStaffId(int staffId);
+        string GetOnlineStoreStaffId(long staffId);
         string GetOnlineStoreStaffIdByRFID(string rfidCode);
         string GetStoreType();
         string GetLocalImagePath(string path, string category);

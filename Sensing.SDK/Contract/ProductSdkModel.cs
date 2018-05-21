@@ -61,7 +61,7 @@ namespace Sensing.SDK.Contract
         ///// </summary>
         public long[] PropValueIds { get; set; }
 
-        public int[] TagIds { get; set; }
+        public long[] TagIds { get; set; }
         public IEnumerable<SkuSdkModel> Skus { get; set; }
 
         public IEnumerable<ProductFileSdkModel> ItemImagesOrVideos { get; set; }
@@ -96,7 +96,7 @@ namespace Sensing.SDK.Contract
 
     public class SkuSdkModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string SkuId { get; set; }
 
@@ -109,7 +109,7 @@ namespace Sensing.SDK.Contract
         /// <summary>
         /// SKU属性值的Ids.
         /// </summary>
-        public int[] PropValueIds { get; set; }
+        public long[] PropValueIds { get; set; }
 
         /// <summary>
         /// 事物都该有个名字来表示

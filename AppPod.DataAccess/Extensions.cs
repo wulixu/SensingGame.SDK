@@ -34,9 +34,11 @@ namespace AppPod.DataAccess
 
         public static string GetLocalImage(this StaffSdkModel staffSdkModel)
         {
-            if (staffSdkModel == null || string.IsNullOrEmpty(staffSdkModel.AvatarUrl)) return null;
-            var localPath = ExtractSchema(staffSdkModel.AvatarUrl);
-            return $"{SensingDataAccess.AppPodDataDirectory}\\Staffs\\res\\{localPath}";
+            //todo://
+            //if (staffSdkModel == null || string.IsNullOrEmpty(staffSdkModel.AvatarUrl)) return null;
+            //var localPath = ExtractSchema(staffSdkModel.AvatarUrl);
+            //return $"{SensingDataAccess.AppPodDataDirectory}\\Staffs\\res\\{localPath}";
+            return null;
         }
 
         public static string GetLocalFile(this AdsSdkModel ads)
