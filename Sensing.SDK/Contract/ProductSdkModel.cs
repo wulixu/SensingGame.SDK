@@ -13,6 +13,9 @@ namespace Sensing.SDK.Contract
 
         public virtual long? OrganizationUnitId { get; set; }
 
+        public int OrderNumber { get; set; }
+
+        public string GroupQrCodeInfo { get; set; }
         /// <summary>
         /// 一句话营销.
         /// </summary>
