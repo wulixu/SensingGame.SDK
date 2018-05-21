@@ -8,7 +8,7 @@ namespace Sensing.SDK.Contract
 {
     public class PropertyViewModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
 
         public bool IsForSale { get; set; } = false;
@@ -21,8 +21,8 @@ namespace Sensing.SDK.Contract
 
     public class PropertyValueViewModel
     {
-        public int Id { get; set; }
-        public int PropertyId { get; set; }
+        public long Id { get; set; }
+        public long PropertyId { get; set; }
 
         public string PropertyName { get; set; }
 
