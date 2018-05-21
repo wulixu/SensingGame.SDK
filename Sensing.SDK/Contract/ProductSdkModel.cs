@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sensing.SDK.Contract
 {
- public class ProductSdkModel
+    public class ProductSdkModel
     {
         public long Id { get; set; }
         public string ItemId { get; set; }
