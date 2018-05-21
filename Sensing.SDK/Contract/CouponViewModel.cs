@@ -8,6 +8,7 @@ namespace Sensing.SDK.Contract
 {
     public class CouponViewModel
     {
+        public long Id { get; set; }
         public int TenantId { get; set; }
 
         public long? OrganizationUnitId { get; set; }
