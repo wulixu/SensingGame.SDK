@@ -13,11 +13,11 @@ namespace Sensing.SDK
         /// Get all the things.
         /// </summary>
         private const string TagBaseUrl = "SensingDevice";
-        private const string GetTagsQuery = TagBaseUrl + "/Tags";
+        private const string GetTagsQuery = TagBaseUrl + "/GetTags";
 
-        public async Task<PagedResultDto<TagSdkModel>> GetTags(int page = 1,int maxCount=300)
+        public async Task<PagedResultDto<TagSdkModel>> GetTags(int skipCount = 0,int maxCount=300)
         {
-            var absolutePath = $"{ServiceHost}/{GetTagsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
+            var absolutePath = $"{ServiceHost}/{GetTagsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<TagSdkModel>>>(HttpMethod.Get, absolutePath, null);

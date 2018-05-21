@@ -13,11 +13,11 @@ namespace Sensing.SDK
         /// Get all the things.
         /// </summary>
         private const string StaffBaseUrl = "SensingDevice";
-        private const string GetStaffsQuery = StaffBaseUrl + "/Staffs";
+        private const string GetStaffsQuery = StaffBaseUrl + "/GetStaffs";
 
-        public async Task<PagedResultDto<StaffSdkModel>> GetStaffs(int page = 1,int maxCount=300)
+        public async Task<PagedResultDto<StaffSdkModel>> GetStaffs(int skipCount = 0,int maxCount=300)
         {
-            var absolutePath = $"{ServiceHost}/{GetStaffsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={page}";
+            var absolutePath = $"{ServiceHost}/{GetStaffsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<StaffSdkModel>>>(HttpMethod.Get, absolutePath, null);

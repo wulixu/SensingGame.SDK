@@ -35,7 +35,7 @@ namespace AppPod.DataAccess.Models
 
         public bool IsSuccessed { get; set; }
 
-        public OnlineStore OnlineTrafficTarget { get; set; }
+        public string OnlineTrafficTarget { get; set; }
 
         public string OS { get; set; }
     }

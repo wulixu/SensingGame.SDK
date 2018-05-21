@@ -47,9 +47,10 @@ namespace Sensing.SDK.Contract
         public string SubKey { get; set; }
         public string OS { get; set; }
         public string OnlineTrafficTarget { get; set; }
-
         public string TenantName { get; set; }
+        public int TenantId { get; set; }
         public string OrganizationUnitName { get; set; }
+        public int OrganizationUnitId { get; set; }
     }
 
     public class DeviceSdkLoginViewModel

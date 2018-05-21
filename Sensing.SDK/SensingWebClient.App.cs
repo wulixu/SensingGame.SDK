@@ -14,14 +14,14 @@ namespace Sensing.SDK
         /// Get all the things.
         /// </summary>
         private const string AppBaseUrl = "SensingDevice";
-        private const string GetAppsQuery = AppBaseUrl + "/Apps";
+        private const string GetAppsQuery = AppBaseUrl + "/GetApps";
 
-        public async Task<List<DeviceSoftwareSdkModel>> GetApps()
+        public async Task<PagedResultDto<DeviceSoftwareSdkModel>> GetApps(int skipCount = 0, int maxCount = 300)
         {
-            var absolutePath = $"{ServiceHost}/{GetAppsQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{ServiceHost}/{GetAppsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
-                var webResult = await SendRequestAsync<string, AjaxResponse<List<DeviceSoftwareSdkModel>>>(HttpMethod.Get, absolutePath,null);
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<DeviceSoftwareSdkModel>>>(HttpMethod.Get, absolutePath,null);
                 if(webResult.Success)
                 {
                     return webResult.Result;

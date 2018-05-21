@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sensing.SDK</RootNamespace>
     <AssemblyName>Sensing.SDK</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -60,6 +60,7 @@
     <Compile Include="ClientError.cs" />
     <Compile Include="ClientException.cs" />
     <Compile Include="Contract\AdsSdkModel.cs" />
+    <Compile Include="Contract\BehaviorRecord.cs" />
     <Compile Include="Contract\CouponViewModel.cs" />
     <Compile Include="Contract\DeviceHeartBeatInput.cs" />
     <Compile Include="Contract\DeviceSdkModel.cs" />

@@ -12,22 +12,22 @@ namespace Sensing.SDK
         /// <summary>
         /// The qrcode4login.
         /// </summary>
-        private const string PostBehaviorQuery = "/Behavior";
+        private const string PostBehaviorQuery = "/BehaviorRecords/PostRecord";
 
-        //public async Task<bool> PostBehaviorRecordsAsync(IEnumerable<BehaviorRecord> records)
-        //{
-        //    var absolutePath = $"{ServiceHost}/{PostBehaviorQuery}?{GetBasicNameValuesQueryString()}";
-        //    try
-        //    {
-        //        var successed = await SendRequestAsync<IEnumerable<BehaviorRecord>, bool>(HttpMethod.Post, absolutePath, records);
-        //        return successed;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //logger.Error("PostBehaviorRecordsAsync", ex);
-        //        Console.WriteLine("PostBehaviorRecordsAsync:" + ex.InnerException);
-        //    }
-        //    return false;
-        //}
+        public async Task<bool> PostBehaviorRecordsAsync(IEnumerable<BehaviorRecord> records)
+        {
+            var absolutePath = $"{ServiceHost}/{PostBehaviorQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var result = await SendRequestAsync<IEnumerable<BehaviorRecord>, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, records);
+                return result.Success;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("PostBehaviorRecordsAsync:" + ex.InnerException);
+            }
+            return false;
+        }
     }
 }

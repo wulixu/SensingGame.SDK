@@ -17,11 +17,11 @@ namespace Sensing.SDK
         private const string RegisterDeviceQuery = DeviceBaseUrl + "/RegisterDevice";
         private const string DeviceHeartBeatQuery = DeviceBaseUrl + "/DeviceHeartBeat";
 
-        private const string GroupInfoQuery = DeviceBaseUrl + "/GroupInfo";
-        private const string DeviceInfoQuery = DeviceBaseUrl + "/DeviceInfo";
+        private const string GroupInfoQuery = DeviceBaseUrl + "/GetTenantAndOrganizationUnitInfo";
+        private const string DeviceInfoQuery = DeviceBaseUrl + "/GetDeviceInfo";
         private const string LoginInfoQuery = DeviceBaseUrl + "/Login";
 
-        public async Task<DeviceOutput> RegisterDeviceAsyn(RegisterDeviceInput device)
+        public async Task<AjaxResponse<DeviceOutput>> RegisterDeviceAsyn(RegisterDeviceInput device)
         {
             var absolutePath = $"{ServiceHost}/{RegisterDeviceQuery}?{GetBasicNameValuesQueryString()}";
             try
@@ -29,7 +29,7 @@ namespace Sensing.SDK
                 var pagedList = await SendRequestAsync<RegisterDeviceInput, AjaxResponse<DeviceOutput>>(HttpMethod.Post, absolutePath, device);
                 if(pagedList.Success)
                 {
-                    return pagedList.Result;
+                    return pagedList;
                 }
             }
             catch (Exception ex)
@@ -60,13 +60,13 @@ namespace Sensing.SDK
             return false;
         }
 
-        public async Task<DeviceOutput> GetDeviceInfo()
+        public async Task<AjaxResponse<DeviceOutput>> GetDeviceInfo()
         {
             var absolutePath = $"{ServiceHost}/{DeviceInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var pagedList = await SendRequestAsync<string, AjaxResponse<DeviceOutput>>(HttpMethod.Get, absolutePath, null);
-                return pagedList.Result;
+                return pagedList;
             }
             catch (Exception ex)
             {

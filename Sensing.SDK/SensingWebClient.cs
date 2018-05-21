@@ -21,9 +21,10 @@ namespace Sensing.SDK
         //public const string ServerBase = "http://localhost:33227/";
         //public const string ServerBase = "http://139.224.15.28:142/";
         //public const string ServerBase = "http://behavior.troncell.com/";
-        public readonly static string ServerBase = "http://store.troncell.com/";
+        public readonly static string ServerBase = "http://139.224.15.28:881/";
         public readonly static string SignalRPath = ServerBase + "signalr";
-        private readonly static string ServiceHost = ServerBase + "api/v1";
+        public readonly static string Api_Relative_Path = "api/services/app/";
+        private readonly static string ServiceHost = ServerBase + Api_Relative_Path;
 
         #region Inner Keys.
         /// <summary>
@@ -65,7 +66,7 @@ namespace Sensing.SDK
             if(!string.IsNullOrEmpty(url))
             {
                 ServerBase = url;
-                ServiceHost = ServerBase + "api/v1";
+                ServiceHost = ServerBase + Api_Relative_Path;
             }
         }
 

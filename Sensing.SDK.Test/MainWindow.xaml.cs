@@ -60,10 +60,10 @@ namespace Sensing.SDK.Test
         {
             ThingMsg.Text = "loading..." + Environment.NewLine;
             var data = await _sensingWebClient.GetProducts();
-            if(data != null && data.Data != null)
+            if(data != null && data.Items != null)
             {
-                ThingMsg.Text = "Successfully" + Environment.NewLine;
-                ThingMsg.Text += $"Thing Count {data.Data.Count()}" + Environment.NewLine;
+                ThingMsg.Text = "Thing Successfully" + Environment.NewLine;
+                ThingMsg.Text += $"Total Count = {data.TotalCount}, Current Count {data.Items.Count()}" + Environment.NewLine;
             }
             else
             {
@@ -77,8 +77,8 @@ namespace Sensing.SDK.Test
             var data = await _sensingWebClient.GetProductCategories();
             if (data != null)
             {
-                ThingMsg.Text = "Successfully" + Environment.NewLine;
-                ThingMsg.Text += $"Categories Count {data.Count()}" + Environment.NewLine;
+                ThingMsg.Text = "Categories Successfully" + Environment.NewLine;
+                ThingMsg.Text += $"Total Count = {data.TotalCount}, Current Count {data.Items.Count()}" + Environment.NewLine;
             }
             else
             {
@@ -93,8 +93,8 @@ namespace Sensing.SDK.Test
             var data = await _sensingWebClient.GetCoupons();
             if (data != null)
             {
-                CouponMsg.Text = "Successfully" + Environment.NewLine;
-                CouponMsg.Text += $"Coupon Count {data.Data.Count()}" + Environment.NewLine;
+                CouponMsg.Text = "Coupon Successfully" + Environment.NewLine;
+                CouponMsg.Text += $"Total Count = {data.TotalCount}, Current Count {data.Items.Count()}" + Environment.NewLine;
             }
             else
             {
@@ -107,8 +107,8 @@ namespace Sensing.SDK.Test
             var data = await _sensingWebClient.GetAds();
             if (data != null)
             {
-                AdsMessage.Text = "Successfully" + Environment.NewLine;
-                AdsMessage.Text += $"Ads Count {data.Data.Count()}" + Environment.NewLine;
+                AdsMessage.Text = "Ads Successfully" + Environment.NewLine;
+                AdsMessage.Text += $"Total Count = {data.TotalCount}, Current Count {data.Items.Count()}" + Environment.NewLine;
             }
             else
             {
@@ -126,8 +126,8 @@ namespace Sensing.SDK.Test
             var data = await _sensingWebClient.GetLikeInfos();
             if (data != null)
             {
-                LikeMsg.Text = "Successfully" + Environment.NewLine;
-                LikeMsg.Text += $"Likes Count {data.Data.Count()}" + Environment.NewLine;
+                LikeMsg.Text = "Likes Successfully" + Environment.NewLine;
+                LikeMsg.Text += $"Total Count = {data.TotalCount}, Current Count {data.Items.Count()}" + Environment.NewLine;
             }
             else
             {
@@ -140,8 +140,8 @@ namespace Sensing.SDK.Test
             var data = await _sensingWebClient.GetMatchInfos();
             if (data != null)
             {
-                MatchMsg.Text = "Successfully" + Environment.NewLine;
-                MatchMsg.Text += $"Matches Count {data.Data.Count()}" + Environment.NewLine;
+                MatchMsg.Text = "Match Successfully" + Environment.NewLine;
+                MatchMsg.Text += $"Total Count = {data.TotalCount}, Current Count {data.Items.Count()}" + Environment.NewLine;
             }
             else
             {
