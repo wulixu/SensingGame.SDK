@@ -23,6 +23,8 @@ namespace AppPod.DataAccess.Models
         public string TagIconUrl { get; set; }
         public string Keyword { get; set; }
         //public string QrcodeUrl { get; set; }
+        public int OrderNumber { get; set; }
+        public List<int> Tags { get; set; }
         public ProductSdkModel Product { get; set; }
     }
 }

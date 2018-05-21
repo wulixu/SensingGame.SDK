@@ -77,5 +77,19 @@ namespace AppPod.DataAccess
         List<ProductCategorySDKModel> ReadCategorys();
         List<TagSdkModel> ReadTags();
         List<StaffSdkModel> ReadStaffs();
+        /// <summary>
+        /// 获取一级分类
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ProductCategorySDKModel> GetRootCategories();
+
+        /// <summary>
+        /// 根据父分类id获取子分类
+        /// </summary>
+        /// <param name="parentCategoryId"></param>
+        /// <returns></returns>
+        IEnumerable<ProductCategorySDKModel> GetChildrenCategory(int parentCategoryId);
+
+        Task<List<ProductCommentModel>> GetProductComments(long productId);
     }
 }
