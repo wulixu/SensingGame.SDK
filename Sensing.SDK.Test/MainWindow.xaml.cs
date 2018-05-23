@@ -3,6 +3,7 @@ using Sensing.SDK.Contract;
 using SensingSite.ClientSDK.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -142,6 +143,29 @@ namespace Sensing.SDK.Test
             {
                 MatchMsg.Text = "Match Successfully" + Environment.NewLine;
                 MatchMsg.Text += $"Total Count = {data.TotalCount}, Current Count {data.Items.Count()}" + Environment.NewLine;
+            }
+            else
+            {
+                MatchMsg.Text = "failed" + Environment.NewLine;
+            }
+        }
+
+        private async void GoodsByFacesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var faces = new FacesRecommendGoodsInput();
+            var face = new FaceImage();
+            var fileName = genderCBox.SelectedIndex == 0 ? "face-m.jpg" : "face-f.jpg";
+            var faceImagePath = System.IO.Path.Combine(Environment.CurrentDirectory, fileName);
+
+            var bytes = File.ReadAllBytes(faceImagePath);
+            face.Image = bytes;
+            face.Type = "head";
+            faces.Faces = new FaceImage[] { face };
+            var data = await _sensingWebClient.GetRecommendedGoodsByFaces(faces);
+            if (data != null)
+            {
+                MatchMsg.Text = "Match Successfully" + Environment.NewLine;
+                MatchMsg.Text += data;
             }
             else
             {
