@@ -13,20 +13,20 @@ namespace Sensing.SDK
         /// Get all the things.
         /// </summary>
         private const string FaceBaseUrl = "SensingDevice";
-        private const string GetGoodsByFacesQuery = FaceBaseUrl + "/GetRecommendedGoodsByFaces";
+        private const string GetGoodsByFacesQuery = FaceBaseUrl + "/GetRecommendsByFaces";
 
-        public async Task<string> GetRecommendedGoodsByFaces(FacesRecommendGoodsInput input)
+        public async Task<FaceRecommnedsOutput> GetRecommendsByFaces(FacesRecommendsInput input)
         {
             input.Subkey = _subKey;
             var absolutePath = $"{ServiceHost}/{GetGoodsByFacesQuery}";
             try
             {
-                var webResult = await SendRequestAsync<FacesRecommendGoodsInput, AjaxResponse<string>>(HttpMethod.Post, absolutePath, input);
+                var webResult = await SendRequestAsync<FacesRecommendsInput, AjaxResponse<FaceRecommnedsOutput>>(HttpMethod.Post, absolutePath, input);
                 return webResult.Result;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetRecommendedGoodsByFaces:" + ex.InnerException);
+                Console.WriteLine("GetRecommendsByFaces:" + ex.InnerException);
             }
             return null;
         }

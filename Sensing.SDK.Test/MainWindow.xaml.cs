@@ -152,7 +152,7 @@ namespace Sensing.SDK.Test
 
         private async void GoodsByFacesBtn_Click(object sender, RoutedEventArgs e)
         {
-            var faces = new FacesRecommendGoodsInput();
+            var faces = new FacesRecommendsInput();
             var face = new FaceImage();
             var fileName = genderCBox.SelectedIndex == 0 ? "face-m.jpg" : "face-f.jpg";
             var faceImagePath = System.IO.Path.Combine(Environment.CurrentDirectory, fileName);
@@ -161,7 +161,7 @@ namespace Sensing.SDK.Test
             face.Image = bytes;
             face.Type = "head";
             faces.Faces = new FaceImage[] { face };
-            var data = await _sensingWebClient.GetRecommendedGoodsByFaces(faces);
+            var data = await _sensingWebClient.GetRecommendsByFaces(faces);
             if (data != null)
             {
                 MatchMsg.Text = "Match Successfully" + Environment.NewLine;
