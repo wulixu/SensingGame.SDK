@@ -60,7 +60,7 @@ namespace Sensing.SDK
 
         static SensingWebClient()
         {
-            s_httpClient.Timeout = TimeSpan.FromSeconds(60);
+            s_httpClient.Timeout = TimeSpan.FromMinutes(5);
             var appConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
             var url = appConfig.AppSettings?.Settings["CloudServerUrl"]?.Value;
             if(!string.IsNullOrEmpty(url))
