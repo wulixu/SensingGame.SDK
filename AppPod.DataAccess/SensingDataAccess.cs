@@ -39,6 +39,27 @@ namespace AppPod.DataAccess
             AppPodDataDirectory = appPodDataDirectory;
         }
 
+        /// <summary>
+        /// 获取一级分类
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ProductCategorySDKModel> GetRootCategories()
+        {
+            var roots = PCategories.Where(p => p.ParentCategoryId == 0 || p.ParentCategoryId == p.Id);
+            return roots.ToList();
+        }
+
+        /// <summary>
+        /// 根据父分类id获取子分类
+        /// </summary>
+        /// <param name="parentCategoryId"></param>
+        /// <returns></returns>
+        public IEnumerable<ProductCategorySDKModel> GetChildrenCategory(int parentCategoryId)
+        {
+            var children = PCategories.Where(p => p.ParentCategoryId == parentCategoryId && p.ParentCategoryId != p.Id);
+            return children.ToList();
+        }
+
         public string GetQrcode(ShowProductInfo showProductInfo, string staffId)
         {
             if (showProductInfo == null) return null;
@@ -854,6 +875,7 @@ namespace AppPod.DataAccess
         public List<LikeInfoViewModel> Likes { get; set; }
 
         public List<PropertyViewModel> Properties { get; set; }
+        public List<ProductCommentModel> ProductComments { get; set; }
 
 
         #region Read Data from Local Json.
@@ -989,11 +1011,49 @@ namespace AppPod.DataAccess
             Tags = ReadTags();
             Products = ReadProducts();
             PCategories = ReadCategorys();
+            BuildCategoryPaths();
             Coupons = ReadCoupons();
             Matches = ReadProductMatches();
             Likes = ReadProductLikes();
             Properties = ReadProperties();
+            ProductComments = ReadProductComments();
             return true;
+        }
+
+        public List<ProductCommentModel> ReadProductComments()
+        {
+            var path = $"{AppPodDataDirectory}/Products/ProductComments.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+
+            var properties = JsonConvert.DeserializeObject<List<ProductCommentModel>>(json);
+            return properties;
+        }
+
+        public void BuildCategoryPaths()
+        {
+            //读取根分类
+            var roots = GetRootCategories();
+            Queue<ProductCategorySDKModel> queue = new Queue<ProductCategorySDKModel>();
+            foreach (var root in roots)
+            {
+                root.Paths = new List<int> { root.Id };
+                queue.Enqueue(root);
+            }
+            //使用队列从根分类逐级读取子分类
+            while (queue.Count > 0)
+            {
+                var catetory = queue.Dequeue();
+                var children = PCategories.Where(p => p.ParentCategoryId == catetory.Id && p.ParentCategoryId != p.Id);
+                foreach (var child in children)
+                {
+                    //设置子分类到根目录的路径
+                    child.Paths = new List<int>();
+                    child.Paths.AddRange(catetory.Paths);
+                    child.Paths.Add(child.Id);
+                    queue.Enqueue(child);
+                }
+            }
         }
 
         public List<ShowProductInfo> DistinctShowProducts(ProductSdkModel prod, long exceptSkuId = -1)
@@ -1242,6 +1302,15 @@ namespace AppPod.DataAccess
         public List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string, string> keyValues)
         {
             return null;
+        }
+
+        public async Task<List<ProductCommentModel>> GetProductComments(long productId)
+        {
+            if (ProductComments == null)
+                return new List<ProductCommentModel>();
+            return await Task.Factory.StartNew(() => {
+                return ProductComments.Where(p => p.ProductId == productId).ToList();
+            });
         }
     }
 }

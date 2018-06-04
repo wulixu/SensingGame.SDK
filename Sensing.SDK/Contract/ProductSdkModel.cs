@@ -89,6 +89,7 @@ namespace Sensing.SDK.Contract
         public string RfidCode { get; set; }
 
         public double? Price2 { get; set; }
+        public string Desc { get; set; }
     }
 
     public class ProductDecideImageViewModel
