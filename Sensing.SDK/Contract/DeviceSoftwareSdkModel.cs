@@ -23,8 +23,8 @@ namespace Sensing.SDK.Contract
         public string Description { get; set; }
         public string Language { get; set; }
         public string ExePath { get; set; }
-
-
+        public string ExtensionData { get; set; }
+        public string Alias { get; set; }
 
     }
 }
