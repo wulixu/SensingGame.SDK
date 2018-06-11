@@ -15,11 +15,10 @@ namespace Sensing.SDK
         private const string ThingBaseUrl = "SensingDevice";
         private const string GetProductsQuery = ThingBaseUrl + "/GetProducts";
 
-
+        private const string GetBrandsQuery = ThingBaseUrl + "/GetBrands";
         private const string GetTCategoriesQuery = ThingBaseUrl + "/GetProductCategories";
         private const string GetMatchesQuery = ThingBaseUrl + "/GetMatchInfos";
         private const string GetLikesQuery = ThingBaseUrl + "/GetLikeInfos";
-
         private const string GetCommentsQuery = ThingBaseUrl + "/GetProductComments";
 
         private const string MaxResultCount = "MaxResultCount";
@@ -104,6 +103,21 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 Console.WriteLine("GetProductComments:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<BrandDto>> GetBrands(int skipCount =0, int maxCount = 100)
+        {
+            var absolutePath = $"{ServiceHost}/{GetBrandsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<BrandDto>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetBrands:" + ex.InnerException);
             }
             return null;
         }

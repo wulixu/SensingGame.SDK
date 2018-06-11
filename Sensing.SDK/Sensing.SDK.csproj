@@ -61,6 +61,7 @@
     <Compile Include="ClientException.cs" />
     <Compile Include="Contract\AdsSdkModel.cs" />
     <Compile Include="Contract\BehaviorRecord.cs" />
+    <Compile Include="Contract\BrandDto.cs" />
     <Compile Include="Contract\CouponViewModel.cs" />
     <Compile Include="Contract\DeviceHeartBeatInput.cs" />
     <Compile Include="Contract\DeviceSdkModel.cs" />
