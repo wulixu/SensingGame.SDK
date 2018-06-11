@@ -90,6 +90,7 @@ namespace Sensing.SDK.Contract
 
         public double? Price2 { get; set; }
         public string Desc { get; set; }
+        public long? BrandId { get; set; }
     }
 
     public class ProductDecideImageViewModel
