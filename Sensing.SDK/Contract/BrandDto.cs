@@ -50,9 +50,14 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public virtual ICollection<BrandResourceFileDto> ItemImagesOrVideos { get; set; }
     }
-
     public class BrandResourceFileDto
     {
-
+        public long Id { get; set; }
+        public string Name { get; set; }
+        public string FileUrl { get; set; }
+        public string FromType { get; set; }
+        public string ResourType { get; set; }
+        public string Content { get; set; }
+        public string Type { get; set; }
     }
 }
