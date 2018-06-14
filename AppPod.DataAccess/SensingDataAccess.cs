@@ -315,7 +315,7 @@ namespace AppPod.DataAccess
                         foreach (var pImg in prod.PropImgs)
                         {
                             var keyProps = pImg.PropertyName;
-                            var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps));
+                            var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName != null && s.PropsName.Contains(keyProps));
                             if (firstSku != null)
                             {
                                 showProducts.Add(new ShowProductInfo
