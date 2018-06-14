@@ -870,10 +870,8 @@ namespace AppPod.DataAccess
         public List<ProductSdkModel> Products { get; set; }
         public List<CouponViewModel> Coupons { get; set; }
         public List<ProductCategorySDKModel> PCategories { get; set; }
-
         public List<MatchInfoViewModel> Matches { get; set; }
         public List<LikeInfoViewModel> Likes { get; set; }
-
         public List<PropertyViewModel> Properties { get; set; }
         public List<ProductCommentModel> ProductComments { get; set; }
 
