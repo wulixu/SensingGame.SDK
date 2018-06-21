@@ -23,7 +23,7 @@ namespace Sensing.SDK
         //public const string ServerBase = "http://behavior.troncell.com/";
         public readonly static string ServerBase = "http://139.224.15.28:881/";
         public readonly static string SignalRPath = ServerBase + "signalr";
-        public readonly static string Api_Relative_Path = "api/services/app/";
+        public readonly static string Api_Relative_Path = "s/api/services/app/";
         private readonly static string ServiceHost = ServerBase + Api_Relative_Path;
 
         #region Inner Keys.

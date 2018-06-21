@@ -47,9 +47,21 @@ namespace Sensing.SDK.Test
             var action = ActionComboBox.SelectedValue.ToString();
             var category = ThingType.SelectedValue.ToString();
             var sku = ThingNoTB.Text;
+            var name = ThingNameTB.Text;
             var increment = int.Parse(IncrementTB.Text);
             var records = new List<BehaviorRecord>();
-            records.Add(new BehaviorRecord { Action = action,ThingId = sku, CollectTime = DateTime.Now, Increment = increment,Category = category });
+            records.Add(new BehaviorRecord
+            {
+                Action = action,
+                ThingId = sku,
+                CollectionTime = DateTime.Now,
+                CollectEndTime = DateTime.Now,
+                Increment = increment,
+                Category = category,
+                Name = name,
+                SoftwareName = SoftwareNameTB.Text,
+                PageName = PageNameTB.Text
+            });
             var result = await _sensingWebClient.PostBehaviorRecordsAsync(records);
             BMessage.Text += result + Environment.NewLine;
         }
@@ -171,6 +183,20 @@ namespace Sensing.SDK.Test
             {
                 MatchMsg.Text = "failed" + Environment.NewLine;
             }
+        }
+
+        private async void DeviceStatus_Click(object sender, RoutedEventArgs e)
+        {
+            var records = new List<DeviceStatusInput>();
+            records.Add(new DeviceStatusInput
+            {
+                StartTime = DateTime.Now.Subtract(TimeSpan.FromMinutes(5)),
+                EndTime = DateTime.Now,
+                Memory = 0.5,
+                Cpu = 0.5
+            });
+            var result = await _sensingWebClient.PostDeviceStatusRecordAsync(records);
+            BMessage.Text += result + Environment.NewLine;
         }
     }
 }
