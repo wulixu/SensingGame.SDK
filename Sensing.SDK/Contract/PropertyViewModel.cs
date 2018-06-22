@@ -22,10 +22,6 @@ namespace Sensing.SDK.Contract
     public class PropertyValueViewModel
     {
         public long Id { get; set; }
-        public long PropertyId { get; set; }
-
-        public string PropertyName { get; set; }
-
         public string Value { get; set; }
         public string Description { get; set; }
         public string DefaultImage { get; set; }
