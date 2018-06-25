@@ -67,7 +67,7 @@ namespace Sensing.SDK.Contract
         public long[] TagIds { get; set; }
         public IEnumerable<SkuSdkModel> Skus { get; set; }
 
-        public IEnumerable<ProductFileSdkModel> ItemImagesOrVideos { get; set; }
+        public IEnumerable<EntityFileSdkModel> ItemImagesOrVideos { get; set; }
 
         public IEnumerable<OnlineStoreInfoViewModel> OnlineStoreInfos { get; set; }
 
@@ -177,17 +177,19 @@ namespace Sensing.SDK.Contract
         public string RfidCode { get; set; }
 
         public double? Price2 { get; set; }
+
+        public IEnumerable<EntityFileSdkModel> ItemImagesOrVideos { get; set; }
     }
 
-    public class ProductFileSdkModel
+    public class EntityFileSdkModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string FileUrl { get; set; }
         public string FromType { get; set; }
-        public string ResourType { get; set; }
-        public string Content { get; set; }
         public string Type { get; set; }
+        public string Content { get; set; }
+        public string Usage { get; set; }
     }
 
     public class OnlineStoreInfoViewModel

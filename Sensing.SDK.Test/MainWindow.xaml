@@ -54,6 +54,7 @@
                     <TextBox x:Name="SoftwareNameTB" HorizontalAlignment="Left" Height="23" Margin="120,188,0,0" TextWrapping="Wrap" Text="" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="167"/>
                     <Label x:Name="label_Copy10" Content="PageName :" HorizontalAlignment="Left" Margin="320,185,0,0" VerticalAlignment="Top" Width="74"/>
                     <TextBox x:Name="PageNameTB" HorizontalAlignment="Left" Height="23" Margin="399,188,0,0" TextWrapping="Wrap" Text="" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="167"/>
+                    <Button x:Name="DeviceInfoBtn" Background="Green" Foreground="White" Content="设备信息" HorizontalAlignment="Left" Margin="491,223,0,0" VerticalAlignment="Top" Width="148" Height="27" Click="DeviceInfoBtn_Click"/>
 
                 </Grid>
             </TabItem>

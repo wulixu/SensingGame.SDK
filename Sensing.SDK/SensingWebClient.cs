@@ -68,7 +68,8 @@ namespace Sensing.SDK
             if(!string.IsNullOrEmpty(url))
             {
                 ServerBase = url;
-                MainServiceApiHost = ServerBase + Api_Relative_Path;
+                MainServiceApiHost = ServerBase + MainServiceRelativePath + Api_Relative_Path;
+                MainServiceHost = ServerBase + MainServiceRelativePath;
             }
         }
 

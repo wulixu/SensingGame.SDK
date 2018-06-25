@@ -1,4 +1,5 @@
-﻿using Sensing.SDK;
+﻿using Newtonsoft.Json;
+using Sensing.SDK;
 using Sensing.SDK.Contract;
 using SensingSite.ClientSDK.Common;
 using System;
@@ -197,6 +198,20 @@ namespace Sensing.SDK.Test
             });
             var result = await _sensingWebClient.PostDeviceStatusRecordAsync(records);
             BMessage.Text += result + Environment.NewLine;
+        }
+
+        private async void DeviceInfoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var data = await _sensingWebClient.GetDeviceInfo();
+            if (data != null)
+            {
+                BMessage.Text = "Match Successfully" + Environment.NewLine;
+                BMessage.Text += JsonConvert.SerializeObject(data.Result);
+            }
+            else
+            {
+                BMessage.Text = "failed" + Environment.NewLine;
+            }
         }
     }
 }
