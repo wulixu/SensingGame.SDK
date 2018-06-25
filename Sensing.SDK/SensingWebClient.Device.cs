@@ -23,7 +23,7 @@ namespace Sensing.SDK
 
         public async Task<AjaxResponse<DeviceOutput>> RegisterDeviceAsyn(RegisterDeviceInput device)
         {
-            var absolutePath = $"{ServiceHost}/{RegisterDeviceQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{MainServiceApiHost}/{RegisterDeviceQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var pagedList = await SendRequestAsync<RegisterDeviceInput, AjaxResponse<DeviceOutput>>(HttpMethod.Post, absolutePath, device);
@@ -42,7 +42,7 @@ namespace Sensing.SDK
 
         public async Task<bool> DeviceHeartBeatAsync(DeviceHeartBeatInput device)
         {
-            var absolutePath = $"{ServiceHost}/{DeviceHeartBeatQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{MainServiceApiHost}/{DeviceHeartBeatQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var result = await SendRequestAsync<DeviceHeartBeatInput, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, device);
@@ -62,7 +62,7 @@ namespace Sensing.SDK
 
         public async Task<AjaxResponse<DeviceOutput>> GetDeviceInfo()
         {
-            var absolutePath = $"{ServiceHost}/{DeviceInfoQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{MainServiceApiHost}/{DeviceInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var pagedList = await SendRequestAsync<string, AjaxResponse<DeviceOutput>>(HttpMethod.Get, absolutePath, null);
@@ -78,7 +78,7 @@ namespace Sensing.SDK
 
         public async Task<TenantAndOrganizationUnitOutput> GetTenantAndOrganizationUnitInfo()
         {
-            var absolutePath = $"{ServiceHost}/{GroupInfoQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{MainServiceApiHost}/{GroupInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var groupResult = await SendRequestAsync<string, AjaxResponse<TenantAndOrganizationUnitOutput>>(HttpMethod.Get, absolutePath, null);
@@ -94,7 +94,7 @@ namespace Sensing.SDK
 
         public async Task<DeviceStaffLoginResultViewModel> DeviceLogin(DeviceSdkLoginViewModel loginVM)
         {
-            var absolutePath = $"{ServiceHost}/{LoginInfoQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{MainServiceApiHost}/{LoginInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var loginResult = await SendRequestAsync<string, AjaxResponse<DeviceStaffLoginResultViewModel>>(HttpMethod.Post, absolutePath, null);

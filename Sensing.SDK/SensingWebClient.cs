@@ -22,9 +22,11 @@ namespace Sensing.SDK
         //public const string ServerBase = "http://139.224.15.28:142/";
         //public const string ServerBase = "http://behavior.troncell.com/";
         public readonly static string ServerBase = "http://139.224.15.28:881/";
+        public readonly static string MainServiceRelativePath = "s/";
         public readonly static string SignalRPath = ServerBase + "signalr";
-        public readonly static string Api_Relative_Path = "s/api/services/app/";
-        private readonly static string ServiceHost = ServerBase + Api_Relative_Path;
+        public readonly static string Api_Relative_Path = "api/services/app/";
+        public readonly static string MainServiceApiHost = ServerBase + MainServiceRelativePath + Api_Relative_Path;
+        public readonly static string MainServiceHost = ServerBase + MainServiceRelativePath;
 
         #region Inner Keys.
         /// <summary>
@@ -66,7 +68,7 @@ namespace Sensing.SDK
             if(!string.IsNullOrEmpty(url))
             {
                 ServerBase = url;
-                ServiceHost = ServerBase + Api_Relative_Path;
+                MainServiceApiHost = ServerBase + Api_Relative_Path;
             }
         }
 
@@ -80,7 +82,7 @@ namespace Sensing.SDK
         #region the json client
         private async Task<TResponse> SendRequestAsync<TRequest, TResponse>(HttpMethod httpMethod, string requestUrl, TRequest requestBody)
         {
-            var request = new HttpRequestMessage(httpMethod, ServiceHost);
+            var request = new HttpRequestMessage(httpMethod, MainServiceApiHost);
             request.RequestUri = new Uri(requestUrl);
             if (requestBody != null)
             {

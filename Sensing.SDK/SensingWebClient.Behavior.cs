@@ -14,6 +14,11 @@ namespace Sensing.SDK
         /// </summary>
         private const string PostBehaviorQuery = "/BehaviorRecord/PostRecord";
         private const string PostDeviceStatusQuery = "/BehaviorRecord/PostDeviceStatusRecord";
+
+        public readonly static string DeviceBigDataServiceRelativePath = "d/";
+        public readonly static string DeviceBigDataServiceApiHost = ServerBase + DeviceBigDataServiceRelativePath + Api_Relative_Path;
+        public readonly static string DeviceBigDataServiceHost = ServerBase + DeviceBigDataServiceRelativePath;
+
         private const string DeviceBigDataPath = "d/api/services/app";
 
         public async Task<bool> PostBehaviorRecordsAsync(IEnumerable<BehaviorRecord> records)

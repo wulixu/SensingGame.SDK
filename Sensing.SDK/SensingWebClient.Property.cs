@@ -17,7 +17,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<PropertyViewModel>> GetProperties(int skipCount = 0,int maxCount=300)
         {
-            var absolutePath = $"{ServiceHost}/{GetPropertiesQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{MainServiceApiHost}/{GetPropertiesQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PropertyViewModel>>>(HttpMethod.Get, absolutePath, null);

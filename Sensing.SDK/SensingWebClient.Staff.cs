@@ -17,7 +17,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<StaffSdkModel>> GetStaffs(int skipCount = 0,int maxCount=300)
         {
-            var absolutePath = $"{ServiceHost}/{GetStaffsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{MainServiceApiHost}/{GetStaffsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<StaffSdkModel>>>(HttpMethod.Get, absolutePath, null);
