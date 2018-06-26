@@ -12,21 +12,17 @@ namespace Sensing.SDK.Contract
         public string Code { get; set; }
 
         public virtual int OrderNumber { get; set; }
-
-
-
+        
         public string Name { get; set; }
 
         /// <summary>
         /// 品牌 Logo
         /// </summary>
-
         public string LogoUrl { get; set; }
 
         /// <summary>
         /// 品牌大图
         /// </summary>
-
         public string ImageUrl { get; set; }
 
         /// <summary>
@@ -38,10 +34,7 @@ namespace Sensing.SDK.Contract
         /// <summary>
         /// 品牌主题色   16进制编码：#FFFFFF
         /// </summary>
-
         public string MainColor { get; set; }
-
-
 
         public string Description { get; set; }
 

@@ -18,7 +18,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<AdsSdkModel>> GetAds(int skipCount = 0,int maxCount=300)
         {
-            var absolutePath = $"{ServiceHost}/{GetAdsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{MainServiceApiHost}/{GetAdsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<AdsSdkModel>>>(HttpMethod.Get, absolutePath,null);

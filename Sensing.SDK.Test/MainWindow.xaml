@@ -24,18 +24,19 @@
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,103">
                     <Label x:Name="label" Content="SKU(Thing的唯一编码)：" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="155"/>
                     <TextBox x:Name="ThingNoTB" HorizontalAlignment="Left" Height="23" Margin="170,37,0,0" TextWrapping="Wrap" Text="ThingNO" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="234"/>
-                    <Label x:Name="label_Copy" Content="Action(关注Thing的行为):" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="155"/>
+                    <Label x:Name="label_Copy" Content="Action(关注Thing的行为):" HorizontalAlignment="Left" Margin="336,71,0,0" VerticalAlignment="Top" Width="155"/>
                     <Label x:Name="label_Copy1" Content="Time(关注Thing的时间):" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Width="155"/>
                     <TextBox x:Name="CollectTimeTB" HorizontalAlignment="Left" Height="23" Margin="170,114,0,0" TextWrapping="Wrap" Text="" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="234"/>
                     <Label x:Name="label_Copy2" Content="Increments(这段时间内关注的次数):" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top" Width="207"/>
                     <TextBox x:Name="IncrementTB" HorizontalAlignment="Left" Height="23" Margin="237,152,0,0" TextWrapping="Wrap" Text="" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="167"/>
-                    <Button x:Name="UploadBehaviorDataBtn" Content="上传数据" HorizontalAlignment="Left" Margin="256,209,0,0" VerticalAlignment="Top" Width="148" Click="UploadBehaviorDataBtn_Click"/>
-                    <ComboBox x:Name="ActionComboBox" HorizontalAlignment="Left" Margin="170,76,0,0" VerticalAlignment="Top" Width="234">
+                    <Button x:Name="UploadBehaviorDataBtn" Background="Green" Foreground="White" Content="上传数据" HorizontalAlignment="Left" Margin="256,223,0,0" VerticalAlignment="Top" Width="148" Click="UploadBehaviorDataBtn_Click" Height="27"/>
+                    <ComboBox x:Name="ActionComboBox" HorizontalAlignment="Left" Margin="496,75,0,0" VerticalAlignment="Top" Width="234">
                         <ComboBoxItem IsSelected="True">Click</ComboBoxItem>
                         <ComboBoxItem>Take</ComboBoxItem>
                         <ComboBoxItem>Buy</ComboBoxItem>
                         <ComboBoxItem>Scan</ComboBoxItem>
                         <ComboBoxItem>Like</ComboBoxItem>
+                        <ComboBoxItem>Entry</ComboBoxItem>
                     </ComboBox>
                     <Label x:Name="label_Copy3" Content="*不填写时，为当前机器时间" HorizontalAlignment="Left" Margin="420,113,0,0" VerticalAlignment="Top" Width="170" Background="{x:Null}" Foreground="#FFF50505"/>
                     <TextBlock x:Name="BMessage" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="29,265,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
@@ -44,8 +45,16 @@
                     <ComboBox x:Name="ThingType" HorizontalAlignment="Left" Margin="496,38,0,0" VerticalAlignment="Top" Width="152">
                         <ComboBoxItem IsSelected="True" Content="Ads"/>
                         <ComboBoxItem Content="Product"/>
+                        <ComboBoxItem Content="Sku"/>
                         <ComboBoxItem Content="App"/>
                     </ComboBox>
+                    <Label x:Name="label_Copy8" Content="SKU(Thing的名称)：" HorizontalAlignment="Left" Margin="35,71,0,0" VerticalAlignment="Top" Width="155"/>
+                    <TextBox x:Name="ThingNameTB" HorizontalAlignment="Left" Height="23" Margin="149,71,0,0" TextWrapping="Wrap" Text="ThingName" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="174"/>
+                    <Label x:Name="label_Copy9" Content="SoftwareName ：" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" Width="103"/>
+                    <TextBox x:Name="SoftwareNameTB" HorizontalAlignment="Left" Height="23" Margin="120,188,0,0" TextWrapping="Wrap" Text="" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="167"/>
+                    <Label x:Name="label_Copy10" Content="PageName :" HorizontalAlignment="Left" Margin="320,185,0,0" VerticalAlignment="Top" Width="74"/>
+                    <TextBox x:Name="PageNameTB" HorizontalAlignment="Left" Height="23" Margin="399,188,0,0" TextWrapping="Wrap" Text="" TextAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="167"/>
+                    <Button x:Name="DeviceInfoBtn" Background="Green" Foreground="White" Content="设备信息" HorizontalAlignment="Left" Margin="491,223,0,0" VerticalAlignment="Top" Width="148" Height="27" Click="DeviceInfoBtn_Click"/>
 
                 </Grid>
             </TabItem>
@@ -89,6 +98,22 @@
                     </ComboBox>
                     <Button Margin="250,29,365,499" x:Name="GoodsByFacesBtn" FontSize="20" Content="GoodsByFaces" Click="GoodsByFacesBtn_Click"/>
                     <TextBlock x:Name="GoodsByFaceTxt" Background="White" Margin="0,159,0,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="DeviceStatus">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="取当前时间之前的5分钟，传至服务器." Margin="44,46,499,501"/>
+                    <Button x:Name="DeviceStatus" Background="Green" Foreground="White" Content="Post Device Status" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="319,46,0,0" Height="26" Click="DeviceStatus_Click"/>
+                    <TextBlock x:Name="DeviceStatusMessage" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="44,111,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Metaphysics">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="获取Metaphysics,DateMetaphysics" Margin="44,46,499,501"/>
+                    <Button x:Name="MetaphysicsList" Background="Green" Foreground="White" Content="Get MetaphysicsList" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="319,46,0,0" Height="26" />
+                    <Button x:Name="DateMetaphysicsList" Background="Green" Foreground="White" Content="Get Date MetaphysicsList" HorizontalAlignment="Left" VerticalAlignment="Top" Width="158" Margin="472,46,0,0" Height="26" />
+                    <TextBlock x:Name="MetaphysicsStatusMessage" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="44,111,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -15,7 +15,7 @@ namespace Sensing.SDK.Contract
         public string ThumbnailUrl { get; set; }
         public string Tags { get; set; }
         public string ProductAttributes { get; set; }
-
+        public long[] TagIds { get; set; }
         public bool IsFromOthers { get; set; }
 
         public string AgeScope { get; set; }

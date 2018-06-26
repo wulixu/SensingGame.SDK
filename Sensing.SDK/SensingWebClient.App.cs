@@ -18,7 +18,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<DeviceSoftwareSdkModel>> GetApps(int skipCount = 0, int maxCount = 300)
         {
-            var absolutePath = $"{ServiceHost}/{GetAppsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{MainServiceApiHost}/{GetAppsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<DeviceSoftwareSdkModel>>>(HttpMethod.Get, absolutePath,null);

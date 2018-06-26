@@ -17,7 +17,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<TagSdkModel>> GetTags(int skipCount = 0,int maxCount=300)
         {
-            var absolutePath = $"{ServiceHost}/{GetTagsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{MainServiceApiHost}/{GetTagsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<TagSdkModel>>>(HttpMethod.Get, absolutePath, null);

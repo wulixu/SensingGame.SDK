@@ -66,10 +66,12 @@
     <Compile Include="Contract\DeviceHeartBeatInput.cs" />
     <Compile Include="Contract\DeviceSdkModel.cs" />
     <Compile Include="Contract\DeviceSoftwareSdkModel.cs" />
+    <Compile Include="Contract\DeviceStatusInput.cs" />
     <Compile Include="Contract\FacesRecommendGoodsInput.cs" />
     <Compile Include="Contract\GetProductSdkInput.cs" />
     <Compile Include="Contract\LikeInfoViewModel.cs" />
     <Compile Include="Contract\MatchInfoViewModel.cs" />
+    <Compile Include="Contract\MetaPhysicsDto.cs" />
     <Compile Include="Contract\ProductCategorySDKModel.cs" />
     <Compile Include="Contract\ProductSdkModel.cs" />
     <Compile Include="Contract\PropertyViewModel.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Dto\TreeDto.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SensingWebClient.Recommend.cs" />
     <Compile Include="SensingWebClient.Property.cs" />
     <Compile Include="SensingWebClient.Face.cs" />
     <Compile Include="SensingWebClient.Tags.cs" />

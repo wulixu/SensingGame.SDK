@@ -18,7 +18,7 @@ namespace Sensing.SDK
         public async Task<FaceRecommnedsOutput> GetRecommendsByFaces(FacesRecommendsInput input)
         {
             input.Subkey = _subKey;
-            var absolutePath = $"{ServiceHost}/{GetGoodsByFacesQuery}";
+            var absolutePath = $"{MainServiceApiHost}/{GetGoodsByFacesQuery}";
             try
             {
                 var webResult = await SendRequestAsync<FacesRecommendsInput, AjaxResponse<FaceRecommnedsOutput>>(HttpMethod.Post, absolutePath, input);
