@@ -71,7 +71,7 @@ namespace AppPod.DataAccess
             return $"{SensingDataAccess.AppPodDataDirectory}\\products\\res\\{localPath}";
         }
 
-        public static string GetLocalFilePath(this ProductFileSdkModel prodcutFileSdkModel)
+        public static string GetLocalFilePath(this EntityFileSdkModel prodcutFileSdkModel)
         {
             if (prodcutFileSdkModel == null || string.IsNullOrEmpty(prodcutFileSdkModel.FileUrl)) return null;
             var localPath = ExtractSchema(prodcutFileSdkModel.FileUrl);
