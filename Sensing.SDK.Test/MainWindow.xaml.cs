@@ -213,5 +213,18 @@ namespace Sensing.SDK.Test
                 BMessage.Text = "failed" + Environment.NewLine;
             }
         }
+
+        private async void MetaphysicsList_Click(object sender, RoutedEventArgs e)
+        {
+            var data = await _sensingWebClient.GetMetaphysicsList();
+            if (data != null)
+            {
+                MetaphysicsStatusMessage.Text = $"Metaphysics Successfully with count = {data.Items.Count}" + Environment.NewLine;
+            }
+            else
+            {
+                MetaphysicsStatusMessage.Text = "failed" + Environment.NewLine;
+            }
+        }
     }
 }
