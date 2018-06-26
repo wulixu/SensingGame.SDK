@@ -71,6 +71,7 @@
     <Compile Include="Contract\GetProductSdkInput.cs" />
     <Compile Include="Contract\LikeInfoViewModel.cs" />
     <Compile Include="Contract\MatchInfoViewModel.cs" />
+    <Compile Include="Contract\MetaPhysicsDto.cs" />
     <Compile Include="Contract\ProductCategorySDKModel.cs" />
     <Compile Include="Contract\ProductSdkModel.cs" />
     <Compile Include="Contract\PropertyViewModel.cs" />
