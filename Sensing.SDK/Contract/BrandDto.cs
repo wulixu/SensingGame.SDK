@@ -42,6 +42,8 @@ namespace Sensing.SDK.Contract
         /// 管理的外部资源
         /// </summary>
         public virtual ICollection<EntityFileSdkModel> ItemImagesOrVideos { get; set; }
+
+        public string Slogan { get; set; }
     }
     public class BrandResourceFileDto
     {
