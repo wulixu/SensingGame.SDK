@@ -49,6 +49,8 @@ namespace AppPod.DataAccess
         List<MatchInfoViewModel> Matches { get; set; }
         List<LikeInfoViewModel> Likes { get; set; }
         List<PropertyViewModel> Properties { get; set; }
+        List<BrandDto> Brands { get; set; }
+
 
         List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string,string> keyValues);
         List<ShowProductInfo> SearchShowProductsByName(string searchTerm);
@@ -91,5 +93,10 @@ namespace AppPod.DataAccess
         IEnumerable<ProductCategorySDKModel> GetChildrenCategory(int parentCategoryId);
 
         Task<List<ProductCommentModel>> GetProductComments(long productId);
+
+        IEnumerable<ShowProductInfo> GetBrandProducts(long brandId);
+        IEnumerable<ProductCategorySDKModel> GetBrandCategories(long brandId);
+
+        IEnumerable<ShowProductInfo> QueryProducts(long brandId, int categoryId);
     }
 }

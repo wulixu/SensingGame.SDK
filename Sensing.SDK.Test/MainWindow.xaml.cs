@@ -74,6 +74,7 @@ namespace Sensing.SDK.Test
         {
             ThingMsg.Text = "loading..." + Environment.NewLine;
             var data = await _sensingWebClient.GetProducts();
+            var brand = await _sensingWebClient.GetBrands();
             if(data != null && data.Items != null)
             {
                 ThingMsg.Text = "Thing Successfully" + Environment.NewLine;

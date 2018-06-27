@@ -60,6 +60,7 @@ namespace AppPod.DataAccess
             return children.ToList();
         }
 
+
         public string GetQrcode(ShowProductInfo showProductInfo, string staffId)
         {
             if (showProductInfo == null) return null;
@@ -354,6 +355,9 @@ namespace AppPod.DataAccess
                     }
                 }
                 mShowProducts = showProducts;
+                mShowProducts.ForEach(p => {
+                    p.BrandName = Brands.FirstOrDefault(b => b.Id == p.Product.BrandId)?.Name;
+                });
                 return showProducts;
             }
         }
@@ -874,7 +878,7 @@ namespace AppPod.DataAccess
         public List<LikeInfoViewModel> Likes { get; set; }
         public List<PropertyViewModel> Properties { get; set; }
         public List<ProductCommentModel> ProductComments { get; set; }
-
+        public List<BrandDto> Brands { get; set; }
 
         #region Read Data from Local Json.
         public List<AdsSdkModel> ReadAds()
@@ -1015,6 +1019,7 @@ namespace AppPod.DataAccess
             Likes = ReadProductLikes();
             Properties = ReadProperties();
             ProductComments = ReadProductComments();
+            Brands = ReadBrands();
             return true;
         }
 
@@ -1026,6 +1031,23 @@ namespace AppPod.DataAccess
 
             var properties = JsonConvert.DeserializeObject<List<ProductCommentModel>>(json);
             return properties;
+        }
+
+        public List<BrandDto> ReadBrands()
+        {
+            var path = $"{AppPodDataDirectory}/Products/Brands.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+
+            var brands = JsonConvert.DeserializeObject<List<BrandDto>>(json);
+            brands.ForEach(b => {
+                b.LogoUrl = GetLocalImagePath(b.LogoUrl, "Products");
+                b.ImageUrl = GetLocalImagePath(b.ImageUrl, "Products");
+                b.ItemImagesOrVideos.ForEach(item => {
+                    item.FileUrl = GetLocalImagePath(item.FileUrl, "Products");
+                });
+            });
+            return brands;
         }
 
         public void BuildCategoryPaths()
@@ -1309,6 +1331,26 @@ namespace AppPod.DataAccess
             return await Task.Factory.StartNew(() => {
                 return ProductComments.Where(p => p.ProductId == productId).ToList();
             });
+        }
+
+        public IEnumerable<ShowProductInfo> GetBrandProducts(long brandId)
+        {
+            if (mShowProducts == null)
+                mShowProducts = QueryShowProducts(false);
+            return mShowProducts.Where(p => p.Product.BrandId.Value == brandId);
+        }
+
+       public IEnumerable<ProductCategorySDKModel> GetBrandCategories(long brandId)
+        {
+            //获取品牌的所有商品
+            var categorys = Products.Where(p => p.BrandId == brandId).SelectMany(b => b.CategoryIds).Distinct();
+            //过滤掉根分类
+            return PCategories.Where(category => categorys.Any(id => id == category.Id) && category.ParentCategoryId != 0 &&  category.ParentCategoryId == category.Id);
+        }
+
+        public IEnumerable<ShowProductInfo> QueryProducts(long brandId, int categoryId)
+        {
+            return mShowProducts.Where(p => p.Product.CategoryIds.Any(c => c == categoryId));
         }
     }
 }
