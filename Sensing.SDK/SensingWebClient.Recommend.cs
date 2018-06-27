@@ -21,39 +21,39 @@ namespace Sensing.SDK
 
         private const string RecommendPath = "r/api/services/app";
 
-        public async Task<bool> GetDateMetaPhysics(IEnumerable<BehaviorRecord> records)
+        public async Task<PagedResultDto<DateMetaphysicsDto>> GetDateMetaPhysics(long? typeId)
         {
             //api/services/app/BehaviorRecord/PostRecord
-            var absolutePath = $"{ServerBase}{RecommendPath}{GetDateMetaPhysicsQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{ServerBase}{RecommendPath}{GetDateMetaPhysicsQuery}?{GetBasicNameValuesQueryString()}&typeId={typeId}";
             try
             {
-                var result = await SendRequestAsync<IEnumerable<BehaviorRecord>, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, records);
-                return result.Success;
+                var result = await SendRequestAsync<string, AjaxResponse<PagedResultDto<DateMetaphysicsDto>>>(HttpMethod.Get, absolutePath, null);
+                return result.Result;
             }
             catch (Exception ex)
             {
                 //logger.Error("PostBehaviorRecordsAsync", ex);
                 Console.WriteLine("PostBehaviorRecordsAsync:" + ex.InnerException);
             }
-            return false;
+            return null;
         }
 
 
-        public async Task<bool> GetMetaphysicsList(long? typeId)
+        public async Task<PagedResultDto<MetaPhysicsDto>> GetMetaphysicsList(long? typeId = null)
         {
             //api/services/app/BehaviorRecord/PostRecord
             var absolutePath = $"{ServerBase}{RecommendPath}{GetMetaphysicsListQuery}?{GetBasicNameValuesQueryString()}&typeId={typeId}";
             try
             {
-                var result = await SendRequestAsync<IEnumerable<BehaviorRecord>, AjaxResponse<bool>>(HttpMethod.Get, absolutePath, null);
-                return result.Success;
+                var result = await SendRequestAsync<string, AjaxResponse<PagedResultDto<MetaPhysicsDto>>>(HttpMethod.Get, absolutePath, null);
+                return result.Result;
             }
             catch (Exception ex)
             {
                 //logger.Error("PostBehaviorRecordsAsync", ex);
                 Console.WriteLine("GetMetaphysicsList:" + ex.InnerException);
             }
-            return false;
+            return null;
         }
 
     }
