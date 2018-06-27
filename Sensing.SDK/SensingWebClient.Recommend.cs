@@ -21,10 +21,10 @@ namespace Sensing.SDK
 
         private const string RecommendPath = "r/api/services/app";
 
-        public async Task<PagedResultDto<DateMetaphysicsDto>> GetDateMetaPhysics(long? typeId)
+        public async Task<PagedResultDto<DateMetaphysicsDto>> GetDateMetaPhysics(DateTime startTime, DateTime endTime,long? typeId = null)
         {
             //api/services/app/BehaviorRecord/PostRecord
-            var absolutePath = $"{ServerBase}{RecommendPath}{GetDateMetaPhysicsQuery}?{GetBasicNameValuesQueryString()}&typeId={typeId}";
+            var absolutePath = $"{ServerBase}{RecommendPath}{GetDateMetaPhysicsQuery}?{GetBasicNameValuesQueryString()}&typeId={typeId}&startTime={startTime}&endTime={endTime}";
             try
             {
                 var result = await SendRequestAsync<string, AjaxResponse<PagedResultDto<DateMetaphysicsDto>>>(HttpMethod.Get, absolutePath, null);

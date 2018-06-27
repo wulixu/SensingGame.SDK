@@ -226,5 +226,18 @@ namespace Sensing.SDK.Test
                 MetaphysicsStatusMessage.Text = "failed" + Environment.NewLine;
             }
         }
+
+        private async void DateMetaphysicsList_Click(object sender, RoutedEventArgs e)
+        {
+            var data = await _sensingWebClient.GetDateMetaPhysics(DateTime.Now, DateTime.Now.AddDays(30));
+            if (data != null)
+            {
+                MetaphysicsStatusMessage.Text = $"GetDateMetaPhysics Successfully with count = {data.Items.Count}" + Environment.NewLine;
+            }
+            else
+            {
+                MetaphysicsStatusMessage.Text = "failed" + Environment.NewLine;
+            }
+        }
     }
 }
