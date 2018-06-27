@@ -207,7 +207,7 @@ namespace Sensing.SDK.Test
             if (data != null)
             {
                 BMessage.Text = "Match Successfully" + Environment.NewLine;
-                BMessage.Text += JsonConvert.SerializeObject(data.Result);
+                BMessage.Text += JsonConvert.SerializeObject(data);
             }
             else
             {

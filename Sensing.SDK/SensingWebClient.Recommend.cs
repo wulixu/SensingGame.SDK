@@ -21,7 +21,7 @@ namespace Sensing.SDK
 
         private const string RecommendPath = "r/api/services/app";
 
-        public async Task<PagedResultDto<DateMetaphysicsDto>> GetDateMetaPhysics(DateTime startTime, DateTime endTime,long? typeId = null)
+        public async Task<PagedResultDto<DateMetaphysicsDto>> GetDateMetaPhysics(DateTime startTime, DateTime endTime,long? typeId = null, int skipCount = 0, int maxCount = 300)
         {
             //api/services/app/BehaviorRecord/PostRecord
             var absolutePath = $"{ServerBase}{RecommendPath}{GetDateMetaPhysicsQuery}?{GetBasicNameValuesQueryString()}&typeId={typeId}&startTime={startTime}&endTime={endTime}";
@@ -39,7 +39,7 @@ namespace Sensing.SDK
         }
 
 
-        public async Task<PagedResultDto<MetaPhysicsDto>> GetMetaphysicsList(long? typeId = null)
+        public async Task<PagedResultDto<MetaPhysicsDto>> GetMetaphysicsList(long? typeId = null, int skipCount = 0, int maxCount = 300)
         {
             //api/services/app/BehaviorRecord/PostRecord
             var absolutePath = $"{ServerBase}{RecommendPath}{GetMetaphysicsListQuery}?{GetBasicNameValuesQueryString()}&typeId={typeId}";
