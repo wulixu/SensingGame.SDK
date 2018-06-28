@@ -35,6 +35,6 @@ namespace Sensing.SDK.Contract
         public bool IsSpecial { get; set; }
 
         public string FromType { get; set; }
-        public List<int> Paths { get; set; }
+        public List<int> Ids { get; set; }
     }
 }
