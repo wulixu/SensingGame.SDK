@@ -207,7 +207,7 @@ namespace Sensing.SDK.Test
             if (data != null)
             {
                 BMessage.Text = "Match Successfully" + Environment.NewLine;
-                BMessage.Text += JsonConvert.SerializeObject(data.Result);
+                BMessage.Text += JsonConvert.SerializeObject(data);
             }
             else
             {
@@ -221,6 +221,19 @@ namespace Sensing.SDK.Test
             if (data != null)
             {
                 MetaphysicsStatusMessage.Text = $"Metaphysics Successfully with count = {data.Items.Count}" + Environment.NewLine;
+            }
+            else
+            {
+                MetaphysicsStatusMessage.Text = "failed" + Environment.NewLine;
+            }
+        }
+
+        private async void DateMetaphysicsList_Click(object sender, RoutedEventArgs e)
+        {
+            var data = await _sensingWebClient.GetDateMetaPhysics(DateTime.Now, DateTime.Now.AddDays(30));
+            if (data != null)
+            {
+                MetaphysicsStatusMessage.Text = $"GetDateMetaPhysics Successfully with count = {data.Items.Count}" + Environment.NewLine;
             }
             else
             {

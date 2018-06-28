@@ -18,7 +18,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<CouponViewModel>> GetCoupons(int skipCount = 0,int maxCount=300)
         {
-            var absolutePath = $"{MainServiceApiHost}/{GetCouponsQuery}?{GetBasicNameValuesQueryString()}&pageSize={maxCount}&page={skipCount}";
+            var absolutePath = $"{MainServiceApiHost}/{GetCouponsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<CouponViewModel>>>(HttpMethod.Get, absolutePath, null);

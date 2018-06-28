@@ -112,7 +112,7 @@
                 <Grid Background="#FFE5E5E5">
                     <Label Content="获取Metaphysics,DateMetaphysics" Margin="44,46,499,501"/>
                     <Button x:Name="MetaphysicsList" Background="Green" Foreground="White" Content="Get MetaphysicsList" HorizontalAlignment="Left" VerticalAlignment="Top" Width="119" Margin="319,46,0,0" Height="26" Click="MetaphysicsList_Click" />
-                    <Button x:Name="DateMetaphysicsList" Background="Green" Foreground="White" Content="Get Date MetaphysicsList" HorizontalAlignment="Left" VerticalAlignment="Top" Width="158" Margin="472,46,0,0" Height="26" />
+                    <Button x:Name="DateMetaphysicsList" Background="Green" Foreground="White" Content="Get Date MetaphysicsList" HorizontalAlignment="Left" VerticalAlignment="Top" Width="158" Margin="472,46,0,0" Height="26" Click="DateMetaphysicsList_Click" />
                     <TextBlock x:Name="MetaphysicsStatusMessage" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="44,111,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
                 </Grid>
             </TabItem>
