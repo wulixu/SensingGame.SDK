@@ -262,6 +262,7 @@ namespace AppPod.DataAccess
                     ImageUrl = GetLocalImagePath(pModel.PicUrl, "Products"),
                     Name = pModel.Title,
                     Price = pModel.Price,
+                    ProductName = pModel.Title,
                     //QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                     Type = ProductType.Product,
                     TagIconUrl = FindTagIcon(pModel.TagIds),
@@ -285,6 +286,7 @@ namespace AppPod.DataAccess
                                 ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
                                 Name = prod.Title,
                                 Price = prod.Price,
+                                ProductName = prod.Title,
                                 Quantity = prod.Num,
                                 Type = ProductType.Product,
                                 TagIconUrl = FindTagIcon(prod.TagIds),
@@ -303,6 +305,7 @@ namespace AppPod.DataAccess
                                 ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
                                 Quantity = prod.Num,
                                 Name = prod.Title,
+                                ProductName = prod.Title,
                                 Price = prod.Price,
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 Type = ProductType.Product,
@@ -325,7 +328,8 @@ namespace AppPod.DataAccess
                                     Id = firstSku.Id,
                                     ImageUrl = GetLocalImagePath(pImg.ImageUrl, "Products"),
                                     Quantity = firstSku.Quantity,
-                                    Name = firstSku.Title,
+                                    Name = prod.Title,
+                                    ProductName = prod.Title,
                                     Price = firstSku.Price,
                                     //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                     TagIconUrl = FindTagIcon(firstSku.TagIds),
@@ -346,6 +350,7 @@ namespace AppPod.DataAccess
                                 ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
                                 Quantity = firstSku.Quantity,
                                 Name = firstSku.Title,
+                                ProductName = prod.Title,
                                 Price = firstSku.Price,
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 TagIconUrl = FindTagIcon(firstSku.TagIds),
@@ -1069,7 +1074,7 @@ namespace AppPod.DataAccess
                     if (child != null)
                     {
                         stack.Push(child);
-                        child.Ids = new List<int>();
+                        child.Ids = new List<int> { child.Id};
                         PCategories.Remove(child);
                     }
                     else
@@ -1080,7 +1085,7 @@ namespace AppPod.DataAccess
                             break;
                         topItem = stack.Peek();
                         if (topItem.Ids == null)
-                            topItem.Ids = new List<int>() { topItem.Id};
+                            topItem.Ids = new List<int>();
                         topItem.Ids.Add(popItem.Id);
                         topItem.Ids.AddRange(popItem.Ids);
                     }
