@@ -98,5 +98,14 @@ namespace AppPod.DataAccess
         IEnumerable<ProductCategorySDKModel> GetBrandCategories(long brandId);
 
         IEnumerable<ShowProductInfo> QueryProducts(long brandId, int categoryId);
+
+        #region Metas
+        List<MetaPhysicsDto> Metas { get; set; }
+        List<DateMetaphysicsDto> DateMetas { get; set; }
+
+        IEnumerable<MetaPhysicsDto> GetAllAstro();
+        DateMetaphysicsDto GetLatestLuckyByMetaId(long metaId);
+        #endregion
+
     }
 }
