@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -261,6 +262,7 @@ namespace AppPod.DataAccess
                     ImageUrl = GetLocalImagePath(pModel.PicUrl, "Products"),
                     Name = pModel.Title,
                     Price = pModel.Price,
+                    ProductName = pModel.Title,
                     //QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                     Type = ProductType.Product,
                     TagIconUrl = FindTagIcon(pModel.TagIds),
@@ -284,6 +286,7 @@ namespace AppPod.DataAccess
                                 ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
                                 Name = prod.Title,
                                 Price = prod.Price,
+                                ProductName = prod.Title,
                                 Quantity = prod.Num,
                                 Type = ProductType.Product,
                                 TagIconUrl = FindTagIcon(prod.TagIds),
@@ -302,6 +305,7 @@ namespace AppPod.DataAccess
                                 ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
                                 Quantity = prod.Num,
                                 Name = prod.Title,
+                                ProductName = prod.Title,
                                 Price = prod.Price,
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 Type = ProductType.Product,
@@ -324,7 +328,8 @@ namespace AppPod.DataAccess
                                     Id = firstSku.Id,
                                     ImageUrl = GetLocalImagePath(pImg.ImageUrl, "Products"),
                                     Quantity = firstSku.Quantity,
-                                    Name = firstSku.Title,
+                                    Name = prod.Title,
+                                    ProductName = prod.Title,
                                     Price = firstSku.Price,
                                     //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                     TagIconUrl = FindTagIcon(firstSku.TagIds),
@@ -345,6 +350,7 @@ namespace AppPod.DataAccess
                                 ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
                                 Quantity = firstSku.Quantity,
                                 Name = firstSku.Title,
+                                ProductName = prod.Title,
                                 Price = firstSku.Price,
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 TagIconUrl = FindTagIcon(firstSku.TagIds),
@@ -1080,28 +1086,41 @@ namespace AppPod.DataAccess
 
         public void BuildCategoryPaths()
         {
+           List<ProductCategorySDKModel> categoriesWithPath = new List<ProductCategorySDKModel>();
             //读取根分类
             var roots = GetRootCategories();
-            Queue<ProductCategorySDKModel> queue = new Queue<ProductCategorySDKModel>();
+            Stack<ProductCategorySDKModel> stack = new Stack<ProductCategorySDKModel>();
             foreach (var root in roots)
             {
-                root.Paths = new List<int> { root.Id };
-                queue.Enqueue(root);
-            }
-            //使用队列从根分类逐级读取子分类
-            while (queue.Count > 0)
-            {
-                var catetory = queue.Dequeue();
-                var children = PCategories.Where(p => p.ParentCategoryId == catetory.Id && p.ParentCategoryId != p.Id);
-                foreach (var child in children)
+                stack.Push(root);
+                PCategories.Remove(root);
+                //使用队列从根分类逐级读取子分类
+                while (true)
                 {
-                    //设置子分类到根目录的路径
-                    child.Paths = new List<int>();
-                    child.Paths.AddRange(catetory.Paths);
-                    child.Paths.Add(child.Id);
-                    queue.Enqueue(child);
+                    var topItem = stack.Peek();
+                    var child = PCategories.FirstOrDefault(p => p.ParentCategoryId == topItem.Id && p.ParentCategoryId != p.Id);
+                    if (child != null)
+                    {
+                        stack.Push(child);
+                        child.Ids = new List<int> { child.Id};
+                        PCategories.Remove(child);
+                    }
+                    else
+                    {
+                        var popItem = stack.Pop();
+                        categoriesWithPath.Add(popItem);
+                        if (stack.Count == 0)
+                            break;
+                        topItem = stack.Peek();
+                        if (topItem.Ids == null)
+                            topItem.Ids = new List<int>();
+                        topItem.Ids.Add(popItem.Id);
+                        topItem.Ids.AddRange(popItem.Ids);
+                    }
                 }
             }
+           
+            PCategories = categoriesWithPath;
         }
 
         public List<ShowProductInfo> DistinctShowProducts(ProductSdkModel prod, long exceptSkuId = -1)
@@ -1221,7 +1240,6 @@ namespace AppPod.DataAccess
             }
             return (null, null);
         }
-
 
         public Dictionary<string, string> GetPropertyNames(string properties)
         {
@@ -1373,12 +1391,19 @@ namespace AppPod.DataAccess
             //获取品牌的所有商品
             var categorys = Products.Where(p => p.BrandId == brandId).SelectMany(b => b.CategoryIds).Distinct();
             //过滤掉根分类
-            return PCategories.Where(category => categorys.Any(id => id == category.Id) && category.ParentCategoryId != 0 &&  category.ParentCategoryId == category.Id);
+
+            return PCategories.Where(category => categorys.Any(id => id == category.Id) && category.ParentCategoryId != 0 &&  category.ParentCategoryId != category.Id);
         }
 
         public IEnumerable<ShowProductInfo> QueryProducts(long brandId, int categoryId)
         {
-            return mShowProducts.Where(p => p.Product.CategoryIds.Any(c => c == categoryId));
+            ProductCategorySDKModel category = null;
+            if(categoryId > 0)
+            {
+                category = PCategories.FirstOrDefault(c => c.Id == categoryId);
+            }
+            return mShowProducts.Where(p => categoryId <=0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0 ))
+                                .Where(p => brandId <= 0 || p.Product.BrandId == brandId);
         }
 
         public const string AstroString = "星座,astro";
