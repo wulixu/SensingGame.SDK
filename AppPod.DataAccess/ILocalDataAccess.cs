@@ -104,7 +104,7 @@ namespace AppPod.DataAccess
         List<DateMetaphysicsDto> DateMetas { get; set; }
 
         IEnumerable<MetaPhysicsDto> GetAllAstro();
-        DateMetaphysicsDto GetLatestLuckyByMetaId(long metaId);
+        DateMetaphysicsDto GetNowOrLatestLuckyByMetaId(long metaId);
         #endregion
 
     }
