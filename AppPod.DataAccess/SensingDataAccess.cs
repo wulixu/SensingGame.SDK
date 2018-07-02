@@ -885,6 +885,8 @@ namespace AppPod.DataAccess
         public List<PropertyViewModel> Properties { get; set; }
         public List<ProductCommentModel> ProductComments { get; set; }
         public List<BrandDto> Brands { get; set; }
+        public List<MetaPhysicsDto> Metas { get; set; }
+        public List<DateMetaphysicsDto> DateMetas { get; set ; }
 
         #region Read Data from Local Json.
         public List<AdsSdkModel> ReadAds()
@@ -1026,7 +1028,33 @@ namespace AppPod.DataAccess
             Properties = ReadProperties();
             ProductComments = ReadProductComments();
             Brands = ReadBrands();
+            Metas = ReadMetas();
+            DateMetas = ReadDateMetas();
             return true;
+        }
+
+        public List<MetaPhysicsDto> ReadMetas()
+        {
+            var path = $"{AppPodDataDirectory}/Metas/Metas.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+
+            var metas = JsonConvert.DeserializeObject<List<MetaPhysicsDto>>(json);
+            metas.ForEach(b => {
+                b.LogoUrl = GetLocalImagePath(b.LogoUrl, "Metas");
+                b.PicUrl = GetLocalImagePath(b.PicUrl, "Metas");
+            });
+            return metas;
+        }
+
+        public List<DateMetaphysicsDto> ReadDateMetas()
+        {
+            var path = $"{AppPodDataDirectory}/Metas/DateMetas.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+
+            var dateMetas = JsonConvert.DeserializeObject<List<DateMetaphysicsDto>>(json);
+            return dateMetas;
         }
 
         public List<ProductCommentModel> ReadProductComments()
@@ -1376,6 +1404,21 @@ namespace AppPod.DataAccess
             }
             return mShowProducts.Where(p => categoryId <=0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0 ))
                                 .Where(p => brandId <= 0 || p.Product.BrandId == brandId);
+        }
+
+        public const string AstroString = "星座,astro";
+        public IEnumerable<MetaPhysicsDto> GetAllAstro()
+        {
+            if (Metas == null || Metas.Count == 0) return null;
+            return Metas.Where(m => AstroString.Contains(m.Type.Name)).ToList();
+        }
+
+        public DateMetaphysicsDto GetNowOrLatestLuckyByMetaId(long metaId)
+        {
+            if (DateMetas == null || DateMetas.Count == 0) return null;
+            var entity = DateMetas.Where(m => m.MetaphysicsId == metaId && m.Date == DateTime.Today).FirstOrDefault();
+            if (entity != null) return entity;
+            return DateMetas.Where(m => m.MetaphysicsId == metaId).OrderBy(m => m.Date).FirstOrDefault();
         }
 
         public IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId)

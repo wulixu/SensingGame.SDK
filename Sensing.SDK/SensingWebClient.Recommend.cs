@@ -24,7 +24,6 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<DateMetaphysicsDto>> GetDateMetaPhysics(DateTime startTime, DateTime endTime,long? typeId = null, int skipCount = 0, int maxCount = 300)
         {
             var typestring = typeId.HasValue ? typeId.Value.ToString() : "";
-            //api/services/app/BehaviorRecord/PostRecord
             var absolutePath = $"{ServerBase}{RecommendPath}{GetDateMetaPhysicsQuery}?{GetBasicNameValuesQueryString()}&typeId={typestring}&startTime={startTime}&endTime={endTime}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
@@ -38,7 +37,6 @@ namespace Sensing.SDK
             }
             return null;
         }
-
 
         public async Task<PagedResultDto<MetaPhysicsDto>> GetMetaphysicsList(long? typeId = null, int skipCount = 0, int maxCount = 300)
         {
