@@ -1377,5 +1377,12 @@ namespace AppPod.DataAccess
             return mShowProducts.Where(p => categoryId <=0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0 ))
                                 .Where(p => brandId <= 0 || p.Product.BrandId == brandId);
         }
+
+        public IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId)
+        {
+            var mainCategory  = PCategories.FirstOrDefault(c => c.Id == categoryId);
+            var brandIds = Products.Where(p => p.CategoryIds.Intersect(mainCategory.Ids).Count() > 0).Select(p => p.BrandId).Distinct();
+            return Brands.Where(b => brandIds.Any(id => id == b.Id));
+        }
     }
 }

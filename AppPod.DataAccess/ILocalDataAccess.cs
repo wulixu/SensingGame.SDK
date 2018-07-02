@@ -98,5 +98,6 @@ namespace AppPod.DataAccess
         IEnumerable<ProductCategorySDKModel> GetBrandCategories(long brandId);
 
         IEnumerable<ShowProductInfo> QueryProducts(long brandId, int categoryId);
+        IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId);
     }
 }
