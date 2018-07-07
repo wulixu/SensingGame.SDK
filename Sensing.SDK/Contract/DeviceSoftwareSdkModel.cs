@@ -53,6 +53,7 @@ namespace Sensing.SDK.Contract
 
     public class DeviceSoftwareSdkModel
     {
+        public long Id { get; set; }
         public long DeviceId { get; set; }
         public TenantAppSdkSetting TenantAppSetting { get; set; }
         public SoftwareSdkModel Software { get; set; }
