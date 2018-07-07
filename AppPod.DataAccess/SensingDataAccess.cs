@@ -1386,13 +1386,13 @@ namespace AppPod.DataAccess
             return mShowProducts.Where(p => p.Product.BrandId.Value == brandId);
         }
 
-       public IEnumerable<ProductCategorySDKModel> GetBrandCategories(long brandId)
+        public IEnumerable<ProductCategorySDKModel> GetBrandCategories(long brandId)
         {
             //获取品牌的所有商品
             var categorys = Products.Where(p => p.BrandId == brandId).SelectMany(b => b.CategoryIds).Distinct();
             //过滤掉根分类
 
-            return PCategories.Where(category => categorys.Any(id => id == category.Id) && category.ParentCategoryId != 0 &&  category.ParentCategoryId != category.Id);
+            return PCategories.Where(category => categorys.Any(id => id == category.Id) && category.ParentCategoryId != 0 && category.ParentCategoryId != category.Id);
         }
 
         public IEnumerable<ShowProductInfo> QueryProducts(long brandId, int categoryId)
@@ -1404,28 +1404,6 @@ namespace AppPod.DataAccess
             }
             return mShowProducts.Where(p => categoryId <=0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0 ))
                                 .Where(p => brandId <= 0 || p.Product.BrandId == brandId);
-        }
-
-        public const string AstroString = "星座,astro";
-        public IEnumerable<MetaPhysicsDto> GetAllAstro()
-        {
-            if (Metas == null || Metas.Count == 0) return null;
-            return Metas.Where(m => AstroString.Contains(m.Type.Name)).ToList();
-        }
-
-        public DateMetaphysicsDto GetNowOrLatestLuckyByMetaId(long metaId)
-        {
-            if (DateMetas == null || DateMetas.Count == 0) return null;
-            var entity = DateMetas.Where(m => m.MetaphysicsId == metaId && m.Date == DateTime.Today).FirstOrDefault();
-            if (entity != null) return entity;
-            return DateMetas.Where(m => m.MetaphysicsId == metaId).OrderBy(m => m.Date).FirstOrDefault();
-        }
-
-        public IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId)
-        {
-            var mainCategory  = PCategories.FirstOrDefault(c => c.Id == categoryId);
-            var brandIds = Products.Where(p => p.CategoryIds.Intersect(mainCategory.Ids).Count() > 0).Select(p => p.BrandId).Distinct();
-            return Brands.Where(b => brandIds.Any(id => id == b.Id));
         }
     }
 }
