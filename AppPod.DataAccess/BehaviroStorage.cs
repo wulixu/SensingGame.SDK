@@ -68,32 +68,36 @@ namespace AppPod.DataAccess
         public void AddBehavoirData(string thingId, string thingName, string category,string action,string softwareName = "", string pageName ="")
         {
             //todo:william.
-            if (string.IsNullOrEmpty(thingId)) return;
-            SqlLiteBehaviorRecord record = new SqlLiteBehaviorRecord();
-            record.Action = action;
-            record.CollectionTime = DateTime.Now;
-            record.Increment = 1;
-            record.ThingId = thingId;
-            record.Name = thingName;
-            record.SoftwareName = softwareName;
-            record.PageName = pageName;
-            record.Category = category;
-            record.IsSynced = false;
-            m_db.Insert(record);
-
-            var records = m_db.Table<SqlLiteBehaviorRecord>().Where(r => r.IsSynced == false).Take(10).ToList();
-            if (records.Count() > 0)
+            Task.Factory.StartNew(() =>
             {
-                bool success = sesingWebClient.PostBehaviorRecordsAsync(records).GetAwaiter().GetResult();
-                if (success)
+                if (string.IsNullOrEmpty(thingId)) return;
+                SqlLiteBehaviorRecord record = new SqlLiteBehaviorRecord();
+                record.Action = action;
+                record.CollectionTime = DateTime.Now;
+                record.Increment = 1;
+                record.ThingId = thingId;
+                record.Name = thingName;
+                record.SoftwareName = softwareName;
+                record.PageName = pageName;
+                record.Category = category;
+                record.IsSynced = false;
+                m_db.Insert(record);
+
+                var records = m_db.Table<SqlLiteBehaviorRecord>().Where(r => r.IsSynced == false).Take(10).ToList();
+                if (records.Count() > 0)
                 {
-                    foreach (var r in records)
+                    bool success = sesingWebClient.PostBehaviorRecordsAsync(records).GetAwaiter().GetResult();
+                    if (success)
                     {
-                        r.IsSynced = true;
+                        foreach (var r in records)
+                        {
+                            r.IsSynced = true;
+                        }
+                        m_db.UpdateAll(records);
                     }
-                    m_db.UpdateAll(records);
                 }
-            }
+            });
+           
         }
 
 
