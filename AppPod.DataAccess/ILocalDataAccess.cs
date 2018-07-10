@@ -107,5 +107,7 @@ namespace AppPod.DataAccess
         DateMetaphysicsDto GetNowOrLatestLuckyByMetaId(long metaId);
         #endregion
 
+        IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId);
+        void RemoveFrontBrandName();
     }
 }

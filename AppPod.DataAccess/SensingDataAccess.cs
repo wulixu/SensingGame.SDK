@@ -269,7 +269,6 @@ namespace AppPod.DataAccess
                     Product = pModel
                 }).ToList();
                 mShowProducts = infos;
-                return infos;
             }
             else
             {
@@ -361,11 +360,11 @@ namespace AppPod.DataAccess
                     }
                 }
                 mShowProducts = showProducts;
-                mShowProducts.ForEach(p => {
-                    p.BrandName = Brands.FirstOrDefault(b => b.Id == p.Product.BrandId)?.Name;
-                });
-                return showProducts;
             }
+            mShowProducts.ForEach(p => {
+                p.BrandName = Brands.FirstOrDefault(b => b.Id == p.Product.BrandId)?.Name;
+            });
+            return mShowProducts;
         }
 
 
@@ -886,7 +885,7 @@ namespace AppPod.DataAccess
         public List<ProductCommentModel> ProductComments { get; set; }
         public List<BrandDto> Brands { get; set; }
         public List<MetaPhysicsDto> Metas { get; set; }
-        public List<DateMetaphysicsDto> DateMetas { get; set ; }
+        public List<DateMetaphysicsDto> DateMetas { get; set; }
 
         #region Read Data from Local Json.
         public List<AdsSdkModel> ReadAds()
@@ -1086,7 +1085,7 @@ namespace AppPod.DataAccess
 
         public void BuildCategoryPaths()
         {
-           List<ProductCategorySDKModel> categoriesWithPath = new List<ProductCategorySDKModel>();
+            List<ProductCategorySDKModel> categoriesWithPath = new List<ProductCategorySDKModel>();
             //读取根分类
             var roots = GetRootCategories();
             Stack<ProductCategorySDKModel> stack = new Stack<ProductCategorySDKModel>();
@@ -1102,7 +1101,7 @@ namespace AppPod.DataAccess
                     if (child != null)
                     {
                         stack.Push(child);
-                        child.Ids = new List<int> { child.Id};
+                        child.Ids = new List<int> { child.Id };
                         PCategories.Remove(child);
                     }
                     else
@@ -1119,7 +1118,7 @@ namespace AppPod.DataAccess
                     }
                 }
             }
-           
+
             PCategories = categoriesWithPath;
         }
 
@@ -1398,12 +1397,18 @@ namespace AppPod.DataAccess
         public IEnumerable<ShowProductInfo> QueryProducts(long brandId, int categoryId)
         {
             ProductCategorySDKModel category = null;
-            if(categoryId > 0)
+            if (categoryId > 0)
             {
                 category = PCategories.FirstOrDefault(c => c.Id == categoryId);
             }
-            return mShowProducts.Where(p => categoryId <=0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0 ))
+            return mShowProducts.Where(p => categoryId <= 0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0))
                                 .Where(p => brandId <= 0 || p.Product.BrandId == brandId);
+        }
+        public IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId)
+        {
+            var mainCategory = PCategories.FirstOrDefault(c => c.Id == categoryId);
+            var brandIds = Products.Where(p => p.CategoryIds.Intersect(mainCategory.Ids).Count() > 0).Select(p => p.BrandId).Distinct();
+            return Brands.Where(b => brandIds.Any(id => id == b.Id));
         }
 
         public const string AstroString = "星座,astro";
@@ -1419,6 +1424,22 @@ namespace AppPod.DataAccess
             var entity = DateMetas.Where(m => m.MetaphysicsId == metaId && m.Date == DateTime.Today).FirstOrDefault();
             if (entity != null) return entity;
             return DateMetas.Where(m => m.MetaphysicsId == metaId).OrderBy(m => m.Date).FirstOrDefault();
+        }
+
+        public void RemoveFrontBrandName()
+        {
+            var showProducts = QueryShowProducts(false);
+            showProducts.ForEach(p => {
+                string brandName = p.BrandName;
+                if(brandName != null)
+                {
+                    if (p.ProductName.Substring(0, p.BrandName.Length) == brandName)
+                    {
+                        p.ProductName = p.ProductName.Substring(brandName.Length).TrimStart();
+                        p.Product.Title = p.ProductName;
+                    }
+                }
+            });
         }
     }
 }
