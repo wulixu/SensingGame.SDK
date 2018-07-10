@@ -269,7 +269,6 @@ namespace AppPod.DataAccess
                     Product = pModel
                 }).ToList();
                 mShowProducts = infos;
-                return infos;
             }
             else
             {
@@ -361,11 +360,11 @@ namespace AppPod.DataAccess
                     }
                 }
                 mShowProducts = showProducts;
-                mShowProducts.ForEach(p => {
-                    p.BrandName = Brands.FirstOrDefault(b => b.Id == p.Product.BrandId)?.Name;
-                });
-                return showProducts;
             }
+            mShowProducts.ForEach(p => {
+                p.BrandName = Brands.FirstOrDefault(b => b.Id == p.Product.BrandId)?.Name;
+            });
+            return mShowProducts;
         }
 
 
