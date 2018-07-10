@@ -1425,5 +1425,21 @@ namespace AppPod.DataAccess
             if (entity != null) return entity;
             return DateMetas.Where(m => m.MetaphysicsId == metaId).OrderBy(m => m.Date).FirstOrDefault();
         }
+
+        public void RemoveFrontBrandName()
+        {
+            var showProducts = QueryShowProducts(false);
+            showProducts.ForEach(p => {
+                string brandName = p.BrandName;
+                if(brandName != null)
+                {
+                    if (p.ProductName.Substring(0, p.BrandName.Length) == brandName)
+                    {
+                        p.ProductName = p.ProductName.Substring(brandName.Length).TrimStart();
+                        p.Product.Title = p.ProductName;
+                    }
+                }
+            });
+        }
     }
 }

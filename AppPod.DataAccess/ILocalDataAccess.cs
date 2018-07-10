@@ -108,5 +108,6 @@ namespace AppPod.DataAccess
         #endregion
 
         IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId);
+        void RemoveFrontBrandName();
     }
 }
