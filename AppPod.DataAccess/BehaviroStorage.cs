@@ -18,6 +18,7 @@ namespace AppPod.DataAccess
         void AddClick(AdsSdkModel ads, string softwareName, string pageName);
         void AddLike(ShowProductInfo productInfo, string softwareName, string pageName);
         void AddClick(ShowProductInfo productInfo, string softwareName, string pageName);
+        void LogDeviceStatus(int secondInterval);
     }
 
     public class BehaviroStorage : IBehaviorDataUploader
@@ -101,28 +102,33 @@ namespace AppPod.DataAccess
         }
 
 
-        public void LogDeviceStatus()
+        public void LogDeviceStatus(int secondInterval)
         {
             var now = DateTime.Now;
-            var record = m_db.Table<SqliteDeviceStatus>().Where(r => r.IsSynced == false).OrderBy(d => d.EndTime).Take(1).FirstOrDefault();
-            var cpu = GetCpuUsage();
-            MEMORY_INFO memInfo = new MEMORY_INFO();
-            GlobalMemoryStatus(ref memInfo);
-            var memory = memInfo.dwMemoryLoad;
-            if (record != null)
+            var record = m_db.Table<SqliteDeviceStatus>().Where(r => r.IsSynced == false).OrderByDescending(d => d.EndTime).Take(1).FirstOrDefault();
+            //var cpu = GetCpuUsage();
+            //MEMORY_INFO memInfo = new MEMORY_INFO();
+            //GlobalMemoryStatus(ref memInfo);
+            //var memory = memInfo.dwMemoryLoad;
+            if (record != null && record.EndTime.Subtract(now).Days == 0)
             {
-                if(now.Subtract(record.EndTime).TotalMinutes > 6)
+                if(now.Subtract(record.EndTime).TotalSeconds > secondInterval)
                 {
-                    var newRecord = new SqliteDeviceStatus { StartTime = now, EndTime = now, IsSynced = false, Cpu = cpu, Memory = memory };
-                    m_db.Insert(record);
+                    var newRecord = new SqliteDeviceStatus { StartTime = now, EndTime = now, IsSynced = false, Cpu = 0, Memory = 0 };
+                    m_db.Insert(newRecord);
                 }
                 else
                 {
                     record.EndTime = now;
-                    if (cpu > record.Cpu) record.Cpu = cpu;
-                    if (memory > record.Memory) record.Memory = memory;
+                    //if (cpu > record.Cpu) record.Cpu = cpu;
+                    //if (memory > record.Memory) record.Memory = memory;
                     m_db.Update(record);
                 }
+            }
+            else
+            {
+                var newRecord = new SqliteDeviceStatus { StartTime = now, EndTime = now, IsSynced = false, Cpu = 0, Memory = 0 };
+                m_db.Insert(newRecord);
             }
             //todo: update to cloud.
             SyncToCloud();
@@ -130,7 +136,20 @@ namespace AppPod.DataAccess
 
         public void SyncToCloud()
         {
-
+            var now = DateTime.Now;
+            var records = m_db.Table<SqliteDeviceStatus>().Where(r => r.IsSynced == false).OrderByDescending(d => d.EndTime).Skip(1).OrderBy(d => d.EndTime).Take(10).ToList();
+            if (records.Count() > 0)
+            {
+                bool success = sesingWebClient.PostDeviceStatusRecordAsync(records).GetAwaiter().GetResult();
+                if (success)
+                {
+                    foreach (var r in records)
+                    {
+                        r.IsSynced = true;
+                    }
+                    m_db.UpdateAll(records);
+                }
+            }
         }
         public int GetCpuUsage()
         {
