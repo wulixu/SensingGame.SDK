@@ -51,7 +51,7 @@ namespace AppPod.DataAccess
         List<PropertyViewModel> Properties { get; set; }
         List<BrandDto> Brands { get; set; }
 
-
+        List<TagSdkModel> Tags { get; set; }
         List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string,string> keyValues);
         List<ShowProductInfo> SearchShowProductsByName(string searchTerm);
         //ProductInfo FindProductByAttribute(string productAttribute);
@@ -108,6 +108,7 @@ namespace AppPod.DataAccess
         #endregion
 
         IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId);
+        IEnumerable<AdsSdkModel> FindAdsByTagName(string tagName);
         void RemoveFrontBrandName();
     }
 }

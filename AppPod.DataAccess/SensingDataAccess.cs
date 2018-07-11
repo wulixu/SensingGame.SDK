@@ -1426,6 +1426,20 @@ namespace AppPod.DataAccess
             return DateMetas.Where(m => m.MetaphysicsId == metaId).OrderBy(m => m.Date).FirstOrDefault();
         }
 
+        public IEnumerable<AdsSdkModel> FindAdsByTagName(string tagName)
+        {
+            var tag = Tags.FirstOrDefault(t => t.Value == tagName);
+            if (tag == null)
+            {
+                return Enumerable.Empty<AdsSdkModel>();
+            }
+            var ads = Ads.Where(t => t.TagIds.Contains(tag.Id));
+            ads.ForEach((a) => {
+                a.FileUrl = a.GetLocalFile();
+            });
+            return ads;
+        }
+
         public void RemoveFrontBrandName()
         {
             var showProducts = QueryShowProducts(false);
