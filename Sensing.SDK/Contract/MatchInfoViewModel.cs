@@ -58,5 +58,6 @@ namespace Sensing.SDK.Contract
         public string SkuTitle { get; set; }
 
         public string Reason { get; set; }
+        public bool IsMain { get; set; }
     }
 }
