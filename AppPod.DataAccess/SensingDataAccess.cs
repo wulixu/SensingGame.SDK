@@ -1073,6 +1073,7 @@ namespace AppPod.DataAccess
             string json = File.ReadAllText(path);
 
             var brands = JsonConvert.DeserializeObject<List<BrandDto>>(json);
+            brands = brands.OrderBy(b => b.OrderNumber).ToList();
             brands.ForEach(b => {
                 b.LogoUrl = GetLocalImagePath(b.LogoUrl, "Products");
                 b.ImageUrl = GetLocalImagePath(b.ImageUrl, "Products");
