@@ -20,6 +20,7 @@ namespace AppPod.DataAccess.Models
         public string ProductName { get; set; }
         public long Quantity { get; set; }
         public double Price { get; set; }
+        public double PromPrice { get; set; }
         public string ImageUrl { get; set; }
         public string TagIconUrl { get; set; }
         public string Keyword { get; set; }

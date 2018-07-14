@@ -262,6 +262,7 @@ namespace AppPod.DataAccess
                     ImageUrl = GetLocalImagePath(pModel.PicUrl, "Products"),
                     Name = pModel.Title,
                     Price = pModel.Price,
+                    PromPrice = pModel.PromPrice,
                     ProductName = pModel.Title,
                     //QrcodeUrl = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                     Type = ProductType.Product,
@@ -285,6 +286,7 @@ namespace AppPod.DataAccess
                                 ImageUrl = GetLocalImagePath(prod.PicUrl, "Products"),
                                 Name = prod.Title,
                                 Price = prod.Price,
+                                PromPrice = prod.PromPrice,
                                 ProductName = prod.Title,
                                 Quantity = prod.Num,
                                 Type = ProductType.Product,
@@ -306,6 +308,7 @@ namespace AppPod.DataAccess
                                 Name = prod.Title,
                                 ProductName = prod.Title,
                                 Price = prod.Price,
+                                PromPrice = prod.PromPrice,
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 Type = ProductType.Product,
                                 TagIconUrl = FindTagIcon(prod.TagIds),
@@ -330,6 +333,7 @@ namespace AppPod.DataAccess
                                     Name = prod.Title,
                                     ProductName = prod.Title,
                                     Price = firstSku.Price,
+                                    PromPrice = firstSku.PromPrice,
                                     //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                     TagIconUrl = FindTagIcon(firstSku.TagIds),
                                     Type = ProductType.Sku,
@@ -351,6 +355,7 @@ namespace AppPod.DataAccess
                                 Name = firstSku.Title,
                                 ProductName = prod.Title,
                                 Price = firstSku.Price,
+                                PromPrice = firstSku.PromPrice,
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 TagIconUrl = FindTagIcon(firstSku.TagIds),
                                 Type = ProductType.Sku,
@@ -886,6 +891,7 @@ namespace AppPod.DataAccess
         public List<BrandDto> Brands { get; set; }
         public List<MetaPhysicsDto> Metas { get; set; }
         public List<DateMetaphysicsDto> DateMetas { get; set; }
+        public Dictionary<long, IEnumerable<ShowProductInfo>> MatchedProducts { get; set; }
 
         #region Read Data from Local Json.
         public List<AdsSdkModel> ReadAds()
@@ -1446,7 +1452,7 @@ namespace AppPod.DataAccess
             var showProducts = QueryShowProducts(false);
             showProducts.ForEach(p => {
                 string brandName = p.BrandName;
-                if(brandName != null)
+                if (brandName != null)
                 {
                     if (p.ProductName.Substring(0, p.BrandName.Length) == brandName)
                     {
@@ -1455,6 +1461,33 @@ namespace AppPod.DataAccess
                     }
                 }
             });
+        }
+
+        public void FindAllMatch()
+        {
+            if (MatchedProducts == null)
+                MatchedProducts = new Dictionary<long, IEnumerable<ShowProductInfo>>();
+            foreach (var matchGroup in Matches)
+            {
+                var mainItem = matchGroup.MatchItems.FirstOrDefault(m => m.IsMain == true);
+                if (mainItem == null)
+                    continue;
+                var mainProduct = Products.FirstOrDefault(p => p.Skus.Any(s => s.Id == mainItem.SkuId));
+                if (mainProduct == null)
+                    continue;
+                var showProducts = new List<ShowProductInfo>();
+                MatchedProducts.Add(mainProduct.Id, showProducts);
+                foreach (var item in matchGroup.MatchItems)
+                {
+                    var product = Products.FirstOrDefault(p => p.Skus.Any(s => s.Id == item.SkuId));
+                    if (product == null)
+                        continue;
+                   var showProduct =  mShowProducts.FirstOrDefault(p => p.Product == product);
+                    if (showProduct == null)
+                        continue;
+                    showProducts.Add(showProduct);
+                }
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Sensing.SDK.Contract
         /// </summary>
         public double Price { get; set; }
 
-        public double Prom_Price { get; set; }
+        public double PromPrice { get; set; }
 
         public string Barcode { get; set; }
         /// <summary>
@@ -129,7 +129,7 @@ namespace Sensing.SDK.Contract
         /// <summary>
         /// 促销价格
         /// </summary>
-        public double Prom_Price { get; set; }
+        public double PromPrice { get; set; }
 
 
         /// <summary>

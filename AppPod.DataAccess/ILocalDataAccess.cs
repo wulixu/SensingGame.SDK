@@ -52,6 +52,8 @@ namespace AppPod.DataAccess
         List<BrandDto> Brands { get; set; }
 
         List<TagSdkModel> Tags { get; set; }
+        Dictionary<long, IEnumerable<ShowProductInfo>> MatchedProducts { get; set; }
+
         List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string,string> keyValues);
         List<ShowProductInfo> SearchShowProductsByName(string searchTerm);
         //ProductInfo FindProductByAttribute(string productAttribute);
@@ -109,6 +111,7 @@ namespace AppPod.DataAccess
 
         IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId);
         IEnumerable<AdsSdkModel> FindAdsByTagName(string tagName);
+        void FindAllMatch();
         void RemoveFrontBrandName();
     }
 }
