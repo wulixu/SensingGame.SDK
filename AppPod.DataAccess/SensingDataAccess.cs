@@ -1489,5 +1489,30 @@ namespace AppPod.DataAccess
                 }
             }
         }
+
+        public ShowProductInfo GetShowProductByOutId(string outId)
+        {
+            var product = Products.FirstOrDefault(p => p.Skus.Any(s => s.OuterId == outId));
+            if (product == null)
+                return null;
+            var sku = product.Skus.FirstOrDefault(s => s.OuterId == outId);
+            if (sku == null)
+                return null;
+            return new ShowProductInfo
+            {
+                Id = sku.Id,
+                ImageUrl = GetLocalImagePath(sku.PicUrl, "Products"),
+                Quantity = product.Num,
+                Name = sku.Title,
+                BrandName =  Brands.FirstOrDefault(b => b.Id == product.BrandId)?.Name,
+                ProductName = product.Title,
+                Price = sku.Price,
+                PromPrice = sku.PromPrice,
+                //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                Type = ProductType.Sku,
+                TagIconUrl = FindTagIcon(product.TagIds),
+                Product = product
+            };
+        }
     }
 }

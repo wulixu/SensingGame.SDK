@@ -113,5 +113,6 @@ namespace AppPod.DataAccess
         IEnumerable<AdsSdkModel> FindAdsByTagName(string tagName);
         void FindAllMatch();
         void RemoveFrontBrandName();
+         ShowProductInfo GetShowProductByOutId(string outId);
     }
 }
