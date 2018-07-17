@@ -114,5 +114,6 @@ namespace AppPod.DataAccess
         void FindAllMatch();
         void RemoveFrontBrandName();
          ShowProductInfo GetShowProductByOutId(string outId);
+         ShowProductInfo GetShowProductBySku(long skuId);
     }
 }
