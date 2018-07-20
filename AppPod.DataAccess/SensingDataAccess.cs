@@ -1049,6 +1049,7 @@ namespace AppPod.DataAccess
                 b.LogoUrl = GetLocalImagePath(b.LogoUrl, "Metas");
                 b.PicUrl = GetLocalImagePath(b.PicUrl, "Metas");
             });
+            metas = metas.OrderBy(m => m.StartTime).ToList();
             return metas;
         }
 
