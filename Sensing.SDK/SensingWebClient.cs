@@ -132,7 +132,7 @@ namespace Sensing.SDK
                     }
                 }
 
-                response.EnsureSuccessStatusCode();
+                    response.EnsureSuccessStatusCode();
             }
 
             return default(TResponse);
