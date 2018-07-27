@@ -75,6 +75,7 @@ namespace AppPod.DataAccess
                 SqlLiteBehaviorRecord record = new SqlLiteBehaviorRecord();
                 record.Action = action;
                 record.CollectionTime = DateTime.Now;
+                record.CollectEndTime = DateTime.Now;
                 record.Increment = 1;
                 record.ThingId = thingId;
                 record.Name = thingName;
