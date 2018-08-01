@@ -15,6 +15,8 @@ namespace AppPod.DataAccess.Models
 
         public int DeivceId { get; set; }
         public string Name { get; set; }
+        public string TenantName { get; set; }
+        public long TenantId { get; set; }
 
         public int GroupId { get; set; }
         public string GroupName { get; set; }

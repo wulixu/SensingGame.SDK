@@ -1049,6 +1049,7 @@ namespace AppPod.DataAccess
                 b.LogoUrl = GetLocalImagePath(b.LogoUrl, "Metas");
                 b.PicUrl = GetLocalImagePath(b.PicUrl, "Metas");
             });
+            metas = metas.OrderBy(m => m.StartTime).ToList();
             return metas;
         }
 
@@ -1505,6 +1506,31 @@ namespace AppPod.DataAccess
                 Quantity = product.Num,
                 Name = sku.Title,
                 BrandName =  Brands.FirstOrDefault(b => b.Id == product.BrandId)?.Name,
+                ProductName = product.Title,
+                Price = sku.Price,
+                PromPrice = sku.PromPrice,
+                //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
+                Type = ProductType.Sku,
+                TagIconUrl = FindTagIcon(product.TagIds),
+                Product = product
+            };
+        }
+
+        public ShowProductInfo GetShowProductBySku(long skuId)
+        {
+            var product = Products.FirstOrDefault(p => p.Skus.Any(s => s.Id == skuId));
+            if (product == null)
+                return null;
+            var sku = product.Skus.FirstOrDefault(s => s.Id == skuId);
+            if (sku == null)
+                return null;
+            return new ShowProductInfo
+            {
+                Id = sku.Id,
+                ImageUrl = GetLocalImagePath(sku.PicUrl, "Products"),
+                Quantity = product.Num,
+                Name = sku.Title,
+                BrandName = Brands.FirstOrDefault(b => b.Id == product.BrandId)?.Name,
                 ProductName = product.Title,
                 Price = sku.Price,
                 PromPrice = sku.PromPrice,
