@@ -32,6 +32,12 @@ namespace Sensing.SDK.Contract
         public bool IsMember { get; set; }
         public string MemberId { get; set; }
         public string MemberName { get; set; }
+        public string Mobile { get; set; }
+        public string OpenId { get; set; }   
+        /// <summary>
+        /// 人脸识别来源/推荐来源.
+        /// </summary>
+        public string From { get; set; }
         public Recommneds[] Recommends { get; set; }
         public string Reason { get; set; }
     }
