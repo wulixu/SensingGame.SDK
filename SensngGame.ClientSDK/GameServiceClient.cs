@@ -565,6 +565,39 @@ namespace SensngGame.ClientSDK
             return null;
         }
 
+        public async Task<string> PostAction2TaoByFaceUser(string faceMemberId, string gameImage, string gameName, string activityName, int score, ActionStatus actionStatus)
+        {
+            var absolutePath = $"https://taobao.troncell.com/api/v1/Taobao/PostActionByUser";
+            //var absolutePath = $"http://localhost:61084/api/v1/Taobao/PostFaceActionByUser";
+            var nameValues = new NameValueCollection();
+            nameValues.Add("subKey", _subscriptionKey);
+            nameValues.Add("score", score.ToString());
+            nameValues.Add("status", actionStatus.ToString());
+            nameValues.Add("game", gameName);
+            nameValues.Add("faceMemberId", faceMemberId);
+            nameValues.Add("activityName", activityName);
+            try
+            {
+                var files = new List<string>();
+                var names = new List<string>();
+                if (!string.IsNullOrEmpty(gameImage) && File.Exists(gameImage))
+                {
+                    files.Add(gameImage);
+                    names.Add("gameimage");
+                }
+                var result = await SendMultipartFormRequestAsync<WebApiResult>(absolutePath, files.ToArray(), names.ToArray(), nameValues);
+                if (result.Status == "OK")
+                {
+                    return result.Data;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error("PostImageToTao", ex);
+            }
+            return null;
+        }
+
 
         #endregion
 
