@@ -214,7 +214,7 @@ namespace AppPod.DataAccess
 
         public SkuSdkModel FindSkuById(long skuId)
         {
-            return Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == skuId)).Skus.FirstOrDefault(s => s.Id == skuId);
+            return Products?.FirstOrDefault(p => p.Skus != null && p.Skus.Any(s => s.Id == skuId))?.Skus.FirstOrDefault(s => s.Id == skuId);
         }
 
         public ProductSdkModel FindByScanId(string skc)
