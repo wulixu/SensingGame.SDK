@@ -565,11 +565,12 @@ namespace SensngGame.ClientSDK
             return null;
         }
 
-        public async Task<string> PostAction2TaoByFaceUser(string faceMemberId, string gameImage, string gameName, string activityName, int score, ActionStatus actionStatus)
+        public async Task<string> PostAction2TaoByFaceUser(string mixName,string faceMemberId, string gameImage, string gameName, string activityName, int score, ActionStatus actionStatus)
         {
             var absolutePath = $"https://taobao.troncell.com/api/v1/Taobao/PostActionByUser";
             //var absolutePath = $"http://localhost:61084/api/v1/Taobao/PostFaceActionByUser";
             var nameValues = new NameValueCollection();
+            nameValues.Add("mixName", mixName);
             nameValues.Add("subKey", _subscriptionKey);
             nameValues.Add("score", score.ToString());
             nameValues.Add("status", actionStatus.ToString());
