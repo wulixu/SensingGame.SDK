@@ -51,6 +51,12 @@ namespace Sensing.SDK.Contract
         public int TenantId { get; set; }
         public string OrganizationUnitName { get; set; }
         public int OrganizationUnitId { get; set; }
+        public bool IsStore { get; set; }
+        public string StoreOuterId { get; set; }
+
+        public string OutType { get; set; }
+
+        public string TaobaoDeviceId { get; set; }
     }
 
     public class DeviceSdkLoginViewModel
