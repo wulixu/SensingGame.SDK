@@ -29,6 +29,7 @@ namespace AppPod.DataAccess
         private SQLite.SQLiteConnection m_db;
         private object lockobject = new object();
         private string mMac;
+        private DateTime mLastUploadTime;
 
         public BehaviroStorage(SensingWebClient webClient, string mac)
         {
@@ -71,35 +72,52 @@ namespace AppPod.DataAccess
             //todo:william.
             Task.Factory.StartNew(() =>
             {
-                if (string.IsNullOrEmpty(thingId)) return;
-                SqlLiteBehaviorRecord record = new SqlLiteBehaviorRecord();
-                record.Action = action;
-                record.CollectionTime = DateTime.Now;
-                record.CollectEndTime = DateTime.Now;
-                record.Increment = 1;
-                record.ThingId = thingId;
-                record.Name = thingName;
-                record.SoftwareName = softwareName;
-                record.PageName = pageName;
-                record.Category = category;
-                record.IsSynced = false;
-                m_db.Insert(record);
-
-                var records = m_db.Table<SqlLiteBehaviorRecord>().Where(r => r.IsSynced == false).Take(10).ToList();
-                if (records.Count() > 0)
+                if (string.IsNullOrEmpty(action)) return;
+                var updateRecord = m_db.Table<SqlLiteBehaviorRecord>().FirstOrDefault(r => r.ThingId == thingId && r.Category == category && r.Action == action && r.IsSynced == false);
+                if(updateRecord == null)
                 {
-                    bool success = sesingWebClient.PostBehaviorRecordsAsync(records).GetAwaiter().GetResult();
-                    if (success)
-                    {
-                        foreach (var r in records)
-                        {
-                            r.IsSynced = true;
-                        }
-                        m_db.UpdateAll(records);
-                    }
+                    SqlLiteBehaviorRecord record = new SqlLiteBehaviorRecord();
+                    record.Action = action;
+                    record.CollectionTime = DateTime.Now;
+                    record.CollectEndTime = DateTime.Now;
+                    record.Increment = 1;
+                    record.ThingId = thingId;
+                    record.Name = thingName;
+                    record.SoftwareName = softwareName;
+                    record.PageName = pageName;
+                    record.Category = category;
+                    record.IsSynced = false;
+                    m_db.Insert(record);
                 }
+                else
+                {
+                    updateRecord.Increment++;
+                    m_db.Update(updateRecord);
+                }
+                UploadData();
             });
            
+        }
+
+        private void UploadData()
+        {
+            if (DateTime.Now.Subtract(mLastUploadTime).TotalMinutes < 30)
+                return;
+            var records = m_db.Table<SqlLiteBehaviorRecord>().Where(r => r.IsSynced == false).Take(50).ToList();
+            if (records.Count() > 0)
+            {
+                bool success = sesingWebClient.PostBehaviorRecordsAsync(records).GetAwaiter().GetResult();
+                if (success)
+                {
+                    foreach (var r in records)
+                    {
+                        r.IsSynced = true;
+                    }
+                    m_db.UpdateAll(records);
+                    mLastUploadTime = DateTime.Now;
+                }
+                int deletedCount = m_db.Execute("delete from SqlLiteBehaviorRecord where IsSynced =? and  CollectionTime < ?", true, DateTime.Today.AddDays(-15));
+            }
         }
 
 
