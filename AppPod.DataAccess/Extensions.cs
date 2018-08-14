@@ -3,8 +3,10 @@ using Sensing.SDK.Contract;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AppPod.DataAccess
@@ -104,9 +106,18 @@ namespace AppPod.DataAccess
             if (fileName.StartsWith("http", true, CultureInfo.CurrentCulture))
             {
                 var uri = new Uri(fileName).LocalPath;
-                fileNamePath = uri;
+                fileNamePath = SanitizeFileName(uri);
             }
             return ChangeFileName(fileNamePath);
+        }
+
+        public static string SanitizeFileName(string path)
+        {
+            int index = path.LastIndexOf("/");
+            string filename = path.Substring(index + 1);
+            string regex = String.Format(@"[{0}]+", Regex.Escape(new string(Path.GetInvalidFileNameChars())));
+            filename = Regex.Replace(filename, regex, "_");
+            return Path.Combine(path.Substring(0, index + 1), filename);
         }
 
         public static string ChangeFileName(string fileNamePath)
