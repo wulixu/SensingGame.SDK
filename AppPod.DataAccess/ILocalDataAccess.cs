@@ -52,6 +52,7 @@ namespace AppPod.DataAccess
         List<BrandDto> Brands { get; set; }
 
         List<TagSdkModel> Tags { get; set; }
+        List<AppInfo> Apps { get; set; }
         Dictionary<long, IEnumerable<ShowProductInfo>> MatchedProducts { get; set; }
 
         List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string,string> keyValues);

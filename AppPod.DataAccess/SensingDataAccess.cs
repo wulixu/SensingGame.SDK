@@ -892,6 +892,7 @@ namespace AppPod.DataAccess
         public List<MetaPhysicsDto> Metas { get; set; }
         public List<DateMetaphysicsDto> DateMetas { get; set; }
         public Dictionary<long, IEnumerable<ShowProductInfo>> MatchedProducts { get; set; }
+        public List<AppInfo> Apps { get; set; }
 
         #region Read Data from Local Json.
         public List<AdsSdkModel> ReadAds()
@@ -998,6 +999,14 @@ namespace AppPod.DataAccess
             return JsonConvert.DeserializeObject<List<StaffSdkModel>>(json);
         }
 
+        public List<AppInfo> ReadApps()
+        {
+            var path = $"{AppPodDataDirectory}/Apps/LocalApps.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<List<AppInfo>>(json);
+        }
+
         public static async Task<string> ReadText(string filePath)
         {
             using (FileStream sourceStream = new FileStream(filePath,
@@ -1017,6 +1026,8 @@ namespace AppPod.DataAccess
                 return sb.ToString();
             }
         }
+
+
         #endregion
 
         public bool Intialize()
@@ -1035,6 +1046,7 @@ namespace AppPod.DataAccess
             Brands = ReadBrands();
             Metas = ReadMetas();
             DateMetas = ReadDateMetas();
+            Apps = ReadApps();
             return true;
         }
 
