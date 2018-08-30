@@ -97,6 +97,7 @@
                         <ComboBoxItem>Female</ComboBoxItem>
                     </ComboBox>
                     <Button Margin="250,29,365,499" x:Name="GoodsByFacesBtn" FontSize="20" Content="GoodsByFaces" Click="GoodsByFacesBtn_Click"/>
+                    <Button Margin="250,88,365,440" x:Name="MemberFaceBtn" FontSize="20" Content="IsFaceMember" Click="MemberFaceBtn_Click" />
                     <TextBlock x:Name="GoodsByFaceTxt" Background="White" Margin="0,159,0,0"/>
                 </Grid>
             </TabItem>

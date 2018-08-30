@@ -178,7 +178,7 @@ namespace Sensing.SDK.Test
             var data = await _sensingWebClient.GetRecommendsByFaces(faces);
             if (data != null)
             {
-                MatchMsg.Text = "Match Successfully" + Environment.NewLine;
+                MatchMsg.Text = "GoodsByFaces Successfully" + Environment.NewLine;
                 MatchMsg.Text += data;
             }
             else
@@ -238,6 +238,26 @@ namespace Sensing.SDK.Test
             else
             {
                 MetaphysicsStatusMessage.Text = "failed" + Environment.NewLine;
+            }
+        }
+
+        private async void MemberFaceBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var faces = new FaceInput();
+            var fileName = genderCBox.SelectedIndex == 0 ? "face-m.jpg" : "face-f.jpg";
+            var faceImagePath = System.IO.Path.Combine(Environment.CurrentDirectory, fileName);
+
+            var bytes = File.ReadAllBytes(faceImagePath);
+            faces.Face = bytes;
+            var data = await _sensingWebClient.IsFaceMember(faces);
+            if (data != null)
+            {
+                MatchMsg.Text = "IsFaceMember Successfully" + Environment.NewLine;
+                MatchMsg.Text += data;
+            }
+            else
+            {
+                MatchMsg.Text = "failed" + Environment.NewLine;
             }
         }
     }
