@@ -41,4 +41,26 @@ namespace Sensing.SDK.Contract
         public Recommneds[] Recommends { get; set; }
         public string Reason { get; set; }
     }
+
+    public class FaceInput
+    {
+        public byte[] Face { get; set; }
+        public string Subkey { get; set; }
+    }
+
+    public class FaceMemberOutput
+    {
+        public bool Recognized { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
+        public bool IsMember { get; set; }
+        public string MemberId { get; set; }
+        public string MemberName { get; set; }
+        public string Mobile { get; set; }
+        public string OpenId { get; set; }
+        /// <summary>
+        /// 人脸识别来源/推荐来源.
+        /// </summary>
+        public string From { get; set; }
+    }
 }
