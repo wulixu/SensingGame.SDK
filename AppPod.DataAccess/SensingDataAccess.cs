@@ -1480,12 +1480,31 @@ namespace AppPod.DataAccess
         {
             var showProducts = QueryShowProducts(false);
             showProducts.ForEach(p => {
-                if (!string.IsNullOrEmpty(text) && p.Product.Title.StartsWith(text))
+                var keywords = text.Split(new char[] { ';' });
+                foreach (var keyword in keywords)
                 {
-                    p.ProductName = p.ProductName.Substring(text.Length).TrimStart();
-                    p.Name = p.ProductName;
-                    p.Product.Title = p.ProductName;
+                    if (string.IsNullOrEmpty(keyword))
+                        continue;
+                    if ( p.Product.Title.StartsWith(keyword))
+                    {
+                        p.ProductName = p.ProductName.Substring(keyword.Length).TrimStart();
+                        p.Name = p.ProductName;
+                        p.Product.Title = p.ProductName;
+                    }
+                    if (p.Product.Skus != null)
+                    {
+                        foreach (var sku in p.Product.Skus)
+                        {
+                            if (sku.Title.StartsWith(keyword))
+                            {
+                                sku.Title = sku.Title.Substring(keyword.Length).TrimStart();
+                            }
+
+                        }
+                    }
+
                 }
+
             });
         }
 
