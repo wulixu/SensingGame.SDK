@@ -2,6 +2,7 @@
 using Sensing.SDK;
 using Sensing.SDK.Contract;
 using SensingSite.ClientSDK.Common;
+using SensingStoreCloud.Activity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,11 +27,35 @@ namespace Sensing.SDK.Test
     public partial class MainWindow : Window
     {
         SensingWebClient _sensingWebClient;
-        
+        private Dictionary<string, EnumQRStatus> qrcodeTypes = new Dictionary<string, EnumQRStatus>();
         public MainWindow()
         {
             InitializeComponent();
             this.ClientNoTB.Text = MacIPHelper.GetClientMac();
+
+            qrcodeTypes.Add("游戏之前", EnumQRStatus.BeforeGame);
+            qrcodeTypes.Add("游戏之后", EnumQRStatus.AfterGame);
+            qrcodeTypes.Add("活动介绍", EnumQRStatus.ActivityIntroduction);
+            qrcodeTypes.Add("活动注册", EnumQRStatus.ActivityRegister);
+            qrcodeTypes.Add("在线游戏", EnumQRStatus.OnlineGame);
+            qrcodeTypes.Add("游戏结果", EnumQRStatus.GameResult);
+            qrcodeTypes.Add("中奖信息", EnumQRStatus.Award);
+
+            InitializeComponent();
+            platformCBox.Items.Add("WeChat");
+            platformCBox.Items.Add("Taobao");
+
+            foreach (var pair in qrcodeTypes)
+            {
+                qrCodeCBox.Items.Add(pair.Key);
+            }
+            qrCodeCBox.SelectedIndex = 1;
+
+            orderByCBox.Items.Add("score");
+            orderByCBox.Items.Add("likecount");
+            orderByCBox.Items.Add("viewcount");
+
+            orderByCBox.SelectedIndex = 1;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
