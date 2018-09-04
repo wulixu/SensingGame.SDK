@@ -88,6 +88,7 @@
     <Compile Include="Contract\TenantAndOrganizationUnitOutput.cs" />
     <Compile Include="Contract\StaffSdkModel.cs" />
     <Compile Include="Contract\AjaxResponse.cs" />
+    <Compile Include="Dto\EntityDto.cs" />
     <Compile Include="Dto\PagedAndFilteredInputDto.cs" />
     <Compile Include="Dto\PagedAndSortedInputDto.cs" />
     <Compile Include="Dto\PagedInputDto.cs" />

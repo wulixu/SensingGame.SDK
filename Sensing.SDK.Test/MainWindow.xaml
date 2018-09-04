@@ -172,7 +172,16 @@
                         <ComboBox x:Name="qrCodeCBox" HorizontalAlignment="Left" Margin="83,9,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" Height="22"/>
                         <Label x:Name="ActivityInfoLabel" Content="活动信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="68" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115"/>
                         <Label x:Name="GameInfoLabel" Content="游戏信息:" HorizontalAlignment="Left" Margin="10,7,0,0" Width="68" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="1"/>
-                        <Label x:Name="ActivityGameLabel" Content="活动游戏信息:" HorizontalAlignment="Left" Margin="7,7,0,0" Width="92" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="2"/>
+                        <Label x:Name="ActivityGameLabel" Content="活动游戏设备信息:" HorizontalAlignment="Left" Margin="7,7,0,0" Width="113" Grid.Row="1" Height="26" VerticalAlignment="Top" RenderTransformOrigin="1.239,-1.115" Grid.Column="2">
+                            <Label.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform AngleY="-0.406"/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="-0.808"/>
+                                </TransformGroup>
+                            </Label.RenderTransform>
+                        </Label>
                         <TextBlock x:Name="activityDetails" HorizontalAlignment="Left" Height="77" Margin="12,31,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227"/>
                         <TextBlock x:Name="gameInfoDetails" HorizontalAlignment="Left" Height="77" Margin="10,31,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="1"/>
                         <TextBlock x:Name="activityGameDetails" HorizontalAlignment="Left" Height="77" Margin="13,31,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="227" Grid.Column="2"/>

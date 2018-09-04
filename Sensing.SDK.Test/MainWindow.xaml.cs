@@ -313,6 +313,42 @@ namespace Sensing.SDK.Test
         private async void GetDeviceActivityGameInfos_Click(object sender, RoutedEventArgs e)
         {
             var deviceActivityGame = await _sensingWebClient.GetDeviceActivityGameInfoAsync();
+            if (deviceActivityGame != null)
+            {
+                if (deviceActivityGame.Activity != null)
+                {
+                    activityDetails.Text = $"Activity Name:{deviceActivityGame.Activity.Name}" + Environment.NewLine;
+                    activityDetails.Text += $"Wechat Public Id:{deviceActivityGame.Activity.WeChatAppID}" + Environment.NewLine;
+                    activityDetails.Text += $"Taobao Seller Id:{deviceActivityGame.Activity.TaobaoSellerID}" + Environment.NewLine;
+                    activityDetails.Text += $"Enable Special User:{deviceActivityGame.Activity.IsEnableWhiteUser}" + Environment.NewLine;
+                }
+
+                //game details
+                if (deviceActivityGame.Software != null)
+                {
+                    gameInfoDetails.Text = $"Game Name:{deviceActivityGame.Software.Name}" + Environment.NewLine;
+                    gameInfoDetails.Text += $"Game Language:{deviceActivityGame.Software.Language}" + Environment.NewLine;
+                    gameInfoDetails.Text += $"Game EnvType:{deviceActivityGame.Software.EnvType}" + Environment.NewLine;
+                    gameInfoDetails.Text += $"Game Version:{deviceActivityGame.Software.VersionNumber}" + Environment.NewLine;
+                }
+
+                //game details
+                //gameInfoDetails.Text = $"ActivityGame Name:{deviceActivityGame.Name}" + Environment.NewLine;
+                activityGameDetails.Text += $"WeChatAuthorizationType:{deviceActivityGame.WeChatAuthorizationType.ToString()}" + Environment.NewLine;
+                activityGameDetails.Text += $"TaobaoAuthorizationType:{deviceActivityGame.TaobaoAuthorizationType}" + Environment.NewLine;
+                activityGameDetails.Text += $"DeviceId:{deviceActivityGame.DeviceId}" + Environment.NewLine;
+                activityGameDetails.Text += $"DeviceName:{deviceActivityGame.DeviceId}" + Environment.NewLine;
+            }
+
+            var awards = await _sensingWebClient.GetAwardsAsync();
+            if (awards != null)
+            {
+                awardDetails.Text += $"Awards Count :{awards.Count}" + Environment.NewLine;
+                foreach (var award in awards)
+                {
+                    awardDetails.Text += $"Award:{award.Name}--AwardId:{award.Id}----{award.AwardProduct}" + Environment.NewLine;
+                }
+            }
         }
     }
 }

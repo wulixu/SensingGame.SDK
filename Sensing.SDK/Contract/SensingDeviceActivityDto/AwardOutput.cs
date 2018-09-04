@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sensing.SDK.Dto;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace SensingStoreCloud.Activity
         Placeholder
     }
 
-    public class AwardOutput
+    public class AwardOutput : EntityDto<long>
     {
         /// <summary>
         /// 所属的租户 Id

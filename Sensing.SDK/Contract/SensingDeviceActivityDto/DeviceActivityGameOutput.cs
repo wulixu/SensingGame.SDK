@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sensing.SDK.Dto;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,9 +19,11 @@ namespace SensingStoreCloud.Activity
         /// 活动游戏名称.
         /// </summary>
         public string Name { get; set; }
-        public long? DeviceId { get; set; }
         public long SoftwareId { get; set; }
+        public SoftwareOutput Software { get; set; }
         public long DispatchedSoftwareId { get; set; }
+
+        public long? DeviceId { get; set; }
         //public DispatchedSoftware DispatchedSoftware { get; set; }
         public long ActivityId { get; set; }
         public virtual ActivityOutput Activity { get; set; }
@@ -244,5 +247,102 @@ namespace SensingStoreCloud.Activity
         /// 活动联系人电话
         /// </summary>
         public string ContactorPhone { get; set; }
+    }
+
+    public class SoftwareOutput : EntityDto<long>
+    {
+        /// <summary>
+        /// 软件或软件产品的名称.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 软件唯一标号，便于部署的名字.
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
+        /// 软件开发的负责人.
+        /// </summary>
+        public string Owner { get; set; }
+
+        public string Contact { get; set; }
+
+        public int? TenantId { get; set; }
+
+        /// <summary>
+        /// 在线游戏链接地址
+        /// OnLine时使用该地址,Offline的h5也使用该地址.
+        /// </summary>
+        public string Url { get; set; }
+
+
+        public string LogoUrl { get; set; }
+
+        public string LargeImageUrl { get; set; }
+
+        public int EnvType { get; set; }
+
+        /// <summary>
+        /// 版本号,格式为 1.0.0.5
+        /// </summary>
+        public string VersionNumber { get; set; }
+
+        public int Type { get; set; }
+
+
+        /// <summary>
+        /// 最佳分辨率, 1920*1080.
+        /// </summary>
+        public int? TargetResolution_Width { get; set; }
+
+        public int? TargetResolution_Height { get; set; }
+
+        public string Language { get; set; }
+
+        public int GameType { get; set; }
+
+        public string Description { get; set; }
+
+        #region SNS Settings.
+
+        /// <summary>
+        /// 游戏支持的同时玩游戏人数
+        /// </summary>
+        public int? SupportedPlayersCount { get; set; }
+
+        /// <summary>
+        /// 是否支持同步
+        /// </summary>
+        public bool IsSupportAsync { get; set; } = false;
+
+        /// <summary>
+        /// 是否在游戏前发送消息
+        /// 比如有些游戏需要先扫码才能玩，一旦用户扫码，用户的微信会接收到一条消息，这个时候就是游戏前发送消息
+        /// </summary>
+        public bool IsSendWechatBeforeGame { get; set; }
+        /// <summary>
+        /// 表示这个消息什么场景会发，比如游戏前，或者扫码时
+        /// </summary>
+        public string SendWeChatBeforGameTabName { get; set; }
+        /// <summary>
+        /// 是否在游戏后发送消息
+        /// 用户玩完游戏后，系统会推送一些游戏成绩到用户微信里，决定是否发这样的消息
+        /// </summary>
+        public bool IsSendWechatAfterGame { get; set; }
+        /// <summary>
+        /// 表示这个消息什么场景会发，比如游戏前，或者扫码时
+        /// </summary>
+        public string SendWeChatAfterGameTabName { get; set; }
+        /// <summary>
+        /// 游戏是否支持分享
+        /// </summary>
+        public bool IsShareAction { get; set; } = true;
+        /// <summary>
+        /// 表示分享tab的名称
+        /// </summary>
+        public string ShareActionTabName { get; set; } = "游戏分享";
+
+        #endregion
     }
 }

@@ -17,6 +17,7 @@ namespace Sensing.SDK
         private const string CreateQrcode4LoginQuery = "/BehaviorRecord/PostRecord";
         //private const string PostDeviceStatusQuery = "/BehaviorRecord/PostDeviceStatusRecord";
         private const string GetDeviceActivityGameInfoQuery = "services/app/SensingDeviceActivity/GetDeviceActivityGameInfo";
+        private const string GetAwardsByActivityQuery =       "services/app/SensingDeviceActivity/GetAwardsByActivity";
 
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
@@ -46,7 +47,23 @@ namespace Sensing.SDK
             var absolutePath = $"{ServerBase}{ActivityDataPath}{GetDeviceActivityGameInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
-                var webResult = await SendRequestAsync<string, AjaxResponse<DeviceActivityGameOutput>>(HttpMethod.Post, absolutePath, string.Empty);
+                var webResult = await SendRequestAsync<string, AjaxResponse<DeviceActivityGameOutput>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetRecommendsByFaces:" + ex.InnerException);
+            }
+            return null;
+        }
+
+
+        public async Task<List<AwardOutput>> GetAwardsAsync()
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetAwardsByActivityQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<List<AwardOutput>>>(HttpMethod.Get, absolutePath, null);
                 return webResult.Result;
             }
             catch (Exception ex)
