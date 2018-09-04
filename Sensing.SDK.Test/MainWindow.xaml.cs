@@ -36,9 +36,10 @@ namespace Sensing.SDK.Test
         {
             var subKey = SubKeyTB.Text;
             var mac = ClientNoTB.Text;
+            var dAG = SecurityKey.Text;
             //subKey = "hahaha";
             //mac = "aa:bb:cc:dd:ee:f0";
-            _sensingWebClient = new SensingWebClient(subKey, "123456", mac);
+            _sensingWebClient = new SensingWebClient(subKey, "123456", mac,dAG);
             CreateBtn.Background = Brushes.Green;
             tabControl.IsEnabled = true;
         }
@@ -259,6 +260,59 @@ namespace Sensing.SDK.Test
             {
                 MatchMsg.Text = "failed" + Environment.NewLine;
             }
+        }
+
+        #region Activity
+
+        private void ScannedAvator_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CreateQrcode_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void ActivityWinner_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GetRankUsers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CreateWinUser_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StartActivity_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StopAcitivy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PostDataByUserClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TaoUploadBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        private async void GetDeviceActivityGameInfos_Click(object sender, RoutedEventArgs e)
+        {
+            var deviceActivityGame = await _sensingWebClient.GetDeviceActivityGameInfoAsync();
         }
     }
 }

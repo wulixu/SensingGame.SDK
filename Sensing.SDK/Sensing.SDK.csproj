@@ -77,6 +77,11 @@
     <Compile Include="Contract\ProductSdkModel.cs" />
     <Compile Include="Contract\PropertyViewModel.cs" />
     <Compile Include="Contract\RegisterDeviceViewModel.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\AwardOutput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\DeviceActivityGameOutput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\Qrcode4LoginInput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\QrcodeOutput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\SnsUserAwardOuput.cs" />
     <Compile Include="Contract\SensingDeviceProductCommentModel.cs" />
     <Compile Include="Contract\TagSdkModel.cs" />
     <Compile Include="Contract\TaobaoRecommendGoodsInput.cs" />
