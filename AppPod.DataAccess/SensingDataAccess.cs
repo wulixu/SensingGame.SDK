@@ -1476,6 +1476,19 @@ namespace AppPod.DataAccess
             });
         }
 
+        public void RemovePrefixText(string text)
+        {
+            var showProducts = QueryShowProducts(false);
+            showProducts.ForEach(p => {
+                if (!string.IsNullOrEmpty(text) && p.Product.Title.StartsWith(text))
+                {
+                    p.ProductName = p.ProductName.Substring(text.Length).TrimStart();
+                    p.Name = p.ProductName;
+                    p.Product.Title = p.ProductName;
+                }
+            });
+        }
+
         public void FindAllMatch()
         {
             if (MatchedProducts == null)
