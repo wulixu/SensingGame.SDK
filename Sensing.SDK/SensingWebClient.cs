@@ -35,6 +35,7 @@ namespace Sensing.SDK
         private string _subKey;
         private string _softwareNo;
         private string _clientNo;
+        private string _deviceActivityGameSecurityKey;
         #endregion
 
         private static readonly ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -73,11 +74,12 @@ namespace Sensing.SDK
             }
         }
 
-        public SensingWebClient(string subscriptionKey, string softwareNo,string mac)
+        public SensingWebClient(string subscriptionKey, string softwareCode,string mac,string deviceActivityGameSecurityKey = "")
         {
             this._subKey = subscriptionKey;
-            this._softwareNo = softwareNo;
+            this._softwareNo = softwareCode;
             this._clientNo = mac;
+            _deviceActivityGameSecurityKey = deviceActivityGameSecurityKey;
         }
 
         #region the json client
@@ -199,7 +201,7 @@ namespace Sensing.SDK
 
         private string GetBasicNameValuesQueryString()
         {
-            return $"softwareNo={_softwareNo}&clientNo={_clientNo}&subKey={_subKey}";
+            return $"softwareNo={_softwareNo}&clientNo={_clientNo}&subKey={_subKey}&securityKey={_deviceActivityGameSecurityKey}";
         }
 
         private void AddBasicNameValues(NameValueCollection collections)
@@ -207,6 +209,7 @@ namespace Sensing.SDK
             collections.Add("softwareNo", _softwareNo);
             collections.Add("clientNo", _clientNo);
             collections.Add("subKey", _subKey);
+            collections.Add("SecurityKey", _deviceActivityGameSecurityKey);
         }
         #endregion
     }

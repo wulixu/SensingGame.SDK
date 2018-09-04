@@ -33,7 +33,8 @@ namespace Sensing.SDK.Contract
         public string MemberId { get; set; }
         public string MemberName { get; set; }
         public string Mobile { get; set; }
-        public string OpenId { get; set; }   
+        public string OpenId { get; set; }
+        public string AvatarUrl { get; set; }
         /// <summary>
         /// 人脸识别来源/推荐来源.
         /// </summary>
@@ -58,6 +59,7 @@ namespace Sensing.SDK.Contract
         public string MemberName { get; set; }
         public string Mobile { get; set; }
         public string OpenId { get; set; }
+        public string AvatarUrl { get; set; }
         /// <summary>
         /// 人脸识别来源/推荐来源.
         /// </summary>
