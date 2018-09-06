@@ -105,6 +105,10 @@ namespace Sensing.SDK
                     request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 }
             }
+            //else if(requestBody != null && httpMethod == HttpMethod.Post)
+            //{
+
+            //}
 
             HttpResponseMessage response = await s_httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)

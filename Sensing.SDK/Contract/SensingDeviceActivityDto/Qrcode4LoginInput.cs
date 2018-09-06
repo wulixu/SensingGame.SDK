@@ -19,42 +19,6 @@ namespace SensingStoreCloud.Activity
         NotGetPrize
     }
 
-    public interface ISensingDeviceGameInput
-    {
-         string SecurityKey { get; set; }
-    }
-    public class SensingDeviceGameInputBase : ISensingDeviceGameInput
-    {
-        [Required]
-        public string SecurityKey { get; set; }
-    }
-
-    public class SensingDeviceGamePagedSortedFilteredInputBase: PagedSortedAndFilteredInputDto, ISensingDeviceGameInput
-    {
-        [Required]
-        public string SecurityKey { get; set; }
-
-        public string SoftwareCode { get; set; }
-
-        public string ClientId { get; set; }
-
-        public void Normalize()
-        {
-            if (string.IsNullOrEmpty(Sorting))
-            {
-                Sorting = "LastModificationTime";
-            }
-        }
-    }
-
-    public class Qrcode4LoginInput: SensingDeviceGameInputBase
-    {
-        public bool IsSendWeChatMsg { get; set; }
-        public string Params { get; set; }
-        public EnumQRStatus QrType { get; set; }
-        public EnumSnsType SnsType { get; set; }
-    }
-
     public enum EnumSnsType
     {
         Taobao,
@@ -91,10 +55,57 @@ namespace SensingStoreCloud.Activity
         [Display(Name = "中奖主页")]
         Award
     }
-    public class Qrcode4UsersInput : PagedSortedAndFilteredInputDto
+
+    public interface ISensingDeviceGameInput
+    {
+        string SecurityKey { get; set; }
+    }
+    public class SensingDeviceGameInputBase : ISensingDeviceGameInput
     {
         [Required]
-        [Range(0,double.MaxValue)]
+        public string SecurityKey { get; set; }
+
+        public string Params { get; set; }
+    }
+
+    public class SensingDeviceGameListInputBase : PagedSortedAndFilteredInputDto, ISensingDeviceGameInput
+    {
+        [Required]
+        public string SecurityKey { get; set; }
+        public string Params { get; set; }
+    }
+
+    public class SensingDeviceGamePagedSortedFilteredInputBase : PagedSortedAndFilteredInputDto, ISensingDeviceGameInput
+    {
+        [Required]
+        public string SecurityKey { get; set; }
+
+        public string SoftwareCode { get; set; }
+
+        public string ClientId { get; set; }
+
+        public void Normalize()
+        {
+            if (string.IsNullOrEmpty(Sorting))
+            {
+                Sorting = "LastModificationTime";
+            }
+        }
+    }
+
+    public class Qrcode4LoginInput : SensingDeviceGameInputBase
+    {
+        public bool? IsSendWeChatMsg { get; set; }
+        public string Params { get; set; }
+        public EnumQRStatus QrType { get; set; }
+        public EnumSnsType SnsType { get; set; }
+        public string TargetUrl { get; set; }
+    }
+
+    public class Qrcode4UsersInput : SensingDeviceGameListInputBase
+    {
+        [Required]
+        [Range(0, double.MaxValue)]
         public long QrcodeId { get; set; }
 
         public void Normalize()
@@ -106,18 +117,13 @@ namespace SensingStoreCloud.Activity
         }
     }
 
-    public class ActivityInput: PagedSortedAndFilteredInputDto
+
+    public class PlayerDataInput : Qrcode4LoginInput
     {
-
-    }
-
-
-    public class PlayerDataInput: Qrcode4LoginInput
-    { 
-        //public IFormFile PlayerImage { get; set; }
-        //public IFormFile PlayingImage { get; set; }
+        public string PlayerImage { get; set; }
+        public string PlayingImage { get; set; }
         public double? Score { get; set; }
-        public ActionStatus? Status { get; set; }
+        //public ActionStatus? Status { get; set; }
     }
 
     public class PlayerActionDataInput : PlayerDataInput
@@ -127,11 +133,35 @@ namespace SensingStoreCloud.Activity
         public long ActionId { get; set; }
     }
 
-    public class SnsUserActionDataInput: PlayerActionDataInput
+    public class SnsUserActionDataInput : PlayerActionDataInput
     {
         [Required]
         [Range(0, double.MaxValue)]
         public string OpenId { get; set; }
+        public string AvatarUrl { get; set; }
+    }
+
+    public class FaceUserFormDataInput : Qrcode4LoginInput
+    {
+        [Required]
+        [Range(0, double.MaxValue)]
+        public string OpenId { get; set; }
+        public string AvatarUrl { get; set; }
+        public string HeaderImage { get; set; }
+        public string Phone { get; set; }
+        public string Name { get; set; }
+    }
+
+
+    public class FaceUserDataInput : Qrcode4LoginInput
+    {
+        [Required]
+        [Range(0, double.MaxValue)]
+        public string OpenId { get; set; }
+        public string AvatarUrl { get; set; }
+        public string FaceUrl { get; set; }
+        public string Phone { get; set; }
+        public string Name { get; set; }
     }
 
     public class ActionDataInput : SensingDeviceGameInputBase
@@ -141,10 +171,17 @@ namespace SensingStoreCloud.Activity
         public long ActionId { get; set; }
     }
 
-    public class LotteryByAwardDataInput : SensingDeviceGameInputBase
+    public class AwardDataInput : SensingDeviceGameInputBase
     {
         [Required]
         [Range(0, double.MaxValue)]
         public long AwardId { get; set; }
+    }
+
+    public class UserAwardDataInput : SensingDeviceGameInputBase
+    {
+        [Required]
+        [Range(0, double.MaxValue)]
+        public long UserAwardId { get; set; }
     }
 }
