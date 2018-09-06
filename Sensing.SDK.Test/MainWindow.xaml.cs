@@ -24,6 +24,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZXing;
 using Brushes = System.Windows.Media.Brushes;
+using Path = System.IO.Path;
 
 namespace Sensing.SDK.Test
 {
@@ -79,13 +80,29 @@ namespace Sensing.SDK.Test
 
         public static BitmapSource WebImageToImage(string imageUrl)
         {
-            var imageBytes = new WebClient().DownloadData(imageUrl);
-            MemoryStream ms = new MemoryStream(imageBytes);
-            BitmapImage bmImage = new BitmapImage();
-            bmImage.BeginInit();
-            bmImage.StreamSource = ms;
-            bmImage.EndInit();
-            return bmImage;
+            try
+            {
+                var imageBytes = new WebClient().DownloadData(imageUrl);
+                MemoryStream ms = new MemoryStream(imageBytes);
+                BitmapImage bmImage = new BitmapImage();
+                bmImage.BeginInit();
+                bmImage.StreamSource = ms;
+                bmImage.EndInit();
+                return bmImage;
+            }
+            catch
+            {
+                //var imageBytes = new WebClient().DownloadFile(imageUrl,"avator.png");
+                new WebClient().DownloadFile(imageUrl, "avator.png");
+                var path = Path.Combine(Environment.CurrentDirectory, "avator.png");
+                OpenCvSharp.Mat src = new OpenCvSharp.Mat(path, OpenCvSharp.ImreadModes.Color);
+                // Mat src = Cv2.ImRead("lenna.png", ImreadModes.GrayScale);
+                BitmapImage bmImage = new BitmapImage();
+                bmImage.BeginInit();
+                bmImage.StreamSource = src.ToMemoryStream();
+                bmImage.EndInit();
+                return bmImage;
+            }
         }
 
         public static BitmapSource ValueToImage(string qrcode)
@@ -433,7 +450,7 @@ namespace Sensing.SDK.Test
                 var winner = await _sensingWebClient.DoLotteryAwardByAction(actionData);
                 if (winner != null)
                 {
-                    avatorWinnerImg.Source = UriToImage(winner.SnsUserInfo.Headimgurl);
+                    avatorWinnerImg.Source = UriToImage(winner.Award.AwardProduct);
                 }
             }
         }

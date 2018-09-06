@@ -172,7 +172,7 @@ namespace Sensing.SDK
         public async Task<SnsUserAwardOuput> DoLotteryUserByAwardId(AwardDataInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetScanQrCodeUsersQuery}";
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{DoLotteryUserByAwardIdQuery}";
             try
             {
                 var webResult = await SendRequestAsync<AwardDataInput, AjaxResponse<SnsUserAwardOuput>>(HttpMethod.Post, absolutePath, input);
