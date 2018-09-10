@@ -117,6 +117,17 @@ namespace SensingStoreCloud.Activity
         }
     }
 
+    public class PlayerActionDataSimpleDataInput: SensingDeviceGameListInputBase
+    {
+        [Required]
+        [Range(0, double.MaxValue)]
+        public long ActionId { get; set; }
+        public string PlayerImage { get; set; }
+        public string PlayingImage { get; set; }
+        public double? Score { get; set; }
+        public EnumQRStatus QrType { get; set; }
+    }
+
 
     public class PlayerDataInput : Qrcode4LoginInput
     {

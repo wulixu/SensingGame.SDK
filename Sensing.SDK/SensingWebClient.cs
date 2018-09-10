@@ -153,9 +153,13 @@ namespace Sensing.SDK
                 foreach (string key in data.Keys)
                 {
                     //Content-Disposition : form-data; name="json".
-                    var stringContent = new StringContent(data[key]);
-                    stringContent.Headers.Add("Content-Disposition", $"form-data; name={key}");
-                    form.Add(stringContent, key);
+                    var value = data[key];
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        var stringContent = new StringContent(value);
+                        stringContent.Headers.Add("Content-Disposition", $"form-data; name={key}");
+                        form.Add(stringContent, key);
+                    }
                 }
 
                 //1.2 file

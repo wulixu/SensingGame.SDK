@@ -459,14 +459,14 @@ namespace Sensing.SDK.Test
         {
             var rankMax = int.Parse(rankPos.Text);
             var orderby = orderByCBox.SelectedValue as string;
-            var first = new Qrcode4UsersInput { QrcodeId = long.Parse(firstQrCode), Sorting = orderby, SkipCount = rankMax };
-            var rankUser = await _sensingWebClient.GetScanQrCodeUsers(first);
+            var first = new Qrcode4UsersInput { QrcodeId = long.Parse(firstQrCode), Sorting = orderby, SkipCount = rankMax-1 };
+            var rankUserActions = await _sensingWebClient.GetScanQrCodeUserActions(first);
 
-            if (rankUser != null && rankUser.Items.Count > 0)
+            if (rankUserActions != null && rankUserActions.Items.Count > 0)
             {
-                var topUser = rankUser.Items[0];
-                avatorRank.Source = UriToImage(topUser.Headimgurl);
-                rankMsg.Content = $"Id:{topUser.Id}--OpenId:{topUser.Openid}--Nickname:{topUser.Nickname}";
+                var topUser = rankUserActions.Items[0];
+                avatorRank.Source = UriToImage(topUser.SnsUserInfo.Headimgurl);
+                rankMsg.Content = $"Id:{topUser.Id}--OpenId:{topUser.SnsUserInfo.Openid}--Nickname:{topUser.SnsUserInfo.Nickname}";
             }
             else
             {
@@ -495,9 +495,28 @@ namespace Sensing.SDK.Test
 
         }
 
-        private void PostDataByUserClick(object sender, RoutedEventArgs e)
+        private async void PostDataByUserClick(object sender, RoutedEventArgs e)
         {
-
+            var playData = new PlayerActionDataInput
+            {
+                ActionId = firstUserAction.Id,
+                PlayerImage = System.IO.Path.Combine(Environment.CurrentDirectory, "player.jpg"),
+                PlayingImage = System.IO.Path.Combine(Environment.CurrentDirectory, "playing.jpg"),
+                Score = Convert.ToInt16(score.Text),
+                SnsType = EnumSnsType.WeChat,
+                QrType = EnumQRStatus.AfterGame,
+                IsSendWeChatMsg = true
+            };
+            var data = await _sensingWebClient.PostPlayerDataByAction(playData);
+            if (data != null)
+            {
+                var userActionData = new ActionDataInput { ActionId = firstUserAction.Id };
+                var userAction = await _sensingWebClient.GetUserActionByIdAsync(userActionData);
+                if(userAction != null)
+                {
+                    PlayingImg.Source = WebImageToImage(userAction.GameImage);
+                }
+            }
         }
 
         #endregion

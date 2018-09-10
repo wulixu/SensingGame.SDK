@@ -28,6 +28,7 @@ namespace Sensing.SDK
 
         private const string DoLotteryUserByAwardIdQuery = "services/app/SensingDeviceActivity/DoLotteryUserByAwardId";
         private const string DoLotteryAwardByActionQuery = "services/app/SensingDeviceActivity/DoLotteryAwardByAction";
+        private const string GetUserActionByIdQuery = "services/app/SensingDeviceActivity/GetUserActionById";
 
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
@@ -68,7 +69,8 @@ namespace Sensing.SDK
 
         public async Task<UserActionInfoOutput> PostPlayerDataByAction(PlayerActionDataInput playerActionData)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{PostPlayerDataByActionQuery}";
+            //var absolutePath = $"{ServerBase}{ActivityDataPath}{PostPlayerDataByActionQuery}";
+            var absolutePath = "http://localhost:13654/api/UserAction/PostPlayerDataByAction";
             var nameValues = new NameValueCollection();
             AddBasicNameValues(nameValues);
             nameValues.Add("score", playerActionData.Score.ToString());
@@ -216,6 +218,23 @@ namespace Sensing.SDK
             return null;
         }
 
-        
+
+        public async Task<UserActionInfoOutput> GetUserActionByIdAsync(ActionDataInput input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetUserActionByIdQuery}?{GetBasicNameValuesQueryString()}&actionId={input.ActionId}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<UserActionInfoOutput>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetUserActionById:" + ex.InnerException);
+            }
+            return null;
+        }
+
+
     }
 }
