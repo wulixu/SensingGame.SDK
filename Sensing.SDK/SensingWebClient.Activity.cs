@@ -69,8 +69,8 @@ namespace Sensing.SDK
 
         public async Task<UserActionInfoOutput> PostPlayerDataByAction(PlayerActionDataInput playerActionData)
         {
-            //var absolutePath = $"{ServerBase}{ActivityDataPath}{PostPlayerDataByActionQuery}";
-            var absolutePath = "http://localhost:13654/api/UserAction/PostPlayerDataByAction";
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{PostPlayerDataByActionQuery}";
+            //var absolutePath = "http://localhost:13654/api/UserAction/PostPlayerDataByAction";
             var nameValues = new NameValueCollection();
             AddBasicNameValues(nameValues);
             nameValues.Add("score", playerActionData.Score.ToString());
@@ -191,16 +191,16 @@ namespace Sensing.SDK
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
             var absolutePath = $"{ServerBase}{ActivityDataPath}{DoLotteryAwardByActionQuery}";
-            try
-            {
-                var webResult = await SendRequestAsync<ActionDataInput, AjaxResponse<SnsUserAwardOuput>>(HttpMethod.Post, absolutePath, input);
-                return webResult.Result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("DoLotteryByAwardId:" + ex.InnerException);
-            }
-            return null;
+            //var absolutePath = "http://localhost:13654/api/services/app/SensingDeviceActivity/DoLotteryAwardByAction";
+
+            var webResult = await SendRequestAsync<ActionDataInput, AjaxResponse<SnsUserAwardOuput>>(HttpMethod.Post, absolutePath, input);
+            return webResult.Result;
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("DoLotteryByAwardId:" + ex.InnerException);
+            //}
+            //return null;
         }
 
         public async Task<List<AwardOutput>> GetAwardsAsync()

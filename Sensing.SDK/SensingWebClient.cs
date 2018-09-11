@@ -11,6 +11,7 @@ using System.Collections.Specialized;
 using log4net;
 using System.Reflection;
 using System.Configuration;
+using Sensing.SDK.Contract;
 
 namespace Sensing.SDK
 {
@@ -131,14 +132,15 @@ namespace Sensing.SDK
                 if (response.Content != null && response.Content.Headers.ContentType.MediaType.Contains(JsonHeader))
                 {
                     var errorObjectString = await response.Content.ReadAsStringAsync();
-                    ClientError errorCollection = JsonConvert.DeserializeObject<ClientError>(errorObjectString);
+                    ErrorAjaxResponse errorCollection = JsonConvert.DeserializeObject<ErrorAjaxResponse>(errorObjectString);
+                    //return errorCollection;
                     if (errorCollection != null)
                     {
-                        throw new ClientException(errorCollection, response.StatusCode);
+                        throw new ClientException(errorCollection.Error?.Message, response.StatusCode);
                     }
                 }
 
-                    response.EnsureSuccessStatusCode();
+                response.EnsureSuccessStatusCode();
             }
 
             return default(TResponse);

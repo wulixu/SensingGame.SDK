@@ -447,10 +447,18 @@ namespace Sensing.SDK.Test
             if (_awards != null && _awards.Count > 0)
             {
                 var actionData = new ActionDataInput { ActionId = firstUserAction.Id };
-                var winner = await _sensingWebClient.DoLotteryAwardByAction(actionData);
-                if (winner != null)
+                try
                 {
-                    avatorWinnerImg.Source = UriToImage(winner.Award.AwardProduct);
+                    var winner = await _sensingWebClient.DoLotteryAwardByAction(actionData);
+                    if (winner != null)
+                    {
+                        avatorWinnerImg.Source = WebImageToImage(winner.Award.AwardImagePath);
+                        AwardProductLable.Content = $"Award Id:{winner.Award.Id},Award Name:{winner.Award.AwardProduct}";
+                    }
+                }
+                catch(Exception ex)
+                {
+                    AwardProductLable.Content = ex.Message;
                 }
             }
         }
@@ -481,7 +489,17 @@ namespace Sensing.SDK.Test
             var awardUser = await _sensingWebClient.DoLotteryUserByAwardId(awardData);
             if (awardUser != null)
             {
-                awardUserImg.Source = UriToImage(awardUser.SnsUserInfo.Headimgurl);
+                awardImgy.Source = WebImageToImage(awardUser.Award.AwardImagePath);
+                if (!string.IsNullOrEmpty(awardUser.SnsUserInfo.Headimgurl))
+                {
+                    awardUserImg.Source = WebImageToImage(awardUser.SnsUserInfo.Headimgurl);
+                }
+                else
+                {
+                    awardUserImg.Source = new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, "no.jpg")));
+                }
+                awardTextBlock.Text = $"Award User Id ={awardUser.SnsUserInfo.Openid}, SnsType={awardUser.SnsUserInfo.SnsType.ToString()}" + Environment.NewLine;
+                awardTextBlock.Text += $"Award  Id ={awardUser.AwardId}, Product Name={awardUser.Award.AwardProduct}" + Environment.NewLine;
             }
         }
 
@@ -533,6 +551,7 @@ namespace Sensing.SDK.Test
                     activityDetails.Text += $"Wechat Public Id:{deviceActivityGame.Activity.WeChatAppID}" + Environment.NewLine;
                     activityDetails.Text += $"Taobao Seller Id:{deviceActivityGame.Activity.TaobaoSellerID}" + Environment.NewLine;
                     activityDetails.Text += $"Enable Special User:{deviceActivityGame.Activity.IsEnableWhiteUser}" + Environment.NewLine;
+                    activityDetails.Text += $"Enable Repeart Award:{deviceActivityGame.Activity.IsAllowedRepeatAward}" + Environment.NewLine;
                 }
 
                 //game details
