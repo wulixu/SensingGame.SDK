@@ -224,7 +224,7 @@ namespace AppPod.DataAccess
 
         public ProductSdkModel FindByRfidCode(string rfid)
         {
-            return Products?.FirstOrDefault(p => p.Skus.Any(s => s.RfidCode != null && s.RfidCode.Contains(rfid)));
+            return Products?.FirstOrDefault(p => p.Skus.Any(s => (s.RfidCode?.StartsWith(rfid)??false) || (s.OuterId?.StartsWith(rfid)??false) || (s.SkuId?.StartsWith(rfid)??false)));
         }
 
         public string GetLocalImagePath(string path, string category)
@@ -719,7 +719,7 @@ namespace AppPod.DataAccess
                             foreach (var pImg in prod.PropImgs)
                             {
                                 var keyProps = pImg.PropertyName;
-                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags, keywords));
+                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName != null && s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags, keywords));
                                 if (firstSku != null)
                                 {
                                     showProducts.Add(new ShowProductInfo

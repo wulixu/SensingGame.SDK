@@ -23,7 +23,6 @@ namespace Sensing.SDK.Contract
         /// <summary>
         /// 面额
         /// </summary>
-        public int Amount { get; set; }
 
         /// <summary>
         /// 优惠券活动ID 应该是模板id
