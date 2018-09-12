@@ -23,6 +23,8 @@ namespace Sensing.SDK
 
         private const string MaxResultCount = "MaxResultCount";
         private const string SkipCount = "SkipCount";
+        private const string Query = "Filter";
+
 
         public async Task<PagedResultDto<ProductSdkModel>> GetProducts(int skipCount = 0,int maxCount=300)
         {

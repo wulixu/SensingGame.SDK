@@ -2,10 +2,14 @@
 using Sensing.SDK;
 using Sensing.SDK.Contract;
 using SensingSite.ClientSDK.Common;
+using SensingStoreCloud.Activity;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,10 +17,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZXing;
+using Brushes = System.Windows.Media.Brushes;
+using Path = System.IO.Path;
 
 namespace Sensing.SDK.Test
 {
@@ -26,12 +34,38 @@ namespace Sensing.SDK.Test
     public partial class MainWindow : Window
     {
         SensingWebClient _sensingWebClient;
-        
+        private Dictionary<string, EnumQRStatus> qrcodeTypes = new Dictionary<string, EnumQRStatus>();
         public MainWindow()
         {
             InitializeComponent();
             this.ClientNoTB.Text = MacIPHelper.GetClientMac();
+
+            qrcodeTypes.Add("游戏之前", EnumQRStatus.BeforeGame);
+            qrcodeTypes.Add("游戏之后", EnumQRStatus.AfterGame);
+            qrcodeTypes.Add("活动介绍", EnumQRStatus.ActivityIntroduction);
+            qrcodeTypes.Add("活动注册", EnumQRStatus.ActivityRegister);
+            qrcodeTypes.Add("在线游戏", EnumQRStatus.OnlineGame);
+            qrcodeTypes.Add("游戏结果", EnumQRStatus.GameResult);
+            qrcodeTypes.Add("中奖信息", EnumQRStatus.Award);
+
+            InitializeComponent();
+            platformCBox.Items.Add("WeChat");
+            platformCBox.Items.Add("Taobao");
+
+            foreach (var pair in qrcodeTypes)
+            {
+                qrCodeCBox.Items.Add(pair.Key);
+            }
+            qrCodeCBox.SelectedIndex = 1;
+
+            orderByCBox.Items.Add("score");
+            orderByCBox.Items.Add("likecount");
+            orderByCBox.Items.Add("viewcount");
+
+            orderByCBox.SelectedIndex = 1;
         }
+
+        #region private 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var subKey = SubKeyTB.Text;
@@ -43,6 +77,83 @@ namespace Sensing.SDK.Test
             CreateBtn.Background = Brushes.Green;
             tabControl.IsEnabled = true;
         }
+
+        public static BitmapSource WebImageToImage(string imageUrl)
+        {
+            try
+            {
+                var imageBytes = new WebClient().DownloadData(imageUrl);
+                MemoryStream ms = new MemoryStream(imageBytes);
+                BitmapImage bmImage = new BitmapImage();
+                bmImage.BeginInit();
+                bmImage.StreamSource = ms;
+                bmImage.EndInit();
+                return bmImage;
+            }
+            catch
+            {
+                //var imageBytes = new WebClient().DownloadFile(imageUrl,"avator.png");
+                new WebClient().DownloadFile(imageUrl, "avator.png");
+                var path = Path.Combine(Environment.CurrentDirectory, "avator.png");
+                OpenCvSharp.Mat src = new OpenCvSharp.Mat(path, OpenCvSharp.ImreadModes.Color);
+                // Mat src = Cv2.ImRead("lenna.png", ImreadModes.GrayScale);
+                BitmapImage bmImage = new BitmapImage();
+                bmImage.BeginInit();
+                bmImage.StreamSource = src.ToMemoryStream();
+                bmImage.EndInit();
+                return bmImage;
+            }
+        }
+
+        public static BitmapSource ValueToImage(string qrcode)
+        {
+
+            IBarcodeWriter writer = new BarcodeWriter { Format = BarcodeFormat.QR_CODE };
+            var bitmap = writer.Write(qrcode);
+
+            var hbmp = bitmap.GetHbitmap();
+            BitmapSource source;
+            try
+            {
+                source = Imaging.CreateBitmapSourceFromHBitmap(hbmp, IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+
+            }
+            finally
+            {
+                //DeleteObject(hbmp);
+            }
+            return source;
+        }
+
+        public static BitmapImage ToBitmapImage(Bitmap bitmap)
+        {
+            using (var memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+
+                return bitmapImage;
+            }
+        }
+        public static BitmapSource UriToImage(string imageUrl)
+        {
+            if (string.IsNullOrEmpty(imageUrl)) return null;
+            if (imageUrl.Contains("mp.weixin.qq.com/cgi-bin/showqrcode") || imageUrl.Contains("wx.qlogo.cn"))
+            {
+                return WebImageToImage(imageUrl);
+            }
+            else
+            {
+                return ValueToImage(imageUrl);
+            }
+        }
+        #endregion
 
         private async void UploadBehaviorDataBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -67,9 +178,6 @@ namespace Sensing.SDK.Test
             var result = await _sensingWebClient.PostBehaviorRecordsAsync(records);
             BMessage.Text += result + Environment.NewLine;
         }
-
-
-
 
         private async void GetThings_Click(object sender, RoutedEventArgs e)
         {
@@ -266,26 +374,133 @@ namespace Sensing.SDK.Test
 
         private void ScannedAvator_Click(object sender, RoutedEventArgs e)
         {
+            Timer_ScanUsers(null,null);
+        }
+
+        UserActionInfoOutput firstUserAction;
+        private async void Timer_ScanUsers(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(firstQrCode))
+            {
+                var first = new Qrcode4UsersInput { QrcodeId = long.Parse(firstQrCode), Sorting = "CreateTime" };
+                var users = await _sensingWebClient.GetScanQrCodeUserActions(first);
+                if (users != null && users.Items.Count > 0)
+                {
+                    scanCountBefore.Content = $"目前有{users.Items.Count} 人扫码";
+                    firstUserAction = users.Items[0];
+                    //avatorImg.Source = new BitmapImage(new Uri(user.Data.Headimgurl));
+                    avatorImg.Source = UriToImage(firstUserAction.SnsUserInfo.Headimgurl);
+                    //await gameSvc.PostDataByUserAsync(firstUser.ActionId.ToString(), null, null, 80);
+                }
+            }
+        }
+
+
+        private string firstQrCode;
+        private string afterQrCode;
+        private async void CreateQrcode_Click(object sender, RoutedEventArgs e)
+        {
+            var snsType = platformCBox.SelectedValue.ToString() == "Taobao" ? EnumSnsType.Taobao : EnumSnsType.WeChat;
+            var qrType = qrcodeTypes[qrCodeCBox.SelectedValue.ToString()];
+            if (qrType == EnumQRStatus.AfterGame)
+            {
+                var playingData = new PlayerDataInput()
+                {
+                    IsSendWeChatMsg = true,
+                    PlayerImage = System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"),
+                    PlayingImage = System.IO.Path.Combine(Environment.CurrentDirectory, "player.png"),
+                    Score = double.Parse(scoreafter.Text),
+                    QrType = qrType,
+                    SnsType = snsType,
+                     TargetUrl = YourTargetUrl.Text
+                };
+
+                var actionQrcode = await _sensingWebClient.PostPlayerData4ActionQrcodeAsync(playingData);
+                if (actionQrcode != null)
+                {
+                    firstQrCode = actionQrcode.QrCodeId;
+                    qrCodeImg.Source = UriToImage(actionQrcode.QrCodeUrl);
+                }
+            }
+            else
+            {
+                var loginData = new Qrcode4LoginInput() { IsSendWeChatMsg = false, SnsType = snsType, QrType = qrType, TargetUrl = YourTargetUrl.Text };
+                var data = await _sensingWebClient.CreateQrCode4LoginAsync(loginData);
+                if (data != null)
+                {
+                    //var qrcode = data.Data;
+                    firstQrCode = data.QrCodeId;
+                    qrCodeImg.Source = UriToImage(data.QrCodeUrl);
+                }
+            }
+
 
         }
 
-        private void CreateQrcode_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 特定用户随机抽奖.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void ActivityWinner_Click(object sender, RoutedEventArgs e)
         {
-
+            if (_awards != null && _awards.Count > 0)
+            {
+                var actionData = new ActionDataInput { ActionId = firstUserAction.Id };
+                try
+                {
+                    var winner = await _sensingWebClient.DoLotteryAwardByAction(actionData);
+                    if (winner != null)
+                    {
+                        avatorWinnerImg.Source = WebImageToImage(winner.Award.AwardImagePath);
+                        AwardProductLable.Content = $"Award Id:{winner.Award.Id},Award Name:{winner.Award.AwardProduct}";
+                    }
+                }
+                catch(Exception ex)
+                {
+                    AwardProductLable.Content = ex.Message;
+                }
+            }
         }
-        private void ActivityWinner_Click(object sender, RoutedEventArgs e)
-        {
 
+        private async void GetRankUsers_Click(object sender, RoutedEventArgs e)
+        {
+            var rankMax = int.Parse(rankPos.Text);
+            var orderby = orderByCBox.SelectedValue as string;
+            var first = new Qrcode4UsersInput { QrcodeId = long.Parse(firstQrCode), Sorting = orderby, SkipCount = rankMax-1 };
+            var rankUserActions = await _sensingWebClient.GetScanQrCodeUserActions(first);
+
+            if (rankUserActions != null && rankUserActions.Items.Count > 0)
+            {
+                var topUser = rankUserActions.Items[0];
+                avatorRank.Source = UriToImage(topUser.SnsUserInfo.Headimgurl);
+                rankMsg.Content = $"Id:{topUser.Id}--OpenId:{topUser.SnsUserInfo.Openid}--Nickname:{topUser.SnsUserInfo.Nickname}";
+            }
+            else
+            {
+                rankMsg.Content = "没有这么多人";
+            }
         }
 
-        private void GetRankUsers_Click(object sender, RoutedEventArgs e)
+        private async void CreateWinUser_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void CreateWinUser_Click(object sender, RoutedEventArgs e)
-        {
-
+            var awardId = awardIDBox.Text;
+            var awardData = new AwardDataInput { AwardId = long.Parse(awardId) };
+            var awardUser = await _sensingWebClient.DoLotteryUserByAwardId(awardData);
+            if (awardUser != null)
+            {
+                awardImgy.Source = WebImageToImage(awardUser.Award.AwardImagePath);
+                if (!string.IsNullOrEmpty(awardUser.SnsUserInfo.Headimgurl))
+                {
+                    awardUserImg.Source = WebImageToImage(awardUser.SnsUserInfo.Headimgurl);
+                }
+                else
+                {
+                    awardUserImg.Source = new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, "no.jpg")));
+                }
+                awardTextBlock.Text = $"Award User Id ={awardUser.SnsUserInfo.Openid}, SnsType={awardUser.SnsUserInfo.SnsType.ToString()}" + Environment.NewLine;
+                awardTextBlock.Text += $"Award  Id ={awardUser.AwardId}, Product Name={awardUser.Award.AwardProduct}" + Environment.NewLine;
+            }
         }
 
         private void StartActivity_Click(object sender, RoutedEventArgs e)
@@ -298,21 +513,74 @@ namespace Sensing.SDK.Test
 
         }
 
-        private void PostDataByUserClick(object sender, RoutedEventArgs e)
+        private async void PostDataByUserClick(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void TaoUploadBtn_Click(object sender, RoutedEventArgs e)
-        {
-
+            var playData = new PlayerActionDataInput
+            {
+                ActionId = firstUserAction.Id,
+                PlayerImage = System.IO.Path.Combine(Environment.CurrentDirectory, "player.jpg"),
+                PlayingImage = System.IO.Path.Combine(Environment.CurrentDirectory, "playing.jpg"),
+                Score = Convert.ToInt16(score.Text),
+                SnsType = EnumSnsType.WeChat,
+                QrType = EnumQRStatus.AfterGame,
+                IsSendWeChatMsg = true
+            };
+            var data = await _sensingWebClient.PostPlayerDataByAction(playData);
+            if (data != null)
+            {
+                var userActionData = new ActionDataInput { ActionId = firstUserAction.Id };
+                var userAction = await _sensingWebClient.GetUserActionByIdAsync(userActionData);
+                if(userAction != null)
+                {
+                    PlayingImg.Source = WebImageToImage(userAction.GameImage);
+                }
+            }
         }
 
         #endregion
 
+        List<AwardOutput> _awards = null;
         private async void GetDeviceActivityGameInfos_Click(object sender, RoutedEventArgs e)
         {
             var deviceActivityGame = await _sensingWebClient.GetDeviceActivityGameInfoAsync();
+            if (deviceActivityGame != null)
+            {
+                if (deviceActivityGame.Activity != null)
+                {
+                    activityDetails.Text = $"Activity Name:{deviceActivityGame.Activity.Name}" + Environment.NewLine;
+                    activityDetails.Text += $"Wechat Public Id:{deviceActivityGame.Activity.WeChatAppID}" + Environment.NewLine;
+                    activityDetails.Text += $"Taobao Seller Id:{deviceActivityGame.Activity.TaobaoSellerID}" + Environment.NewLine;
+                    activityDetails.Text += $"Enable Special User:{deviceActivityGame.Activity.IsEnableWhiteUser}" + Environment.NewLine;
+                    activityDetails.Text += $"Enable Repeart Award:{deviceActivityGame.Activity.IsAllowedRepeatAward}" + Environment.NewLine;
+                }
+
+                //game details
+                if (deviceActivityGame.Software != null)
+                {
+                    gameInfoDetails.Text = $"Game Name:{deviceActivityGame.Software.Name}" + Environment.NewLine;
+                    gameInfoDetails.Text += $"Game Language:{deviceActivityGame.Software.Language}" + Environment.NewLine;
+                    gameInfoDetails.Text += $"Game EnvType:{deviceActivityGame.Software.EnvType}" + Environment.NewLine;
+                    gameInfoDetails.Text += $"Game Version:{deviceActivityGame.Software.VersionNumber}" + Environment.NewLine;
+                }
+
+                //game details
+                //gameInfoDetails.Text = $"ActivityGame Name:{deviceActivityGame.Name}" + Environment.NewLine;
+                activityGameDetails.Text += $"WeChatAuthorizationType:{deviceActivityGame.WeChatAuthorizationType.ToString()}" + Environment.NewLine;
+                activityGameDetails.Text += $"TaobaoAuthorizationType:{deviceActivityGame.TaobaoAuthorizationType}" + Environment.NewLine;
+                activityGameDetails.Text += $"DeviceId:{deviceActivityGame.DeviceId}" + Environment.NewLine;
+                activityGameDetails.Text += $"DeviceName:{deviceActivityGame.DeviceId}" + Environment.NewLine;
+            }
+
+            var awards = await _sensingWebClient.GetAwardsAsync();
+            if (awards != null)
+            {
+                _awards = awards;
+                awardDetails.Text += $"Awards Count :{awards.Count}" + Environment.NewLine;
+                foreach (var award in awards)
+                {
+                    awardDetails.Text += $"Award:{award.Name}--AwardId:{award.Id}----{award.AwardProduct}" + Environment.NewLine;
+                }
+            }
         }
     }
 }

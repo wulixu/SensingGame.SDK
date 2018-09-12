@@ -11,6 +11,7 @@ using System.Collections.Specialized;
 using log4net;
 using System.Reflection;
 using System.Configuration;
+using Sensing.SDK.Contract;
 
 namespace Sensing.SDK
 {
@@ -105,6 +106,10 @@ namespace Sensing.SDK
                     request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 }
             }
+            //else if(requestBody != null && httpMethod == HttpMethod.Post)
+            //{
+
+            //}
 
             HttpResponseMessage response = await s_httpClient.SendAsync(request);
             if (response.IsSuccessStatusCode)
@@ -127,14 +132,15 @@ namespace Sensing.SDK
                 if (response.Content != null && response.Content.Headers.ContentType.MediaType.Contains(JsonHeader))
                 {
                     var errorObjectString = await response.Content.ReadAsStringAsync();
-                    ClientError errorCollection = JsonConvert.DeserializeObject<ClientError>(errorObjectString);
+                    ErrorAjaxResponse errorCollection = JsonConvert.DeserializeObject<ErrorAjaxResponse>(errorObjectString);
+                    //return errorCollection;
                     if (errorCollection != null)
                     {
-                        throw new ClientException(errorCollection, response.StatusCode);
+                        throw new ClientException(errorCollection.Error?.Message, response.StatusCode);
                     }
                 }
 
-                    response.EnsureSuccessStatusCode();
+                response.EnsureSuccessStatusCode();
             }
 
             return default(TResponse);
@@ -149,9 +155,13 @@ namespace Sensing.SDK
                 foreach (string key in data.Keys)
                 {
                     //Content-Disposition : form-data; name="json".
-                    var stringContent = new StringContent(data[key]);
-                    stringContent.Headers.Add("Content-Disposition", $"form-data; name={key}");
-                    form.Add(stringContent, key);
+                    var value = data[key];
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        var stringContent = new StringContent(value);
+                        stringContent.Headers.Add("Content-Disposition", $"form-data; name={key}");
+                        form.Add(stringContent, key);
+                    }
                 }
 
                 //1.2 file

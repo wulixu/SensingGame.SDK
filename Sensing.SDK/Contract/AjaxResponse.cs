@@ -27,6 +27,19 @@ namespace Sensing.SDK.Contract
         public string Details { get; set; }
     }
 
+    public class ErrorAjaxResponse
+    {
+        public string TargetUrl { get; set; }
+
+        public bool Success { get; set; }
+
+        public ErrorInfo Error { get; set; }
+
+        public bool UnAuthorizedRequest { get; set; }
+
+        public bool __abp { get; } = true;
+    }
+
     //public class ApiStatus
     //{
     //    public static string OK = "OK";
