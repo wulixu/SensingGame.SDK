@@ -29,5 +29,6 @@ namespace AppPod.DataAccess.Models
         public string BrandName { get; set; }
         public List<int> Tags { get; set; }
         public ProductSdkModel Product { get; set; }
+        public int ClickCount { get; set; }
     }
 }

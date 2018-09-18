@@ -1421,7 +1421,7 @@ namespace AppPod.DataAccess
             {
                 category = PCategories.FirstOrDefault(c => c.Id == categoryId);
             }
-            return mShowProducts.Where(p => categoryId <= 0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0))
+            return mShowProducts.Where(p =>  categoryId <= 0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0))
                                 .Where(p => brandId <= 0 || p.Product.BrandId == brandId);
         }
         public IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId)
@@ -1583,6 +1583,19 @@ namespace AppPod.DataAccess
                 TagIconUrl = FindTagIcon(product.TagIds),
                 Product = product
             };
+        }
+
+        public void ReadClickCounts(List<ClickInfo> clickInfoData)
+        {
+            var clickDic = clickInfoData.ToDictionary(x => long.Parse(x.ThingId));
+            foreach (var product in mShowProducts)
+            {
+                if (clickDic.ContainsKey(product.Id))
+                {
+                    var clickInfo = clickDic[product.Id];
+                    product.ClickCount = clickInfo.ClickCount;
+                }
+            }
         }
     }
 }
