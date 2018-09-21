@@ -523,7 +523,8 @@ namespace Sensing.SDK.Test
                 Score = Convert.ToInt16(score.Text),
                 SnsType = EnumSnsType.WeChat,
                 QrType = EnumQRStatus.AfterGame,
-                IsSendWeChatMsg = true
+                IsSendWeChatMsg = true,
+                Params = ParamsTbx.Text
             };
             var data = await _sensingWebClient.PostPlayerDataByAction(playData);
             if (data != null)

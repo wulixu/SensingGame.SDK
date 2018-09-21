@@ -218,7 +218,6 @@ namespace Sensing.SDK
             return null;
         }
 
-
         public async Task<UserActionInfoOutput> GetUserActionByIdAsync(ActionDataInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
@@ -234,7 +233,5 @@ namespace Sensing.SDK
             }
             return null;
         }
-
-
     }
 }
