@@ -18,6 +18,7 @@ namespace AppPod.DataAccess
         void AddClick(AdsSdkModel ads, string softwareName, string pageName);
         void AddLike(ShowProductInfo productInfo, string softwareName, string pageName);
         void AddClick(ShowProductInfo productInfo, string softwareName, string pageName);
+        List<ClickInfo> ReadClickData();
         void LogDeviceStatus(int secondInterval);
     }
 
@@ -97,6 +98,12 @@ namespace AppPod.DataAccess
                 UploadData();
             });
            
+        }
+
+        public List<ClickInfo> ReadClickData()
+        {
+            var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='click' group by ThingId");
+            return query;
         }
 
         private void UploadData()

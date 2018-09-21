@@ -224,7 +224,7 @@ namespace AppPod.DataAccess
 
         public ProductSdkModel FindByRfidCode(string rfid)
         {
-            return Products?.FirstOrDefault(p => p.Skus.Any(s => s.RfidCode != null && s.RfidCode.Contains(rfid)));
+            return Products?.FirstOrDefault(p => p.Skus.Any(s => (s.RfidCode?.StartsWith(rfid)??false) || (s.OuterId?.StartsWith(rfid)??false) || (s.SkuId?.StartsWith(rfid)??false)));
         }
 
         public string GetLocalImagePath(string path, string category)
@@ -719,7 +719,7 @@ namespace AppPod.DataAccess
                             foreach (var pImg in prod.PropImgs)
                             {
                                 var keyProps = pImg.PropertyName;
-                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags, keywords));
+                                var firstSku = prod.Skus.AsQueryable().FirstOrDefault(s => s.PropsName != null && s.PropsName.Contains(keyProps) && CanAddFilter(s, priceRanges, colors, tags, keywords));
                                 if (firstSku != null)
                                 {
                                     showProducts.Add(new ShowProductInfo
@@ -1421,7 +1421,7 @@ namespace AppPod.DataAccess
             {
                 category = PCategories.FirstOrDefault(c => c.Id == categoryId);
             }
-            return mShowProducts.Where(p => categoryId <= 0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0))
+            return mShowProducts.Where(p =>  categoryId <= 0 || (category != null && p.Product.CategoryIds.Intersect(category.Ids).Count() > 0))
                                 .Where(p => brandId <= 0 || p.Product.BrandId == brandId);
         }
         public IEnumerable<BrandDto> GetBrandsByMainCategory(int categoryId)
@@ -1480,12 +1480,31 @@ namespace AppPod.DataAccess
         {
             var showProducts = QueryShowProducts(false);
             showProducts.ForEach(p => {
-                if (!string.IsNullOrEmpty(text) && p.Product.Title.StartsWith(text))
+                var keywords = text.Split(new char[] { ';' });
+                foreach (var keyword in keywords)
                 {
-                    p.ProductName = p.ProductName.Substring(text.Length).TrimStart();
-                    p.Name = p.ProductName;
-                    p.Product.Title = p.ProductName;
+                    if (string.IsNullOrEmpty(keyword))
+                        continue;
+                    if ( p.Product.Title.StartsWith(keyword))
+                    {
+                        p.ProductName = p.ProductName.Substring(keyword.Length).TrimStart();
+                        p.Name = p.ProductName;
+                        p.Product.Title = p.ProductName;
+                    }
+                    if (p.Product.Skus != null)
+                    {
+                        foreach (var sku in p.Product.Skus)
+                        {
+                            if (sku.Title.StartsWith(keyword))
+                            {
+                                sku.Title = sku.Title.Substring(keyword.Length).TrimStart();
+                            }
+
+                        }
+                    }
+
                 }
+
             });
         }
 
@@ -1564,6 +1583,19 @@ namespace AppPod.DataAccess
                 TagIconUrl = FindTagIcon(product.TagIds),
                 Product = product
             };
+        }
+
+        public void ReadClickCounts(List<ClickInfo> clickInfoData)
+        {
+            var clickDic = clickInfoData.ToDictionary(x => long.Parse(x.ThingId));
+            foreach (var product in mShowProducts)
+            {
+                if (clickDic.ContainsKey(product.Id))
+                {
+                    var clickInfo = clickDic[product.Id];
+                    product.ClickCount = clickInfo.ClickCount;
+                }
+            }
         }
     }
 }
