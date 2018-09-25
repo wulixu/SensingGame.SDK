@@ -94,15 +94,24 @@
                 </Grid>
             </TabItem>
             <TabItem Header="GoodsByFaces" Margin="-2,-2,-2,0">
-                <Grid Background="#FFE5E5E5">
+                <Canvas Background="#FFE5E5E5">
                     <ComboBox x:Name="genderCBox" HorizontalAlignment="Left" Margin="72,44,0,0" VerticalAlignment="Top" Width="123" Height="28">
                         <ComboBoxItem IsSelected="True">Male</ComboBoxItem>
                         <ComboBoxItem>Female</ComboBoxItem>
                     </ComboBox>
-                    <Button Margin="250,29,365,499" x:Name="GoodsByFacesBtn" FontSize="20" Content="GoodsByFaces" Click="GoodsByFacesBtn_Click"/>
-                    <Button Margin="250,88,365,440" x:Name="MemberFaceBtn" FontSize="20" Content="IsFaceMember" Click="MemberFaceBtn_Click" />
-                    <TextBlock x:Name="GoodsByFaceTxt" Background="White" Margin="0,159,0,0"/>
-                </Grid>
+                    <Button Margin="583,29,571,738" x:Name="GoodsByFacesBtn" FontSize="20" Content="GoodsByFaces" Click="GoodsByFacesBtn_Click"/>
+                    <Button Margin="878,27,294,740" x:Name="MemberFaceBtn" FontSize="20" Content="IsFaceMember" Click="MemberFaceBtn_Click" />
+                    <Label Height="30" Canvas.Left="72" Canvas.Top="110">Gender:</Label>
+                    <TextBox Width="150" x:Name="GenderTBox" Canvas.Left="127" Canvas.Top="116">Male</TextBox>
+                    <Label Height="30" Canvas.Left="71" Canvas.Top="150" RenderTransformOrigin="0.588,1.667" Content="Age :"/>
+                    <TextBox Width="150" Canvas.Left="127" x:Name="AgeTBox" Canvas.Top="154">25</TextBox>
+                    <Button x:Name="TagRecommendBtn" FontSize="20" Content="TagRecommends"  Canvas.Left="573" Canvas.Top="126" Click="TagRecommendBtn_Click" />
+                    <TextBlock x:Name="GoodsByFaceTxt" Background="White" Height="382" Width="1350" Canvas.Top="185"/>
+                    <Label Height="30" Canvas.Left="304" Canvas.Top="110" RenderTransformOrigin="0.588,1.667" Content="Happiness:"/>
+                    <TextBox Width="57" x:Name="HappinessTBox" Canvas.Left="387" Canvas.Top="114" Text="95"/>
+                    <Label Height="30" Canvas.Left="304" Canvas.Top="146" RenderTransformOrigin="0.588,1.667" Content="BeautyScore:"/>
+                    <TextBox Width="57" x:Name="BeautyScoreTBox" Canvas.Left="397" Canvas.Top="150" Text="90"/>
+                </Canvas>
             </TabItem>
             <TabItem Header="DeviceStatus">
                 <Grid Background="#FFE5E5E5">

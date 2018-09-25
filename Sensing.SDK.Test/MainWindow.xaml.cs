@@ -583,5 +583,23 @@ namespace Sensing.SDK.Test
                 }
             }
         }
+
+        private async void TagRecommendBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var tagInput = new GetTagAndRecommendsBySubKeyInput();
+            tagInput.Age = Convert.ToInt32(AgeTBox.Text);
+            tagInput.Happiness = Convert.ToInt32(HappinessTBox.Text);
+            tagInput.BeautyScore = Convert.ToInt32(HappinessTBox.Text);
+            tagInput.Gender =  GenderTBox.Text;
+
+            var tagRecommend = await _sensingWebClient.GetTagRecommends(tagInput);
+            if(tagRecommend != null)
+            {
+                GoodsByFaceTxt.Text = $"Tag's Count = {tagRecommend.Tags.Count}" + Environment.NewLine;
+                GoodsByFaceTxt.Text += $"Recommend's Count = {tagRecommend.Recommends.Count}" + Environment.NewLine;
+            }
+        }
+
+
     }
 }

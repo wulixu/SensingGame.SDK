@@ -14,6 +14,8 @@ namespace Sensing.SDK
         /// </summary>
         private const string GetDateMetaPhysicsQuery = "/DateMetaPhysics/GetDateMetaphysicsBySubkey";
         private const string GetMetaphysicsListQuery = "/MetaPhysics/GetMetaphysicsListBySubkey";
+        private const string GeTagRecommendsQuery = "/FaceTags/GetTagRecommendsBySubkey";
+        private const string GeTagRecommendsByFaceQuery = "/FaceTags/GetTagRecommendsByFace";
 
         public readonly static string RecommendServiceRelativePath = "r/";
         public readonly static string RecommendServiceApiHost = ServerBase + DeviceBigDataServiceRelativePath + Api_Relative_Path;
@@ -51,6 +53,41 @@ namespace Sensing.SDK
             {
                 //logger.Error("PostBehaviorRecordsAsync", ex);
                 Console.WriteLine("GetMetaphysicsList:" + ex.InnerException);
+            }
+            return null;
+        }
+
+
+        public async Task<FaceTagsRecommendsDto> GetTagRecommends(GetTagAndRecommendsBySubKeyInput input)
+        {
+            input.SubKey = _subKey;
+            var absolutePath = $"{ServerBase}{RecommendPath}{GeTagRecommendsQuery}?{GetBasicNameValuesQueryString()}&gender={input.Gender}&age={input.Age}&happiness={input.Happiness}&beautyScore={input.BeautyScore}";
+            try
+            {
+                var result = await SendRequestAsync<string, AjaxResponse<FaceTagsRecommendsDto>> (HttpMethod.Get, absolutePath, null);
+                return result.Result;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetTagRecommends:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<FaceTagsRecommendsDto> GetTagRecommendsByFace(GetTagRecommendsByFaceInput input)
+        {
+            input.SubKey = _subKey;
+            var absolutePath = $"{ServerBase}{RecommendPath}{GeTagRecommendsByFaceQuery}";
+            try
+            {
+                var result = await SendRequestAsync<GetTagRecommendsByFaceInput, AjaxResponse<FaceTagsRecommendsDto>>(HttpMethod.Post, absolutePath, input);
+                return result.Result;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetTagRecommendsByFace:" + ex.InnerException);
             }
             return null;
         }
