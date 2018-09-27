@@ -1597,5 +1597,20 @@ namespace AppPod.DataAccess
                 }
             }
         }
+
+        public void SetKeyword(string keyword)
+        {
+            mShowProducts.ForEach((p) => {
+                if (p.Product.Title.Contains(keyword))
+                {
+                    p.Product.Keywords = keyword;
+                }
+            });
+        }
+
+        public IEnumerable<ShowProductInfo> QueryByKeyword(string keyword)
+        {
+            return mShowProducts.Where(p => p.Product.Keywords == keyword);
+        }
     }
 }
