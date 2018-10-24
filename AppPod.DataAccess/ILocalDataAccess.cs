@@ -55,7 +55,7 @@ namespace AppPod.DataAccess
         List<AppInfo> Apps { get; set; }
         Dictionary<long, IEnumerable<ShowProductInfo>> MatchedProducts { get; set; }
 
-        List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string,string> keyValues);
+        List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string, string> keyValues);
         List<ShowProductInfo> SearchShowProductsByName(string searchTerm);
         //ProductInfo FindProductByAttribute(string productAttribute);
         List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, bool onlySpu = false);
@@ -116,8 +116,10 @@ namespace AppPod.DataAccess
         void RemoveFrontBrandName();
         void RemovePrefixText(string text);
 
-         ShowProductInfo GetShowProductByOutId(string outId);
-         ShowProductInfo GetShowProductBySku(long skuId);
+        ShowProductInfo GetShowProductByOutId(string outId);
+        ShowProductInfo GetShowProductBySku(long skuId);
         void ReadClickCounts(List<ClickInfo> clickInfoData);
+        void SetKeyword(string keyword);
+        IEnumerable<ShowProductInfo> QueryByKeyword(string keyword);
     }
 }

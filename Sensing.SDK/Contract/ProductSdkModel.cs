@@ -190,6 +190,8 @@ namespace Sensing.SDK.Contract
         public string Type { get; set; }
         public string Content { get; set; }
         public string Usage { get; set; }
+        public int OrderNumber { get; set; }
+
     }
 
     public class OnlineStoreInfoViewModel
