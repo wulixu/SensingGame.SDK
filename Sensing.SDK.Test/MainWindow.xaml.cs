@@ -452,6 +452,10 @@ namespace Sensing.SDK.Test
                     var winner = await _sensingWebClient.DoLotteryAwardByAction(actionData);
                     if (winner != null)
                     {
+                        if (!winner.Award.AwardImagePath.ToLower().StartsWith("http"));
+                        {
+                            winner.Award.AwardImagePath = Path.Combine("https://all.api.troncell.com/s", winner.Award.AwardImagePath);
+                        }
                         avatorWinnerImg.Source = WebImageToImage(winner.Award.AwardImagePath);
                         AwardProductLable.Content = $"Award Id:{winner.Award.Id},Award Name:{winner.Award.AwardProduct}";
                     }

@@ -7,6 +7,7 @@ namespace SensingStoreCloud.Activity
     public class QrcodeOutput
     {
         public string QrCodeUrl { get; set; }
+        public string QrCodeImage { get; set; }
         public string QrCodeId { get; set; }
     }
 
