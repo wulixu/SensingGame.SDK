@@ -57,6 +57,7 @@ namespace Sensing.SDK.Contract
         public string OutType { get; set; }
 
         public string TaobaoDeviceId { get; set; }
+        public string DeviceOuterId { get; set; }
     }
 
     public class DeviceSdkLoginViewModel
