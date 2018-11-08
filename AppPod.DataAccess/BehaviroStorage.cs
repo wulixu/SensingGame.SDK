@@ -19,7 +19,9 @@ namespace AppPod.DataAccess
         void AddLike(ShowProductInfo productInfo, string softwareName, string pageName);
         void AddClick(ShowProductInfo productInfo, string softwareName, string pageName);
         List<ClickInfo> ReadClickData();
+        List<ClickInfo> ReadLikeClickData();
         void LogDeviceStatus(int secondInterval);
+
     }
 
     public class BehaviroStorage : IBehaviorDataUploader
@@ -55,9 +57,10 @@ namespace AppPod.DataAccess
             if (productInfo == null) return;
             Task.Factory.StartNew(() => 
             {
-                AddBehavoirData(productInfo.Id.ToString(), productInfo.Type.ToString(), "like", softwareName, pageName);
+                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name,productInfo.Type.ToString(), "like", softwareName, pageName);
             });
         }
+
 
         public void AddClick(ShowProductInfo productInfo, string softwareName, string pageName)
         {
@@ -103,6 +106,12 @@ namespace AppPod.DataAccess
         public List<ClickInfo> ReadClickData()
         {
             var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='click' group by ThingId");
+            return query;
+        }
+
+        public List<ClickInfo> ReadLikeClickData()
+        {
+            var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='like' group by ThingId");
             return query;
         }
 
