@@ -14,6 +14,7 @@ namespace Sensing.SDK
         /// </summary>
         private const string PostBehaviorQuery = "/BehaviorRecord/PostRecord";
         private const string PostDeviceStatusQuery = "/BehaviorRecord/PostDeviceStatusRecord";
+        private const string PostFaceRecordQuery = "/BehaviorRecord/PostFaceRecord";
 
         public readonly static string DeviceBigDataServiceRelativePath = "d/";
         public readonly static string DeviceBigDataServiceApiHost = ServerBase + DeviceBigDataServiceRelativePath + Api_Relative_Path;
@@ -53,5 +54,23 @@ namespace Sensing.SDK
             }
             return false;
         }
+
+        public async Task<bool> PostFaceRecordAsync(FaceRecord record)
+        {
+            //api/services/app/BehaviorRecord/PostRecord
+            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{PostFaceRecordQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var result = await SendRequestAsync<FaceRecord, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, record);
+                return result.Success;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("PostFaceRecordAsync:" + ex.InnerException);
+            }
+            return false;
+        }
+
     }
 }

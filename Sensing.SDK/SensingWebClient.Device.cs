@@ -20,6 +20,10 @@ namespace Sensing.SDK
         private const string GroupInfoQuery = DeviceBaseUrl + "/GetTenantAndOrganizationUnitInfo";
         private const string DeviceInfoQuery = DeviceBaseUrl + "/GetDeviceInfo";
         private const string LoginInfoQuery = DeviceBaseUrl + "/Login";
+        private const string GetDeviceAppPodVersionQuery = DeviceBaseUrl + "/GetDeviceAppPodVersion";
+        private const string ChangeDeviceApppodVersionQuery = DeviceBaseUrl + "/ChangeDeviceApppodVersion";
+
+
 
         public async Task<AjaxResponse<DeviceOutput>> RegisterDeviceAsyn(RegisterDeviceInput device)
         {
@@ -107,5 +111,40 @@ namespace Sensing.SDK
             }
             return null;
         }
+
+        public async Task<DeviceAppPodVersionModel> GetDeviceAppPodVersion()
+        {
+            var absolutePath = $"{ExtenalServiceHost}{GetDeviceAppPodVersionQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var appPodVersion = await SendRequestAsync<string, AjaxResponse<DeviceAppPodVersionModel>>(HttpMethod.Get, absolutePath, null);
+                return appPodVersion.Result;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetDeviceAppPodVersion:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<bool> ChangeDeviceApppodVersion(ChangeDeviceApppodVersionInput input)
+        {
+            input.Subkey = _subKey;
+            var absolutePath = $"{ExtenalServiceHost}{ChangeDeviceApppodVersionQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var loginResult = await SendRequestAsync<ChangeDeviceApppodVersionInput, AjaxResponse<string>>(HttpMethod.Post, absolutePath, input);
+                return loginResult.Success;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("DeviceLogin:" + ex.InnerException);
+            }
+            return false;
+        }
+
+
     }
 }

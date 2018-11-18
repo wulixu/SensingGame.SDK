@@ -5,6 +5,7 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -20,6 +21,8 @@ namespace AppPod.DataAccess
         void AddClick(ShowProductInfo productInfo, string softwareName, string pageName);
         List<ClickInfo> ReadClickData();
         void LogDeviceStatus(int secondInterval);
+        void AddFaceRecord(string face, string softwareName = "", string pageName = "");
+
     }
 
     public class BehaviroStorage : IBehaviorDataUploader
@@ -36,9 +39,12 @@ namespace AppPod.DataAccess
         {
             sesingWebClient = webClient;
             mMac = mac;
-            m_db = new SQLite.SQLiteConnection(DBPath);
+            var appPodFolder = SensingDataAccess.FindAppPodRootFolder();
+            m_db = new SQLite.SQLiteConnection(Path.Combine(appPodFolder,DBPath));
             m_db.CreateTable<SqlLiteBehaviorRecord>();
             m_db.CreateTable<SqliteDeviceStatus>();
+            m_db.CreateTable<SqlLiteFaceRecord>();
+
         }
 
         public void AddClick(AdsSdkModel ads, string softwareName, string pageName)
@@ -127,6 +133,27 @@ namespace AppPod.DataAccess
             }
         }
 
+        private void UploadFaceData()
+        {
+            if (DateTime.Now.Subtract(mLastUploadTime).TotalMinutes < 30)
+                return;
+            var records = m_db.Table<SqlLiteFaceRecord>().Where(r => r.IsSynced == false).Take(50).ToList();
+            for (int i = 0; i < records.Count; i++)
+            {
+                var record = records[i];
+                bool success = sesingWebClient.PostFaceRecordAsync(record).GetAwaiter().GetResult();
+                if (success)
+                {
+                    record.IsSynced = true;
+                }
+            }
+            m_db.UpdateAll(records);
+            int deletedCount = m_db.Execute("delete from SqlLiteFaceRecord where IsSynced =? and  CollectionTime < ?", true, DateTime.Today.AddDays(-15));
+
+
+        }
+
+
 
         public void LogDeviceStatus(int secondInterval)
         {
@@ -160,6 +187,27 @@ namespace AppPod.DataAccess
             SyncToCloud();
         }
 
+        public void AddFaceRecord(string facePath, string softwareName = "", string pageName = "")
+        {
+            Task.Factory.StartNew(() =>
+            {
+                byte[] bytesImage = File.ReadAllBytes(facePath);
+                string base64Image = Convert.ToBase64String(bytesImage);
+                SqlLiteFaceRecord record = new SqlLiteFaceRecord
+                {
+                    SoftwareName = softwareName,
+                    PageName = pageName,
+                    IsSynced = false,
+                    CollectionTime = DateTime.Now,
+                    CollectEndTime = DateTime.Now,
+                    Face = base64Image
+                };
+                m_db.Insert(record);
+
+                UploadFaceData();
+            });
+        }
+
         public void SyncToCloud()
         {
             var now = DateTime.Now;
@@ -187,6 +235,8 @@ namespace AppPod.DataAccess
 
         [DllImport("kernel32")]
         public static extern void GlobalMemoryStatus(ref MEMORY_INFO meminfo);
+
+
     }
     //定义内存的信息结构    
     [StructLayout(LayoutKind.Sequential)]
@@ -210,6 +260,14 @@ namespace AppPod.DataAccess
     }
 
     public class SqliteDeviceStatus : DeviceStatusInput
+    {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+
+        public bool IsSynced { get; set; }
+    }
+
+    public class SqlLiteFaceRecord : FaceRecord
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

@@ -64,10 +64,12 @@
     <Compile Include="Contract\BrandDto.cs" />
     <Compile Include="Contract\CouponViewModel.cs" />
     <Compile Include="Contract\DateMetaPhysicsDto.cs" />
+    <Compile Include="Contract\DeviceAppPodVersionModel.cs" />
     <Compile Include="Contract\DeviceHeartBeatInput.cs" />
     <Compile Include="Contract\DeviceSdkModel.cs" />
     <Compile Include="Contract\DeviceSoftwareSdkModel.cs" />
     <Compile Include="Contract\DeviceStatusInput.cs" />
+    <Compile Include="Contract\FaceRecord.cs" />
     <Compile Include="Contract\FacesRecommendGoodsInput.cs" />
     <Compile Include="Contract\GetProductSdkInput.cs" />
     <Compile Include="Contract\LikeInfoViewModel.cs" />
