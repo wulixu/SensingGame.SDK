@@ -86,6 +86,7 @@
     <Compile Include="Contract\SensingDeviceActivityDto\QrcodeOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\SnsUserAwardOuput.cs" />
     <Compile Include="Contract\SensingDeviceProductCommentModel.cs" />
+    <Compile Include="Contract\TableLastTimeDto.cs" />
     <Compile Include="Contract\TagSdkModel.cs" />
     <Compile Include="Contract\TaobaoRecommendGoodsInput.cs" />
     <Compile Include="Contract\TenantAndOrganizationUnitOutput.cs" />

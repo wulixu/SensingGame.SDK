@@ -40,6 +40,8 @@ namespace AppPod.DataAccess
             sesingWebClient = webClient;
             mMac = mac;
             var appPodFolder = SensingDataAccess.FindAppPodRootFolder();
+            if (appPodFolder == null)
+                appPodFolder = "";
             m_db = new SQLite.SQLiteConnection(Path.Combine(appPodFolder,DBPath));
             m_db.CreateTable<SqlLiteBehaviorRecord>();
             m_db.CreateTable<SqliteDeviceStatus>();
@@ -163,7 +165,7 @@ namespace AppPod.DataAccess
             //MEMORY_INFO memInfo = new MEMORY_INFO();
             //GlobalMemoryStatus(ref memInfo);
             //var memory = memInfo.dwMemoryLoad;
-            if (record != null && record.EndTime.Subtract(now).Days == 0)
+            if (record != null && record.EndTime.Date.Subtract(now.Date).Days == 0)
             {
                 if(now.Subtract(record.EndTime).TotalSeconds > secondInterval)
                 {
@@ -176,6 +178,7 @@ namespace AppPod.DataAccess
                     //if (cpu > record.Cpu) record.Cpu = cpu;
                     //if (memory > record.Memory) record.Memory = memory;
                     m_db.Update(record);
+                    bool success = sesingWebClient.PostDeviceStatusRecordAsync(new List<SqliteDeviceStatus> { record }).GetAwaiter().GetResult();
                 }
             }
             else

@@ -22,6 +22,7 @@ namespace Sensing.SDK
         private const string LoginInfoQuery = DeviceBaseUrl + "/Login";
         private const string GetDeviceAppPodVersionQuery = DeviceBaseUrl + "/GetDeviceAppPodVersion";
         private const string ChangeDeviceApppodVersionQuery = DeviceBaseUrl + "/ChangeDeviceApppodVersion";
+        private const string GetLastUpdateTimeQuery = DeviceBaseUrl + "/GetLastUpdateTime";
 
 
 
@@ -144,6 +145,23 @@ namespace Sensing.SDK
             }
             return false;
         }
+
+        public async Task<TableLastTimeDto> GetLastUpdateTime()
+        {
+            var absolutePath = $"{MainServiceApiHost}/{GetLastUpdateTimeQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var pagedList = await SendRequestAsync<string, AjaxResponse<TableLastTimeDto>>(HttpMethod.Get, absolutePath, null);
+                return pagedList.Result;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetDeviceInfo:" + ex.InnerException);
+            }
+            return null;
+        }
+
 
 
     }
