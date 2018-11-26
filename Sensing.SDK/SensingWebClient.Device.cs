@@ -19,6 +19,7 @@ namespace Sensing.SDK
 
         private const string GroupInfoQuery = DeviceBaseUrl + "/GetTenantAndOrganizationUnitInfo";
         private const string DeviceInfoQuery = DeviceBaseUrl + "/GetDeviceInfo";
+        private const string GetDeviceSubkeyByHardwareCodeQuery = DeviceBaseUrl + "/GetDeviceSubkeyByHardwareCode";
         private const string LoginInfoQuery = DeviceBaseUrl + "/Login";
         private const string GetDeviceAppPodVersionQuery = DeviceBaseUrl + "/GetDeviceAppPodVersion";
         private const string ChangeDeviceApppodVersionQuery = DeviceBaseUrl + "/ChangeDeviceApppodVersion";
@@ -80,6 +81,7 @@ namespace Sensing.SDK
             }
             return null;
         }
+
 
         public async Task<TenantAndOrganizationUnitOutput> GetTenantAndOrganizationUnitInfo()
         {
@@ -152,6 +154,22 @@ namespace Sensing.SDK
             try
             {
                 var pagedList = await SendRequestAsync<string, AjaxResponse<TableLastTimeDto>>(HttpMethod.Get, absolutePath, null);
+                return pagedList.Result;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetDeviceInfo:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<string> GetDeviceSubkeyByHardwareCode(string hardwareid)
+        {
+            var absolutePath = $"{MainServiceApiHost}/{GetDeviceSubkeyByHardwareCodeQuery}?HardwareCode={hardwareid}";
+            try
+            {
+                var pagedList = await SendRequestAsync<string, AjaxResponse<string>>(HttpMethod.Get, absolutePath, null);
                 return pagedList.Result;
             }
             catch (Exception ex)
