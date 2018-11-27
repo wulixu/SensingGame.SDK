@@ -15,7 +15,6 @@ namespace Sensing.SDK
         /// </summary>
         private const string DeviceBaseUrl = "SensingDevice";
         private const string RegisterDeviceQuery = DeviceBaseUrl + "/RegisterDevice";
-        private const string DeviceHeartBeatQuery = DeviceBaseUrl + "/DeviceHeartBeat";
 
         private const string GroupInfoQuery = DeviceBaseUrl + "/GetTenantAndOrganizationUnitInfo";
         private const string DeviceInfoQuery = DeviceBaseUrl + "/GetDeviceInfo";
@@ -24,6 +23,7 @@ namespace Sensing.SDK
         private const string GetDeviceAppPodVersionQuery = DeviceBaseUrl + "/GetDeviceAppPodVersion";
         private const string ChangeDeviceApppodVersionQuery = DeviceBaseUrl + "/ChangeDeviceApppodVersion";
         private const string GetLastUpdateTimeQuery = DeviceBaseUrl + "/GetLastUpdateTime";
+        private const string UploadScreenShotQuery = DeviceBaseUrl + "/UploadScreenShot";
 
 
 
@@ -46,25 +46,6 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<bool> DeviceHeartBeatAsync(DeviceHeartBeatInput device)
-        {
-            var absolutePath = $"{MainServiceApiHost}/{DeviceHeartBeatQuery}?{GetBasicNameValuesQueryString()}";
-            try
-            {
-                var result = await SendRequestAsync<DeviceHeartBeatInput, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, device);
-                if(result != null)
-                {
-                    return result.Success;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("RegisterDevice:" + ex.InnerException);
-            }
-            return false;
-        }
 
         public async Task<AjaxResponse<DeviceOutput>> GetDeviceInfo()
         {
@@ -181,6 +162,21 @@ namespace Sensing.SDK
         }
 
 
+        public async Task<bool> UploadScreenShot(ScreenshotInput screenshot)
+        {
+            var absolutePath = $"{ExtenalServiceHost}{UploadScreenShotQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var loginResult = await SendRequestAsync<ScreenshotInput, AjaxResponse<string>>(HttpMethod.Post, absolutePath, screenshot);
+                return loginResult.Success;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("DeviceLogin:" + ex.InnerException);
+            }
+            return false;
+        }
 
     }
 }
