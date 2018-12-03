@@ -337,7 +337,9 @@ namespace AppPod.DataAccess
                                     //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                     TagIconUrl = FindTagIcon(firstSku.TagIds),
                                     Type = ProductType.Sku,
-                                    Product = prod
+                                    Product = prod,
+                                    PropsName = firstSku.PropsName
+
                                 });
                             }
                         }
@@ -359,7 +361,8 @@ namespace AppPod.DataAccess
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 TagIconUrl = FindTagIcon(firstSku.TagIds),
                                 Type = ProductType.Sku,
-                                Product = prod
+                                Product = prod,
+                                PropsName = firstSku.PropsName
                             });
                         }
                     }

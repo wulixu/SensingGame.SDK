@@ -29,6 +29,9 @@ namespace Sensing.SDK
         private const string DoLotteryUserByAwardIdQuery = "services/app/SensingDeviceActivity/DoLotteryUserByAwardId";
         private const string DoLotteryAwardByActionQuery = "services/app/SensingDeviceActivity/DoLotteryAwardByAction";
         private const string GetUserActionByIdQuery = "services/app/SensingDeviceActivity/GetUserActionById";
+        private const string GetUserActionsByActivityGameQuery = "services/app/SensingDeviceActivity/GetUserActionsByActivityGame";
+        private const string GetUserActionsByActivityQuery = "services/app/SensingDeviceActivity/GetUserActionsByActivity";
+
 
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
