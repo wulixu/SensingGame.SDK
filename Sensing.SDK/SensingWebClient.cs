@@ -24,10 +24,13 @@ namespace Sensing.SDK
         //public const string ServerBase = "http://behavior.troncell.com/";
         public readonly static string ServerBase = "http://139.224.15.28:881/";
         public readonly static string MainServiceRelativePath = "s/";
+        public readonly static string ExtenalServiceRelativePath = "e/";
         public readonly static string SignalRPath = ServerBase + "signalr";
         public readonly static string Api_Relative_Path = "api/services/app/";
         public readonly static string MainServiceApiHost = ServerBase + MainServiceRelativePath + Api_Relative_Path;
         public readonly static string MainServiceHost = ServerBase + MainServiceRelativePath;
+        public readonly static string ExtenalServiceHost = ServerBase + ExtenalServiceRelativePath + Api_Relative_Path;
+
 
         #region Inner Keys.
         /// <summary>
@@ -72,6 +75,9 @@ namespace Sensing.SDK
                 ServerBase = url;
                 MainServiceApiHost = ServerBase + MainServiceRelativePath + Api_Relative_Path;
                 MainServiceHost = ServerBase + MainServiceRelativePath;
+               // ExtenalServiceHost = ServerBase + ExtenalServiceRelativePath + Api_Relative_Path;
+               ExtenalServiceHost = "https://e.api.troncell.com/" + Api_Relative_Path;
+
             }
         }
 

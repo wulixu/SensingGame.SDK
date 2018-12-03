@@ -1453,7 +1453,7 @@ namespace AppPod.DataAccess
             {
                 return Enumerable.Empty<AdsSdkModel>();
             }
-            var ads = Ads.Where(t => t.TagIds.Contains(tag.Id));
+            var ads = Ads.Where(t => t.TagIds.Contains(tag.Id)).OrderBy(t => t.OrderNumber);
             ads.ForEach((a) => {
                 a.FileUrl = a.GetLocalFile();
             });
