@@ -57,6 +57,7 @@ namespace Sensing.SDK
         private static JsonSerializerSettings s_settings = new JsonSerializerSettings()
         {
             DateFormatHandling = DateFormatHandling.IsoDateFormat,
+            DateFormatString = "yyyy-MM-dd HH:mm:ss",
             NullValueHandling = NullValueHandling.Ignore,
             ContractResolver = s_defaultResolver
         };

@@ -93,6 +93,12 @@ namespace SensingStoreCloud.Activity
         }
     }
 
+    public class ActivityGamePageInput : SensingDeviceGamePagedSortedFilteredInputBase
+    {
+
+    }
+
+
     public class Qrcode4LoginInput : SensingDeviceGameInputBase
     {
         public bool? IsSendWeChatMsg { get; set; }

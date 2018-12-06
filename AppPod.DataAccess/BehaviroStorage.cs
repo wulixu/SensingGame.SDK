@@ -15,10 +15,10 @@ namespace AppPod.DataAccess
 {
     public interface IBehaviorDataUploader
     {
-        void AddBehavoirData(string thingId, string thingName, string category, string action, string softwareName = "", string pageName = "");
-        void AddClick(AdsSdkModel ads, string softwareName, string pageName);
-        void AddLike(ShowProductInfo productInfo, string softwareName, string pageName);
-        void AddClick(ShowProductInfo productInfo, string softwareName, string pageName);
+        void AddBehavoirData(string thingId, string thingName, string category, string action, string softwareName = "", string pageName = "", string previousPage = "", string previousPageArea = "");
+        void AddClick(AdsSdkModel ads, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
+        void AddLike(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
+        void AddClick(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
         List<ClickInfo> ReadClickData();
         List<ClickInfo> ReadLikeClickData();
         void LogDeviceStatus(int secondInterval);
@@ -50,35 +50,34 @@ namespace AppPod.DataAccess
 
         }
 
-        public void AddClick(AdsSdkModel ads, string softwareName, string pageName)
+        public void AddClick(AdsSdkModel ads, string softwareName, string pageName, string previousPage = "", string previousPageArea = "")
         {
             if (ads == null) return;
             Task.Factory.StartNew(() =>
             {
-                AddBehavoirData(ads.Id.ToString(), "ads", "click", softwareName, pageName);
+                AddBehavoirData(ads.Id.ToString(), "ads", "click", softwareName, pageName,previousPage,previousPageArea);
             });
         }
 
-        public void AddLike(ShowProductInfo productInfo, string softwareName, string pageName)
+        public void AddLike(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "")
         {
             if (productInfo == null) return;
             Task.Factory.StartNew(() => 
             {
-                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name,productInfo.Type.ToString(), "like", softwareName, pageName);
+                AddBehavoirData(productInfo.Id.ToString(), productInfo.Type.ToString(), "like", softwareName, pageName, previousPage, previousPageArea);
             });
         }
 
-
-        public void AddClick(ShowProductInfo productInfo, string softwareName, string pageName)
+        public void AddClick(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "")
         {
             if (productInfo == null) return;
             Task.Factory.StartNew(() =>
             {
-                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name, productInfo.Type.ToString(), "click", softwareName, pageName);
+                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name, productInfo.Type.ToString(), "click", softwareName, pageName, previousPage, previousPageArea);
             });
         }
 
-        public void AddBehavoirData(string thingId, string thingName, string category,string action,string softwareName = "", string pageName ="")
+        public void AddBehavoirData(string thingId, string thingName, string category,string action,string softwareName = "", string pageName ="",string previousPage= "",string previousPageArea = "")
         {
             //todo:william.
             Task.Factory.StartNew(() =>
@@ -97,6 +96,8 @@ namespace AppPod.DataAccess
                     record.SoftwareName = softwareName;
                     record.PageName = pageName;
                     record.Category = category;
+                    record.PreviousPageArea = previousPageArea;
+                    record.PreviousPageName = previousPage;
                     record.IsSynced = false;
                     m_db.Insert(record);
                 }
@@ -182,11 +183,11 @@ namespace AppPod.DataAccess
                 }
                 else
                 {
-                    record.EndTime = now;
+                    record.EndTime = DateTime.Now;
                     //if (cpu > record.Cpu) record.Cpu = cpu;
                     //if (memory > record.Memory) record.Memory = memory;
-                    m_db.Update(record);
                     bool success = sesingWebClient.PostDeviceStatusRecordAsync(new List<SqliteDeviceStatus> { record }).GetAwaiter().GetResult();
+                    m_db.Update(record);
                 }
             }
             else
