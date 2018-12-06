@@ -236,5 +236,21 @@ namespace Sensing.SDK
             }
             return null;
         }
+
+        public async Task<PagedResultDto<UserActionInfoOutput>> GetUserActionsByActivityGameAsync(ActivityGamePageInput input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetUserActionsByActivityGameQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserActionInfoOutput>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetUserActionsByActivityGameAsync:" + ex.InnerException);
+            }
+            return null;
+        }
     }
 }

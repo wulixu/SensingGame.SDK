@@ -435,6 +435,7 @@ namespace Sensing.SDK.Test
             }
 
 
+
         }
 
         /// <summary>
@@ -473,7 +474,6 @@ namespace Sensing.SDK.Test
             var orderby = orderByCBox.SelectedValue as string;
             var first = new Qrcode4UsersInput { QrcodeId = long.Parse(firstQrCode), Sorting = orderby, SkipCount = rankMax-1 };
             var rankUserActions = await _sensingWebClient.GetScanQrCodeUserActions(first);
-
             if (rankUserActions != null && rankUserActions.Items.Count > 0)
             {
                 var topUser = rankUserActions.Items[0];
