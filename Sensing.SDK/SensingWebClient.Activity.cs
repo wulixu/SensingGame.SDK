@@ -29,6 +29,9 @@ namespace Sensing.SDK
         private const string DoLotteryUserByAwardIdQuery = "services/app/SensingDeviceActivity/DoLotteryUserByAwardId";
         private const string DoLotteryAwardByActionQuery = "services/app/SensingDeviceActivity/DoLotteryAwardByAction";
         private const string GetUserActionByIdQuery = "services/app/SensingDeviceActivity/GetUserActionById";
+        private const string GetUserActionsByActivityGameQuery = "services/app/SensingDeviceActivity/GetUserActionsByActivityGame";
+        private const string GetUserActionsByActivityQuery = "services/app/SensingDeviceActivity/GetUserActionsByActivity";
+
 
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
@@ -230,6 +233,22 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 Console.WriteLine("GetUserActionById:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<UserActionInfoOutput>> GetUserActionsByActivityGameAsync(ActivityGamePageInput input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetUserActionsByActivityGameQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserActionInfoOutput>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetUserActionsByActivityGameAsync:" + ex.InnerException);
             }
             return null;
         }

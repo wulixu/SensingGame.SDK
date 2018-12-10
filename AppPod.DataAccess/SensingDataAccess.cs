@@ -337,7 +337,9 @@ namespace AppPod.DataAccess
                                     //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                     TagIconUrl = FindTagIcon(firstSku.TagIds),
                                     Type = ProductType.Sku,
-                                    Product = prod
+                                    Product = prod,
+                                    PropsName = firstSku.PropsName
+
                                 });
                             }
                         }
@@ -359,7 +361,8 @@ namespace AppPod.DataAccess
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 TagIconUrl = FindTagIcon(firstSku.TagIds),
                                 Type = ProductType.Sku,
-                                Product = prod
+                                Product = prod,
+                                PropsName = firstSku.PropsName
                             });
                         }
                     }
@@ -1453,7 +1456,7 @@ namespace AppPod.DataAccess
             {
                 return Enumerable.Empty<AdsSdkModel>();
             }
-            var ads = Ads.Where(t => t.TagIds.Contains(tag.Id));
+            var ads = Ads.Where(t => t.TagIds.Contains(tag.Id)).OrderBy(t => t.OrderNumber);
             ads.ForEach((a) => {
                 a.FileUrl = a.GetLocalFile();
             });

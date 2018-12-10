@@ -64,10 +64,13 @@
     <Compile Include="Contract\BrandDto.cs" />
     <Compile Include="Contract\CouponViewModel.cs" />
     <Compile Include="Contract\DateMetaPhysicsDto.cs" />
+    <Compile Include="Contract\DeviceAppPodVersionModel.cs" />
     <Compile Include="Contract\DeviceHeartBeatInput.cs" />
     <Compile Include="Contract\DeviceSdkModel.cs" />
     <Compile Include="Contract\DeviceSoftwareSdkModel.cs" />
     <Compile Include="Contract\DeviceStatusInput.cs" />
+    <Compile Include="Contract\ScreenshotInput.cs" />
+    <Compile Include="Contract\FaceRecord.cs" />
     <Compile Include="Contract\FacesRecommendGoodsInput.cs" />
     <Compile Include="Contract\GetProductSdkInput.cs" />
     <Compile Include="Contract\LikeInfoViewModel.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="Contract\SensingDeviceActivityDto\QrcodeOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\SnsUserAwardOuput.cs" />
     <Compile Include="Contract\SensingDeviceProductCommentModel.cs" />
+    <Compile Include="Contract\TableLastTimeDto.cs" />
     <Compile Include="Contract\TagSdkModel.cs" />
     <Compile Include="Contract\TaobaoRecommendGoodsInput.cs" />
     <Compile Include="Contract\TenantAndOrganizationUnitOutput.cs" />
