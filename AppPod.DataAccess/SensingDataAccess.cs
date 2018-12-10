@@ -1598,6 +1598,19 @@ namespace AppPod.DataAccess
             }
         }
 
+        public void ReadLikeCounts(List<ClickInfo> clickInfoData)
+        {
+            var clickDic = clickInfoData.ToDictionary(x => long.Parse(x.ThingId));
+            foreach (var product in mShowProducts)
+            {
+                if (clickDic.ContainsKey(product.Id))
+                {
+                    var clickInfo = clickDic[product.Id];
+                    product.Product.LikeCount = clickInfo.ClickCount;
+                }
+            }
+        }
+
         public void SetKeyword(string keyword)
         {
             mShowProducts.ForEach((p) => {

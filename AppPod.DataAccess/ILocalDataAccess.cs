@@ -119,6 +119,7 @@ namespace AppPod.DataAccess
         ShowProductInfo GetShowProductByOutId(string outId);
         ShowProductInfo GetShowProductBySku(long skuId);
         void ReadClickCounts(List<ClickInfo> clickInfoData);
+        void ReadLikeCounts(List<ClickInfo> clickInfoData);
         void SetKeyword(string keyword);
         IEnumerable<ShowProductInfo> QueryByKeyword(string keyword);
     }

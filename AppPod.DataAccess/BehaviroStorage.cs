@@ -71,6 +71,15 @@ namespace AppPod.DataAccess
             });
         }
 
+        public void AddMatch(ShowProductInfo productInfo, string softwareName, string pageName)
+        {
+            if (productInfo == null) return;
+            Task.Factory.StartNew(() =>
+            {
+                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name, productInfo.Type.ToString(), "match", softwareName, pageName);
+            });
+        }
+
         public void AddBehavoirData(string thingId, string thingName, string category,string action,string softwareName = "", string pageName ="")
         {
             //todo:william.
@@ -112,6 +121,12 @@ namespace AppPod.DataAccess
         public List<ClickInfo> ReadLikeClickData()
         {
             var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='like' group by ThingId");
+            return query;
+        }
+
+        public List<ClickInfo> ReadMatchClickData()
+        {
+            var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='match' group by ThingId");
             return query;
         }
 
