@@ -433,9 +433,6 @@ namespace Sensing.SDK.Test
                     qrCodeImg.Source = UriToImage(data.QrCodeUrl);
                 }
             }
-
-
-
         }
 
         /// <summary>
