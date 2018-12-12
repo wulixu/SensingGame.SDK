@@ -63,6 +63,7 @@ namespace SensingStoreCloud.Activity
 
     public class ChatMessage
     {
+        public int Id { get; set; }
         public long? SnsUserInfoId { get; set; }
 
         public virtual SnsUserInfoOutput SnsUserInfo { get; set; }
