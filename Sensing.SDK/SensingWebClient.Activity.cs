@@ -277,6 +277,12 @@ namespace Sensing.SDK
             return -1;
         }
 
+        /// <summary>
+        /// 获得活动的聊天信息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+
         public async Task<PagedResultDto<ChatMessage>> GetActivityChattingRecordsAsync(SensingDeviceGamePagedSortedFilteredInputBase input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
@@ -293,6 +299,12 @@ namespace Sensing.SDK
             return null;
         }
 
+
+        /// <summary>
+        /// 获得游戏的聊天信息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public async Task<PagedResultDto<ChatMessage>> GetDeviceActivityGameChattingRecordAsync(SensingDeviceGamePagedSortedFilteredInputBase input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
