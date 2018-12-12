@@ -98,6 +98,15 @@ namespace SensingStoreCloud.Activity
 
     }
 
+    public class SnsUserTextDataInput : SensingDeviceGameInputBase
+    {
+        [Required]
+        public string Text { get; set; }
+        [Required]
+        public string OpenId { get; set; }
+        public EnumSnsType SnsType { get; set; }
+    }
+
 
     public class Qrcode4LoginInput : SensingDeviceGameInputBase
     {
