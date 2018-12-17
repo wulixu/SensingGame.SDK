@@ -291,7 +291,7 @@ namespace AppPod.DataAccess
                                 Quantity = prod.Num,
                                 Type = ProductType.Product,
                                 TagIconUrl = FindTagIcon(prod.TagIds),
-                                Product = prod
+                                Product = prod,
                             });
                         }
                         continue;
@@ -1556,7 +1556,8 @@ namespace AppPod.DataAccess
                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                 Type = ProductType.Sku,
                 TagIconUrl = FindTagIcon(product.TagIds),
-                Product = product
+                Product = product,
+                
             };
         }
 
@@ -1597,6 +1598,33 @@ namespace AppPod.DataAccess
                 }
             }
         }
+
+        public void ReadLikeClickCounts(List<ClickInfo> clickInfoData)
+        {
+            var clickDic = clickInfoData.ToDictionary(x => long.Parse(x.ThingId));
+            foreach (var product in mShowProducts)
+            {
+                if (clickDic.ContainsKey(product.Id))
+                {
+                    var clickInfo = clickDic[product.Id];
+                    product.LikeClickCount = clickInfo.ClickCount;
+                }
+            }
+        }
+
+        public void ReadAllClickCounts(List<ClickInfo> clickInfoData)
+        {
+            var clickDic = clickInfoData.ToDictionary(x => long.Parse(x.ThingId));
+            foreach (var product in mShowProducts)
+            {
+                if (clickDic.ContainsKey(product.Id))
+                {
+                    var clickInfo = clickDic[product.Id];
+                    product.TotalClickCouont = clickInfo.ClickCount;
+                }
+            }
+        }
+
 
         public void SetKeyword(string keyword)
         {
