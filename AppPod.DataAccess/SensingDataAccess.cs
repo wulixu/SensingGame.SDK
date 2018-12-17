@@ -337,7 +337,9 @@ namespace AppPod.DataAccess
                                     //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                     TagIconUrl = FindTagIcon(firstSku.TagIds),
                                     Type = ProductType.Sku,
-                                    Product = prod
+                                    Product = prod,
+                                    PropsName = firstSku.PropsName
+
                                 });
                             }
                         }
@@ -359,7 +361,8 @@ namespace AppPod.DataAccess
                                 //QrcodeUrl = prod.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreType == storeType)?.Qrcode,
                                 TagIconUrl = FindTagIcon(firstSku.TagIds),
                                 Type = ProductType.Sku,
-                                Product = prod
+                                Product = prod,
+                                PropsName = firstSku.PropsName
                             });
                         }
                     }
@@ -1453,7 +1456,7 @@ namespace AppPod.DataAccess
             {
                 return Enumerable.Empty<AdsSdkModel>();
             }
-            var ads = Ads.Where(t => t.TagIds.Contains(tag.Id));
+            var ads = Ads.Where(t => t.TagIds.Contains(tag.Id)).OrderBy(t => t.OrderNumber);
             ads.ForEach((a) => {
                 a.FileUrl = a.GetLocalFile();
             });
@@ -1625,6 +1628,18 @@ namespace AppPod.DataAccess
             }
         }
 
+        public void ReadLikeCounts(List<ClickInfo> clickInfoData)
+        {
+            var clickDic = clickInfoData.ToDictionary(x => long.Parse(x.ThingId));
+            foreach (var product in mShowProducts)
+            {
+                if (clickDic.ContainsKey(product.Id))
+                {
+                    var clickInfo = clickDic[product.Id];
+                    product.Product.LikeCount = clickInfo.ClickCount;
+                }
+            }
+        }
 
         public void SetKeyword(string keyword)
         {

@@ -29,6 +29,12 @@ namespace Sensing.SDK
         private const string DoLotteryUserByAwardIdQuery = "services/app/SensingDeviceActivity/DoLotteryUserByAwardId";
         private const string DoLotteryAwardByActionQuery = "services/app/SensingDeviceActivity/DoLotteryAwardByAction";
         private const string GetUserActionByIdQuery = "services/app/SensingDeviceActivity/GetUserActionById";
+        private const string GetUserActionsByActivityGameQuery = "services/app/SensingDeviceActivity/GetUserActionsByActivityGame";
+        private const string GetUserActionsByActivityQuery = "services/app/SensingDeviceActivity/GetUserActionsByActivity";
+        private const string SendTextMessageByUserQuery = "services/app/SensingDeviceActivity/SendTextMessageByUser";
+        private const string GetActivityChattingRecordsQuery = "services/app/SensingDeviceActivity/GetActivityChattingRecords";
+        private const string GetDeviceActivityGameChattingRecordsQuery = "services/app/SensingDeviceActivity/GetDeviceActivityGameChattingRecords";
+
 
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
@@ -233,5 +239,87 @@ namespace Sensing.SDK
             }
             return null;
         }
+
+        public async Task<PagedResultDto<UserActionInfoOutput>> GetUserActionsByActivityGameAsync(ActivityGamePageInput input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetUserActionsByActivityGameQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserActionInfoOutput>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetUserActionsByActivityGameAsync:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 发送聊天信息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<int> SendTextMessageByUserAsync(SnsUserTextDataInput input)
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{SendTextMessageByUserQuery}";
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            try
+            {
+                var webResult = await SendRequestAsync<SnsUserTextDataInput, AjaxResponse<int>>(HttpMethod.Post, absolutePath, input);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("SendTextMessageByUserAsync:" + ex.InnerException);
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// 获得活动的聊天信息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+
+        public async Task<PagedResultDto<ChatMessage>> GetActivityChattingRecordsAsync(SensingDeviceGamePagedSortedFilteredInputBase input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetActivityChattingRecordsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<ChatMessage>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityChattingRecords:" + ex.InnerException);
+            }
+            return null;
+        }
+
+
+        /// <summary>
+        /// 获得游戏的聊天信息
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<PagedResultDto<ChatMessage>> GetDeviceActivityGameChattingRecordAsync(SensingDeviceGamePagedSortedFilteredInputBase input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetDeviceActivityGameChattingRecordsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<ChatMessage>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityChattingRecords:" + ex.InnerException);
+            }
+            return null;
+        }
+
     }
 }
