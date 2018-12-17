@@ -130,12 +130,6 @@ namespace AppPod.DataAccess
             return query;
         }
 
-        public List<ClickInfo> ReadLikeClickData()
-        {
-            var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='like' group by ThingId");
-            return query;
-        }
-
         public List<ClickInfo> ReadMatchClickData()
         {
             var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='match' group by ThingId");
