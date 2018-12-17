@@ -1135,8 +1135,8 @@ namespace AppPod.DataAccess
                             break;
                         topItem = stack.Peek();
                         if (topItem.Ids == null)
-                            topItem.Ids = new List<int>();
-                        topItem.Ids.Add(popItem.Id);
+                            topItem.Ids = new List<int> { topItem.Id };
+                        //topItem.Ids.Add(popItem.Id);
                         topItem.Ids.AddRange(popItem.Ids);
                     }
                 }
