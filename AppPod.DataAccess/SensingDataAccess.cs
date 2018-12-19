@@ -1120,11 +1120,13 @@ namespace AppPod.DataAccess
                 while (true)
                 {
                     var topItem = stack.Peek();
+                    if (topItem.Ids == null)
+                        topItem.Ids = new List<int> { topItem.Id };
                     var child = PCategories.FirstOrDefault(p => p.ParentCategoryId == topItem.Id && p.ParentCategoryId != p.Id);
                     if (child != null)
                     {
                         stack.Push(child);
-                        child.Ids = new List<int> { child.Id };
+                        //child.Ids = new List<int> { child.Id };
                         PCategories.Remove(child);
                     }
                     else
@@ -1134,8 +1136,6 @@ namespace AppPod.DataAccess
                         if (stack.Count == 0)
                             break;
                         topItem = stack.Peek();
-                        if (topItem.Ids == null)
-                            topItem.Ids = new List<int> { topItem.Id };
                         //topItem.Ids.Add(popItem.Id);
                         topItem.Ids.AddRange(popItem.Ids);
                     }

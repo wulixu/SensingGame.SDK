@@ -120,6 +120,8 @@ namespace Sensing.SDK
             nameValues.Add("qrType", playerData.QrType.ToString());
             nameValues.Add("snsType", playerData.SnsType.ToString());
             nameValues.Add("IsSendWeChatMsg", playerData.IsSendWeChatMsg.ToString());
+            nameValues.Add("type", playerData.Type?.ToString()??"");
+            nameValues.Add("extensionData", playerData.ExtensionData?.ToString()??"");
             if (!string.IsNullOrEmpty(playerData.TargetUrl)) nameValues.Add("TargetUrl", playerData.TargetUrl);
 
             try
