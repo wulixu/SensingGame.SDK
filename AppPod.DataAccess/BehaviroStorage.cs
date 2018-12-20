@@ -21,6 +21,7 @@ namespace AppPod.DataAccess
         void AddClick(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
         List<ClickInfo> ReadClickData();
         List<ClickInfo> ReadLikeClickData();
+        List<ClickInfo> ReadAllClickData();
         void LogDeviceStatus(int secondInterval);
         void AddFaceRecord(string face, string softwareName = "", string pageName = "");
 
@@ -113,13 +114,25 @@ namespace AppPod.DataAccess
 
         public List<ClickInfo> ReadClickData()
         {
-            var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='click' group by ThingId");
+            var query = m_db.Query<ClickInfo>("select ThingId,sum(Increment) ClickCount from SqlLiteBehaviorRecord where Action='click' group by ThingId");
             return query;
         }
 
         public List<ClickInfo> ReadLikeClickData()
         {
-            var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='like' group by ThingId");
+            var query = m_db.Query<ClickInfo>("select ThingId,sum(Increment) ClickCount from SqlLiteBehaviorRecord where Action='like' group by ThingId");
+            return query;
+        }
+
+        public List<ClickInfo> ReadAllClickData()
+        {
+            var query = m_db.Query<ClickInfo>("select ThingId,sum(Increment) ClickCount from SqlLiteBehaviorRecord group by ThingId");
+            return query;
+        }
+
+        public List<ClickInfo> ReadMatchClickData()
+        {
+            var query = m_db.Query<ClickInfo>("select ThingId,count(*) ClickCount from SqlLiteBehaviorRecord where Action='match' group by ThingId");
             return query;
         }
 

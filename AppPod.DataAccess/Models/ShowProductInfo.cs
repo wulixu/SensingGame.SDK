@@ -31,5 +31,7 @@ namespace AppPod.DataAccess.Models
         public ProductSdkModel Product { get; set; }
         public int ClickCount { get; set; }
         public string PropsName { get; set; } 
+        public int LikeClickCount { get; set; }
+        public int TotalClickCouont { get; set; }
     }
 }

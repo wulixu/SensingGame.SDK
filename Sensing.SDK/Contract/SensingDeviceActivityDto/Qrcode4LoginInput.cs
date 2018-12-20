@@ -98,6 +98,15 @@ namespace SensingStoreCloud.Activity
 
     }
 
+    public class SnsUserTextDataInput : SensingDeviceGameInputBase
+    {
+        [Required]
+        public string Text { get; set; }
+        [Required]
+        public string OpenId { get; set; }
+        public EnumSnsType SnsType { get; set; }
+    }
+
 
     public class Qrcode4LoginInput : SensingDeviceGameInputBase
     {
@@ -140,6 +149,10 @@ namespace SensingStoreCloud.Activity
         public string PlayerImage { get; set; }
         public string PlayingImage { get; set; }
         public double? Score { get; set; }
+        ////action的类型，应用自己确定(SkinTest_XiaoFu)
+        public string Type { get; set; }
+        //扩展的字段，一般json格式
+        public string ExtensionData { get; set; }
         //public ActionStatus? Status { get; set; }
     }
 
