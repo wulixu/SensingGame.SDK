@@ -65,7 +65,7 @@ namespace AppPod.DataAccess
             if (productInfo == null) return;
             Task.Factory.StartNew(() => 
             {
-                AddBehavoirData(productInfo.Id.ToString(), productInfo.Type.ToString(), "like", softwareName, pageName, previousPage, previousPageArea);
+                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name, productInfo.Type.ToString(), "like", softwareName, pageName, previousPage, previousPageArea);
             });
         }
 
