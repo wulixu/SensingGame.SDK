@@ -414,7 +414,10 @@ namespace Sensing.SDK.Test
                     SnsType = snsType,
                      TargetUrl = YourTargetUrl.Text
                 };
-
+                playingData.Type = "x";
+                var json = File.ReadAllText("result1.json");
+                var extensionData = JsonConvert.SerializeObject(json);
+                playingData.ExtensionData = extensionData;
                 var actionQrcode = await _sensingWebClient.PostPlayerData4ActionQrcodeAsync(playingData);
                 if (actionQrcode != null)
                 {
