@@ -69,6 +69,9 @@
     <Compile Include="Contract\DeviceSoftwareSdkModel.cs" />
     <Compile Include="Contract\DeviceStatusInput.cs" />
     <Compile Include="Contract\FacesRecommendGoodsInput.cs" />
+    <Compile Include="Contract\Faces\FaceInput.cs" />
+    <Compile Include="Contract\Faces\FaceModelDto.cs" />
+    <Compile Include="Contract\Faces\UserFaceInfoDto.cs" />
     <Compile Include="Contract\GetProductSdkInput.cs" />
     <Compile Include="Contract\LikeInfoViewModel.cs" />
     <Compile Include="Contract\MatchInfoViewModel.cs" />

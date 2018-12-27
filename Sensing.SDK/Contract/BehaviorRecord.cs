@@ -55,5 +55,7 @@ namespace Sensing.SDK.Contract
         public string Comments { get; set; }
 
         public string PageName { get; set; }
+
+        public string OriginalPageName { get; set; }
     }
 }
