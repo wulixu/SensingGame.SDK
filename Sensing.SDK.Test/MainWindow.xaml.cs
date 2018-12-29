@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Sensing.SDK;
 using Sensing.SDK.Contract;
+using Sensing.SDK.Contract.Faces;
 using SensingSite.ClientSDK.Common;
 using SensingStoreCloud.Activity;
 using System;
@@ -23,6 +24,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZXing;
+using static Sensing.SDK.SensingWebClient;
 using Brushes = System.Windows.Media.Brushes;
 using Path = System.IO.Path;
 
@@ -352,12 +354,16 @@ namespace Sensing.SDK.Test
 
         private async void MemberFaceBtn_Click(object sender, RoutedEventArgs e)
         {
+            //Go(null,null);
             var faces = new FaceInput();
             var fileName = genderCBox.SelectedIndex == 0 ? "face-m.jpg" : "face-f.jpg";
             var faceImagePath = System.IO.Path.Combine(Environment.CurrentDirectory, fileName);
 
             var bytes = File.ReadAllBytes(faceImagePath);
             faces.Face = bytes;
+
+            File.WriteAllBytes("wu.txt", bytes);
+
             var data = await _sensingWebClient.IsFaceMember(faces);
             if (data != null)
             {
@@ -369,6 +375,9 @@ namespace Sensing.SDK.Test
                 MatchMsg.Text = "failed" + Environment.NewLine;
             }
         }
+
+
+
 
         #region Activity
 
@@ -601,6 +610,53 @@ namespace Sensing.SDK.Test
             }
         }
 
+        private async void RegisterMemberFace_Click(object sender, RoutedEventArgs e)
+        {
+            var myFace = new UserFaceDataInput();
+            var fileName = "wu.jpg";
+            var faceImagePath = System.IO.Path.Combine(Environment.CurrentDirectory, fileName);
 
+            var bytes = File.ReadAllBytes(faceImagePath);
+            myFace.FaceBytes = bytes;
+            myFace.SecurityKey = "da4e335581084497a9faae269727fa45";
+            myFace.OpenId = OpenIdTBox.Text.Trim();
+            myFace.SnsType = EnumSnsType.WeChat;
+
+            var data = await _sensingWebClient.RegisterFaceMember(myFace);
+            if (data != null)
+            {
+                MatchMsg.Text = "RegisterFaceMember Successfully" + Environment.NewLine;
+                MatchMsg.Text += data;
+            }
+            else
+            {
+                MatchMsg.Text = "failed" + Environment.NewLine;
+            }
+        }
+
+        private async void UserByFaceBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var faces = new FaceInput();
+            var fileName = "wu.jpg";
+            var faceImagePath = System.IO.Path.Combine(Environment.CurrentDirectory, fileName);
+
+            var bytes = File.ReadAllBytes(faceImagePath);
+            faces.Face = bytes;
+
+            //File.WriteAllBytes("wu.txt", bytes);
+
+            var myFace = new FaceDataInput();
+            myFace.FaceBytes = bytes;
+            var data = await _sensingWebClient.QueryUserByFace(myFace);
+            if (data != null)
+            {
+                MatchMsg.Text = "QueryUserByFace Successfully" + Environment.NewLine;
+                MatchMsg.Text += data;
+            }
+            else
+            {
+                MatchMsg.Text = "failed" + Environment.NewLine;
+            }
+        }
     }
 }

@@ -100,17 +100,21 @@
                         <ComboBoxItem>Female</ComboBoxItem>
                     </ComboBox>
                     <Button Margin="583,29,571,738" x:Name="GoodsByFacesBtn" FontSize="20" Content="GoodsByFaces" Click="GoodsByFacesBtn_Click"/>
-                    <Button Margin="878,27,294,740" x:Name="MemberFaceBtn" FontSize="20" Content="IsFaceMember" Click="MemberFaceBtn_Click" />
+                    <Button x:Name="MemberFaceBtn" FontSize="20" Content="IsFaceMember" Click="MemberFaceBtn_Click" Canvas.Left="876" Canvas.Top="29" />
                     <Label Height="30" Canvas.Left="72" Canvas.Top="110">Gender:</Label>
                     <TextBox Width="150" x:Name="GenderTBox" Canvas.Left="127" Canvas.Top="116">Male</TextBox>
                     <Label Height="30" Canvas.Left="71" Canvas.Top="150" RenderTransformOrigin="0.588,1.667" Content="Age :"/>
                     <TextBox Width="150" Canvas.Left="127" x:Name="AgeTBox" Canvas.Top="154">25</TextBox>
                     <Button x:Name="TagRecommendBtn" FontSize="20" Content="TagRecommends"  Canvas.Left="573" Canvas.Top="126" Click="TagRecommendBtn_Click" />
-                    <TextBlock x:Name="GoodsByFaceTxt" Background="White" Height="382" Width="1350" Canvas.Top="185"/>
+                    <TextBlock x:Name="GoodsByFaceTxt" Background="White" Height="382" Width="1350" Canvas.Top="430"/>
                     <Label Height="30" Canvas.Left="304" Canvas.Top="110" RenderTransformOrigin="0.588,1.667" Content="Happiness:"/>
                     <TextBox Width="57" x:Name="HappinessTBox" Canvas.Left="387" Canvas.Top="114" Text="95"/>
                     <Label Height="30" Canvas.Left="304" Canvas.Top="146" RenderTransformOrigin="0.588,1.667" Content="BeautyScore:"/>
                     <TextBox Width="57" x:Name="BeautyScoreTBox" Canvas.Left="397" Canvas.Top="150" Text="90"/>
+                    <TextBox Width="348" x:Name="OpenIdTBox" Canvas.Left="127" Canvas.Top="294"></TextBox>
+                    <Button x:Name="RegisterMemberFace" FontSize="20" Content="RegisterFaceMember" Canvas.Left="72" Canvas.Top="328" Click="RegisterMemberFace_Click" />
+                    <Label Height="30" Canvas.Left="71" Canvas.Top="287" RenderTransformOrigin="0.588,1.667" Content="OpenId:"/>
+                    <Button x:Name="UserByFaceBtn" FontSize="20" Content="Tenant FindUserByFace" Canvas.Left="541" Canvas.Top="328" Width="256" Click="UserByFaceBtn_Click" />
                 </Canvas>
             </TabItem>
             <TabItem Header="DeviceStatus">

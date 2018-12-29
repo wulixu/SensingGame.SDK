@@ -1,4 +1,5 @@
 ﻿using Sensing.SDK.Contract;
+using Sensing.SDK.Contract.Faces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -44,6 +45,40 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 Console.WriteLine("IsFaceMember:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        
+
+        public async Task<UserFaceInfoDto> QueryUserByFace(FaceDataInput input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"https://f.api.troncell.com/api/Face/QueryUserByFace";
+            try
+            {
+                var webResult = await SendRequestAsync<FaceDataInput, AjaxResponse<UserFaceInfoDto>>(HttpMethod.Post, absolutePath, input);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("QueryUserByFace:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<FaceModelDto> RegisterFaceMember(UserFaceDataInput input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"https://f.api.troncell.com/api/Face/RegisterFaceByUser";
+            try
+            {
+                var webResult = await SendRequestAsync<UserFaceDataInput, AjaxResponse<FaceModelDto>>(HttpMethod.Post, absolutePath, input);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("RegisterFaceMember:" + ex.InnerException);
             }
             return null;
         }
