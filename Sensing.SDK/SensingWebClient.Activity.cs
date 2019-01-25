@@ -35,7 +35,8 @@ namespace Sensing.SDK
         private const string SendTextMessageByUserQuery = "services/app/SensingDeviceActivity/SendTextMessageByUser";
         private const string GetActivityChattingRecordsQuery = "services/app/SensingDeviceActivity/GetActivityChattingRecords";
         private const string GetDeviceActivityGameChattingRecordsQuery = "services/app/SensingDeviceActivity/GetDeviceActivityGameChattingRecords";
-
+        private const string GetPaperQuery = "services/app/SengsingDevice/GetPapers";
+        private const string GetQuestionsByPaperIdQuery = "services/app/SengsingDevice/GetQuestionsByPaperId";
 
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
@@ -316,6 +317,36 @@ namespace Sensing.SDK
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<ChatMessage>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityChattingRecords:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<PaperDto>> GetPaperAsync(PaperInput input)
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetPaperQuery}?{GetBasicNameValuesQueryString()}&softwareId={input.SoftwareId}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PaperDto>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityChattingRecords:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<QuestionDto>> GetQuestionsByPaperIdAsync(QuestionInput input)
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetQuestionsByPaperIdQuery}?{GetBasicNameValuesQueryString()}&paperId={input.PaperId}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<QuestionDto>>>(HttpMethod.Get, absolutePath, null);
                 return webResult.Result;
             }
             catch (Exception ex)

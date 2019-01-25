@@ -1444,9 +1444,7 @@ namespace AppPod.DataAccess
         public DateMetaphysicsDto GetNowOrLatestLuckyByMetaId(long metaId)
         {
             if (DateMetas == null || DateMetas.Count == 0) return null;
-            var entity = DateMetas.Where(m => m.MetaphysicsId == metaId && m.Date == DateTime.Today).FirstOrDefault();
-            if (entity != null) return entity;
-            return DateMetas.Where(m => m.MetaphysicsId == metaId).OrderBy(m => m.Date).FirstOrDefault();
+            return DateMetas.Where(m => m.MetaphysicsId == metaId).OrderByDescending(m => m.Date).FirstOrDefault();
         }
 
         public IEnumerable<AdsSdkModel> FindAdsByTagName(string tagName)
