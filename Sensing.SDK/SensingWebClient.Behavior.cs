@@ -99,7 +99,7 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<FaceRecordOutput>> GetFaceRecordsAsync(FaceRecordInput input)
         {
             //api/services/app/BehaviorRecord/PostRecord
-            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{GetFaceRecordsQuery}?{GetBasicNameValuesQueryString()}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{GetFaceRecordsQuery}?{GetBasicNameValuesQueryString()}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}&collectionStartTime={input.CollectionStartTime}&collectionEndTime={input.CollectionEndTime}";
             try
             {
                 var result = await SendRequestAsync<string, AjaxResponse<PagedResultDto<FaceRecordOutput>>>(HttpMethod.Get, absolutePath, null);
