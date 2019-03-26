@@ -202,6 +202,7 @@ namespace Sensing.SDK
                     if (response.Content != null && response.Content.Headers.ContentType.MediaType.Contains(JsonHeader))
                     {
                         var errorObjectString = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine(errorObjectString);
                         ClientError errorCollection = JsonConvert.DeserializeObject<ClientError>(errorObjectString);
                         if (errorCollection != null)
                         {

@@ -15,6 +15,7 @@ namespace Sensing.SDK
         /// </summary>
         private const string PostBehaviorQuery = "/BehaviorRecord/PostRecord";
         private const string PostDeviceStatusQuery = "/BehaviorRecord/PostDeviceStatusRecord";
+        private const string PostDeviceNetworkStatusQuery = "/BehaviorRecord/PostDeviceNetworkStatusRecords";
         private const string PostFaceRecordQuery = "/BehaviorRecord/PostFaceRecord";
         private string DeviceHeartBeatQuery = "/BehaviorRecord/DeviceHeartBeat";
         private string GetFaceRecordsQuery = "/BehaviorRecord/GetFaceRecords";
@@ -59,6 +60,22 @@ namespace Sensing.SDK
             return false;
         }
 
+        public async Task<bool> PostDeviceNetworkStatusRecords(IEnumerable<DeviceNetworkStatusInput> status)
+        {
+            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{PostDeviceNetworkStatusQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var result = await SendRequestAsync<IEnumerable<DeviceNetworkStatusInput>, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, status);
+                return result.Success;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("PostDeviceNetworkStatusRecords:" + ex.InnerException);
+            }
+            return false;
+        }
+
         public async Task<bool> PostFaceRecordAsync(FaceRecord record)
         {
             //api/services/app/BehaviorRecord/PostRecord
@@ -99,7 +116,7 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<FaceRecordOutput>> GetFaceRecordsAsync(FaceRecordInput input)
         {
             //api/services/app/BehaviorRecord/PostRecord
-            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{GetFaceRecordsQuery}?{GetBasicNameValuesQueryString()}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{GetFaceRecordsQuery}?{GetBasicNameValuesQueryString()}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}&collectionStartTime={input.CollectionStartTime}&collectionEndTime={input.CollectionEndTime}";
             try
             {
                 var result = await SendRequestAsync<string, AjaxResponse<PagedResultDto<FaceRecordOutput>>>(HttpMethod.Get, absolutePath, null);

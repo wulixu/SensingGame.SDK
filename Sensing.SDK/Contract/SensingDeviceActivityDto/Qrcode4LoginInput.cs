@@ -84,13 +84,13 @@ namespace SensingStoreCloud.Activity
 
         public string ClientId { get; set; }
 
-        public void Normalize()
-        {
-            if (string.IsNullOrEmpty(Sorting))
-            {
-                Sorting = "LastModificationTime";
-            }
-        }
+        //public void Normalize()
+        //{
+        //    if (string.IsNullOrEmpty(Sorting))
+        //    {
+        //        Sorting = "LastModificationTime";
+        //    }
+        //}
     }
 
     public class ActivityGamePageInput : SensingDeviceGamePagedSortedFilteredInputBase
@@ -123,13 +123,13 @@ namespace SensingStoreCloud.Activity
         [Range(0, double.MaxValue)]
         public long QrcodeId { get; set; }
 
-        public void Normalize()
-        {
-            if (string.IsNullOrEmpty(Sorting))
-            {
-                Sorting = "LastModificationTime";
-            }
-        }
+        //public void Normalize()
+        //{
+        //    if (string.IsNullOrEmpty(Sorting))
+        //    {
+        //        Sorting = "LastModificationTime";
+        //    }
+        //}
     }
 
     public class PlayerActionDataSimpleDataInput: SensingDeviceGameListInputBase

@@ -113,6 +113,7 @@ namespace Sensing.SDK
         }
         public async Task<QrcodeActionOutput> PostPlayerData4ActionQrcodeAsync(PlayerDataInput playerData)
         {
+            Console.WriteLine("Enter PostPlayerData4ActionQrcodeAsync ");
             var absolutePath = $"{ServerBase}{ActivityDataPath}{PostPlayerData4ActionQrcodeQuery}";
             var nameValues = new NameValueCollection();
             AddBasicNameValues(nameValues);
@@ -147,6 +148,7 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 logger.Error("PostData4ScanAsync", ex);
+                Console.WriteLine(ex.Message);
             }
             return default(QrcodeActionOutput);
         }

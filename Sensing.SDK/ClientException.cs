@@ -113,15 +113,15 @@ namespace Sensing.SDK
         /// </summary>
         /// <param name="message">The corresponding error message.</param>
         /// <returns>Client Exception Instance.</returns>
-        public static ClientException BadRequest(string message)
-        {
-            return new ClientException(
-                new ClientError()
-                {
-                    Code = ((int)HttpStatusCode.BadRequest).ToString(),
-                    Message = message
-                },
-                HttpStatusCode.BadRequest);
-        }
+        //public static ClientException BadRequest(string message)
+        //{
+        //    return new ClientException(
+        //        new ClientError()
+        //        {
+        //            Code = ((int)HttpStatusCode.BadRequest).ToString(),
+        //            Message = message
+        //        },
+        //        HttpStatusCode.BadRequest);
+        //}
     }
 }
