@@ -409,6 +409,7 @@ namespace Sensing.SDK.Test
         private string afterQrCode;
         private async void CreateQrcode_Click(object sender, RoutedEventArgs e)
         {
+            var games = await _sensingWebClient.GetActivityGames();
             var snsType = platformCBox.SelectedValue.ToString() == "Taobao" ? EnumSnsType.Taobao : EnumSnsType.WeChat;
             var qrType = qrcodeTypes[qrCodeCBox.SelectedValue.ToString()];
             if (qrType == EnumQRStatus.AfterGame)

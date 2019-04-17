@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ClientError.cs" />
     <Compile Include="ClientException.cs" />
+    <Compile Include="Contract\ActivityGameDto.cs" />
     <Compile Include="Contract\AdsSdkModel.cs" />
     <Compile Include="Contract\BehaviorRecord.cs" />
     <Compile Include="Contract\BrandDto.cs" />

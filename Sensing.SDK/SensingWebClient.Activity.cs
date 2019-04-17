@@ -26,6 +26,7 @@ namespace Sensing.SDK
         private const string PostPlayerDataByActionQuery = "UserAction/PostPlayerDataByAction";
         private const string GetScanQrCodeUsersQuery = "services/app/SensingDeviceActivity/GetScanQrCodeUsers";
         private const string GetScanQrCodeUserActionsQuery = "services/app/SensingDeviceActivity/GetScanQrCodeUserActions";
+        private const string GetActivityGamesQuery = "services/app/SengsingDevice/GetActivityGames";
 
         private const string DoLotteryUserByAwardIdQuery = "services/app/SensingDeviceActivity/DoLotteryUserByAwardId";
         private const string DoLotteryAwardByActionQuery = "services/app/SensingDeviceActivity/DoLotteryAwardByAction";
@@ -183,6 +184,23 @@ namespace Sensing.SDK
             }
             return null;
         }
+
+
+        public async Task<List<ActivityGameDto>> GetActivityGames()
+        {
+              var absolutePath = $"{ServerBase}{ActivityDataPath}{GetActivityGamesQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<List<ActivityGameDto>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityGames:" + ex.InnerException);
+            }
+            return null;
+        }
+
 
         public async Task<SnsUserAwardOuput> DoLotteryUserByAwardId(AwardDataInput input)
         {
