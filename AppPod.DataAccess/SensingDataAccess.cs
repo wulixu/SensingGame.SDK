@@ -50,6 +50,27 @@ namespace AppPod.DataAccess
             return roots.ToList();
         }
 
+        public string GetStoreId()
+        {
+            try{
+                string appPodFolder = AppPodDataDirectory;
+                if (appPodFolder != null)
+                {
+                    string deviceJson = File.ReadAllText(Path.Combine(appPodFolder, "Device.json"));
+                    var deviceInfo = JsonConvert.DeserializeObject<DeviceOutput>(deviceJson);
+                    if (deviceInfo != null)
+                    {
+                        return deviceInfo.StoreOuterId;
+                    }
+                }
+            }
+           catch (Exception)
+            {
+            }
+            return null;
+        }
+
+
         /// <summary>
         /// 根据父分类id获取子分类
         /// </summary>
@@ -60,6 +81,7 @@ namespace AppPod.DataAccess
             var children = PCategories.Where(p => p.ParentCategoryId == parentCategoryId && p.ParentCategoryId != p.Id);
             return children.ToList();
         }
+
 
 
         public string GetQrcode(ShowProductInfo showProductInfo, string staffId)

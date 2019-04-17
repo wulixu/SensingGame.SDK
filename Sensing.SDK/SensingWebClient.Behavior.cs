@@ -26,7 +26,7 @@ namespace Sensing.SDK
         public readonly static string DeviceBigDataServiceHost = ServerBase + DeviceBigDataServiceRelativePath;
 
         private const string DeviceBigDataPath = "d/api/services/app";
-
+    
         public async Task<bool> PostBehaviorRecordsAsync(IEnumerable<BehaviorRecord> records)
         {
             //api/services/app/BehaviorRecord/PostRecord

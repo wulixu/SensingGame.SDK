@@ -123,5 +123,7 @@ namespace AppPod.DataAccess
         void ReadAllClickCounts(List<ClickInfo> clickInfoData);
         void SetKeyword(string keyword);
         IEnumerable<ShowProductInfo> QueryByKeyword(string keyword);
+        string GetStoreId();
+
     }
 }
