@@ -1555,6 +1555,8 @@ namespace AppPod.DataAccess
                 if (mainProduct == null)
                     continue;
                 var showProducts = new List<ShowProductInfo>();
+                if (MatchedProducts.ContainsKey(mainProduct.Id))
+                    continue;
                 MatchedProducts.Add(mainProduct.Id, showProducts);
                 foreach (var item in matchGroup.MatchItems)
                 {
