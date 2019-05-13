@@ -8,7 +8,7 @@ namespace Sensing.SDK.Contract
 {
     public class FaceImage
     {
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public string ImageUrl { get; set; }
         public string Type { get; set; }
     }

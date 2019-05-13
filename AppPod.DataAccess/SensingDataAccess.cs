@@ -921,6 +921,8 @@ namespace AppPod.DataAccess
         public List<DeviceSoftwareSdkModel> DeviceSoftwares { get; set; }
         
         public List<ActivityGameDto> ActivityGames { get; set; }
+        public DeviceAppPodVersionModel AppPodVersion { get; set; }
+
         #region Read Data from Local Json.
         public List<AdsSdkModel> ReadAds()
         {
@@ -1042,6 +1044,14 @@ namespace AppPod.DataAccess
             return JsonConvert.DeserializeObject<List<DeviceSoftwareSdkModel>>(json);
         }
 
+        public DeviceAppPodVersionModel ReadDeviceAppPodVersion()
+        {
+            var path = $"{AppPodDataDirectory}/AppPodVersion.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<List<DeviceAppPodVersionModel>>(json)?.FirstOrDefault();
+        }
+
         public static async Task<string> ReadText(string filePath)
         {
             using (FileStream sourceStream = new FileStream(filePath,
@@ -1084,6 +1094,8 @@ namespace AppPod.DataAccess
             DateMetas = ReadDateMetas();
             Apps = ReadApps();
             DeviceSoftwares = ReadDeviceSoftwares();
+            AppPodVersion = ReadDeviceAppPodVersion();
+
             return true;
         }
 
@@ -1367,7 +1379,7 @@ namespace AppPod.DataAccess
         {
             if (DeviceSetting == null)
                 return "Taobao";
-            return DeviceSetting.OnlineTrafficTarget.ToString();
+            return DeviceSetting.OnlineTrafficTarget?.ToString();
         }
 
         /// <summary>

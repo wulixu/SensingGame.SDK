@@ -275,6 +275,12 @@ namespace Sensing.SDK.Test
             }
         }
 
+        public string ImageToBase64(string imagePath)
+        {
+            byte[] bytesImage = File.ReadAllBytes(imagePath);
+            return Convert.ToBase64String(bytesImage);
+        }
+
         private async void GoodsByFacesBtn_Click(object sender, RoutedEventArgs e)
         {
             var faces = new FacesRecommendsInput();
@@ -283,7 +289,7 @@ namespace Sensing.SDK.Test
             var faceImagePath = System.IO.Path.Combine(Environment.CurrentDirectory, fileName);
 
             var bytes = File.ReadAllBytes(faceImagePath);
-            face.Image = bytes;
+            face.Image = ImageToBase64(faceImagePath);
             face.Type = "head";
             faces.Faces = new FaceImage[] { face };
             var data = await _sensingWebClient.GetRecommendsByFaces(faces);

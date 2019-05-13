@@ -55,6 +55,8 @@ namespace AppPod.DataAccess
         List<AppInfo> Apps { get; set; }
         List<ActivityGameDto> ActivityGames { get; set; }
         List<DeviceSoftwareSdkModel> DeviceSoftwares { get; set; }
+        DeviceAppPodVersionModel AppPodVersion { get; set; }
+
         Dictionary<long, IEnumerable<ShowProductInfo>> MatchedProducts { get; set; }
 
         List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string, string> keyValues);
