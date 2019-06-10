@@ -47,6 +47,16 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdsItems\BaseItem.cs" />
+    <Compile Include="AdsItems\ButtonItem.cs" />
+    <Compile Include="AdsItems\CanvasItem.cs" />
+    <Compile Include="AdsItems\CustomAd.cs" />
+    <Compile Include="AdsItems\H5Item.cs" />
+    <Compile Include="AdsItems\ILink.cs" />
+    <Compile Include="AdsItems\ImageItem.cs" />
+    <Compile Include="AdsItems\LabelItem.cs" />
+    <Compile Include="AdsItems\SwiperItem.cs" />
+    <Compile Include="AdsItems\VideoItem.cs" />
     <Compile Include="ClientError.cs" />
     <Compile Include="ClientException.cs" />
     <Compile Include="Contract\ActivityGameDto.cs" />

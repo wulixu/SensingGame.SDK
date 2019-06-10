@@ -50,5 +50,7 @@ namespace Sensing.SDK.Contract
         public string Transition { get; set; }
 
         public string Description { get; set; }
+        public bool IsCustom { get; set; }
+        public string CustomContent { get; set; }
     }
 }

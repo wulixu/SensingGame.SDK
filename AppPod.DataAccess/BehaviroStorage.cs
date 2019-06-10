@@ -15,7 +15,7 @@ namespace AppPod.DataAccess
 {
     public interface IBehaviorDataUploader
     {
-        void AddBehavoirData(string thingId, string thingName, string category, string action, string softwareName = "", string pageName = "", string previousPage = "", string previousPageArea = "");
+        void AddBehavoirData(string thingId, string thingName, string category, string action, string softwareName = "", string pageName = "", string previousPage = "", string previousPageArea = "", long productId = 0);
         void AddClick(AdsSdkModel ads, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
         void AddLike(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
         void AddClick(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
@@ -76,11 +76,11 @@ namespace AppPod.DataAccess
             if (productInfo == null) return;
             Task.Factory.StartNew(() =>
             {
-                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name, productInfo.Type.ToString(), "click", softwareName, pageName, previousPage, previousPageArea);
+                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name, productInfo.Type.ToString(), "click", softwareName, pageName, previousPage, previousPageArea, productInfo.Product?.Id??0);
             });
         }
 
-        public void AddBehavoirData(string thingId, string thingName, string category,string action,string softwareName = "", string pageName ="",string previousPage= "",string previousPageArea = "")
+        public void AddBehavoirData(string thingId, string thingName, string category,string action,string softwareName = "", string pageName ="",string previousPage= "",string previousPageArea = "",long productId = 0)
         {
             //todo:william.
             Task.Factory.StartNew(() =>
@@ -102,6 +102,7 @@ namespace AppPod.DataAccess
                     record.PreviousPageArea = previousPageArea;
                     record.PreviousPageName = previousPage;
                     record.IsSynced = false;
+                    record.ProductId = productId;
                     m_db.Insert(record);
                 }
                 else
