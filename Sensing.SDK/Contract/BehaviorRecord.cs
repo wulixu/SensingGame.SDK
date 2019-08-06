@@ -12,7 +12,7 @@ namespace Sensing.SDK.Contract
         /// item的id
         /// </summary>
         public string ThingId { get; set; }
-
+        public long ProductId { get; set; }
         /// <summary>
         /// item的名称
         /// </summary>

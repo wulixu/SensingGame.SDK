@@ -108,10 +108,6 @@ namespace AppPod.DataAccess
                 var uri = new Uri(fileName).LocalPath;
                 fileNamePath = SanitizeFileName(uri);
             }
-            else
-            {
-                fileNamePath = "/s/" + fileNamePath;
-            }
             return ChangeFileName(fileNamePath);
         }
 

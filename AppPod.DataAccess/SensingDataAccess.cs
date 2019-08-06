@@ -50,6 +50,27 @@ namespace AppPod.DataAccess
             return roots.ToList();
         }
 
+        public string GetStoreId()
+        {
+            try{
+                string appPodFolder = AppPodDataDirectory;
+                if (appPodFolder != null)
+                {
+                    string deviceJson = File.ReadAllText(Path.Combine(appPodFolder, "Device.json"));
+                    var deviceInfo = JsonConvert.DeserializeObject<DeviceOutput>(deviceJson);
+                    if (deviceInfo != null)
+                    {
+                        return deviceInfo.StoreOuterId;
+                    }
+                }
+            }
+           catch (Exception)
+            {
+            }
+            return null;
+        }
+
+
         /// <summary>
         /// 根据父分类id获取子分类
         /// </summary>
@@ -899,6 +920,10 @@ namespace AppPod.DataAccess
         public List<DateMetaphysicsDto> DateMetas { get; set; }
         public Dictionary<long, IEnumerable<ShowProductInfo>> MatchedProducts { get; set; }
         public List<AppInfo> Apps { get; set; }
+        public List<DeviceSoftwareSdkModel> DeviceSoftwares { get; set; }
+        
+        public List<ActivityGameDto> ActivityGames { get; set; }
+        public DeviceAppPodVersionModel AppPodVersion { get; set; }
 
         #region Read Data from Local Json.
         public List<AdsSdkModel> ReadAds()
@@ -1013,6 +1038,22 @@ namespace AppPod.DataAccess
             return JsonConvert.DeserializeObject<List<AppInfo>>(json);
         }
 
+        public List<DeviceSoftwareSdkModel> ReadDeviceSoftwares()
+        {
+            var path = $"{AppPodDataDirectory}/Apps/Apps.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<List<DeviceSoftwareSdkModel>>(json);
+        }
+
+        public DeviceAppPodVersionModel ReadDeviceAppPodVersion()
+        {
+            var path = $"{AppPodDataDirectory}/AppPodVersion.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<List<DeviceAppPodVersionModel>>(json)?.FirstOrDefault();
+        }
+
         public static async Task<string> ReadText(string filePath)
         {
             using (FileStream sourceStream = new FileStream(filePath,
@@ -1050,9 +1091,13 @@ namespace AppPod.DataAccess
             Properties = ReadProperties();
             ProductComments = ReadProductComments();
             Brands = ReadBrands();
+            ActivityGames = ReadActivityGames();
             Metas = ReadMetas();
             DateMetas = ReadDateMetas();
             Apps = ReadApps();
+            DeviceSoftwares = ReadDeviceSoftwares();
+            AppPodVersion = ReadDeviceAppPodVersion();
+
             return true;
         }
 
@@ -1108,6 +1153,16 @@ namespace AppPod.DataAccess
             });
             return brands;
         }
+
+        public List<ActivityGameDto> ReadActivityGames()
+        {
+            var path = $"{AppPodDataDirectory}/Products/ActivityGames.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+            var games = JsonConvert.DeserializeObject<List<ActivityGameDto>>(json);
+            return games;
+        }
+
 
         public void BuildCategoryPaths()
         {
@@ -1449,9 +1504,7 @@ namespace AppPod.DataAccess
         public DateMetaphysicsDto GetNowOrLatestLuckyByMetaId(long metaId)
         {
             if (DateMetas == null || DateMetas.Count == 0) return null;
-            var entity = DateMetas.Where(m => m.MetaphysicsId == metaId && m.Date == DateTime.Today).FirstOrDefault();
-            if (entity != null) return entity;
-            return DateMetas.Where(m => m.MetaphysicsId == metaId).OrderBy(m => m.Date).FirstOrDefault();
+            return DateMetas.Where(m => m.MetaphysicsId == metaId).OrderByDescending(m => m.Date).FirstOrDefault();
         }
 
         public IEnumerable<AdsSdkModel> FindAdsByTagName(string tagName)
@@ -1529,6 +1582,8 @@ namespace AppPod.DataAccess
                 if (mainProduct == null)
                     continue;
                 var showProducts = new List<ShowProductInfo>();
+                if (MatchedProducts.ContainsKey(mainProduct.Id))
+                    continue;
                 MatchedProducts.Add(mainProduct.Id, showProducts);
                 foreach (var item in matchGroup.MatchItems)
                 {

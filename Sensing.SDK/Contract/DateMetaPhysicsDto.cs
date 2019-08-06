@@ -79,5 +79,6 @@ namespace Sensing.SDK.Contract
         public string BestMatch { get; set; }
 
         public long DateMetaphysicsId { get; set; }
+        public string Keyword { get; set; }
     }
 }

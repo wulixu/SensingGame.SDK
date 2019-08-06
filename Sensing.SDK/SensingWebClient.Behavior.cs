@@ -1,4 +1,5 @@
 ﻿using Sensing.SDK.Contract;
+using Sensing.SDK.Contract.Faces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -14,15 +15,18 @@ namespace Sensing.SDK
         /// </summary>
         private const string PostBehaviorQuery = "/BehaviorRecord/PostRecord";
         private const string PostDeviceStatusQuery = "/BehaviorRecord/PostDeviceStatusRecord";
+        private const string PostDeviceNetworkStatusQuery = "/BehaviorRecord/PostDeviceNetworkStatusRecords";
         private const string PostFaceRecordQuery = "/BehaviorRecord/PostFaceRecord";
         private string DeviceHeartBeatQuery = "/BehaviorRecord/DeviceHeartBeat";
+        private string GetFaceRecordsQuery = "/BehaviorRecord/GetFaceRecords";
+
 
         public readonly static string DeviceBigDataServiceRelativePath = "d/";
         public readonly static string DeviceBigDataServiceApiHost = ServerBase + DeviceBigDataServiceRelativePath + Api_Relative_Path;
         public readonly static string DeviceBigDataServiceHost = ServerBase + DeviceBigDataServiceRelativePath;
 
         private const string DeviceBigDataPath = "d/api/services/app";
-
+    
         public async Task<bool> PostBehaviorRecordsAsync(IEnumerable<BehaviorRecord> records)
         {
             //api/services/app/BehaviorRecord/PostRecord
@@ -52,6 +56,22 @@ namespace Sensing.SDK
             {
                 //logger.Error("PostBehaviorRecordsAsync", ex);
                 Console.WriteLine("PostDeviceStatusRecordAsync:" + ex.InnerException);
+            }
+            return false;
+        }
+
+        public async Task<bool> PostDeviceNetworkStatusRecords(IEnumerable<DeviceNetworkStatusInput> status)
+        {
+            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{PostDeviceNetworkStatusQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var result = await SendRequestAsync<IEnumerable<DeviceNetworkStatusInput>, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, status);
+                return result.Success;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("PostDeviceNetworkStatusRecords:" + ex.InnerException);
             }
             return false;
         }
@@ -91,6 +111,23 @@ namespace Sensing.SDK
                 Console.WriteLine("RegisterDevice:" + ex.InnerException);
             }
             return false;
+        }
+
+        public async Task<PagedResultDto<FaceRecordOutput>> GetFaceRecordsAsync(FaceRecordInput input)
+        {
+            //api/services/app/BehaviorRecord/PostRecord
+            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{GetFaceRecordsQuery}?{GetBasicNameValuesQueryString()}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}&collectionStartTime={input.CollectionStartTime}&collectionEndTime={input.CollectionEndTime}";
+            try
+            {
+                var result = await SendRequestAsync<string, AjaxResponse<PagedResultDto<FaceRecordOutput>>>(HttpMethod.Get, absolutePath, null);
+                return result.Result;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetFaceRecordsAsync:" + ex.InnerException);
+            }
+            return null;
         }
 
     }

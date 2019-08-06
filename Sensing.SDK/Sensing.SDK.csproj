@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sensing.SDK</RootNamespace>
     <AssemblyName>Sensing.SDK</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -39,26 +39,27 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Common, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.Common.4.3.0\lib\net451\System.Data.Common.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.Remoting" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdsItems\BaseItem.cs" />
+    <Compile Include="AdsItems\ButtonItem.cs" />
+    <Compile Include="AdsItems\CanvasItem.cs" />
+    <Compile Include="AdsItems\CustomAd.cs" />
+    <Compile Include="AdsItems\H5Item.cs" />
+    <Compile Include="AdsItems\ILink.cs" />
+    <Compile Include="AdsItems\ImageItem.cs" />
+    <Compile Include="AdsItems\LabelItem.cs" />
+    <Compile Include="AdsItems\SwiperItem.cs" />
+    <Compile Include="AdsItems\VideoItem.cs" />
     <Compile Include="ClientError.cs" />
     <Compile Include="ClientException.cs" />
+    <Compile Include="Contract\ActivityGameDto.cs" />
     <Compile Include="Contract\AdsSdkModel.cs" />
     <Compile Include="Contract\BehaviorRecord.cs" />
     <Compile Include="Contract\BrandDto.cs" />
@@ -68,7 +69,9 @@
     <Compile Include="Contract\DeviceHeartBeatInput.cs" />
     <Compile Include="Contract\DeviceSdkModel.cs" />
     <Compile Include="Contract\DeviceSoftwareSdkModel.cs" />
+    <Compile Include="Contract\DeviceNetworkStatusInput.cs" />
     <Compile Include="Contract\DeviceStatusInput.cs" />
+    <Compile Include="Contract\PaperInput.cs" />
     <Compile Include="Contract\ScreenshotInput.cs" />
     <Compile Include="Contract\FaceRecord.cs" />
     <Compile Include="Contract\FacesRecommendGoodsInput.cs" />
@@ -95,6 +98,7 @@
     <Compile Include="Contract\SensingDeviceActivityDto\SnsUserAwardOuput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\UserDataOutPut.cs" />
     <Compile Include="Contract\SensingDeviceProductCommentModel.cs" />
+    <Compile Include="Contract\ShoppingCartInput.cs" />
     <Compile Include="Contract\TableLastTimeDto.cs" />
     <Compile Include="Contract\TagSdkModel.cs" />
     <Compile Include="Contract\TaobaoRecommendGoodsInput.cs" />

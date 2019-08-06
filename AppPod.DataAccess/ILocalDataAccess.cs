@@ -53,6 +53,10 @@ namespace AppPod.DataAccess
 
         List<TagSdkModel> Tags { get; set; }
         List<AppInfo> Apps { get; set; }
+        List<ActivityGameDto> ActivityGames { get; set; }
+        List<DeviceSoftwareSdkModel> DeviceSoftwares { get; set; }
+        DeviceAppPodVersionModel AppPodVersion { get; set; }
+
         Dictionary<long, IEnumerable<ShowProductInfo>> MatchedProducts { get; set; }
 
         List<ShowProductInfo> QueryShowProductsByProperties(IDictionary<string, string> keyValues);
@@ -123,5 +127,7 @@ namespace AppPod.DataAccess
         void ReadAllClickCounts(List<ClickInfo> clickInfoData);
         void SetKeyword(string keyword);
         IEnumerable<ShowProductInfo> QueryByKeyword(string keyword);
+        string GetStoreId();
+
     }
 }

@@ -15,7 +15,7 @@ namespace AppPod.DataAccess
 {
     public interface IBehaviorDataUploader
     {
-        void AddBehavoirData(string thingId, string thingName, string category, string action, string softwareName = "", string pageName = "", string previousPage = "", string previousPageArea = "");
+        void AddBehavoirData(string thingId, string thingName, string category, string action, string softwareName = "", string pageName = "", string previousPage = "", string previousPageArea = "", long productId = 0);
         void AddClick(AdsSdkModel ads, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
         void AddLike(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
         void AddClick(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
@@ -23,6 +23,8 @@ namespace AppPod.DataAccess
         List<ClickInfo> ReadLikeClickData();
         List<ClickInfo> ReadAllClickData();
         void LogDeviceStatus(int secondInterval);
+        void LogDeviceNetworkStatusRecords(int pingSeed, int secondInterval);
+
         void AddFaceRecord(string face, string softwareName = "", string pageName = "");
 
     }
@@ -48,7 +50,7 @@ namespace AppPod.DataAccess
             m_db.CreateTable<SqlLiteBehaviorRecord>();
             m_db.CreateTable<SqliteDeviceStatus>();
             m_db.CreateTable<SqlLiteFaceRecord>();
-
+            m_db.CreateTable<SqliteDeviceNetworkStatus>();
         }
 
         public void AddClick(AdsSdkModel ads, string softwareName, string pageName, string previousPage = "", string previousPageArea = "")
@@ -74,11 +76,11 @@ namespace AppPod.DataAccess
             if (productInfo == null) return;
             Task.Factory.StartNew(() =>
             {
-                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name, productInfo.Type.ToString(), "click", softwareName, pageName, previousPage, previousPageArea);
+                AddBehavoirData(productInfo.Id.ToString(), productInfo.Name, productInfo.Type.ToString(), "click", softwareName, pageName, previousPage, previousPageArea, productInfo.Product?.Id??0);
             });
         }
 
-        public void AddBehavoirData(string thingId, string thingName, string category,string action,string softwareName = "", string pageName ="",string previousPage= "",string previousPageArea = "")
+        public void AddBehavoirData(string thingId, string thingName, string category,string action,string softwareName = "", string pageName ="",string previousPage= "",string previousPageArea = "",long productId = 0)
         {
             //todo:william.
             Task.Factory.StartNew(() =>
@@ -100,6 +102,7 @@ namespace AppPod.DataAccess
                     record.PreviousPageArea = previousPageArea;
                     record.PreviousPageName = previousPage;
                     record.IsSynced = false;
+                    record.ProductId = productId;
                     m_db.Insert(record);
                 }
                 else
@@ -140,7 +143,7 @@ namespace AppPod.DataAccess
         {
             if (DateTime.Now.Subtract(mLastUploadTime).TotalMinutes < 30)
                 return;
-            var records = m_db.Table<SqlLiteBehaviorRecord>().Where(r => r.IsSynced == false).Take(50).ToList();
+            var records = m_db.Table<SqlLiteBehaviorRecord>().Where(r => r.IsSynced == false).Take(15).ToList();
             if (records.Count() > 0)
             {
                 bool success = sesingWebClient.PostBehaviorRecordsAsync(records).GetAwaiter().GetResult();
@@ -212,6 +215,37 @@ namespace AppPod.DataAccess
             SyncToCloud();
         }
 
+        public void LogDeviceNetworkStatusRecords(int pingSeed, int secondInterval)
+        {
+            if (pingSeed == 0)
+                return;
+            var now = DateTime.Now;
+            var record = m_db.Table<SqliteDeviceNetworkStatus>().Where(r => r.IsSynced == false).OrderByDescending(d => d.CollectionEndTime).Take(1).FirstOrDefault();
+            if (record != null && record.CollectionEndTime.Date.Subtract(now.Date).Days == 0)
+            {
+                if (now.Subtract(record.CollectionEndTime).TotalSeconds > secondInterval)
+                {
+                    var newRecord = new SqliteDeviceNetworkStatus { CollectionTime = now, CollectionEndTime = now, IsSynced = false,PingSeed = pingSeed,MaxPingSeed = pingSeed };
+                    m_db.Insert(newRecord);
+                }
+                else
+                {
+                    record.CollectionEndTime = DateTime.Now;
+                    record.PingSeed = (record.PingSeed + pingSeed) / 2;
+                    record.MaxPingSeed = Math.Max(record.PingSeed, pingSeed);
+                    bool success = sesingWebClient.PostDeviceNetworkStatusRecords(new List<SqliteDeviceNetworkStatus> { record }).GetAwaiter().GetResult();
+                    m_db.Update(record);
+                }
+            }
+            else
+            {
+                var newRecord = new SqliteDeviceNetworkStatus { CollectionTime = now,CollectionEndTime = now, IsSynced = false, PingSeed = pingSeed ,MaxPingSeed = pingSeed};
+                m_db.Insert(newRecord);
+            }
+            //todo: update to cloud.
+            SyncDeviceNetworkStatusToCloud();
+        }
+
         public void AddFaceRecord(string facePath, string softwareName = "", string pageName = "")
         {
             Task.Factory.StartNew(() =>
@@ -240,6 +274,24 @@ namespace AppPod.DataAccess
             if (records.Count() > 0)
             {
                 bool success = sesingWebClient.PostDeviceStatusRecordAsync(records).GetAwaiter().GetResult();
+                if (success)
+                {
+                    foreach (var r in records)
+                    {
+                        r.IsSynced = true;
+                    }
+                    m_db.UpdateAll(records);
+                }
+            }
+        }
+
+        public void SyncDeviceNetworkStatusToCloud()
+        {
+            var now = DateTime.Now;
+            var records = m_db.Table<SqliteDeviceNetworkStatus>().Where(r => r.IsSynced == false).OrderByDescending(d => d.CollectionEndTime).Skip(1).OrderBy(d => d.CollectionEndTime).Take(10).ToList();
+            if (records.Count() > 0)
+            {
+                bool success = sesingWebClient.PostDeviceNetworkStatusRecords(records).GetAwaiter().GetResult();
                 if (success)
                 {
                     foreach (var r in records)
@@ -299,4 +351,14 @@ namespace AppPod.DataAccess
 
         public bool IsSynced { get; set; }
     }
+
+    public class SqliteDeviceNetworkStatus : DeviceNetworkStatusInput
+    {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public int MaxPingSeed { get; set; }
+
+        public bool IsSynced { get; set; }
+    }
+
 }

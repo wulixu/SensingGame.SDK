@@ -1,4 +1,5 @@
-﻿using Sensing.SDK.Contract;
+﻿using Newtonsoft.Json;
+using Sensing.SDK.Contract;
 using Sensing.SDK.Contract.SensingDeviceActivityDto;
 using SensingStoreCloud.Activity;
 using System;
@@ -33,6 +34,7 @@ namespace Sensing.SDK
         private const string GetMyPersonDataInActivityQuery = "services/app/SensingDeviceActivity/GetMyPersonDataInActivity";
         private const string GetScanQrCodeUserActionsQuery = "services/app/SensingDeviceActivity/GetScanQrCodeUserActions";
         private const string GetDataUsersQuery = "services/app/SensingDeviceActivity/GetDataUsers";
+        private const string GetActivityGamesQuery = "services/app/SengsingDevice/GetActivityGames";
 
         private const string DoLotteryUserByAwardIdQuery = "services/app/SensingDeviceActivity/DoLotteryUserByAwardId";
         private const string SendAwardNotifyQuery = "services/app/SensingDeviceActivity/SendAwardNotify";
@@ -43,7 +45,8 @@ namespace Sensing.SDK
         private const string SendTextMessageByUserQuery = "services/app/SensingDeviceActivity/SendTextMessageByUser";
         private const string GetActivityChattingRecordsQuery = "services/app/SensingDeviceActivity/GetActivityChattingRecords";
         private const string GetDeviceActivityGameChattingRecordsQuery = "services/app/SensingDeviceActivity/GetDeviceActivityGameChattingRecords";
-
+        private const string GetPaperQuery = "services/app/SengsingDevice/GetPapers";
+        private const string GetQuestionsByPaperIdQuery = "services/app/SengsingDevice/GetQuestionsByPaperId";
 
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
@@ -188,6 +191,7 @@ namespace Sensing.SDK
             nameValues.Add("IsSendWeChatMsg", playerData.IsSendWeChatMsg.ToString());
             nameValues.Add("IsTransferred", playerData.IsTransferred.ToString());
             nameValues.Add("type", playerData.Type?.ToString()??"");
+
             nameValues.Add("extensionData", playerData.ExtensionData?.ToString()??"");
             if (!string.IsNullOrEmpty(playerData.TargetUrl)) nameValues.Add("TargetUrl", playerData.TargetUrl);
 
@@ -211,6 +215,7 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 logger.Error("PostData4ScanAsync", ex);
+                Console.WriteLine(ex.Message);
             }
             return default(QrcodeActionOutput);
         }
@@ -320,6 +325,23 @@ namespace Sensing.SDK
             }
             return null;
         }
+
+
+        public async Task<List<ActivityGameDto>> GetActivityGames()
+        {
+              var absolutePath = $"{ServerBase}{ActivityDataPath}{GetActivityGamesQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<List<ActivityGameDto>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityGames:" + ex.InnerException);
+            }
+            return null;
+        }
+
 
         public async Task<SnsUserAwardOuput> DoLotteryUserByAwardId(AwardDataInput input)
         {
@@ -487,6 +509,36 @@ namespace Sensing.SDK
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<ChatMessage>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityChattingRecords:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<PaperDto>> GetPaperAsync(PaperInput input)
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetPaperQuery}?{GetBasicNameValuesQueryString()}&softwareId={input.SoftwareId}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PaperDto>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityChattingRecords:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<QuestionDto>> GetQuestionsByPaperIdAsync(QuestionInput input)
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetQuestionsByPaperIdQuery}?{GetBasicNameValuesQueryString()}&paperId={input.PaperId}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<QuestionDto>>>(HttpMethod.Get, absolutePath, null);
                 return webResult.Result;
             }
             catch (Exception ex)

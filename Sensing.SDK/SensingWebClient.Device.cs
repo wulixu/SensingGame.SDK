@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Sensing.SDK
 {
@@ -177,6 +178,28 @@ namespace Sensing.SDK
             }
             return false;
         }
+
+        public async Task<CartQrcodeOutput> AddGoodsToCar(List<ShoppingCartItem> shoppingCart)
+        {
+            var absolutePath = $"https://sync.api.troncell.com/api/services/app/ThingSync/AddGoodsToCar?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                ShoppingCartInput input = new ShoppingCartInput
+                {
+                    Longterm = true,
+                    Item_ids = String.Join(",",shoppingCart.Select(s => $"{s.ItemId}_{s.SkuId}_{s.ItemCount}"))
+                };
+                var loginResult = await SendRequestAsync<ShoppingCartInput, AjaxResponse<CartQrcodeOutput>>(HttpMethod.Post, absolutePath, input);
+                return loginResult.Result;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("DeviceLogin:" + ex.InnerException);
+            }
+            return null;
+        }
+
 
     }
 }

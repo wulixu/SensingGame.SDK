@@ -275,6 +275,12 @@ namespace Sensing.SDK.Test
             }
         }
 
+        public string ImageToBase64(string imagePath)
+        {
+            byte[] bytesImage = File.ReadAllBytes(imagePath);
+            return Convert.ToBase64String(bytesImage);
+        }
+
         private async void GoodsByFacesBtn_Click(object sender, RoutedEventArgs e)
         {
             var faces = new FacesRecommendsInput();
@@ -283,7 +289,7 @@ namespace Sensing.SDK.Test
             var faceImagePath = System.IO.Path.Combine(Environment.CurrentDirectory, fileName);
 
             var bytes = File.ReadAllBytes(faceImagePath);
-            face.Image = bytes;
+            face.Image = ImageToBase64(faceImagePath);
             face.Type = "head";
             faces.Faces = new FaceImage[] { face };
             var data = await _sensingWebClient.GetRecommendsByFaces(faces);
@@ -409,6 +415,7 @@ namespace Sensing.SDK.Test
         private string afterQrCode;
         private async void CreateQrcode_Click(object sender, RoutedEventArgs e)
         {
+            var games = await _sensingWebClient.GetActivityGames();
             var snsType = platformCBox.SelectedValue.ToString() == "Taobao" ? EnumSnsType.Taobao : EnumSnsType.WeChat;
             var qrType = qrcodeTypes[qrCodeCBox.SelectedValue.ToString()];
             if (qrType == EnumQRStatus.AfterGame)
@@ -423,7 +430,10 @@ namespace Sensing.SDK.Test
                     SnsType = snsType,
                      TargetUrl = YourTargetUrl.Text
                 };
-
+                playingData.Type = "x";
+                var json = File.ReadAllText("result1.json");
+                var extensionData = JsonConvert.SerializeObject(json);
+                playingData.ExtensionData = extensionData;
                 var actionQrcode = await _sensingWebClient.PostPlayerData4ActionQrcodeAsync(playingData);
                 if (actionQrcode != null)
                 {
