@@ -35,6 +35,7 @@ namespace Sensing.SDK.Contract
         public string Mobile { get; set; }
         public string OpenId { get; set; }
         public string AvatarUrl { get; set; }
+        public string FaceId { get; set; }
         /// <summary>
         /// 人脸识别来源/推荐来源.
         /// </summary>

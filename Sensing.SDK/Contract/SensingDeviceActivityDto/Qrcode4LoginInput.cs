@@ -153,6 +153,7 @@ namespace SensingStoreCloud.Activity
         public string Type { get; set; }
         //扩展的字段，一般json格式
         public string ExtensionData { get; set; }
+        public bool IsTransferred { get; set; }
         //public ActionStatus? Status { get; set; }
     }
 
