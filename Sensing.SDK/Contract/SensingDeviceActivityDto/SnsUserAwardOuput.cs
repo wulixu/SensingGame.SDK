@@ -93,5 +93,7 @@ namespace SensingStoreCloud.Activity
         public string Description { get; set; }
 
         public bool IsConfirmed { get; set; }
+
+        public long Id { get; set; }
     }
 }

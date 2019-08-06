@@ -84,11 +84,16 @@
     <Compile Include="Contract\PropertyViewModel.cs" />
     <Compile Include="Contract\Recommends\GetTagsRecommendsBySubKeyInput.cs" />
     <Compile Include="Contract\RegisterDeviceViewModel.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\ActionDataOutput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\ActivityUserDataOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\AwardOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\DeviceActivityGameOutput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\PersonDataOutput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\PlayedGamesOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\Qrcode4LoginInput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\QrcodeOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\SnsUserAwardOuput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\UserDataOutPut.cs" />
     <Compile Include="Contract\SensingDeviceProductCommentModel.cs" />
     <Compile Include="Contract\TableLastTimeDto.cs" />
     <Compile Include="Contract\TagSdkModel.cs" />
