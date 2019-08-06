@@ -191,7 +191,6 @@ namespace SensingStoreCloud.Activity
         public bool IsTransferred { get; set; }
         //public ActionStatus? Status { get; set; }
 
-        public bool IsTransferred { get; set; }
     }
 
     public class PlayerActionDataInput : PlayerDataInput
