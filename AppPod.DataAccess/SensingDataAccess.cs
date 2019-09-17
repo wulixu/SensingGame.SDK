@@ -78,9 +78,11 @@ namespace AppPod.DataAccess
         /// <returns></returns>
         public IEnumerable<ProductCategorySDKModel> GetChildrenCategory(int parentCategoryId)
         {
-            var children = PCategories.Where(p => p.ParentCategoryId == parentCategoryId && p.ParentCategoryId != p.Id);
+            IEnumerable<ProductCategorySDKModel> children;
+            children = PCategories.Where(p => p.ParentCategoryId == parentCategoryId && p.ParentCategoryId != p.Id);
             return children.ToList();
         }
+        
 
 
 
@@ -1381,7 +1383,9 @@ namespace AppPod.DataAccess
         {
             if (DeviceSetting == null)
                 return "Taobao";
-            return DeviceSetting.OnlineTrafficTarget?.ToString();
+            if (DeviceSetting.OnlineTrafficTarget == null)
+                return "官方电商";
+            return DeviceSetting.OnlineTrafficTarget.ToString();
         }
 
         /// <summary>

@@ -443,14 +443,14 @@ namespace Sensing.SDK.Test
             }
             else
             {
-                var loginData = new Qrcode4LoginInput() { IsSendWeChatMsg = false, SnsType = snsType, QrType = qrType, TargetUrl = YourTargetUrl.Text };
-                var data = await _sensingWebClient.CreateQrCode4LoginAsync(loginData);
-                if (data != null)
-                {
-                    //var qrcode = data.Data;
-                    firstQrCode = data.QrCodeId;
-                    qrCodeImg.Source = UriToImage(data.QrCodeUrl);
-                }
+                //var loginData = new CreatQrcodeInput() { IsSendWeChatMsg = false, SnsType = snsType, QrType = qrType, TargetUrl = YourTargetUrl.Text };
+                //var data = await _sensingWebClient.CreateQrCode4LoginAsync(loginData);
+                //if (data != null)
+                //{
+                //    //var qrcode = data.Data;
+                //    firstQrCode = data.QrCodeId;
+                //    qrCodeImg.Source = UriToImage(data.QrCodeUrl);
+                //}
             }
         }
 
@@ -592,16 +592,16 @@ namespace Sensing.SDK.Test
                 activityGameDetails.Text += $"DeviceName:{deviceActivityGame.DeviceId}" + Environment.NewLine;
             }
 
-            var awards = await _sensingWebClient.GetAwardsAsync();
-            if (awards != null)
-            {
-                _awards = awards;
-                awardDetails.Text += $"Awards Count :{awards.Count}" + Environment.NewLine;
-                foreach (var award in awards)
-                {
-                    awardDetails.Text += $"Award:{award.Name}--AwardId:{award.Id}----{award.AwardProduct}" + Environment.NewLine;
-                }
-            }
+            //var awards = await _sensingWebClient.GetAwardsAsync();
+            //if (awards != null)
+            //{
+            //    _awards = awards;
+            //    awardDetails.Text += $"Awards Count :{awards.Count}" + Environment.NewLine;
+            //    foreach (var award in awards)
+            //    {
+            //        awardDetails.Text += $"Award:{award.Name}--AwardId:{award.Id}----{award.AwardProduct}" + Environment.NewLine;
+            //    }
+            //}
         }
 
         private async void TagRecommendBtn_Click(object sender, RoutedEventArgs e)

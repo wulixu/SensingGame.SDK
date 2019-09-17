@@ -117,6 +117,18 @@ namespace SensingStoreCloud.Activity
         public string TargetUrl { get; set; }
     }
 
+    public class CreatQrcodeInput
+    {
+        public string SecurityKey { get; set; }
+        public bool IsSendWeChatMsg { get; set; }
+        public string Params { get; set; }
+        public string QrType { get; set; }
+        public string SnsType { get; set; }
+        public string TargetUrl { get; set; }
+        public bool IsTransferred { get; set; }
+    }
+
+
     public class Qrcode4UsersInput : SensingDeviceGameListInputBase
     {
         [Required]
@@ -132,7 +144,30 @@ namespace SensingStoreCloud.Activity
         //}
     }
 
-    public class PlayerActionDataSimpleDataInput: SensingDeviceGameListInputBase
+    public class PersonDataInput 
+    {
+        public string SecurityKey { get; set; }
+        public string OpenId { get; set; }
+        public EnumSnsType SnsType { get; set; }
+        public long ActionId { get; set; }
+        public string Params { get; set; }
+    }
+
+    public class DataUsersInput
+    {
+        public bool IsGameLevel { get; set; }
+        public string SecurityKey { get; set; }
+        public string SoftwareCode { get; set;}
+        public string ClientId { get; set; }
+        public string Filter { get; set; }
+        public string Sorting { get; set; }
+        public long MaxResultCount { get; set; }
+        public long SkipCount { get; set; }
+
+
+    }
+
+    public class PlayerActionDataSimpleDataInput : SensingDeviceGameListInputBase
     {
         [Required]
         [Range(0, double.MaxValue)]
@@ -155,6 +190,7 @@ namespace SensingStoreCloud.Activity
         public string ExtensionData { get; set; }
         public bool IsTransferred { get; set; }
         //public ActionStatus? Status { get; set; }
+
     }
 
     public class PlayerActionDataInput : PlayerDataInput
@@ -163,6 +199,13 @@ namespace SensingStoreCloud.Activity
         [Range(0, double.MaxValue)]
         public long ActionId { get; set; }
     }
+
+    public class PlayerDataActionInput : PlayerDataInput
+    {
+        public long ActionId { get; set; }
+        public string OpenId { get; set; }
+    }
+
 
     public class SnsUserActionDataInput : PlayerActionDataInput
     {
@@ -202,12 +245,47 @@ namespace SensingStoreCloud.Activity
         public long ActionId { get; set; }
     }
 
+    public class ActionInput
+    {
+        public long ActionId { get; set; }
+    }
+
+    public class PlayGameInput
+    {
+        public string OpenId { get; set; }
+        public EnumSnsType SnsType { get; set; }
+        public string Security { get; set; }
+        public string Params { get; set; }
+        public string Filter { get; set; }
+        public string Sorting { get; set; }
+        public long MaxResultCount { get; set;}
+        public long SkipCount { get; set; }
+    }
+
+    public class AwardInput
+    {
+        public string SecurityKey { get; set; }
+        public string Sorting { get; set; }
+        public long MaxResultCount { get; set; }
+    }
+
+
     public class AwardDataInput : SensingDeviceGameInputBase
     {
         [Required]
         [Range(0, double.MaxValue)]
         public long AwardId { get; set; }
+        public bool IsNeedSendNotify { get; set;}
     }
+
+    public class NotifyInput 
+    {
+        public long UserAwardId { get; set; }
+        public string SecurityKey { get; set; }
+        public string Params { get; set; }
+    }
+
+
 
     public class UserAwardDataInput : SensingDeviceGameInputBase
     {
