@@ -60,6 +60,7 @@
     <Compile Include="ClientError.cs" />
     <Compile Include="ClientException.cs" />
     <Compile Include="Contract\ActivityGameDto.cs" />
+    <Compile Include="Contract\AddUserPaperInput.cs" />
     <Compile Include="Contract\AdsSdkModel.cs" />
     <Compile Include="Contract\BehaviorRecord.cs" />
     <Compile Include="Contract\BrandDto.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Contract\DeviceSoftwareSdkModel.cs" />
     <Compile Include="Contract\DeviceNetworkStatusInput.cs" />
     <Compile Include="Contract\DeviceStatusInput.cs" />
+    <Compile Include="Contract\PaperAnswerReportDto.cs" />
     <Compile Include="Contract\PaperInput.cs" />
     <Compile Include="Contract\ScreenshotInput.cs" />
     <Compile Include="Contract\FaceRecord.cs" />

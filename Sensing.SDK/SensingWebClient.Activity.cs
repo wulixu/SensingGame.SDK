@@ -38,6 +38,9 @@ namespace Sensing.SDK
         private const string GetDeviceActivityGameChattingRecordsQuery = "services/app/SensingDeviceActivity/GetDeviceActivityGameChattingRecords";
         private const string GetPaperQuery = "services/app/SengsingDevice/GetPapers";
         private const string GetQuestionsByPaperIdQuery = "services/app/SengsingDevice/GetQuestionsByPaperId";
+        private const string GetPapersByTagsQuery = "services/app/SengsingDevice/GetPapersByTags";
+        private const string AddUserPaperQuery = "services/app/SengsingDevice/AddUserPaper";
+        private const string GetPaperAnswerReportQuery = "services/app/SengsingDevice/GetPaperAnswerReport";
 
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
@@ -372,6 +375,52 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 Console.WriteLine("GetActivityChattingRecords:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<PaperDto>> GetPapersByTagAsync(string tag)
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetPapersByTagsQuery}?{GetBasicNameValuesQueryString()}&Tags={tag}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PaperDto>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityChattingRecords:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<string> AddUserPaperAsync(AddUserPaperInput input)
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{AddUserPaperQuery}?{GetBasicNameValuesQueryString()}";
+            input.subkey = _subKey;
+            try
+            {
+                var webResult = await SendRequestAsync<AddUserPaperInput, AjaxResponse<string>>(HttpMethod.Post, absolutePath, input);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("AddUserPaperAsync:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<PaperAnswerReportDto>> GetPaperAnswerReportAsync(int paperId)
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetPaperAnswerReportQuery}?{GetBasicNameValuesQueryString()}&paperId={paperId}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PaperAnswerReportDto>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetPaperAnswerReportAsync:" + ex.InnerException);
             }
             return null;
         }

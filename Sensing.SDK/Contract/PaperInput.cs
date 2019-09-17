@@ -32,6 +32,7 @@ namespace Sensing.SDK.Contract
         public int ActualQuestionsCount { get; set; }
         public string CompositionType { get; set; }
         public int RandomCount { get; set; }
+        public List<QuestionDto> Questions { get; set; }
 
     }
 
@@ -57,6 +58,7 @@ namespace Sensing.SDK.Contract
 
     public class Questionitem
     {
+        public int Id { get; set; }
         public int OrderNo { get; set; }
         public string Prefix { get; set; }
         public string Content { get; set; }

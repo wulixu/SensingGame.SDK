@@ -141,8 +141,8 @@ namespace AppPod.DataAccess
 
         private void UploadData()
         {
-            if (DateTime.Now.Subtract(mLastUploadTime).TotalMinutes < 30)
-                return;
+            //if (DateTime.Now.Subtract(mLastUploadTime).TotalMinutes < 30)
+            //    return;
             var records = m_db.Table<SqlLiteBehaviorRecord>().Where(r => r.IsSynced == false).Take(15).ToList();
             if (records.Count() > 0)
             {
