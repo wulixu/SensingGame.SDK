@@ -63,6 +63,7 @@ namespace AppPod.DataAccess
         List<ShowProductInfo> SearchShowProductsByName(string searchTerm);
         //ProductInfo FindProductByAttribute(string productAttribute);
         List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, bool onlySpu = false);
+
         List<ProductCategorySDKModel> GetCategroyInfos(bool isSpecial = true);
         List<ProductCategorySDKModel> GetUsefulCategroyInfos();
         //List<ProductInfo> GetProductInfos();

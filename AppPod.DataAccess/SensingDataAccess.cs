@@ -481,6 +481,7 @@ namespace AppPod.DataAccess
             return Coupons.ToList();
         }
 
+
         public bool CanAddFilter(ProductSdkModel product, List<Range<float>> priceRanges, List<string> colors, List<int> tags, List<int> categories, List<string> keywords)
         {
             var priceOk = false;
@@ -543,14 +544,8 @@ namespace AppPod.DataAccess
             {
                 if (product.CategoryIds != null)
                 {
-                    foreach (var category in categories)
-                    {
-                        if (product.CategoryIds.Contains(category))
-                        {
-                            categoryOK = true;
-                            break;
-                        }
-                    }
+                    var categoryIds  = PCategories.Where(c => categories.Contains(c.Id)).SelectMany(c => c.Ids);
+                    categoryOK = product.CategoryIds.Intersect(categoryIds).Count() > 0;
                 }
             }
             else
@@ -567,7 +562,7 @@ namespace AppPod.DataAccess
                     {
                         if (product.Keywords.Contains(keyword))
                         {
-                            categoryOK = true;
+                            keywordOK = true;
                             break;
                         }
                     }
@@ -575,7 +570,7 @@ namespace AppPod.DataAccess
             }
             else
             {
-                categoryOK = true;
+                keywordOK = true;
             }
 
             return priceOk && colorOK && tagOK && categoryOK && keywordOK;
@@ -671,6 +666,7 @@ namespace AppPod.DataAccess
             if (categories.Intersect(product.CategoryIds).Count() > 0) return true;
             return false;
         }
+
         public List<ShowProductInfo> SearchProducts(List<Range<float>> priceRanges, List<string> colors, List<int> categories, List<int> tags, List<string> keywords, bool onlySpu = false)
         {
             if (Products == null || Products.Count == 0) return null;
