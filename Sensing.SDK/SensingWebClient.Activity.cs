@@ -24,6 +24,7 @@ namespace Sensing.SDK
         private const string GetDeviceActivityGameInfoQuery = "services/app/SensingDeviceActivity/GetDeviceActivityGameInfo";
         private const string GetAwardsByActivityQuery ="services/app/SensingDeviceActivity/GetAwardsByActivity";
         private const string GetPlayGamesByUserQuery = "services/app/SensingDeviceActivity/GetPlayGamesByUser";
+        private const string GetRankedUsersWithActionByActivityQuery = "services/app/SensingDeviceActivity/GetRankedUsersWithActionByActivity";
         private const string GetQrcode4LoginQuery = "services/app/SensingDeviceActivity/CreateQrCode4Login";
         private const string MySignInActivityQuery = "services/app/SensingDeviceActivity/MySignInActivity";
         private const string PostPlayerData4ActionQrcodeQuery = "UserAction/PostPlayerData4ActionQrcode";
@@ -224,7 +225,6 @@ namespace Sensing.SDK
         }
 
 
-        //todo..
         public async Task<ActionDataOutput> ActionDataById(ActionInput actionDataInput)
         {
             var absolutePath = $"{ServerBase}{ActivityDataPath}{ActionDataByIdQuery}";
@@ -243,7 +243,21 @@ namespace Sensing.SDK
             return default(ActionDataOutput);
         }
 
-        //TODO.
+        //todo.. GetRankedUsersWithActionByActivity
+        public async Task<PagedResultDto<UserRankDto>> GetRankedUsersWithActionByActivity(GetRankedUsersWithActionByActivityInput input)
+        {
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetRankedUsersWithActionByActivityQuery}?{GetBasicNameValuesQueryString()}&rankColumn={input.RankColumn}&startTime={input.StartTime}&endTime={input.EndTime}&isGameLevel={input.IsGameLevel}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserRankDto>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetRankedUsersWithActionByActivity:" + ex.InnerException);
+            }
+            return null;
+        }
 
         public async Task<PagedResultDto<PlayedGamesOutput>> GetPlayGamesByUserAsync(PlayGameInput input)
         {
