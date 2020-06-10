@@ -42,7 +42,7 @@ namespace Sensing.SDK.Contract
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public int Priority { get; set; }
-        [JsonConverter(typeof(ScheduleModelMonthDayConverter))]
+        [JsonConverter(typeof(ListToStringJsonConverter))]
         public List<int> MonthDay { get; set; }
         public List<int> WeekdayList { get; set; }
     }
@@ -54,6 +54,36 @@ namespace Sensing.SDK.Contract
         Week = 2,
         Month = 3
     }
+
+    public class AdsPlayListConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return true;
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.String)
+            {
+                var model = JsonConvert.DeserializeObject<List<AdsPlayList>>(reader.Value as string);
+                return model;
+            }
+            else if (reader.TokenType == JsonToken.StartObject)
+            {
+                return serializer.Deserialize(reader, objectType);
+            }
+
+            return null;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            writer.WriteValue(JsonConvert.SerializeObject(value));
+
+        }
+    }
+
 
     public class ScheduleModelConverter : JsonConverter
     {
@@ -83,50 +113,16 @@ namespace Sensing.SDK.Contract
                 }
                 return model;
             }
-            else if (reader.TokenType == JsonToken.StartObject)
-            {
-                return serializer.Deserialize(reader, objectType);
-            }
-
             return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-
+            writer.WriteValue(JsonConvert.SerializeObject(value));
         }
     }
 
-    public class AdsPlayListConverter : JsonConverter
-    {
-        public override bool CanConvert(Type objectType)
-        {
-            return true;
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.String)
-            {
-                var model = JsonConvert.DeserializeObject<List<AdsPlayList>>(reader.Value as string);
-                return model;
-            }
-            else if (reader.TokenType == JsonToken.StartObject)
-            {
-                return serializer.Deserialize(reader, objectType);
-            }
-
-            return null;
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-
-        }
-    }
-
-
-    public class ScheduleModelMonthDayConverter : JsonConverter
+    public class ListToStringJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -139,16 +135,17 @@ namespace Sensing.SDK.Contract
             {
                 return (reader.Value as string).Split(',').Select(int.Parse).ToList();
             }
-            else if (reader.TokenType == JsonToken.StartArray)
+            else
             {
                 return reader.Value;
             }
-            return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-
+            List<int> list = (List<int>)value;
+            string text = string.Join(",", list);
+            writer.WriteValue(text);
         }
     }
 }

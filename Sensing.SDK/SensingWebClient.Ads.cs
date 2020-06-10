@@ -39,7 +39,7 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<PagedResultDto<AdSchedule>> GetAdScheduling(string subkey, int skipCount = 0, int maxResultCount = 300)
+        public async Task<PagedResultDto<AdSchedule>> GetAdScheduling(int skipCount = 0, int maxResultCount = 300)
         {
             var absolutePath = $"{MainServiceApiHost}/{GetAdSchedulingQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxResultCount}&{SkipCount}={skipCount}";
             try

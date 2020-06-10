@@ -95,11 +95,19 @@ namespace AppPod.DataAccess
             {
                 var pModel = FindByShowProduct(showProductInfo);
                 qrcode = pModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreName == storeType)?.Qrcode;
+                if(qrcode == null)
+                {
+                    qrcode = pModel.OnlineStoreInfos.FirstOrDefault()?.Qrcode;
+                }
             }
             else
             {
                 var sModel = FindSkuById(showProductInfo.Id);
                 qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreName == storeType)?.Qrcode;
+                if (qrcode == null)
+                {
+                    qrcode = sModel.OnlineStoreInfos.FirstOrDefault()?.Qrcode;
+                }
             }
             if (string.IsNullOrEmpty(qrcode)) return null;
             if (!string.IsNullOrEmpty(staffId))
@@ -122,6 +130,10 @@ namespace AppPod.DataAccess
             string qrcode = string.Empty;
             var storeType = GetStoreType();
             qrcode = pModel.OnlineStoreInfos?.FirstOrDefault(s => s.OnlineStoreName == storeType)?.Qrcode;
+            if (qrcode == null)
+            {
+                qrcode = pModel.OnlineStoreInfos.FirstOrDefault()?.Qrcode;
+            }
             if (string.IsNullOrEmpty(qrcode)) return null;
             if (!string.IsNullOrEmpty(staffId))
             {
@@ -142,6 +154,10 @@ namespace AppPod.DataAccess
             if (sModel == null) return null;
             var storeType = GetStoreType();
             string qrcode = sModel.OnlineStoreInfos.FirstOrDefault(s => s.OnlineStoreName == storeType)?.Qrcode;
+            if (qrcode == null)
+            {
+                qrcode = sModel.OnlineStoreInfos.FirstOrDefault()?.Qrcode; 
+            }
             if (string.IsNullOrEmpty(qrcode)) return null;
             if (!string.IsNullOrEmpty(staffId))
             {
@@ -507,7 +523,7 @@ namespace AppPod.DataAccess
                 foreach (var color in colors)
                 {
                     if ((!string.IsNullOrEmpty(product.Title) && product.Title.Contains(color))
-                        || (!string.IsNullOrEmpty(product.Description) && product.Description.Contains(color)))
+                        || (!string.IsNullOrEmpty(product.Description) && product.Description.Contains(color)) )
                     {
                         colorOK = true;
                         break;
@@ -750,7 +766,7 @@ namespace AppPod.DataAccess
                                     showProducts.Add(new ShowProductInfo
                                     {
                                         Id = firstSku.Id,
-                                        ImageUrl = GetLocalImagePath(pImg.ImageUrl, "Products"),
+                                        ImageUrl = GetLocalImagePath(firstSku.PicUrl, "Products"),
                                         Quantity = firstSku.Quantity,
                                         Name = firstSku.Title,
                                         Price = firstSku.Price,
@@ -760,6 +776,7 @@ namespace AppPod.DataAccess
                                         Product = prod,
                                         Keyword = prod.Keywords
                                     });
+
                                 }
                             }
                         }
