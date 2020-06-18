@@ -678,8 +678,16 @@ namespace AppPod.DataAccess
         private bool ProductIsOK(ProductSdkModel product, List<int> categories)
         {
             if (categories == null) return true;
-            if (categories.Count < 1) return true;
-            if (categories.Intersect(product.CategoryIds).Count() > 0) return true;
+            if (categories.Count < 1)
+                return true;
+            foreach (var id in categories)
+            {
+                var category = PCategories.FirstOrDefault(p => p.Id == id);
+                if (category == null)
+                    continue;
+                if (category.Ids.Intersect(product.CategoryIds).Count() > 0)
+                    return true;
+            }
             return false;
         }
 
@@ -1235,11 +1243,12 @@ namespace AppPod.DataAccess
                             showProducts.Add(new ShowProductInfo
                             {
                                 Id = firstSku.Id,
-                                ImageUrl = GetLocalImagePath(pImg.ImageUrl, "Products"),
+                                ImageUrl = GetLocalImagePath(pImg.ImageUrl ?? firstSku.PicUrl, "Products"),
                                 Quantity = firstSku.Quantity,
                                 Name = firstSku.Title,
                                 Price = firstSku.Price,
-                                Type = ProductType.Sku
+                                Type = ProductType.Sku,
+                                PropsName = pImg.PropertyName
                             });
                         }
                     }
