@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Blend for Visual Studio 15
+# Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{9956EBCB-3413-4A62-8B40-2D47E3D342FA}"
@@ -22,7 +22,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensing.Mqtt", "Sensing.Mqt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mqtt.Test", "Mqtt.Test\Mqtt.Test.csproj", "{A2637889-C1B2-432E-92B9-C163D1964537}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppPod.DataAccess", "AppPod.DataAccess\AppPod.DataAccess.csproj", "{BF49E28B-4BA4-415D-95F1-61119F63E287}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppPod.DataAccess", "AppPod.DataAccess\AppPod.DataAccess.csproj", "{BF49E28B-4BA4-415D-95F1-61119F63E287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensing.Ads", "Sensing.Ads\Sensing.Ads.csproj", "{FF520CFE-83BE-4913-AD5B-FD5852114B2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,6 +134,22 @@ Global
 		{BF49E28B-4BA4-415D-95F1-61119F63E287}.Release|x64.Build.0 = Release|Any CPU
 		{BF49E28B-4BA4-415D-95F1-61119F63E287}.Release|x86.ActiveCfg = Release|Any CPU
 		{BF49E28B-4BA4-415D-95F1-61119F63E287}.Release|x86.Build.0 = Release|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Debug|ARM.Build.0 = Debug|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Debug|x64.Build.0 = Debug|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Debug|x86.Build.0 = Debug|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Release|ARM.Build.0 = Release|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Release|x64.ActiveCfg = Release|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Release|x64.Build.0 = Release|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Release|x86.ActiveCfg = Release|Any CPU
+		{FF520CFE-83BE-4913-AD5B-FD5852114B2A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

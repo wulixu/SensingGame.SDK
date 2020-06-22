@@ -267,11 +267,19 @@ namespace AppPod.DataAccess
             return Products?.FirstOrDefault(p => p.Skus.Any(s => (s.RfidCode?.StartsWith(rfid)??false) || (s.OuterId?.StartsWith(rfid)??false) || (s.SkuId?.StartsWith(rfid)??false)));
         }
 
-        public string GetLocalImagePath(string path, string category)
+        public  string GetLocalImagePath(string path, string category)
         {
             if (string.IsNullOrEmpty(path)) return null;
             var localPath = Extensions.ExtractSchema(path);
             return $"{SensingDataAccess.AppPodDataDirectory}\\{category}\\res\\{localPath}";
+        }
+
+        public static string GetAdsLocalFile(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return null;
+            var localPath = Extensions.ExtractSchema(url);
+            return $"{SensingDataAccess.AppPodDataDirectory}\\ads\\res\\{localPath}";
         }
 
         private string FindTagIcon(long[] tagIds)
@@ -946,6 +954,8 @@ namespace AppPod.DataAccess
         public List<DeviceSoftwareSdkModel> DeviceSoftwares { get; set; }
         
         public List<ActivityGameDto> ActivityGames { get; set; }
+         public  List<AdSchedule> AdSchedules { get; set; }
+
         public DeviceAppPodVersionModel AppPodVersion { get; set; }
 
         #region Read Data from Local Json.
@@ -1115,11 +1125,13 @@ namespace AppPod.DataAccess
             ProductComments = ReadProductComments();
             Brands = ReadBrands();
             ActivityGames = ReadActivityGames();
+            AdSchedules = ReadAdSchedules();
             Metas = ReadMetas();
             DateMetas = ReadDateMetas();
             Apps = ReadApps();
             DeviceSoftwares = ReadDeviceSoftwares();
             AppPodVersion = ReadDeviceAppPodVersion();
+            
 
             return true;
         }
@@ -1183,6 +1195,15 @@ namespace AppPod.DataAccess
             if (!File.Exists(path)) return null;
             string json = File.ReadAllText(path);
             var games = JsonConvert.DeserializeObject<List<ActivityGameDto>>(json);
+            return games;
+        }
+
+        public List<AdSchedule> ReadAdSchedules()
+        {
+            var path = $"{AppPodDataDirectory}/Ads/AdsScheduling.json";
+            if (!File.Exists(path)) return null;
+            string json = File.ReadAllText(path);
+            var games = JsonConvert.DeserializeObject<List<AdSchedule>>(json);
             return games;
         }
 

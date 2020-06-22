@@ -52,6 +52,8 @@ namespace AppPod.DataAccess
 
 
 
+
+
         public static ShowProductInfo ToShowProductInfo(this ProductSdkModel productInfo)
         {
             if (productInfo == null) return null;
