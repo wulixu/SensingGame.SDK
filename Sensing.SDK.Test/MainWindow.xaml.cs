@@ -668,5 +668,19 @@ namespace Sensing.SDK.Test
                 MatchMsg.Text = "failed" + Environment.NewLine;
             }
         }
+
+        private async void GetTimelines_Click(object sender, RoutedEventArgs e)
+        {
+            var timelines = await _sensingWebClient.GetAdAndAppTimelinesInAWeek(DateTime.Now);
+            if (timelines != null)
+            {
+                AdsMessage.Text = "Query GetAdAndAppTimelinesInAWeek Successfully" + Environment.NewLine;
+                AdsMessage.Text += "Timeline count is " + timelines.Count;
+            }
+            else
+            {
+                AdsMessage.Text = "failed" + Environment.NewLine;
+            }
+        }
     }
 }
