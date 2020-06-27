@@ -16,7 +16,7 @@ namespace SensingAds.CustomAds
             Button button = new Button();
             setCommonProperties(button);
             button.Click += Control_Click;
-            //control.Opacity = 0;
+            button.Opacity = 0;
             return button;
         }
 

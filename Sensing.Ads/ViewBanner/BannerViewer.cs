@@ -36,8 +36,10 @@ namespace SensingAds.ViewBanner
         private Grid root;
         private List<PageTransformer> pageTransformers = new List<PageTransformer>();
         private PageTransformer defaultPageTransform = new SlideUpTransformer();
-        private Random rnd = new Random();
+        static int seed = 1;
+        private Random rnd = new Random(seed++);
         private DispatcherTimer timer = new DispatcherTimer();
+        
 
         public BannerViewer()
         {
