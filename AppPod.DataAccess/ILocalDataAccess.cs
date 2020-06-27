@@ -54,7 +54,7 @@ namespace AppPod.DataAccess
         List<TagSdkModel> Tags { get; set; }
         List<AppInfo> Apps { get; set; }
         List<ActivityGameDto> ActivityGames { get; set; }
-        List<AdSchedule> AdSchedules { get; set; }
+        List<AdAndAppTimelineScheduleViewModel> AdAndAppTimelineSchedules { get; set; }
 
         List<DeviceSoftwareSdkModel> DeviceSoftwares { get; set; }
         DeviceAppPodVersionModel AppPodVersion { get; set; }

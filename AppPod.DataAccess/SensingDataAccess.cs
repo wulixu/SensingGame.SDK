@@ -954,7 +954,7 @@ namespace AppPod.DataAccess
         public List<DeviceSoftwareSdkModel> DeviceSoftwares { get; set; }
         
         public List<ActivityGameDto> ActivityGames { get; set; }
-         public  List<AdSchedule> AdSchedules { get; set; }
+         public  List<AdAndAppTimelineScheduleViewModel> AdAndAppTimelineSchedules { get; set; }
 
         public DeviceAppPodVersionModel AppPodVersion { get; set; }
 
@@ -1125,7 +1125,7 @@ namespace AppPod.DataAccess
             ProductComments = ReadProductComments();
             Brands = ReadBrands();
             ActivityGames = ReadActivityGames();
-            AdSchedules = ReadAdSchedules();
+            AdAndAppTimelineSchedules = ReadAdAndAppTimelineSchedules();
             Metas = ReadMetas();
             DateMetas = ReadDateMetas();
             Apps = ReadApps();
@@ -1198,13 +1198,13 @@ namespace AppPod.DataAccess
             return games;
         }
 
-        public List<AdSchedule> ReadAdSchedules()
+        public List<AdAndAppTimelineScheduleViewModel> ReadAdAndAppTimelineSchedules()
         {
-            var path = $"{AppPodDataDirectory}/Ads/AdsScheduling.json";
+            var path = $"{AppPodDataDirectory}/AdAndApp_Timelines.json";
             if (!File.Exists(path)) return null;
             string json = File.ReadAllText(path);
-            var games = JsonConvert.DeserializeObject<List<AdSchedule>>(json);
-            return games;
+            var timelines = JsonConvert.DeserializeObject<List<AdAndAppTimelineScheduleViewModel>>(json);
+            return timelines;
         }
 
 

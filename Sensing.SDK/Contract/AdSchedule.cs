@@ -5,28 +5,12 @@ using System.Linq;
 
 namespace Sensing.SDK.Contract
 {
-    public class AdSchedule
+    public class AdAndAppTimelineScheduleViewModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        public DateTime? EndTime { get; set; }
-        public DateTime? StartTime { get; set; }
-        public DateTime? CreationTime { get; set; }
-        public List<AdSchedulingContent> AdSchedulingContent { get; set; }
-    }
-
-
-
-    public class AdSchedulingContent
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        [JsonConverter(typeof(ScheduleModelConverter))]
-        public SchedulingModel Content { get; set; }
-        [JsonConverter(typeof(AdsPlayListConverter))]
-        public List<AdsPlayList> Ads { get; set; }
+        public DateTime Date { get; set; }
         public TimeSpan? StartTimeSpan { get; set; }
+        public ScheduleModel ScheduleModel { get; set; }
+        public List<AdsPlayList> AdAndApps { get; set; }
     }
 
     public enum PlayMode
@@ -35,7 +19,7 @@ namespace Sensing.SDK.Contract
         NoStrict = 1
     }
 
-    public class SchedulingModel
+    public class ScheduleModel
     {
         public SchedulingModelType Model { get; set; }
         public PlayMode PlayMode { get; set; }
@@ -96,7 +80,7 @@ namespace Sensing.SDK.Contract
         {
             if (reader.TokenType == JsonToken.String)
             {
-                var model = JsonConvert.DeserializeObject<SchedulingModel>(reader.Value as string);
+                var model = JsonConvert.DeserializeObject<ScheduleModel>(reader.Value as string);
                 if (model.StartTime.HasValue)
                 {
                     if (model.StartTime.Value.Kind == DateTimeKind.Utc)

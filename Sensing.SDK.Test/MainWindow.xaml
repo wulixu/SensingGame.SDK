@@ -73,6 +73,7 @@
                 <Grid Background="#FFE5E5E5">
                     <Button x:Name="GetAds" Content="Get Ads" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Margin="48,33,0,0" Height="26" Click="GetAds_Click"/>
                     <TextBlock x:Name="AdsMessage" TextWrapping="Wrap" Background="White" HorizontalAlignment="Left" Margin="44,111,0,0" Text="" VerticalAlignment="Top" Height="157" Width="732"/>
+                    <Button x:Name="GetTimelines" Content="Get Timelines" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Margin="216,33,0,0" Height="26" Click="GetTimelines_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Coupons">
