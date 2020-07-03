@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdsItems\BaseItem.cs" />
+    <Compile Include="AdsItems\ProductItem.cs" />
     <Compile Include="AdsItems\ButtonItem.cs" />
     <Compile Include="AdsItems\CanvasItem.cs" />
     <Compile Include="AdsItems\CustomAd.cs" />

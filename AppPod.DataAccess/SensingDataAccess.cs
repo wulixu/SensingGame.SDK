@@ -215,7 +215,7 @@ namespace AppPod.DataAccess
                     return new ShowProductInfo
                     {
                         Id = firstSku.Id,
-                        ImageUrl = GetLocalImagePath(keyImage.ImageUrl, "Products"),
+                        ImageUrl = GetLocalImagePath(keyImage.ImageUrl??firstSku.PicUrl, "Products"),
                         Quantity = firstSku.Quantity,
                         Name = firstSku.Title,
                         Price = firstSku.Price,
@@ -354,7 +354,7 @@ namespace AppPod.DataAccess
                                 showProducts.Add(new ShowProductInfo
                                 {
                                     Id = firstSku.Id,
-                                    ImageUrl = GetLocalImagePath(pImg.ImageUrl, "Products"),
+                                    ImageUrl = GetLocalImagePath(pImg.ImageUrl??firstSku.PicUrl, "Products"),
                                     Quantity = firstSku.Quantity,
                                     Name = prod.Title,
                                     ProductName = prod.Title,

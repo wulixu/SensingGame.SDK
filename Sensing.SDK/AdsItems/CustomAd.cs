@@ -48,6 +48,10 @@ namespace Sensing.SDK.AdsItems
                 {
                     Items.Add(item.ToObject<LabelItem>());
                 }
+                else if (type == "product")
+                {
+                    Items.Add(item.ToObject<ProductItem>());
+                }
             }
         }
             
