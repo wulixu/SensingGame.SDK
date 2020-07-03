@@ -15,6 +15,8 @@ namespace Sensing.SDK
         /// </summary>
         private const string AdsBaseUrl = "SensingDevice";
         private const string GetAdsQuery = AdsBaseUrl + "/GetAds";
+        private const string GetAdSchedulingQuery = AdsBaseUrl + "/GetAdScheduling";
+
 
         public async Task<PagedResultDto<AdsSdkModel>> GetAds(int skipCount = 0,int maxCount=300)
         {
@@ -36,5 +38,29 @@ namespace Sensing.SDK
             }
             return null;
         }
+
+        public async Task<PagedResultDto<AdSchedule>> GetAdScheduling(string subkey, int skipCount = 0, int maxResultCount = 300)
+        {
+            var absolutePath = $"{MainServiceApiHost}/{GetAdSchedulingQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxResultCount}&{SkipCount}={skipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<AdSchedule>>>(HttpMethod.Get, absolutePath, null);
+                if (webResult.Success)
+                {
+                    return webResult.Result;
+                }
+                Console.WriteLine("GetAds:" + webResult.Error.Message);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetAds:" + ex.InnerException);
+            }
+            return null;
+           
+
+        }
+
     }
 }
