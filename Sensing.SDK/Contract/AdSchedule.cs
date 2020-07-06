@@ -10,7 +10,7 @@ namespace Sensing.SDK.Contract
         public DateTime Date { get; set; }
         public TimeSpan? StartTimeSpan { get; set; }
         public ScheduleModel ScheduleModel { get; set; }
-        public List<AdsPlayList> AdAndApps { get; set; }
+        public List<ProgramItem> AdAndApps { get; set; }
     }
 
     public enum PlayMode
@@ -50,7 +50,7 @@ namespace Sensing.SDK.Contract
         {
             if (reader.TokenType == JsonToken.String)
             {
-                var model = JsonConvert.DeserializeObject<List<AdsPlayList>>(reader.Value as string);
+                var model = JsonConvert.DeserializeObject<List<ProgramItem>>(reader.Value as string);
                 return model;
             }
             else if (reader.TokenType == JsonToken.StartObject)
