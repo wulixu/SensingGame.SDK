@@ -84,6 +84,7 @@
     <Compile Include="Contract\SensingDeviceActivityDto\ActionDataOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\ActivityUserDataOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\AwardOutput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\GameUserActionOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\UserRankDto.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\DeviceActivityGameOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\GetRankedUsersWithActionByActivityInput.cs" />

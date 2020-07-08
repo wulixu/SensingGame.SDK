@@ -611,13 +611,13 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<PagedResultDto<UserActionInfoOutput>> GetDeviceActivityGameUserActions(ActivityGameActionInput input)
+        public async Task<PagedResultDto<GameUserActionOutput>> GetDeviceActivityGameUserActions(ActivityGameActionInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
             var absolutePath = $"{ServerBase}{ActivityDataPath}{GetDeviceActivityGameUserActionsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}&startTime={input.StartTime}&endTime={input.EndTime}";
             try
             {
-                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserActionInfoOutput>>>(HttpMethod.Get, absolutePath, null);
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<GameUserActionOutput>>>(HttpMethod.Get, absolutePath, null);
                 return webResult.Result;
             }
             catch (Exception ex)
