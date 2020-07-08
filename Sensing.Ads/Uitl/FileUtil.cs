@@ -56,27 +56,15 @@ namespace SensingAds.Uitl
 
         public static string MapLocalPath(string url)
         {
-            //return Path.Combine(FilesFolder(), Md5(url) + Path.GetExtension(url));
-
-            return SensingDataAccess.GetAdsLocalFile(url);
+            if(url.StartsWith("http"))
+                return SensingDataAccess.GetAdsLocalFile(url);
+            return url;
         }
 
         public static string MapExeLocalPath(string url)
         {
             var installDirectory = Path.Combine(Environment.CurrentDirectory, "AppPodData", "Apps", url);
             return installDirectory;
-            //var folder = MapZipExtractFolder(url);
-            //var guessExeName = Path.GetFileNameWithoutExtension(url) + ".exe";
-            //string exePath = FindExe(folder, guessExeName);
-            //if (exePath == null || !File.Exists(exePath))
-            //{
-            //    var subFolder = Directory.GetDirectories(folder).FirstOrDefault();
-            //    if(subFolder != null)
-            //    {
-            //        exePath = FindExe(subFolder, guessExeName);
-            //    }
-            //}
-            //return exePath;
         }
 
         private static string FindExe(string folder, string guessExeName)
