@@ -52,7 +52,6 @@
     <Compile Include="Contract\ActivityGameDto.cs" />
     <Compile Include="Contract\AddUserPaperInput.cs" />
     <Compile Include="Contract\AdSchedule.cs" />
-    <Compile Include="Contract\AdsPlayList.cs" />
     <Compile Include="Contract\AdsSdkModel.cs" />
     <Compile Include="Contract\BehaviorRecord.cs" />
     <Compile Include="Contract\BrandDto.cs" />

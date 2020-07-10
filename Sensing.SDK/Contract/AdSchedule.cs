@@ -10,7 +10,7 @@ namespace Sensing.SDK.Contract
         public DateTime Date { get; set; }
         public TimeSpan? StartTimeSpan { get; set; }
         public ScheduleModel ScheduleModel { get; set; }
-        public List<AdsPlayList> AdAndApps { get; set; }
+        public List<ProgramItem> AdAndApps { get; set; }
     }
 
     public enum PlayMode
@@ -39,33 +39,20 @@ namespace Sensing.SDK.Contract
         Month = 3
     }
 
-    public class AdsPlayListConverter : JsonConverter
+    public class ProgramItem
     {
-        public override bool CanConvert(Type objectType)
-        {
-            return true;
-        }
+        public int ScheduleStartTime { get; set; }
+        public int ScheduleEndTime { get; set; }
+        public bool IdleAble { get; set; }
+        public List<AdOrAppItem> Children { get; set; }
+        public int Type { get; set; }
+    }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.String)
-            {
-                var model = JsonConvert.DeserializeObject<List<AdsPlayList>>(reader.Value as string);
-                return model;
-            }
-            else if (reader.TokenType == JsonToken.StartObject)
-            {
-                return serializer.Deserialize(reader, objectType);
-            }
-
-            return null;
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            writer.WriteValue(JsonConvert.SerializeObject(value));
-
-        }
+    public class AdOrAppItem
+    {
+        public long Id { get; set; }
+        public int Duration { get; set; }
+        public string Transition { get; set; }
     }
 
 
@@ -132,4 +119,7 @@ namespace Sensing.SDK.Contract
             writer.WriteValue(text);
         }
     }
+
+
+
 }
