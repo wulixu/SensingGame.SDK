@@ -66,7 +66,7 @@ namespace SensingAds.ViewBanner
 
         public void SetPageTransformer(PageTransformer pageTransformer)
         {
-            this.pageTransformer = pageTransformer;
+            this.defaultPageTransform = pageTransformer;
         }
 
         private void init()

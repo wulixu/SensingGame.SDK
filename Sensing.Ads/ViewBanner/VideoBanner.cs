@@ -23,6 +23,7 @@ namespace SensingAds.ViewBanner
         {
             videoView = new MediaElement();
             videoView.IsHitTestVisible = false;
+            videoView.Stretch = System.Windows.Media.Stretch.UniformToFill;
             videoView.LoadedBehavior = MediaState.Manual;
             videoView.MediaOpened += onPrepared;
             videoView.MediaEnded += onCompletion;
