@@ -51,7 +51,7 @@ namespace Sensing.SDK
         private const string GetPapersByTagsQuery = "services/app/SengsingDevice/GetPapersByTags";
         private const string AddUserPaperQuery = "services/app/SengsingDevice/AddUserPaper";
         private const string GetPaperAnswerReportQuery = "services/app/SengsingDevice/GetPaperAnswerReport";
-
+        private const string GetDeviceActivityGameUserActionsQuery = "services/app/SensingDeviceActivity/GetDeviceActivityGameUserActions";
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
         public readonly static string ActivityServiceHost = ServerBase + ActivityDataPath;
@@ -607,6 +607,22 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 Console.WriteLine("GetPaperAnswerReportAsync:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<GameUserActionOutput>> GetDeviceActivityGameUserActions(ActivityGameActionInput input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetDeviceActivityGameUserActionsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}&startTime={input.StartTime}&endTime={input.EndTime}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<GameUserActionOutput>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetUserActionsByActivityGameAsync:" + ex.InnerException);
             }
             return null;
         }

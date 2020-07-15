@@ -36,8 +36,10 @@ namespace SensingAds.ViewBanner
         private Grid root;
         private List<PageTransformer> pageTransformers = new List<PageTransformer>();
         private PageTransformer defaultPageTransform = new SlideUpTransformer();
-        private Random rnd = new Random();
+        static int seed = 1;
+        private Random rnd = new Random(seed++);
         private DispatcherTimer timer = new DispatcherTimer();
+        
 
         public BannerViewer()
         {
@@ -64,7 +66,7 @@ namespace SensingAds.ViewBanner
 
         public void SetPageTransformer(PageTransformer pageTransformer)
         {
-            this.pageTransformer = pageTransformer;
+            this.defaultPageTransform = pageTransformer;
         }
 
         private void init()
@@ -91,40 +93,39 @@ namespace SensingAds.ViewBanner
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (adapter.Size() > 0)
+
+            if (root.Children.Count == 0 && adapter.Size() > 0)
             {
-                if (root.Children.Count == 0)
-                {
-                    PlayBanner(adapter.Get(playIndex));
-                }
-                else
-                {
-                    Banner banner = (Banner)root.Children[root.Children.Count - 1];
-                    BannerState bannerState = banner.getBannerState();
-                    if (bannerState == BannerState.Finished)
-                    {
-                        if (adapter.Size() == 1)
-                        {
-                            banner.Replay();
-                        }
-                        else
-                        {
-                            playIndex = (playIndex + 1) % adapter.Size();
-                            //updateIndicator();
-                            PlayBanner(adapter.Get(playIndex));
-                        }
-                    }
-                    else if (bannerState == BannerState.Prepared)
-                    {
-                        if (root.Children.Count > 1)
-                        {
-                            onAnimationStart();
-                            valueAnimator.Begin();
-                        }
-                    }
-                    banner.Update();
-                }
+                PlayBanner(adapter.Get(playIndex));
             }
+            else if(root.Children.Count > 0)
+            {
+                Banner banner = (Banner)root.Children[root.Children.Count - 1];
+                BannerState bannerState = banner.getBannerState();
+                if (bannerState == BannerState.Finished)
+                {
+                    if (adapter.Size() == 1)
+                    {
+                        banner.Replay();
+                    }
+                    else if(adapter.Size() > 1)
+                    {
+                        playIndex = (playIndex + 1) % adapter.Size();
+                        //updateIndicator();
+                        PlayBanner(adapter.Get(playIndex));
+                    }
+                }
+                else if (bannerState == BannerState.Prepared)
+                {
+                    if (root.Children.Count > 1)
+                    {
+                        onAnimationStart();
+                        valueAnimator.Begin();
+                    }
+                }
+                banner.Update();
+            }
+            
         }
 
         private void PlayBanner(Banner banner)
@@ -171,7 +172,7 @@ namespace SensingAds.ViewBanner
             }
             if (currentBanner != banner)
             {
-                currentBanner.Stop();
+                currentBanner?.Stop();
                 PlayBanner(banner);
                 RestartTimer();
             }

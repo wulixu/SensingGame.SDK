@@ -98,6 +98,12 @@ namespace SensingStoreCloud.Activity
 
     }
 
+    public class ActivityGameActionInput : SensingDeviceGamePagedSortedFilteredInputBase
+    {
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+    }
+
     public class SnsUserTextDataInput : SensingDeviceGameInputBase
     {
         [Required]

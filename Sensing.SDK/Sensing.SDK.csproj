@@ -52,7 +52,6 @@
     <Compile Include="Contract\ActivityGameDto.cs" />
     <Compile Include="Contract\AddUserPaperInput.cs" />
     <Compile Include="Contract\AdSchedule.cs" />
-    <Compile Include="Contract\AdsPlayList.cs" />
     <Compile Include="Contract\AdsSdkModel.cs" />
     <Compile Include="Contract\BehaviorRecord.cs" />
     <Compile Include="Contract\BrandDto.cs" />
@@ -84,6 +83,7 @@
     <Compile Include="Contract\SensingDeviceActivityDto\ActionDataOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\ActivityUserDataOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\AwardOutput.cs" />
+    <Compile Include="Contract\SensingDeviceActivityDto\GameUserActionOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\UserRankDto.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\DeviceActivityGameOutput.cs" />
     <Compile Include="Contract\SensingDeviceActivityDto\GetRankedUsersWithActionByActivityInput.cs" />

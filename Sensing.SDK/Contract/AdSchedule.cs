@@ -40,13 +40,20 @@ namespace Sensing.SDK.Contract
         Month = 3
     }
 
-    public class AdsPlayListConverter : JsonConverter
+    public class ProgramItem
     {
-        public override bool CanConvert(Type objectType)
-        {
-            return true;
-        }
+        public int ScheduleStartTime { get; set; }
+        public int ScheduleEndTime { get; set; }
+        public bool IdleAble { get; set; }
+        public List<AdOrAppItem> Children { get; set; }
+        public int Type { get; set; }
+    }
 
+    public class AdOrAppItem
+    {
+        public long Id { get; set; }
+        public int Duration { get; set; }
+        public string Transition { get; set; }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.String)
@@ -133,4 +140,7 @@ namespace Sensing.SDK.Contract
             writer.WriteValue(text);
         }
     }
+
+
+
 }

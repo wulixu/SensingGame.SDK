@@ -51,7 +51,7 @@ namespace SensingStoreCloud.Activity
         public string ScanQrCodeTime { get; set; }
         public bool IsSigned { get; set; }
         public long? AwardId { get; set; }
-
+        public string ExtensionData { get; set; }
         //public AwardOutput Award { get; set; }
         /// <summary>
         /// 用户id 特定公众号下面的user/说到Taobao的用户Id
