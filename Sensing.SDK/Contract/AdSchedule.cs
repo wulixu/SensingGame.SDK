@@ -54,26 +54,6 @@ namespace Sensing.SDK.Contract
         public long Id { get; set; }
         public int Duration { get; set; }
         public string Transition { get; set; }
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.String)
-            {
-                var model = JsonConvert.DeserializeObject<List<ProgramItem>>(reader.Value as string);
-                return model;
-            }
-            else if (reader.TokenType == JsonToken.StartObject)
-            {
-                return serializer.Deserialize(reader, objectType);
-            }
-
-            return null;
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            writer.WriteValue(JsonConvert.SerializeObject(value));
-
-        }
     }
 
 
