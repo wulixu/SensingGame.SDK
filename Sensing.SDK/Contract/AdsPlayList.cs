@@ -7,6 +7,7 @@
         public bool IdleAble { get; set; }
         public AdOrAppItem[] Children { get; set; }
         public int Type { get; set; }
+        public string PackageName { get; set; }
     }
 
     public class AdOrAppItem

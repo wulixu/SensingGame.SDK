@@ -8,7 +8,8 @@ namespace Sensing.SDK.Contract
     public class AdAndAppTimelineScheduleViewModel
     {
         public DateTime Date { get; set; }
-        public TimeSpan? StartTimeSpan { get; set; }
+        public TimeSpan? StartTime { get; set; }
+        public  TimeSpan? EndTime { get; set; }
         public ScheduleModel ScheduleModel { get; set; }
         public List<ProgramItem> AdAndApps { get; set; }
     }
