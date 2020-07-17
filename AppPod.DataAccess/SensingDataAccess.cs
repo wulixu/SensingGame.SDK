@@ -50,6 +50,13 @@ namespace AppPod.DataAccess
             return roots.ToList();
         }
 
+
+        public AdAndAppTimelineScheduleViewModel GetTodayAdAndAppTimelineContent()
+        {
+            var todayTimelineContent = AdAndAppTimelineSchedules.FirstOrDefault(t => t.Date.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"));
+            return todayTimelineContent;
+        }
+
         public string GetStoreId()
         {
             try{
@@ -954,7 +961,7 @@ namespace AppPod.DataAccess
         public List<DeviceSoftwareSdkModel> DeviceSoftwares { get; set; }
         
         public List<ActivityGameDto> ActivityGames { get; set; }
-         public  List<AdAndAppTimelineScheduleViewModel> AdAndAppTimelineSchedules { get; set; }
+        public  List<AdAndAppTimelineScheduleViewModel> AdAndAppTimelineSchedules { get; set; }
 
         public DeviceAppPodVersionModel AppPodVersion { get; set; }
 
