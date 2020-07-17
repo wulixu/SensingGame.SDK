@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace AppPod.DataAccess.Scheduling
 {
-    public class SimplePlayListChooser : PlayListChooserBase
+    public class SequencePlayListChooser : PlayListChooserBase
     {
-        public SimplePlayListChooser(AdAndAppTimelineScheduleViewModel adSchedulingContent,DateTime timelineStartedTimeOnPC) : base(adSchedulingContent, timelineStartedTimeOnPC)
+        public SequencePlayListChooser(AdAndAppTimelineScheduleViewModel adSchedulingContent,DateTime timelineStartedTimeOnPC) : base(adSchedulingContent, timelineStartedTimeOnPC)
         {
             //重置为启动时间
             adSchedulingContent.StartTime = adSchedulingContent.StartTime?? new TimeSpan();
@@ -21,7 +21,7 @@ namespace AppPod.DataAccess.Scheduling
             {
                 return null;
             }
-            //获取广告组的总时长
+            //获取节目组的总时长
             int endTime = _currentSchedule.AdAndApps.Max(a => a.ScheduleEndTime);
             //循环播放的时候，需要把之前播放的时间去除.
             timeSinceStart = timeSinceStart % endTime;
@@ -29,7 +29,11 @@ namespace AppPod.DataAccess.Scheduling
             _currentPlayerList = _currentSchedule.AdAndApps.FirstOrDefault(a => a.ScheduleStartTime <= timeSinceStart && timeSinceStart < a.ScheduleEndTime);
             if (_currentPlayerList == null) return null;
 
-            var abSpan = timeSinceStart - _currentPlayerList.ScheduleStartTime;
+            //获取当前节目的总时长，可能也需要循环播放.
+            var abSpanTotal = timeSinceStart - _currentPlayerList.ScheduleStartTime;
+            var sumTime = _currentPlayerList.Children.Sum(c => c.Duration);
+
+            var abSpan = abSpanTotal % sumTime;
             var listSum = 0;
             for (int i = 0; i < _currentPlayerList.Children.Count; i++)
             {
@@ -42,6 +46,7 @@ namespace AppPod.DataAccess.Scheduling
                     playItem.Type = _currentPlayerList.Type;
                     playItem.AdOrAppId = item.Id;
                     playItem.PlayDuration = itemSpan;
+                    playItem.Transition = item.Transition;
                     _currentPlayItem = playItem;
                     return playItem;
                 }

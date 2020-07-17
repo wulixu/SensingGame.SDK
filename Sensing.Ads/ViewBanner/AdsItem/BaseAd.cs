@@ -10,6 +10,7 @@ namespace SensingAds.ViewBanner.AdsItem
         public string FileUrl { get; set; }
         public int TimeSpan { get; set; }
         public bool IdleAble { get; set; }
+        public string Transition { get; set; }
         public virtual IEnumerable<string> ExtractLinks()
         {
             yield return FileUrl;
