@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SensingAds.ViewBanner.Transitions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SensingAds.ViewBanner.AdsItem
@@ -18,6 +19,7 @@ namespace SensingAds.ViewBanner.AdsItem
             H5Banner banner = new H5Banner(FileUrl, TimeSpan);
             banner.Title = this.Name;
             banner.Id = Id;
+            banner.Transition = NoneTransformer.Name;
             return banner;
         }
 

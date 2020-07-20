@@ -5,6 +5,10 @@ namespace SensingAds.ViewBanner.Transitions
 {
     public class PiLieTransformer : PageTransformer
     {
+
+        public static readonly string Name = "PiLie";
+
+
         private int lines = 6;
 
         private PathGeometry path = new PathGeometry();
@@ -32,6 +36,11 @@ namespace SensingAds.ViewBanner.Transitions
                 path.AddGeometry(new RectangleGeometry(new Rect(rectRight, 0, w - rectLeft, h)));
                 ((Banner)view).setClipPath(path);
             }
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
     }
 }

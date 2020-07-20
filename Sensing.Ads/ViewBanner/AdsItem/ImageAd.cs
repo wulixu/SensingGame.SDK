@@ -7,6 +7,7 @@
             ImageBanner banner = new ImageBanner(FileUrl, TimeSpan);
             banner.Title = this.Name;
             banner.Id = Id;
+            banner.Transition = Transition;
             return banner;
         }
     }

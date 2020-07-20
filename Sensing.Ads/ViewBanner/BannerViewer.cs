@@ -135,7 +135,7 @@ namespace SensingAds.ViewBanner
                 banner.Opacity = 0;
                 animating = true;
             }
-            pageTransformer = banner.GetTransformer();
+            pageTransformer = pageTransformers.FirstOrDefault(t => t.GetName() == banner.Transition);
             if (pageTransformer == null)
             {
                 pageTransformer = getRandomPageTransformer();

@@ -5,6 +5,9 @@ namespace SensingAds.ViewBanner.Transitions
 {
     public class SlideLeftTransformer : PageTransformer
     {
+        public static readonly string Name = "SlideLeft";
+
+
         public void OnAnimationStart(FrameworkElement view, double position)
         {
             view.RenderTransform = new TranslateTransform();
@@ -26,6 +29,11 @@ namespace SensingAds.ViewBanner.Transitions
                 //view.setTranslationY(pageHeight * (1 - position));
                 ((TranslateTransform)view.RenderTransform).Y = pageHeight * (1 - position);
             }
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
     }
 }

@@ -4,6 +4,10 @@ namespace SensingAds.ViewBanner.Transitions
 {
     public class NoneTransformer : PageTransformer
     {
+
+        public static readonly string Name = "None";
+
+
         public void OnAnimationEnd(FrameworkElement view, double position)
         {
             if (position > 0)
@@ -23,6 +27,11 @@ namespace SensingAds.ViewBanner.Transitions
         public void OnAnimationUpdate(FrameworkElement view, double position)
         {
             
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
     }
 }

@@ -35,6 +35,7 @@ namespace SensingAds.ViewBanner.AdsItem
             CustomViewBanner banner = new CustomViewBanner(rootPanel,ItemList,TimeSpan);
             banner.Title = this.Name;
             banner.Id = Id;
+            banner.Transition = Transition;
             return banner;
         }
 

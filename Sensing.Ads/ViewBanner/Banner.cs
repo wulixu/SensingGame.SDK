@@ -13,6 +13,7 @@ namespace SensingAds.ViewBanner
         protected int durtion;
         protected DateTime startTime;
         protected BannerState bannerState = BannerState.Unloaded;
+        public string Transition { get; set; }
 
         protected void setDefaultDurtion(int durtion)
         {
@@ -71,11 +72,6 @@ namespace SensingAds.ViewBanner
             bannerState = BannerState.Finished;
         }
 
-
-        public virtual PageTransformer GetTransformer()
-        {
-            return null;
-        }
 
         public void setClipPath(Geometry clipGeometry)
         {

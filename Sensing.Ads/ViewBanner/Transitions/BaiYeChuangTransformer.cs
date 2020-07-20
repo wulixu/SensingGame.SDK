@@ -5,6 +5,7 @@ namespace SensingAds.ViewBanner.Transitions
 {
     public class BaiYeChuangTransformer : PageTransformer
     {
+        public static readonly string Name = "BaiYeChuang";
         private int lines = 6;
 
         private PathGeometry path = new PathGeometry();
@@ -42,6 +43,11 @@ namespace SensingAds.ViewBanner.Transitions
                 }
                 ((Banner)view).setClipPath(path);
             }
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
     }
 }

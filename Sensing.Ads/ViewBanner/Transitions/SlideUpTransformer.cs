@@ -5,6 +5,9 @@ namespace SensingAds.ViewBanner.Transitions
 {
     public class SlideUpTransformer : PageTransformer
     {
+        public static readonly string Name = "SlideUp";
+
+
         public void OnAnimationStart(FrameworkElement view, double position)
         {
             view.RenderTransform = new TranslateTransform();
@@ -34,6 +37,11 @@ namespace SensingAds.ViewBanner.Transitions
                 ((TranslateTransform)view.RenderTransform).Y = pageHeight * position;
 
             }
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
     }
 }

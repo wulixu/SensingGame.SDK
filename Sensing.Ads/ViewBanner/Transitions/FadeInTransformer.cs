@@ -5,6 +5,9 @@ namespace SensingAds.ViewBanner.Transitions
 {
     public class FadeInTransformer : PageTransformer
     {
+        public static readonly string Name = "FadeIn";
+
+
         public void OnAnimationStart(FrameworkElement view, double position)
         {
         }
@@ -19,6 +22,11 @@ namespace SensingAds.ViewBanner.Transitions
             {
                 view.Opacity = position;
             }
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
     }
 }

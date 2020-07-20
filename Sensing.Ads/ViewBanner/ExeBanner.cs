@@ -75,9 +75,5 @@ namespace SensingAds.ViewBanner
             process.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
         }
 
-        public override PageTransformer GetTransformer()
-        {
-            return new NoneTransformer();
-        }
     }
 }
