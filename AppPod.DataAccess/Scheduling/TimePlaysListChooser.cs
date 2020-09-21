@@ -20,6 +20,8 @@ namespace AppPod.DataAccess.Scheduling
 
             var abSpanTotal = timeSinceStart - _currentPlayerList.ScheduleStartTime;
             var sumTime = _currentPlayerList.Children.Sum(c => c.Duration);
+            if (sumTime == 0)
+                return null;
             //可能在循环播放了,需要时间求余
             var abSpan = abSpanTotal % sumTime;
             var listSum = 0;

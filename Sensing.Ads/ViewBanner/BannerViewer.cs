@@ -69,6 +69,11 @@ namespace SensingAds.ViewBanner
             this.defaultPageTransform = pageTransformer;
         }
 
+        public Banner GetCurrentBanner()
+        {
+            return (Banner)root.Children[root.Children.Count - 1];
+        }
+
         private void init()
         {
             root = new Grid();
@@ -152,6 +157,8 @@ namespace SensingAds.ViewBanner
             return pageTransformers[rnd.Next(pageTransformers.Count)];
             //return  pageTransformers.get((index++)%pageTransformers.size());
         }
+
+
         int index = 0;
 
         /***

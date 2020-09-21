@@ -1275,6 +1275,7 @@ namespace AppPod.DataAccess
                                 Quantity = firstSku.Quantity,
                                 Name = firstSku.Title,
                                 Price = firstSku.Price,
+                                PromPrice = firstSku.PromPrice,
                                 Type = ProductType.Sku,
                                 PropsName = pImg.PropertyName
                             });
@@ -1311,7 +1312,7 @@ namespace AppPod.DataAccess
             }
             if (productInfo.Type == ProductType.Sku)
             {
-                if (useSameSpu)
+                if (useSameSpu)      
                 {
                     var spu = Products?.FirstOrDefault(p => p.Skus.Any(s => s.Id == productInfo.Id));
                     similarSkus = DistinctShowProducts(spu, productInfo.Id);

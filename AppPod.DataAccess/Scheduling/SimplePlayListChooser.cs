@@ -32,6 +32,8 @@ namespace AppPod.DataAccess.Scheduling
             //获取当前节目的总时长，可能也需要循环播放.
             var abSpanTotal = timeSinceStart - _currentPlayerList.ScheduleStartTime;
             var sumTime = _currentPlayerList.Children.Sum(c => c.Duration);
+            if (sumTime == 0)
+                return null;
 
             var abSpan = abSpanTotal % sumTime;
             var listSum = 0;
