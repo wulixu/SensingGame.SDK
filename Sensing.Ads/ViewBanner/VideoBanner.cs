@@ -50,7 +50,9 @@ namespace SensingAds.ViewBanner
         public override void Replay()
         {
             base.Replay();
+            bannerState = BannerState.Prepared;
             videoView.Position = TimeSpan.FromSeconds(0);
+            videoView.Play();
         }
 
         public override void Stop()

@@ -16,11 +16,10 @@ namespace AppPod.DataAccess.Scheduling
         public override AdOrAppPlayItem FindNowPlayItem()
         {
             //启动时长, 播放任务开始之前需要，不允许播放任何东西.
-            double timeSinceStart = DateTime.Now.TimeOfDay.Subtract(_timelineStartedTime.TimeOfDay).Subtract(_currentSchedule.StartTime.Value).TotalSeconds;
-            if(timeSinceStart < 0)
-            {
-                return null;
-            }
+            //double timeSinceStart = DateTime.Now.TimeOfDay.Subtract(_timelineStartedTime.TimeOfDay).Subtract(_currentSchedule.StartTime.Value).TotalSeconds;
+            double timeSinceStart = DateTime.Now.TimeOfDay.Subtract(_timelineStartedTime.TimeOfDay).TotalSeconds;
+
+            timeSinceStart = Math.Abs(timeSinceStart);
             //获取节目组的总时长
             int endTime = _currentSchedule.AdAndApps.Max(a => a.ScheduleEndTime);
             //循环播放的时候，需要把之前播放的时间去除.
@@ -49,6 +48,7 @@ namespace AppPod.DataAccess.Scheduling
                     playItem.AdOrAppId = item.Id;
                     playItem.PlayDuration = itemSpan;
                     playItem.Transition = item.Transition;
+                    playItem.Unstoppable = _currentPlayerList.Unstoppable;
                     _currentPlayItem = playItem;
                     return playItem;
                 }

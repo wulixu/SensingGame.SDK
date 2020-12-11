@@ -19,15 +19,23 @@ namespace SensingAds.ViewBanner.Transitions
 
         }
 
+
+
         public void OnAnimationUpdate(FrameworkElement view, double position)
         {
-            double pageHeight = view.ActualHeight;
+            double pageWidth = view.ActualWidth;
             if (position > 0)
             {
                 //view.setAlpha(1);
                 view.Opacity = 1;
                 //view.setTranslationY(pageHeight * (1 - position));
-                ((TranslateTransform)view.RenderTransform).Y = pageHeight * (1 - position);
+                ((TranslateTransform)view.RenderTransform).X = pageWidth * (1 - position);
+            }
+            else
+            {
+                //view.setTranslationY(pageHeight * position);
+                ((TranslateTransform)view.RenderTransform).X = pageWidth * position;
+
             }
         }
 

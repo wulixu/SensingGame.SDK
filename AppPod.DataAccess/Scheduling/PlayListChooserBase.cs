@@ -11,6 +11,7 @@ namespace AppPod.DataAccess.Scheduling
         public int PlayDuration { get; set; }
         public int Type { get; set; }
         public string Transition { get; set; }
+        public bool Unstoppable { get; set; }
     }
     public abstract class PlayListChooserBase
     {

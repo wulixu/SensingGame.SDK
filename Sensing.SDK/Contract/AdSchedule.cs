@@ -23,7 +23,7 @@ namespace Sensing.SDK.Contract
     public class ScheduleModel
     {
         public SchedulingModelType Model { get; set; }
-        public PlayMode PlayMode { get; set; }
+        public PlayMode PlayModel { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public int Priority { get; set; }
@@ -47,6 +47,7 @@ namespace Sensing.SDK.Contract
         public bool IdleAble { get; set; }
         public List<AdOrAppItem> Children { get; set; }
         public int Type { get; set; }
+        public bool Unstoppable { get; set; }
     }
 
     public class AdOrAppItem
