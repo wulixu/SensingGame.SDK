@@ -52,6 +52,8 @@ namespace Sensing.SDK
         private const string AddUserPaperQuery = "services/app/SengsingDevice/AddUserPaper";
         private const string GetPaperAnswerReportQuery = "services/app/SengsingDevice/GetPaperAnswerReport";
         private const string GetDeviceActivityGameUserActionsQuery = "services/app/SensingDeviceActivity/GetDeviceActivityGameUserActions";
+        private const string GetActivityUserDatasQuery = "services/app/SensingDeviceActivity/GetActivityUserDatas";
+
         public readonly static string ActivityServiceRelativePath = "g/";
         public readonly static string ActivityServiceApiHost = ServerBase + ActivityDataPath + Api_Relative_Path;
         public readonly static string ActivityServiceHost = ServerBase + ActivityDataPath;
@@ -223,6 +225,49 @@ namespace Sensing.SDK
             }
             return default(QrcodeActionOutput);
         }
+
+        public async Task<QrcodeActionOutput> PostPlayerData4ActionQrcodeLimitAsync(PlayerDataInput playerData)
+        {
+            var absolutePath = $"https://g.api.troncell.com/api/UserAction/PostPlayerData4ActionQrcodeLimit";
+            var nameValues = new NameValueCollection();
+            AddBasicNameValues(nameValues);
+            nameValues.Add("score", playerData.Score.ToString());
+            if (!string.IsNullOrEmpty(playerData.Params))
+                nameValues.Add("params", playerData.Params);
+            nameValues.Add("qrType", playerData.QrType.ToString());
+            nameValues.Add("snsType", playerData.SnsType.ToString());
+            nameValues.Add("IsSendWeChatMsg", playerData.IsSendWeChatMsg.ToString());
+            nameValues.Add("IsTransferred", playerData.IsTransferred.ToString());
+            nameValues.Add("type", playerData.Type?.ToString() ?? "");
+
+            nameValues.Add("extensionData", playerData.ExtensionData?.ToString() ?? "");
+            if (!string.IsNullOrEmpty(playerData.TargetUrl)) nameValues.Add("TargetUrl", playerData.TargetUrl);
+
+            try
+            {
+                var files = new List<string>();
+                var names = new List<string>();
+                if (!string.IsNullOrEmpty(playerData.PlayerImage) && File.Exists(playerData.PlayerImage))
+                {
+                    files.Add(playerData.PlayerImage);
+                    names.Add("playerimage");
+                }
+                if (!string.IsNullOrEmpty(playerData.PlayingImage) && File.Exists(playerData.PlayingImage))
+                {
+                    files.Add(playerData.PlayingImage);
+                    names.Add("PlayingImage");
+                }
+                var data = await SendMultipartFormRequestAsync<AjaxResponse<QrcodeActionOutput>>(absolutePath, files.ToArray(), names.ToArray(), nameValues);
+                return data.Result;
+            }
+            catch (Exception ex)
+            {
+                logger.Error("PostData4ScanAsync", ex);
+                Console.WriteLine(ex.Message);
+            }
+            return default(QrcodeActionOutput);
+        }
+
 
 
         public async Task<ActionDataOutput> ActionDataById(ActionInput actionDataInput)
@@ -623,6 +668,22 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 Console.WriteLine("GetUserActionsByActivityGameAsync:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<UserActionInfoOutput>> GetActivityUserDatas(ActivityGameActionInput input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetActivityUserDatasQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserActionInfoOutput>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityUserDatas:" + ex.InnerException);
             }
             return null;
         }
