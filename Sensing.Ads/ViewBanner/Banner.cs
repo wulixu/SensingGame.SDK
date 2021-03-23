@@ -15,6 +15,10 @@ namespace SensingAds.ViewBanner
         protected BannerState bannerState = BannerState.Unloaded;
         public string Transition { get; set; }
 
+        public Banner()
+        {
+            this.Background = Brushes.Black;
+        }
         protected void setDefaultDurtion(int durtion)
         {
             this.durtion = durtion;
