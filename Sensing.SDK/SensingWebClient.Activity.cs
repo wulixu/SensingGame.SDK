@@ -421,20 +421,20 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<int> SendAwardNotify(NotifyInput input)
+        public async Task<bool> SendAwardNotify(NotifyInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{SendAwardNotifyQuery}";
+            var absolutePath = $"{ServerBase}{ActivityDataPath}{SendAwardNotifyQuery}?";
             try
             {
-                var webResult = await SendRequestAsync<NotifyInput, AjaxResponse<int>>(HttpMethod.Post, absolutePath, input);
+                var webResult = await SendRequestAsync<NotifyInput, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, input);
                 return webResult.Result;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("SendAwardNotify:" + ex.InnerException);
             }
-            return -1;
+            return false;
         }
 
         public async Task<SnsUserAwardOuput> DoLotteryAwardByAction(ActionDataInput input)
