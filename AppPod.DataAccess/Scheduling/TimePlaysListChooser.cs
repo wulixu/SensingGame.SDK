@@ -13,7 +13,12 @@ namespace AppPod.DataAccess.Scheduling
 
         public override AdOrAppPlayItem FindNowPlayItem()
         {
-            double timeSinceStart = DateTime.Now.TimeOfDay.Subtract(_currentSchedule.StartTime.Value).TotalSeconds;
+
+            var nowTimeSpan = DateTime.Now.TimeOfDay;
+            //是否当前事件在播放节目单的时间段
+            if (nowTimeSpan <= _currentSchedule.StartTime || nowTimeSpan >= _currentSchedule.EndTime) return null;
+
+            double timeSinceStart = nowTimeSpan.Subtract(_currentSchedule.StartTime.Value).TotalSeconds;
 
             _currentPlayerList = _currentSchedule.AdAndApps.FirstOrDefault(a => a.ScheduleStartTime <= timeSinceStart && timeSinceStart < a.ScheduleEndTime);
             if (_currentPlayerList == null) return null;
