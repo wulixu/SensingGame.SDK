@@ -36,6 +36,7 @@ namespace AppPod.DataAccess.Scheduling
                     playItem.Type = _currentPlayerList.Type;
                     playItem.AdOrAppId = item.Id;
                     playItem.PlayDuration = itemSpan;
+                    playItem.Transition = item.Transition;
                     _currentPlayItem = playItem;
                     return playItem;
                 }

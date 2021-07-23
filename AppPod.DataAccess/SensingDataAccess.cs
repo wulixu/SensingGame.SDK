@@ -46,6 +46,8 @@ namespace AppPod.DataAccess
         /// <returns></returns>
         public IEnumerable<ProductCategorySDKModel> GetRootCategories()
         {
+            if (PCategories == null)
+                return new List<ProductCategorySDKModel>();
             var roots = PCategories.Where(p => p.ParentCategoryId == 0 || p.ParentCategoryId == p.Id);
             return roots.ToList();
         }
@@ -509,6 +511,8 @@ namespace AppPod.DataAccess
 
         public List<CouponViewModel> GetCoupons()
         {
+            if (Coupons == null)
+                return new List<CouponViewModel>();
             return Coupons.ToList();
         }
 
@@ -1056,7 +1060,7 @@ namespace AppPod.DataAccess
 
         public List<TagSdkModel> ReadTags()
         {
-            var path = $"{AppPodDataDirectory}/Products/Tags.json";
+            var path = $"{AppPodDataDirectory}/Products/AdsTags.json";
             if (!File.Exists(path)) return null;
             string json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<List<TagSdkModel>>(json);
@@ -1562,6 +1566,8 @@ namespace AppPod.DataAccess
 
         public IEnumerable<AdsSdkModel> FindAdsByTagName(string tagName)
         {
+            if (Tags == null)
+                return null;
             var tag = Tags.FirstOrDefault(t => t.Value == tagName);
             if (tag == null)
             {

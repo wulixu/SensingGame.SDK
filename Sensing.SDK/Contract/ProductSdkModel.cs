@@ -91,6 +91,8 @@ namespace Sensing.SDK.Contract
         public double? Price2 { get; set; }
         public string Desc { get; set; }
         public long? BrandId { get; set; }
+        public int Quantity { get; set; }
+        public string AuditStatus { get; set; }
     }
 
     public class ProductDecideImageViewModel
@@ -179,6 +181,8 @@ namespace Sensing.SDK.Contract
         public double? Price2 { get; set; }
 
         public IEnumerable<EntityFileSdkModel> ItemImagesOrVideos { get; set; }
+        public string AuditStatus { get; set; }
+
     }
 
     public class EntityFileSdkModel

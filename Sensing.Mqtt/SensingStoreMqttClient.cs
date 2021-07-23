@@ -31,8 +31,8 @@ namespace Sensing.Mqtt
     public delegate void ActionReceivedEventHandler(object sender, ActionReceivedMessageEventArgs e);
     public class SensingStoreMqttClient
     {
-        public const string DeviceControllerTopic = ".device.controller";
-        public const string DeviceLogTopic = ".device.log";
+        public const string DeviceControllerTopic = "sensing.device.controller";
+        public const string DeviceLogStatusTopic = "sensing.device.log.status";
         public static string RabbitMQAddress = "139.224.23.171";
         public static string UserName = "troncell";
         public static string Password = "1qazTronCell@WSX";
@@ -59,7 +59,7 @@ namespace Sensing.Mqtt
             //设置遗嘱消息，当设备离线时间大于1.5倍的心跳时间,会发布此消息到特定topic.
             var willMessageBuilder = new MqttApplicationMessageBuilder();
             var willMsg = willMessageBuilder
-                .WithTopic(DeviceLogTopic)
+                .WithTopic(DeviceLogStatusTopic)
                 .WithPayload(JsonConvert.SerializeObject(_deviceStatusEvent))
                 .WithRetainFlag(true)
                 .Build();
@@ -77,7 +77,7 @@ namespace Sensing.Mqtt
                 //是否清空客户端的连接记录。若为true，则断开后，broker将自动清除该客户端连接信息
                 .WithCleanSession()
                 .WithCommunicationTimeout(TimeSpan.FromSeconds(10))
-                //.WithWillMessage(willMsg)
+                .WithWillMessage(willMsg)
                 .Build();
 
             _client = factory.CreateMqttClient();
@@ -113,7 +113,7 @@ namespace Sensing.Mqtt
             // Subscribe to a topic
             await _client.SubscribeAsync(topicFilter);
             // publish to server and set the device is online.
-            await _client.PublishAsync(DeviceLogTopic, JsonConvert.SerializeObject(_deviceStatusEvent));
+            await _client.PublishAsync(DeviceLogStatusTopic, JsonConvert.SerializeObject(_deviceStatusEvent));
             Console.WriteLine("### SUBSCRIBED ###");
         }
 

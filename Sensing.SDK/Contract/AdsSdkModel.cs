@@ -52,5 +52,6 @@ namespace Sensing.SDK.Contract
         public string Description { get; set; }
         public bool IsCustom { get; set; }
         public string CustomContent { get; set; }
+        public string AuditStatus { get; set; }
     }
 }

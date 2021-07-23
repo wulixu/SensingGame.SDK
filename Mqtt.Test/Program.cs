@@ -21,7 +21,7 @@ namespace Mqtt.Test
         static void Main(string[] args)
         {
 
-            UseMqttTest();
+            // UseMqttTest();
 
             //var automapperTest = new AutomapperTest();
             //automapperTest.MapperStart();
@@ -35,9 +35,10 @@ namespace Mqtt.Test
             //factory.setPort(portNumber);
             //IConnection conn = factory.CreateConnection();
 
-            //Sensing.Mqtt.SensingStoreMqttClient client = new Sensing.Mqtt.SensingStoreMqttClient();
-            //client.Connect("139.196.240.230", "123123");
-            //Console.ReadLine();
+            Sensing.Mqtt.SensingStoreMqttClient client = new Sensing.Mqtt.SensingStoreMqttClient("45", "77");
+            client.ConnectAsync();
+
+            Console.ReadLine();
 
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("139.224.23.171:6379,defaultDatabase=0,password=troncell-redis");
 
@@ -55,7 +56,7 @@ namespace Mqtt.Test
 
         public static void UseMqttTest()
         {
-            var factory = new ConnectionFactory() { HostName = RabbitMQAddress, UserName = UserName, Password = Password, VirtualHost="mqtt" };
+            var factory = new ConnectionFactory() { HostName = RabbitMQAddress, UserName = UserName, Password = Password };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {

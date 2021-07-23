@@ -27,6 +27,14 @@ namespace Sensing.SDK
         public readonly static string ExtenalServiceRelativePath = "e/";
         public readonly static string SignalRPath = ServerBase + "signalr";
         public readonly static string Api_Relative_Path = "api/services/app/";
+        public readonly static string AdsServiceApiHost = "https://ads.api.troncell.com/";
+        public readonly static string DeviceBigDataServiceApiHost = "https://devicebigdata.api.troncell.com/";
+        public readonly static string DeviceCenterApiHost = "https://devicecenter.api.troncell.com/";
+        public readonly static string SApiHost = "https://identity.api.troncell.com/";
+        public readonly static string ProductApiHost = "https://product.api.troncell.com/";
+        public readonly static string RecommendApiHost = "https://recommend.api.troncell.com/";
+
+
         public readonly static string MainServiceApiHost = ServerBase + MainServiceRelativePath + Api_Relative_Path;
         public readonly static string MainServiceHost = ServerBase + MainServiceRelativePath;
         public readonly static string ExtenalServiceHost = ServerBase + ExtenalServiceRelativePath + Api_Relative_Path;

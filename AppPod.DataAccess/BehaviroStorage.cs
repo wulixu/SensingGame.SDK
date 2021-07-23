@@ -15,6 +15,8 @@ namespace AppPod.DataAccess
 {
     public interface IBehaviorDataUploader
     {
+        void AddBehavoirData(string thingId, string thingName, string category, string action, DateTime collectionTime, DateTime collectEndTime, string softwareName = "", string pageName = "", string previousPage = "", string previousPageArea = "", long productId = 0);
+
         void AddBehavoirData(string thingId, string thingName, string category, string action, string softwareName = "", string pageName = "", string previousPage = "", string previousPageArea = "", long productId = 0);
         void AddClick(AdsSdkModel ads, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
         void AddLike(ShowProductInfo productInfo, string softwareName, string pageName, string previousPage = "", string previousPageArea = "");
@@ -79,6 +81,42 @@ namespace AppPod.DataAccess
                 AddBehavoirData(productInfo.Id.ToString(), productInfo.Name, productInfo.Type.ToString(), "click", softwareName, pageName, previousPage, previousPageArea, productInfo.Product?.Id??0);
             });
         }
+
+        public void AddBehavoirData(string thingId, string thingName, string category, string action, DateTime collectionTime,DateTime collectEndTime, string softwareName = "", string pageName = "", string previousPage = "", string previousPageArea = "", long productId = 0)
+        {
+            //todo:william.
+            Task.Factory.StartNew(() =>
+            {
+                if (string.IsNullOrEmpty(action)) return;
+                var updateRecord = m_db.Table<SqlLiteBehaviorRecord>().FirstOrDefault(r => r.ThingId == thingId && r.Category == category && r.Action == action && r.IsSynced == false);
+                if (updateRecord == null)
+                {
+                    SqlLiteBehaviorRecord record = new SqlLiteBehaviorRecord();
+                    record.Action = action;
+                    record.CollectionTime = collectionTime;
+                    record.CollectEndTime = collectEndTime;
+                    record.Increment = 1;
+                    record.ThingId = thingId;
+                    record.Name = thingName;
+                    record.SoftwareName = softwareName;
+                    record.PageName = pageName;
+                    record.Category = category;
+                    record.PreviousPageArea = previousPageArea;
+                    record.PreviousPageName = previousPage;
+                    record.IsSynced = false;
+                    record.ProductId = productId;
+                    m_db.Insert(record);
+                }
+                else
+                {
+                    updateRecord.Increment++;
+                    m_db.Update(updateRecord);
+                }
+                UploadData();
+            });
+
+        }
+
 
         public void AddBehavoirData(string thingId, string thingName, string category,string action,string softwareName = "", string pageName ="",string previousPage= "",string previousPageArea = "",long productId = 0)
         {

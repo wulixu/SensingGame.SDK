@@ -10,7 +10,11 @@ namespace SensingAds.ViewBanner.AdsItem
         {
             string fileType = ad.Type.ToLower();
             int durtion = (int)(ad.TimeSpan?.TotalSeconds ?? 0);
-            if (ad.IsCustom && !string.IsNullOrEmpty(ad.CustomContent))
+            if(ad.AuditStatus == "Offline")
+            {
+                return new OfflineAd { FileUrl = ad.FileUrl, Id = ad.Id, Name = ad.Name, TimeSpan = durtion };
+            }
+            else if (ad.IsCustom && !string.IsNullOrEmpty(ad.CustomContent))
             {
                 return CustomAd.Parse(ad.CustomContent, ad.Id, ad.Name, durtion);
             }

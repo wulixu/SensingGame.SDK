@@ -13,24 +13,18 @@ namespace Sensing.SDK
         /// <summary>
         /// Post device data record.
         /// </summary>
-        private const string PostBehaviorQuery = "/BehaviorRecord/PostRecord";
-        private const string PostDeviceStatusQuery = "/BehaviorRecord/PostDeviceStatusRecord";
-        private const string PostDeviceNetworkStatusQuery = "/BehaviorRecord/PostDeviceNetworkStatusRecords";
-        private const string PostFaceRecordQuery = "/BehaviorRecord/PostFaceRecord";
-        private string DeviceHeartBeatQuery = "/BehaviorRecord/DeviceHeartBeat";
-        private string GetFaceRecordsQuery = "/BehaviorRecord/GetFaceRecords";
+        private const string PostBehaviorQuery = "api/services/app/SensingDevice/PostBehaviorRecords";
+        private const string PostDeviceStatusQuery = "api/services/app/SensingDevice/PostDeviceStatusRecords";
+        private const string PostDeviceNetworkStatusQuery = "api/services/app/SensingDevice/PostDeviceNetworkStatusRecords";
+        private const string PostFaceRecordQuery = "api/services/app/SensingDevice/PostFaceRecord";
+        private string DeviceHeartBeatQuery = "api/services/app/SensingDevice/DeviceHeartBeat";
+        private string GetFaceRecordsQuery = "api/services/app/SensingDevice/PostFaceRecord";
 
 
-        public readonly static string DeviceBigDataServiceRelativePath = "d/";
-        public readonly static string DeviceBigDataServiceApiHost = ServerBase + DeviceBigDataServiceRelativePath + Api_Relative_Path;
-        public readonly static string DeviceBigDataServiceHost = ServerBase + DeviceBigDataServiceRelativePath;
-
-        private const string DeviceBigDataPath = "d/api/services/app";
     
         public async Task<bool> PostBehaviorRecordsAsync(IEnumerable<BehaviorRecord> records)
         {
-            //api/services/app/BehaviorRecord/PostRecord
-            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{PostBehaviorQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{DeviceBigDataServiceApiHost}{PostBehaviorQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var result = await SendRequestAsync<IEnumerable<BehaviorRecord>, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, records);
@@ -46,7 +40,7 @@ namespace Sensing.SDK
 
         public async Task<bool> PostDeviceStatusRecordAsync(IEnumerable<DeviceStatusInput> status)
         {
-            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{PostDeviceStatusQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{DeviceBigDataServiceApiHost}{PostDeviceStatusQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var result = await SendRequestAsync<IEnumerable<DeviceStatusInput>, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, status);
@@ -62,7 +56,7 @@ namespace Sensing.SDK
 
         public async Task<bool> PostDeviceNetworkStatusRecords(IEnumerable<DeviceNetworkStatusInput> status)
         {
-            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{PostDeviceNetworkStatusQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{DeviceBigDataServiceApiHost}{PostDeviceNetworkStatusQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var result = await SendRequestAsync<IEnumerable<DeviceNetworkStatusInput>, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, status);
@@ -78,8 +72,7 @@ namespace Sensing.SDK
 
         public async Task<bool> PostFaceRecordAsync(FaceRecord record)
         {
-            //api/services/app/BehaviorRecord/PostRecord
-            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{PostFaceRecordQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{DeviceBigDataServiceApiHost}{PostFaceRecordQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var result = await SendRequestAsync<FaceRecord, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, record);
@@ -93,30 +86,11 @@ namespace Sensing.SDK
             return false;
         }
 
-        public async Task<bool> DeviceHeartBeatAsync(DeviceHeartBeatInput device)
-        {
-            var absolutePath = $"{ServerBase}{DeviceBigDataPath}/{DeviceHeartBeatQuery}?{GetBasicNameValuesQueryString()}";
-            try
-            {
-                var result = await SendRequestAsync<DeviceHeartBeatInput, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, device);
-                if (result != null)
-                {
-                    return result.Success;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("RegisterDevice:" + ex.InnerException);
-            }
-            return false;
-        }
+
 
         public async Task<PagedResultDto<FaceRecordOutput>> GetFaceRecordsAsync(FaceRecordInput input)
         {
-            //api/services/app/BehaviorRecord/PostRecord
-            var absolutePath = $"{ServerBase}{DeviceBigDataPath}{GetFaceRecordsQuery}?{GetBasicNameValuesQueryString()}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}&collectionStartTime={input.CollectionStartTime}&collectionEndTime={input.CollectionEndTime}";
+            var absolutePath = $"{DeviceBigDataServiceApiHost}{GetFaceRecordsQuery}?{GetBasicNameValuesQueryString()}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}&collectionStartTime={input.CollectionStartTime}&collectionEndTime={input.CollectionEndTime}";
             try
             {
                 var result = await SendRequestAsync<string, AjaxResponse<PagedResultDto<FaceRecordOutput>>>(HttpMethod.Get, absolutePath, null);

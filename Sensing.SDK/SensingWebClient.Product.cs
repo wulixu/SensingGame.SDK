@@ -12,14 +12,14 @@ namespace Sensing.SDK
         /// <summary>
         /// Get all the things.
         /// </summary>
-        private const string ThingBaseUrl = "SensingDevice";
-        private const string GetProductsQuery = ThingBaseUrl + "/GetProducts";
+        private const string GetProductsQuery = "api/services/app/SensingDevice/GetProducts";
 
-        private const string GetBrandsQuery = ThingBaseUrl + "/GetBrands";
-        private const string GetTCategoriesQuery = ThingBaseUrl + "/GetProductCategories";
-        private const string GetMatchesQuery = ThingBaseUrl + "/GetMatchInfos";
-        private const string GetLikesQuery = ThingBaseUrl + "/GetLikeInfos";
-        private const string GetCommentsQuery = ThingBaseUrl + "/GetProductComments";
+        private const string GetTCategoriesQuery = "api/services/app/SensingDevice/GetProductCategories";
+        private const string GetMatchesQuery = "api/services/app/SensingDevice/GetMatchInfos";
+        private const string GetLikesQuery = "api/services/app/SensingDevice/GetLikeInfos";
+        private const string GetCommentsQuery = "api/services/app/SensingDevice/GetProductComments";
+        private const string GetProductTagsQuery = "api/services/app/SensingDevice/GetTags";
+
 
         private const string MaxResultCount = "MaxResultCount";
         private const string SkipCount = "SkipCount";
@@ -28,7 +28,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<ProductSdkModel>> GetProducts(int skipCount = 0,int maxCount=300)
         {
-            var absolutePath = $"{MainServiceApiHost}/{GetProductsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{ProductApiHost}{GetProductsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string,AjaxResponse<PagedResultDto<ProductSdkModel>>>(HttpMethod.Get, absolutePath,null);
@@ -37,14 +37,14 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("GetProducts:" + ex.InnerException);
+                Console.WriteLine("GetProducts:" + ex.InnerException);  
             }
             return null;
         }
 
         public async Task<PagedResultDto<ProductCategorySDKModel>> GetProductCategories(int skipCount = 0,int maxCount = 500)
         {
-            var absolutePath = $"{MainServiceApiHost}/{GetTCategoriesQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{ProductApiHost}{GetTCategoriesQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<ProductCategorySDKModel>>>(HttpMethod.Get, absolutePath, null);
@@ -62,7 +62,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<MatchInfoViewModel>> GetMatchInfos(int skipCount = 0, int maxCount = 1000)
         {
-            var absolutePath = $"{MainServiceApiHost}/{GetMatchesQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{ProductApiHost}{GetMatchesQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<MatchInfoViewModel>>>(HttpMethod.Get, absolutePath, null);
@@ -79,7 +79,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<LikeInfoViewModel>> GetLikeInfos(int skipCount = 0, int maxCount = 1000)
         {
-            var absolutePath = $"{MainServiceApiHost}/{GetLikesQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{ProductApiHost}{GetLikesQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<LikeInfoViewModel>>>(HttpMethod.Get, absolutePath, null);
@@ -96,7 +96,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<ProductCommentModel>> GetProductComments(int skipCount = 0, int maxCount = 1000)
         {
-            var absolutePath = $"{MainServiceApiHost}/{GetCommentsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{ProductApiHost}{GetCommentsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<ProductCommentModel>>>(HttpMethod.Get, absolutePath, null);
@@ -109,19 +109,22 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<PagedResultDto<BrandDto>> GetBrands(int skipCount =0, int maxCount = 100)
+        public async Task<PagedResultDto<TagSdkModel>> GetProductTags(int skipCount = 0, int maxCount = 300)
         {
-            var absolutePath = $"{MainServiceApiHost}/{GetBrandsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            var absolutePath = $"{ProductApiHost}{GetProductTagsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
             try
             {
-                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<BrandDto>>>(HttpMethod.Get, absolutePath, null);
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<TagSdkModel>>>(HttpMethod.Get, absolutePath, null);
                 return webResult.Result;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("GetBrands:" + ex.InnerException);
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("GetTags:" + ex.InnerException);
             }
             return null;
         }
+
+
     }
 }

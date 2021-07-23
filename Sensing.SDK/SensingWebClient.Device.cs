@@ -14,23 +14,23 @@ namespace Sensing.SDK
         /// <summary>
         /// Get all the things.
         /// </summary>
-        private const string DeviceBaseUrl = "SensingDevice";
-        private const string RegisterDeviceQuery = DeviceBaseUrl + "/RegisterDevice";
+        private const string RegisterDeviceQuery = "api/services/app/SensingDevice/RegisterDevice";
 
-        private const string GroupInfoQuery = DeviceBaseUrl + "/GetTenantAndOrganizationUnitInfo";
-        private const string DeviceInfoQuery = DeviceBaseUrl + "/GetDeviceInfo";
-        private const string GetDeviceSubkeyByHardwareCodeQuery = DeviceBaseUrl + "/GetDeviceSubkeyByHardwareCode";
-        private const string LoginInfoQuery = DeviceBaseUrl + "/Login";
-        private const string GetDeviceAppPodVersionQuery = DeviceBaseUrl + "/GetDeviceAppPodVersion";
-        private const string ChangeDeviceApppodVersionQuery = DeviceBaseUrl + "/ChangeDeviceApppodVersion";
-        private const string GetLastUpdateTimeQuery = DeviceBaseUrl + "/GetLastUpdateTime";
-        private const string UploadScreenShotQuery = DeviceBaseUrl + "/UploadScreenShot";
+        private const string DeviceInfoQuery = "api/services/app/SensingDevice/GetDeviceInfo";
+        private const string GetDeviceSubkeyByHardwareCodeQuery = "api/services/app/SensingDevice/GetDeviceSubkeyByHardwareCode";
+        private const string GetDeviceAppPodVersionQuery = "api/services/app/SensingDevice/GetDeviceAppPodVersion";
+        private const string ChangeDeviceApppodVersionQuery = "api/services/app/SensingDevice/ChangeDeviceApppodVersion";
+        private const string UploadScreenShotQuery = "api/services/app/SensingDevice/UploadScreenShot";
+        //private const string LoginInfoQuery = DeviceBaseUrl + "/Login";
+        private const string GetBrandsQuery = "api/services/app/SensingDevice/GetBrands";
+
+
 
 
 
         public async Task<AjaxResponse<DeviceOutput>> RegisterDeviceAsyn(RegisterDeviceInput device)
         {
-            var absolutePath = $"{MainServiceApiHost}/{RegisterDeviceQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{DeviceCenterApiHost}{RegisterDeviceQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var pagedList = await SendRequestAsync<RegisterDeviceInput, AjaxResponse<DeviceOutput>>(HttpMethod.Post, absolutePath, device);
@@ -50,7 +50,7 @@ namespace Sensing.SDK
 
         public async Task<AjaxResponse<DeviceOutput>> GetDeviceInfo()
         {
-            var absolutePath = $"{MainServiceApiHost}/{DeviceInfoQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{DeviceCenterApiHost}{DeviceInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var pagedList = await SendRequestAsync<string, AjaxResponse<DeviceOutput>>(HttpMethod.Get, absolutePath, null);
@@ -65,41 +65,25 @@ namespace Sensing.SDK
         }
 
 
-        public async Task<TenantAndOrganizationUnitOutput> GetTenantAndOrganizationUnitInfo()
-        {
-            var absolutePath = $"{MainServiceApiHost}/{GroupInfoQuery}?{GetBasicNameValuesQueryString()}";
-            try
-            {
-                var groupResult = await SendRequestAsync<string, AjaxResponse<TenantAndOrganizationUnitOutput>>(HttpMethod.Get, absolutePath, null);
-                return groupResult.Result;
-            }
-            catch (Exception ex)
-            {
-                //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("GetGroupInfo:" + ex.InnerException);
-            }
-            return null;
-        }
-
-        public async Task<DeviceStaffLoginResultViewModel> DeviceLogin(DeviceSdkLoginViewModel loginVM)
-        {
-            var absolutePath = $"{MainServiceApiHost}/{LoginInfoQuery}?{GetBasicNameValuesQueryString()}";
-            try
-            {
-                var loginResult = await SendRequestAsync<string, AjaxResponse<DeviceStaffLoginResultViewModel>>(HttpMethod.Post, absolutePath, null);
-                return loginResult.Result;
-            }
-            catch (Exception ex)
-            {
-                //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("DeviceLogin:" + ex.InnerException);
-            }
-            return null;
-        }
+        //public async Task<DeviceStaffLoginResultViewModel> DeviceLogin(DeviceSdkLoginViewModel loginVM)
+        //{
+        //    var absolutePath = $"{MainServiceApiHost}/{LoginInfoQuery}?{GetBasicNameValuesQueryString()}";
+        //    try
+        //    {
+        //        var loginResult = await SendRequestAsync<string, AjaxResponse<DeviceStaffLoginResultViewModel>>(HttpMethod.Post, absolutePath, null);
+        //        return loginResult.Result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //logger.Error("PostBehaviorRecordsAsync", ex);
+        //        Console.WriteLine("DeviceLogin:" + ex.InnerException);
+        //    }
+        //    return null;
+        //}
 
         public async Task<DeviceAppPodVersionModel> GetDeviceAppPodVersion()
         {
-            var absolutePath = $"{ExtenalServiceHost}{GetDeviceAppPodVersionQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{DeviceCenterApiHost}{GetDeviceAppPodVersionQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var appPodVersion = await SendRequestAsync<string, AjaxResponse<DeviceAppPodVersionModel>>(HttpMethod.Get, absolutePath, null);
@@ -116,7 +100,7 @@ namespace Sensing.SDK
         public async Task<bool> ChangeDeviceApppodVersion(ChangeDeviceApppodVersionInput input)
         {
             input.Subkey = _subKey;
-            var absolutePath = $"{ExtenalServiceHost}{ChangeDeviceApppodVersionQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{DeviceCenterApiHost}{ChangeDeviceApppodVersionQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var loginResult = await SendRequestAsync<ChangeDeviceApppodVersionInput, AjaxResponse<string>>(HttpMethod.Post, absolutePath, input);
@@ -130,25 +114,10 @@ namespace Sensing.SDK
             return false;
         }
 
-        public async Task<TableLastTimeDto> GetLastUpdateTime()
-        {
-            var absolutePath = $"{MainServiceApiHost}/{GetLastUpdateTimeQuery}?{GetBasicNameValuesQueryString()}";
-            try
-            {
-                var pagedList = await SendRequestAsync<string, AjaxResponse<TableLastTimeDto>>(HttpMethod.Get, absolutePath, null);
-                return pagedList.Result;
-            }
-            catch (Exception ex)
-            {
-                //logger.Error("PostBehaviorRecordsAsync", ex);
-                Console.WriteLine("GetDeviceInfo:" + ex.InnerException);
-            }
-            return null;
-        }
 
         public async Task<string> GetDeviceSubkeyByHardwareCode(string hardwareid)
         {
-            var absolutePath = $"{MainServiceApiHost}/{GetDeviceSubkeyByHardwareCodeQuery}?HardwareCode={hardwareid}";
+            var absolutePath = $"{DeviceCenterApiHost}{GetDeviceSubkeyByHardwareCodeQuery}?HardwareCode={hardwareid}";
             try
             {
                 var pagedList = await SendRequestAsync<string, AjaxResponse<string>>(HttpMethod.Get, absolutePath, null);
@@ -165,7 +134,7 @@ namespace Sensing.SDK
 
         public async Task<bool> UploadScreenShot(ScreenshotInput screenshot)
         {
-            var absolutePath = $"{ExtenalServiceHost}{UploadScreenShotQuery}?{GetBasicNameValuesQueryString()}";
+           var absolutePath = $"{DeviceCenterApiHost}{UploadScreenShotQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var loginResult = await SendRequestAsync<ScreenshotInput, AjaxResponse<string>>(HttpMethod.Post, absolutePath, screenshot);
@@ -177,6 +146,41 @@ namespace Sensing.SDK
                 Console.WriteLine("DeviceLogin:" + ex.InnerException);
             }
             return false;
+        }
+
+        public async Task<bool> DeviceHeartBeatAsync(DeviceHeartBeatInput device)
+        {
+            var absolutePath = $"{DeviceCenterApiHost}{DeviceHeartBeatQuery}?{GetBasicNameValuesQueryString()}";
+            try
+            {
+                var result = await SendRequestAsync<DeviceHeartBeatInput, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, device);
+                if (result != null)
+                {
+                    return result.Success;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                //logger.Error("PostBehaviorRecordsAsync", ex);
+                Console.WriteLine("RegisterDevice:" + ex.InnerException);
+            }
+            return false;
+        }
+
+        public async Task<PagedResultDto<BrandDto>> GetBrands(int skipCount = 0, int maxCount = 100)
+        {
+            var absolutePath = $"{DeviceCenterApiHost}{GetBrandsQuery}?{GetBasicNameValuesQueryString()}&{MaxResultCount}={maxCount}&{SkipCount}={skipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<BrandDto>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetBrands:" + ex.InnerException);
+            }
+            return null;
         }
 
         public async Task<CartQrcodeOutput> AddGoodsToCar(List<ShoppingCartItem> shoppingCart)

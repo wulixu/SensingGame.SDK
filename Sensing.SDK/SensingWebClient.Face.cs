@@ -54,7 +54,7 @@ namespace Sensing.SDK
         public async Task<UserFaceInfoDto> QueryUserByFace(FaceDataInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"https://f.api.troncell.com/api/Face/QueryUserByFace";
+            var absolutePath = $"https://f.api.troncell.comapi/Face/QueryUserByFace";
             try
             {
                 var webResult = await SendRequestAsync<FaceDataInput, AjaxResponse<UserFaceInfoDto>>(HttpMethod.Post, absolutePath, input);
@@ -70,7 +70,7 @@ namespace Sensing.SDK
         public async Task<FaceModelDto> RegisterFaceMember(UserFaceDataInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"https://f.api.troncell.com/api/Face/RegisterFaceByUser";
+            var absolutePath = $"https://f.api.troncell.comapi/Face/RegisterFaceByUser";
             try
             {
                 var webResult = await SendRequestAsync<UserFaceDataInput, AjaxResponse<FaceModelDto>>(HttpMethod.Post, absolutePath, input);

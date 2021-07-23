@@ -17,7 +17,7 @@ namespace SensingAds.ViewBanner
         {
             localPath = filePath;
             Image image = new Image();
-            image.Stretch = System.Windows.Media.Stretch.UniformToFill;
+            image.Stretch = System.Windows.Media.Stretch.Uniform;
             ImageLoaderUtil.Load(filePath, image);
             this.Children.Add(image);
             bannerState = BannerState.Loaded;

@@ -98,6 +98,7 @@
     <Compile Include="ViewBanner\AdsItem\H5Ad.cs" />
     <Compile Include="ViewBanner\AdsItem\ILink.cs" />
     <Compile Include="ViewBanner\AdsItem\ImageAd.cs" />
+    <Compile Include="ViewBanner\AdsItem\OfflineAd.cs" />
     <Compile Include="ViewBanner\AdsItem\NotSupportAd.cs" />
     <Compile Include="ViewBanner\AdsItem\PdfAd.cs" />
     <Compile Include="ViewBanner\AdsItem\VideoAd.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="ViewBanner\ExeBanner.cs" />
     <Compile Include="ViewBanner\H5Banner.cs" />
     <Compile Include="ViewBanner\ImageBanner.cs" />
+    <Compile Include="ViewBanner\EmptyBanner.cs" />
+    <Compile Include="ViewBanner\OfflineBanner.cs" />
     <Compile Include="ViewBanner\NotSupportBanner.cs" />
     <Compile Include="ViewBanner\PageTransformer.cs" />
     <Compile Include="ViewBanner\Transitions\BaiYeChuangTransformer.cs" />
