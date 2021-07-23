@@ -15,9 +15,12 @@ namespace AppPod.DataAccess.Scheduling
 
         public override AdOrAppPlayItem FindNowPlayItem()
         {
+            var nowTimeSpan = DateTime.Now.TimeOfDay;
+            //是否当前事件在播放节目单的时间段
+            if (nowTimeSpan <= _currentSchedule.StartTime || nowTimeSpan >= _currentSchedule.EndTime) return null;
             //启动时长, 播放任务开始之前需要，不允许播放任何东西.
             //double timeSinceStart = DateTime.Now.TimeOfDay.Subtract(_timelineStartedTime.TimeOfDay).Subtract(_currentSchedule.StartTime.Value).TotalSeconds;
-            double timeSinceStart = DateTime.Now.TimeOfDay.Subtract(_timelineStartedTime.TimeOfDay).TotalSeconds;
+            double timeSinceStart = nowTimeSpan.Subtract(_timelineStartedTime.TimeOfDay).TotalSeconds;
 
             timeSinceStart = Math.Abs(timeSinceStart);
             //获取节目组的总时长
