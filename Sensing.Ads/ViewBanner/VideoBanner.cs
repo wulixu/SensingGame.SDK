@@ -60,6 +60,7 @@ namespace SensingAds.ViewBanner
         {
             base.Stop();
             videoView.Stop();
+            videoView.Position = TimeSpan.FromSeconds(0);
             isPrepared = false;
         }
 

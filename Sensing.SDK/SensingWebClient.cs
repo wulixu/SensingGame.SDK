@@ -33,6 +33,7 @@ namespace Sensing.SDK
         public readonly static string SApiHost = "https://identity.api.troncell.com/";
         public readonly static string ProductApiHost = "https://product.api.troncell.com/";
         public readonly static string RecommendApiHost = "https://recommend.api.troncell.com/";
+        public readonly static string ActivityApiHost = "https://activity.api.troncell.com/";
 
 
         public readonly static string MainServiceApiHost = ServerBase + MainServiceRelativePath + Api_Relative_Path;
@@ -79,7 +80,13 @@ namespace Sensing.SDK
             s_httpClient.Timeout = TimeSpan.FromSeconds(60);
             var appConfig = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
             var url = appConfig.AppSettings?.Settings["CloudServerUrl"]?.Value;
-            if(!string.IsNullOrEmpty(url))
+            var activityApiHost = appConfig.AppSettings?.Settings["ActivityApiHost"]?.Value;
+            if (!string.IsNullOrEmpty(activityApiHost))
+            {
+                ActivityApiHost = activityApiHost;
+            }
+
+                if (!string.IsNullOrEmpty(url))
             {
                 ServerBase = url;
                 MainServiceApiHost = ServerBase + MainServiceRelativePath + Api_Relative_Path;

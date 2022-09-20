@@ -22,7 +22,7 @@ namespace Sensing.SDK
         private const string CreateQrcode4LoginQuery = "/BehaviorRecord/PostRecord";
         //private const string PostDeviceStatusQuery = "/BehaviorRecord/PostDeviceStatusRecord";
         private const string GetDeviceActivityGameInfoQuery = "services/app/SensingDeviceActivity/GetDeviceActivityGameInfo";
-        private const string GetAwardsByActivityQuery ="services/app/SensingDeviceActivity/GetAwardsByActivity";
+        private const string GetAwardsBySecurityKeyQuery = "services/app/SengsingDevice/GetAwardsBySecurityKey";
         private const string GetPlayGamesByUserQuery = "services/app/SensingDeviceActivity/GetPlayGamesByUser";
         private const string GetRankedUsersWithActionByActivityQuery = "services/app/SensingDeviceActivity/GetRankedUsersWithActionByActivity";
         private const string GetQrcode4LoginQuery = "services/app/SensingDeviceActivity/CreateQrCode4Login";
@@ -36,6 +36,8 @@ namespace Sensing.SDK
         private const string GetScanQrCodeUserActionsQuery = "services/app/SensingDeviceActivity/GetScanQrCodeUserActions";
         private const string GetDataUsersQuery = "services/app/SensingDeviceActivity/GetDataUsers";
         private const string GetActivityGamesQuery = "services/app/SengsingDevice/GetActivityGames";
+        private const string GetActivityUserDatasQuery = "services/app/SensingDeviceActivity/GetActivityUserDatas";
+
 
         private const string DoLotteryUserByAwardIdQuery = "services/app/SensingDeviceActivity/DoLotteryUserByAwardId";
         private const string SendAwardNotifyQuery = "services/app/SensingDeviceActivity/SendAwardNotify";
@@ -78,7 +80,7 @@ namespace Sensing.SDK
         public async Task<ActivityUserDataOutput> MySignInActivityAsync(MySignInActivityInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{MySignInActivityQuery}";
+            var absolutePath = $"{ActivityApiHost}api/{MySignInActivityQuery}";
             try
             {
                 var webResult = await SendRequestAsync<MySignInActivityInput, AjaxResponse<ActivityUserDataOutput>>(HttpMethod.Post, absolutePath, input);
@@ -94,7 +96,7 @@ namespace Sensing.SDK
         public async Task<DeviceActivityGameOutput> GetDeviceActivityGameInfoAsync()
         {
             //input.Subkey = _subKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetDeviceActivityGameInfoQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{ActivityApiHost}api/{GetDeviceActivityGameInfoQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<DeviceActivityGameOutput>>(HttpMethod.Get, absolutePath, null);
@@ -109,7 +111,7 @@ namespace Sensing.SDK
 
         public async Task<UserActionInfoOutput> PostPlayerDataByAction(PlayerActionDataInput playerActionData)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{PostPlayerDataByActionQuery}";
+            var absolutePath = $"{ActivityApiHost}api/{PostPlayerDataByActionQuery}";
             //var absolutePath = "http://localhost:13654/api/UserAction/PostPlayerDataByAction";
             var nameValues = new NameValueCollection();
             AddBasicNameValues(nameValues);
@@ -146,7 +148,7 @@ namespace Sensing.SDK
 
         public async Task<UserActionInfoOutput> PostDataByUserAsync(PlayerDataActionInput playerActionData)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{PostDataByUserQuery}";
+            var absolutePath = $"{ActivityApiHost}api/{PostDataByUserQuery}";
             var nameValues = new NameValueCollection();
             AddBasicNameValues(nameValues);
             nameValues.Add("score", playerActionData.Score.ToString());
@@ -184,7 +186,7 @@ namespace Sensing.SDK
 
         public async Task<QrcodeActionOutput> PostPlayerData4ActionQrcodeAsync(PlayerDataInput playerData)
         {
-            var absolutePath = $"https://g.api.troncell.com/api/{PostPlayerData4ActionQrcodeQuery}";
+            var absolutePath = $"{ActivityApiHost}api/{PostPlayerData4ActionQrcodeQuery}";
             var nameValues = new NameValueCollection();
             AddBasicNameValues(nameValues);
             nameValues.Add("score", playerData.Score.ToString());
@@ -227,7 +229,7 @@ namespace Sensing.SDK
 
         public async Task<ActionDataOutput> ActionDataById(ActionInput actionDataInput)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{ActionDataByIdQuery}";
+            var absolutePath = $"{ActivityApiHost}api/{ActionDataByIdQuery}";
             var nameValues = new NameValueCollection();
             AddBasicNameValues(nameValues);
             nameValues.Add("actionId", actionDataInput.ActionId.ToString());        
@@ -246,7 +248,7 @@ namespace Sensing.SDK
         //todo.. GetRankedUsersWithActionByActivity
         public async Task<PagedResultDto<UserRankDto>> GetRankedUsersWithActionByActivity(GetRankedUsersWithActionByActivityInput input)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetRankedUsersWithActionByActivityQuery}?{GetBasicNameValuesQueryString()}&rankColumn={input.RankColumn}&startTime={input.StartTime}&endTime={input.EndTime}&isGameLevel={input.IsGameLevel}";
+            var absolutePath = $"{ActivityApiHost}api/{GetRankedUsersWithActionByActivityQuery}?{GetBasicNameValuesQueryString()}&rankColumn={input.RankColumn}&startTime={input.StartTime}&endTime={input.EndTime}&isGameLevel={input.IsGameLevel}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserRankDto>>>(HttpMethod.Get, absolutePath, null);
@@ -261,7 +263,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<PlayedGamesOutput>> GetPlayGamesByUserAsync(PlayGameInput input)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetPlayGamesByUserQuery}?{GetBasicNameValuesQueryString()}&openId={input.OpenId}&snsType={input.SnsType}&maxResultCount={input.MaxResultCount}";
+            var absolutePath = $"{ActivityApiHost}api/{GetPlayGamesByUserQuery}?{GetBasicNameValuesQueryString()}&openId={input.OpenId}&snsType={input.SnsType}&maxResultCount={input.MaxResultCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PlayedGamesOutput>>>(HttpMethod.Get, absolutePath, null);
@@ -279,7 +281,7 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<SnsUserInfoOutput>> GetScanQrCodeUsers(Qrcode4UsersInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"https://g.api.troncell.com/api/{GetScanQrCodeUsersQuery}?{GetBasicNameValuesQueryString()}&qrcodeId={input.QrcodeId}&{MaxResultCount}={input.MaxResultCount}&{SkipCount}={input.SkipCount}&{Query}={input.Filter}";
+            var absolutePath = $"{ActivityApiHost}api/{GetScanQrCodeUsersQuery}?{GetBasicNameValuesQueryString()}&qrcodeId={input.QrcodeId}&{MaxResultCount}={input.MaxResultCount}&{SkipCount}={input.SkipCount}&{Query}={input.Filter}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<SnsUserInfoOutput>>>(HttpMethod.Get, absolutePath, null);
@@ -296,7 +298,7 @@ namespace Sensing.SDK
         public async Task<PersonDataOutput> GetMyPersonDataInActivity(PersonDataInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetMyPersonDataInActivityQuery}?{GetBasicNameValuesQueryString()}&openID={input.OpenId}&snsType={input.SnsType}&actionId={input.ActionId}";
+            var absolutePath = $"{ActivityApiHost}api/{GetMyPersonDataInActivityQuery}?{GetBasicNameValuesQueryString()}&openID={input.OpenId}&snsType={input.SnsType}&actionId={input.ActionId}";
 
             try
             {
@@ -313,7 +315,7 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<UserActionInfoOutput>> GetScanQrCodeUserActions(Qrcode4UsersInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetScanQrCodeUserActionsQuery}?{GetBasicNameValuesQueryString()}&qrcodeId={input.QrcodeId}&{MaxResultCount}={input.MaxResultCount}&{SkipCount}={input.SkipCount}&{Query}={input.Filter}";
+            var absolutePath = $"{ActivityApiHost}api/{GetScanQrCodeUserActionsQuery}?{GetBasicNameValuesQueryString()}&qrcodeId={input.QrcodeId}&{MaxResultCount}={input.MaxResultCount}&{SkipCount}={input.SkipCount}&{Query}={input.Filter}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserActionInfoOutput>>>(HttpMethod.Get, absolutePath, null);
@@ -330,7 +332,7 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<UserDataOutput>> GetDataUsers(DataUsersInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetDataUsersQuery}?{GetBasicNameValuesQueryString()}&securityKey={input.SecurityKey}&maxResultCount={input.MaxResultCount}";
+            var absolutePath = $"{ActivityApiHost}api/{GetDataUsersQuery}?{GetBasicNameValuesQueryString()}&securityKey={input.SecurityKey}&maxResultCount={input.MaxResultCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserDataOutput>>>(HttpMethod.Get, absolutePath, null);
@@ -346,7 +348,7 @@ namespace Sensing.SDK
 
         public async Task<List<ActivityGameDto>> GetActivityGames()
         {
-              var absolutePath = $"{ServerBase}{ActivityDataPath}{GetActivityGamesQuery}?{GetBasicNameValuesQueryString()}";
+              var absolutePath = $"{ActivityApiHost}api/{GetActivityGamesQuery}?{GetBasicNameValuesQueryString()}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<List<ActivityGameDto>>>(HttpMethod.Get, absolutePath, null);
@@ -363,7 +365,7 @@ namespace Sensing.SDK
         public async Task<SnsUserAwardOuput> DoLotteryUserByAwardId(AwardDataInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{DoLotteryUserByAwardIdQuery}";
+            var absolutePath = $"{ActivityApiHost}api/{DoLotteryUserByAwardIdQuery}";
             try
             {
                 var webResult = await SendRequestAsync<AwardDataInput, AjaxResponse<SnsUserAwardOuput>>(HttpMethod.Post, absolutePath, input);
@@ -376,26 +378,26 @@ namespace Sensing.SDK
             return null;
         }
 
-        public async Task<int> SendAwardNotify(NotifyInput input)
+        public async Task<bool> SendAwardNotify(NotifyInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{SendAwardNotifyQuery}";
+            var absolutePath = $"{ActivityApiHost}api/{SendAwardNotifyQuery}";
             try
             {
-                var webResult = await SendRequestAsync<NotifyInput, AjaxResponse<int>>(HttpMethod.Post, absolutePath, input);
+                var webResult = await SendRequestAsync<NotifyInput, AjaxResponse<bool>>(HttpMethod.Post, absolutePath, input);
                 return webResult.Result;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("SendAwardNotify:" + ex.InnerException);
             }
-            return -1;
+            return true;
         }
 
         public async Task<SnsUserAwardOuput> DoLotteryAwardByAction(ActionDataInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{DoLotteryAwardByActionQuery}";
+            var absolutePath = $"{ActivityApiHost}api/{DoLotteryAwardByActionQuery}";
             //var absolutePath = "http://localhost:13654/api/services/app/SensingDeviceActivity/DoLotteryAwardByAction";
 
             var webResult = await SendRequestAsync<ActionDataInput, AjaxResponse<SnsUserAwardOuput>>(HttpMethod.Post, absolutePath, input);
@@ -408,9 +410,9 @@ namespace Sensing.SDK
             //return null;
         }
 
-        public async Task<PagedResultDto<AwardOutput>> GetAwardsAsync(AwardInput input)
+        public async Task<PagedResultDto<AwardOutput>> GetAwardsBySecurityKeyAsync(AwardInput input)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetAwardsByActivityQuery}?{GetBasicNameValuesQueryString()}&Sorting={"awardSeq ASC"}";
+            var absolutePath = $"{ActivityApiHost}api/{GetAwardsBySecurityKeyQuery}?{GetBasicNameValuesQueryString()}&Sorting={"awardSeq ASC"}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<AwardOutput>>>(HttpMethod.Get, absolutePath, null);
@@ -425,7 +427,7 @@ namespace Sensing.SDK
 
         //public async Task<PagedResultDto<AwardOutput>> GetAwardsBySecurityKeyAsync(AwardInput input)
         //{
-        //    var absolutePath = $"{ServerBase}{ActivityDataPath}{GetAwardsByActivityQuery}?{GetBasicNameValuesQueryString()}&Sorting={"awardSeq ASC"}";
+        //    var absolutePath = $"{ActivityApiHost}api/{GetAwardsByActivityQuery}?{GetBasicNameValuesQueryString()}&Sorting={"awardSeq ASC"}";
         //    try
         //    {
         //        var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<AwardOutput>>>(HttpMethod.Get, absolutePath, null);
@@ -441,7 +443,7 @@ namespace Sensing.SDK
         public async Task<UserActionInfoOutput> GetUserActionByIdAsync(ActionDataInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetUserActionByIdQuery}?{GetBasicNameValuesQueryString()}&actionId={input.ActionId}";
+            var absolutePath = $"{ActivityApiHost}api/{GetUserActionByIdQuery}?{GetBasicNameValuesQueryString()}&actionId={input.ActionId}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<UserActionInfoOutput>>(HttpMethod.Get, absolutePath, null);
@@ -457,7 +459,7 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<UserActionInfoOutput>> GetUserActionsByActivityGameAsync(ActivityGamePageInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetUserActionsByActivityGameQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            var absolutePath = $"{ActivityApiHost}api/{GetUserActionsByActivityGameQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserActionInfoOutput>>>(HttpMethod.Get, absolutePath, null);
@@ -477,7 +479,7 @@ namespace Sensing.SDK
         /// <returns></returns>
         public async Task<int> SendTextMessageByUserAsync(SnsUserTextDataInput input)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{SendTextMessageByUserQuery}";
+            var absolutePath = $"{ActivityApiHost}api/{SendTextMessageByUserQuery}";
             input.SecurityKey = _deviceActivityGameSecurityKey;
             try
             {
@@ -500,7 +502,7 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<ChatMessage>> GetActivityChattingRecordsAsync(SensingDeviceGamePagedSortedFilteredInputBase input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetActivityChattingRecordsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            var absolutePath = $"{ActivityApiHost}api/{GetActivityChattingRecordsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<ChatMessage>>>(HttpMethod.Get, absolutePath, null);
@@ -522,7 +524,7 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<ChatMessage>> GetDeviceActivityGameChattingRecordAsync(SensingDeviceGamePagedSortedFilteredInputBase input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;            
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetDeviceActivityGameChattingRecordsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            var absolutePath = $"{ActivityApiHost}api/{GetDeviceActivityGameChattingRecordsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<ChatMessage>>>(HttpMethod.Get, absolutePath, null);
@@ -537,7 +539,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<PaperDto>> GetPaperAsync(PaperInput input)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetPaperQuery}?{GetBasicNameValuesQueryString()}&softwareId={input.SoftwareId}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            var absolutePath = $"{ActivityApiHost}api/{GetPaperQuery}?{GetBasicNameValuesQueryString()}&softwareId={input.SoftwareId}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PaperDto>>>(HttpMethod.Get, absolutePath, null);
@@ -552,7 +554,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<QuestionDto>> GetQuestionsByPaperIdAsync(QuestionInput input)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetQuestionsByPaperIdQuery}?{GetBasicNameValuesQueryString()}&paperId={input.PaperId}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            var absolutePath = $"{ActivityApiHost}api/{GetQuestionsByPaperIdQuery}?{GetBasicNameValuesQueryString()}&paperId={input.PaperId}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<QuestionDto>>>(HttpMethod.Get, absolutePath, null);
@@ -567,7 +569,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<PaperDto>> GetPapersByTagAsync(string tag)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetPapersByTagsQuery}?{GetBasicNameValuesQueryString()}&Tags={tag}";
+            var absolutePath = $"{ActivityApiHost}api/{GetPapersByTagsQuery}?{GetBasicNameValuesQueryString()}&Tags={tag}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PaperDto>>>(HttpMethod.Get, absolutePath, null);
@@ -582,7 +584,7 @@ namespace Sensing.SDK
 
         public async Task<string> AddUserPaperAsync(AddUserPaperInput input)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{AddUserPaperQuery}?{GetBasicNameValuesQueryString()}";
+            var absolutePath = $"{ActivityApiHost}api/{AddUserPaperQuery}?{GetBasicNameValuesQueryString()}";
             input.subkey = _subKey;
             try
             {
@@ -598,7 +600,7 @@ namespace Sensing.SDK
 
         public async Task<PagedResultDto<PaperAnswerReportDto>> GetPaperAnswerReportAsync(int paperId)
         {
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetPaperAnswerReportQuery}?{GetBasicNameValuesQueryString()}&paperId={paperId}";
+            var absolutePath = $"{ActivityApiHost}api/{GetPaperAnswerReportQuery}?{GetBasicNameValuesQueryString()}&paperId={paperId}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<PaperAnswerReportDto>>>(HttpMethod.Get, absolutePath, null);
@@ -614,7 +616,7 @@ namespace Sensing.SDK
         public async Task<PagedResultDto<GameUserActionOutput>> GetDeviceActivityGameUserActions(ActivityGameActionInput input)
         {
             input.SecurityKey = _deviceActivityGameSecurityKey;
-            var absolutePath = $"{ServerBase}{ActivityDataPath}{GetDeviceActivityGameUserActionsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}&startTime={input.StartTime}&endTime={input.EndTime}";
+            var absolutePath = $"{ActivityApiHost}api/{GetDeviceActivityGameUserActionsQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}&startTime={input.StartTime}&endTime={input.EndTime}";
             try
             {
                 var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<GameUserActionOutput>>>(HttpMethod.Get, absolutePath, null);
@@ -623,6 +625,22 @@ namespace Sensing.SDK
             catch (Exception ex)
             {
                 Console.WriteLine("GetUserActionsByActivityGameAsync:" + ex.InnerException);
+            }
+            return null;
+        }
+
+        public async Task<PagedResultDto<UserActionInfoOutput>> GetActivityUserDatas(ActivityGameActionInput input)
+        {
+            input.SecurityKey = _deviceActivityGameSecurityKey;
+            var absolutePath = $"{ActivityApiHost}api/{GetActivityUserDatasQuery}?{GetBasicNameValuesQueryString()}&filter={input.Filter}&sorting={input.Sorting}&maxResultCount={input.MaxResultCount}&skipCount={input.SkipCount}";
+            try
+            {
+                var webResult = await SendRequestAsync<string, AjaxResponse<PagedResultDto<UserActionInfoOutput>>>(HttpMethod.Get, absolutePath, null);
+                return webResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetActivityUserDatas:" + ex.InnerException);
             }
             return null;
         }
