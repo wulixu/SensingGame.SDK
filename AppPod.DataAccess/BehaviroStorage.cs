@@ -321,6 +321,17 @@ namespace AppPod.DataAccess
                     m_db.UpdateAll(records);
                 }
             }
+
+            //POST the lastest record for updating,but not set IsSynced = true. next time will be updated again.
+            var lastRecord = m_db.Table<SqliteDeviceStatus>().Where(r => r.IsSynced == false).OrderByDescending(d => d.EndTime).Take(1).FirstOrDefault();
+            if (lastRecord != null)
+            {
+                bool success = sesingWebClient.PostDeviceStatusRecordAsync(new DeviceStatusInput[] { lastRecord }).GetAwaiter().GetResult();
+                if (success)
+                {
+                    //todo
+                }
+            }
         }
 
         public void SyncDeviceNetworkStatusToCloud()
